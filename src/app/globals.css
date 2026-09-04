@@ -1,0 +1,876 @@
+@import "tailwindcss";
+
+:root {
+  --bg-main: #050607;
+  --bg-section: #080A0D;
+  --bg-elevated: #0D1117;
+  --bg-hover: #121720;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-main: #F5F7FA;
+  --text-muted: #9BA5B3;
+  --text-silver: #C7CDD4;
+  --blue-primary: #147BFF;
+  --blue-hover: #3A91FF;
+  --orange-primary: #F59A18;
+  --orange-hover: #FFAC36;
+  --green-positive: #10B981;
+  --red-negative: #EF4444;
+}
+
+@theme {
+  --color-hdz-bg: #050607;
+  --color-hdz-section: #080A0D;
+  --color-hdz-elevated: #0D1117;
+  --color-hdz-hover: #121720;
+  --color-hdz-border: rgba(255, 255, 255, 0.08);
+  --color-hdz-text: #F5F7FA;
+  --color-hdz-muted: #9BA5B3;
+  --color-hdz-silver: #C7CDD4;
+  --color-hdz-blue: #147BFF;
+  --color-hdz-blue-hover: #3A91FF;
+  --color-hdz-orange: #F59A18;
+  --color-hdz-orange-hover: #FFAC36;
+  --color-hdz-green: #10B981;
+  --color-hdz-red: #EF4444;
+  
+  --font-outfit: var(--font-outfit), sans-serif;
+  --font-jakarta: var(--font-jakarta), sans-serif;
+  --font-lora: var(--font-lora), serif;
+}
+
+body {
+  background-color: #050607;
+  color: #F5F7FA;
+  font-family: var(--font-jakarta), sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ticker Marquee Keyframe & Mask */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Custom discreet scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #050607;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #147BFF;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid #147BFF;
+  outline-offset: 3px;
+}
+
+/* ==========================================
+   MERCADOS PAGE PREMIUM GLASS & METALLIC STYLES
+   ========================================== */
+
+.markets-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #050607;
+  color: #EEF4FA;
+  isolation: isolate;
+}
+
+.markets-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: image-set(
+    url("/images/markets/markets-background.avif") type("image/avif"),
+    url("/images/markets/markets-background.webp") type("image/webp")
+  );
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  filter:
+    saturate(1.45)
+    brightness(1.12)
+    contrast(1.10);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .markets-page::before {
+    position: absolute;
+    background-image: image-set(
+      url("/images/markets/markets-background-mobile.avif") type("image/avif"),
+      url("/images/markets/markets-background-mobile.webp") type("image/webp")
+    );
+    filter:
+      saturate(1.25)
+      brightness(1.06)
+      contrast(1.08);
+  }
+}
+
+.markets-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 8% 28%,
+      rgba(22, 139, 255, 0.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 92% 62%,
+      rgba(245, 154, 24, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(3, 5, 8, 0.68) 0%,
+      rgba(3, 5, 8, 0.48) 38%,
+      rgba(3, 5, 8, 0.18) 72%,
+      rgba(3, 5, 8, 0.24) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 5, 8, 0.20) 0%,
+      rgba(3, 5, 8, 0.10) 55%,
+      rgba(3, 5, 8, 0.68) 100%
+    );
+}
+
+/* Ice-White Metallic Glass Card Style */
+.market-card {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13, 18, 25, 0.92),
+      rgba(6, 9, 14, 0.96)
+    ) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(242, 247, 252, 0.92) 0%,
+      rgba(190, 202, 214, 0.42) 26%,
+      rgba(255, 255, 255, 0.14) 52%,
+      rgba(245, 154, 24, 0.34) 76%,
+      rgba(224, 232, 240, 0.52) 100%
+    ) border-box;
+  backdrop-filter: blur(16px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 18px 45px rgba(0, 0, 0, 0.34);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 20px 52px rgba(0, 0, 0, 0.44),
+    0 0 24px rgba(245, 154, 24, 0.08);
+}
+
+/* Glass Opening Header Panel */
+.market-header-panel {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 15, 22, 0.88),
+      rgba(6, 9, 14, 0.92)
+    ) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(242, 247, 252, 0.85) 0%,
+      rgba(190, 202, 214, 0.35) 30%,
+      rgba(255, 255, 255, 0.12) 60%,
+      rgba(245, 154, 24, 0.40) 85%,
+      rgba(224, 232, 240, 0.45) 100%
+    ) border-box;
+  backdrop-filter: blur(18px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 60px rgba(0, 0, 0, 0.48),
+    0 0 45px rgba(22, 139, 255, 0.06),
+    0 0 25px rgba(245, 154, 24, 0.04);
+}
+
+/* Premium Partnership Card Style */
+.partnership-card {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13, 18, 25, 0.94),
+      rgba(6, 9, 14, 0.97)
+    ) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(242, 247, 252, 0.88),
+      rgba(184, 197, 209, 0.40),
+      rgba(245, 154, 24, 0.36),
+      rgba(238, 244, 250, 0.50)
+    ) border-box;
+  backdrop-filter: blur(16px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 18px 45px rgba(0, 0, 0, 0.38);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.partnership-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 22px 55px rgba(0, 0, 0, 0.44),
+    0 0 28px rgba(245, 154, 24, 0.10);
+}
+
+/* Picnic Benefit Block Style */
+.picnic-benefit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid rgba(238, 244, 250, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #EEF4FA;
+  font-size: 15px;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.picnic-benefit:hover {
+  border-color: rgba(245, 154, 24, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Premium Asset Icon Container Style */
+.asset-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--icon-accent, #F59A18) 58%, transparent);
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      color-mix(in srgb, var(--icon-accent, #F59A18) 18%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(18, 25, 34, 0.98),
+      rgba(7, 11, 16, 0.98)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 18px color-mix(in srgb, var(--icon-accent, #F59A18) 12%, transparent);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.asset-icon svg {
+  display: block;
+  width: 27px;
+  height: 27px;
+  max-width: 27px;
+  max-height: 27px;
+  aspect-ratio: 1 / 1;
+  overflow: visible;
+  transform: none;
+  object-fit: contain;
+  vector-effect: non-scaling-stroke;
+}
+
+.market-card:hover .asset-icon {
+  border-color: color-mix(
+    in srgb,
+    var(--icon-accent, #F59A18) 78%,
+    white 22%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 22px color-mix(
+      in srgb,
+      var(--icon-accent, #F59A18) 22%,
+      transparent
+    );
+}
+
+.bitcoin-symbol {
+  width: 28px;
+  height: 28px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #F7931A;
+  color: #FFFFFF;
+  transform: none;
+}
+
+/* ========================================================================= */
+/* HOMEPAGE FINAL CTA SECTION LOCALIZED LEGIBILITY STYLES                     */
+/* ========================================================================= */
+
+/* ========================================================================= */
+/* HOMEPAGE FINAL CTA SECTION REFINED LEGIBILITY & BUTTON STYLES             */
+/* ========================================================================= */
+
+.final-cta-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.final-cta-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2, 5, 8, 0.02) 0%,
+      rgba(2, 5, 8, 0.08) 38%,
+      rgba(2, 5, 8, 0.28) 48%,
+      rgba(2, 5, 8, 0.34) 50%,
+      rgba(2, 5, 8, 0.28) 52%,
+      rgba(2, 5, 8, 0.08) 62%,
+      rgba(2, 5, 8, 0.02) 100%
+    ),
+    radial-gradient(
+      ellipse 58% 84% at 50% 48%,
+      rgba(2, 5, 8, 0.94) 0%,
+      rgba(2, 5, 8, 0.82) 30%,
+      rgba(2, 5, 8, 0.58) 50%,
+      rgba(2, 5, 8, 0.26) 72%,
+      rgba(2, 5, 8, 0.05) 100%
+    );
+}
+
+.final-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta-eyebrow {
+  font-family: var(--font-jakarta), sans-serif;
+  color: #f59a18;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+}
+
+.final-cta-content h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: #ffffff;
+  text-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.84),
+    0 1px 3px rgba(0, 0, 0, 0.76);
+}
+
+.final-cta-content p {
+  font-family: var(--font-jakarta), sans-serif;
+  color: #eef3f8;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.65;
+  max-width: 740px;
+  margin-inline: auto;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.92);
+}
+
+@media (max-width: 768px) {
+  .final-cta-content p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+.final-cta-tagline {
+  font-family: var(--font-jakarta), sans-serif;
+  color: #f59a18;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.95),
+    0 0 14px rgba(245, 154, 24, 0.12);
+}
+
+/* Primary CTA: Descobrir o treinamento (Gold/Orange Gradient) */
+.training-cta {
+  font-family: var(--font-jakarta), sans-serif;
+  min-height: 52px;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ffc05a;
+  border-radius: 11px;
+  background:
+    linear-gradient(
+      135deg,
+      #ffb12b 0%,
+      #f59a18 48%,
+      #e98508 100%
+    );
+  color: #090b0e;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 12px 30px rgba(0, 0, 0, 0.40),
+    0 0 26px rgba(245, 154, 24, 0.22);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.training-cta:hover {
+  transform: translateY(-2px);
+  background:
+    linear-gradient(
+      135deg,
+      #ffc253 0%,
+      #ffa51f 48%,
+      #f08e0a 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    0 16px 36px rgba(0, 0, 0, 0.46),
+    0 0 32px rgba(245, 154, 24, 0.30);
+}
+
+.training-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 18%,
+    rgba(255, 255, 255, 0.22) 44%,
+    transparent 68%
+  );
+  opacity: 0;
+  transform: translateX(-35%);
+  transition:
+    opacity 180ms ease,
+    transform 320ms ease;
+}
+
+.training-cta:hover::before {
+  opacity: 1;
+  transform: translateX(35%);
+}
+
+/* Secondary CTAs: Acompanhar as notícias & Explorar matérias (Dark Blue) */
+.news-cta,
+.articles-cta {
+  font-family: var(--font-jakarta), sans-serif;
+  min-height: 52px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(22, 139, 255, 0.48);
+  border-radius: 11px;
+  background: rgba(8, 18, 30, 0.92);
+  color: #f5f8fc;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 24px rgba(0, 0, 0, 0.32);
+  transition: all 180ms ease;
+}
+
+.news-cta:hover,
+.articles-cta:hover {
+  background: rgba(14, 28, 46, 0.96);
+  border-color: rgba(22, 139, 255, 0.80);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.40),
+    0 0 20px rgba(22, 139, 255, 0.20);
+  color: #ffffff;
+}
+
+/* Actions Layout Container */
+.final-cta-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .final-cta-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .final-cta-actions a {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .training-cta,
+  .training-cta:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .training-cta::before,
+  .training-cta:hover::before {
+    display: none;
+  }
+}
+
+/* =========================================================================
+   EDITORIAL SECTIONS: ALÉM DAS MANCHETES & BITCOIN ALÉM DO PREÇO
+   ========================================================================= */
+
+.editorial-visual-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.editorial-visual-section__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.editorial-visual-section__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* 1. SEÇÃO ALÉM DAS MANCHETES (.money-section) */
+.money-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.money-section__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: image-set(
+    url("/images/home/global-economy-background.avif") type("image/avif"),
+    url("/images/home/global-economy-background.webp") type("image/webp")
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .money-section__background {
+    background-image: image-set(
+      url("/images/home/global-economy-background-mobile.avif") type("image/avif"),
+      url("/images/home/global-economy-background-mobile.webp") type("image/webp")
+    );
+    background-position: center top;
+  }
+}
+
+.money-section__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 58% 62% at 34% 27%,
+      rgba(2, 5, 8, 0.94) 0%,
+      rgba(2, 5, 8, 0.78) 32%,
+      rgba(2, 5, 8, 0.46) 56%,
+      rgba(2, 5, 8, 0.16) 78%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 5, 8, 0.06) 0%,
+      rgba(2, 5, 8, 0.12) 46%,
+      rgba(2, 5, 8, 0.64) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(2, 5, 8, 0.30) 0%,
+      rgba(2, 5, 8, 0.04) 48%,
+      rgba(2, 5, 8, 0.06) 76%,
+      rgba(2, 5, 8, 0.24) 100%
+    );
+}
+
+.money-section h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: #ffffff;
+  text-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.84),
+    0 1px 3px rgba(0, 0, 0, 0.76);
+}
+
+.money-section .section-copy {
+  font-family: var(--font-jakarta), sans-serif;
+  color: #eef3f8;
+  font-weight: 500;
+  line-height: 1.65;
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.92),
+    0 1px 3px rgba(0, 0, 0, 0.80);
+}
+
+.money-section .cards-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.money-section .editorial-card {
+  background: rgba(8, 12, 17, 0.92);
+  backdrop-filter: blur(12px) saturate(115%);
+}
+
+/* 2. SEÇÃO BITCOIN ALÉM DO PREÇO (.bitcoin-section) */
+.bitcoin-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.bitcoin-section__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: image-set(
+    url("/images/home/bitcoin-scarcity-background.avif") type("image/avif"),
+    url("/images/home/bitcoin-scarcity-background.webp") type("image/webp")
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .bitcoin-section__background {
+    background-image: image-set(
+      url("/images/home/bitcoin-scarcity-background-mobile.avif") type("image/avif"),
+      url("/images/home/bitcoin-scarcity-background-mobile.webp") type("image/webp")
+    );
+    background-position: center top;
+  }
+}
+
+.bitcoin-section__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 54% 62% at 31% 28%,
+      rgba(2, 5, 8, 0.92) 0%,
+      rgba(2, 5, 8, 0.76) 34%,
+      rgba(2, 5, 8, 0.42) 58%,
+      rgba(2, 5, 8, 0.12) 80%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 5, 8, 0.06) 0%,
+      rgba(2, 5, 8, 0.12) 46%,
+      rgba(2, 5, 8, 0.62) 100%
+    );
+}
+
+.bitcoin-section h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: #ffffff;
+  text-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.84),
+    0 1px 3px rgba(0, 0, 0, 0.76);
+}
+
+.bitcoin-section .section-copy {
+  font-family: var(--font-jakarta), sans-serif;
+  color: #eef3f8;
+  font-weight: 500;
+  line-height: 1.65;
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.92),
+    0 1px 3px rgba(0, 0, 0, 0.80);
+}
+
+.bitcoin-section .cards-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.bitcoin-section .editorial-card {
+  position: relative;
+  border: 1px solid rgba(231, 238, 245, 0.16);
+  border-radius: 14px;
+  background: rgba(6, 10, 15, 0.93);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 16px 36px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px) saturate(108%);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.bitcoin-section .editorial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14%;
+  width: 72%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(238, 244, 250, 0.30),
+    rgba(245, 154, 24, 0.16),
+    transparent
+  );
+}
+
+.bitcoin-section .editorial-card:hover {
+  border-color: rgba(238, 244, 250, 0.26);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+.bitcoin-section .card-number {
+  color: #f59a18;
+  text-shadow: none;
+}
+
+/* RESPONSIVO MOBILE */
+@media (max-width: 768px) {
+  .money-section__overlay {
+    background:
+      radial-gradient(
+        ellipse 96% 72% at 50% 24%,
+        rgba(2, 5, 8, 0.96) 0%,
+        rgba(2, 5, 8, 0.86) 42%,
+        rgba(2, 5, 8, 0.56) 70%,
+        rgba(2, 5, 8, 0.18) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(2, 5, 8, 0.10) 0%,
+        rgba(2, 5, 8, 0.24) 48%,
+        rgba(2, 5, 8, 0.70) 100%
+      );
+  }
+
+  .money-section .section-copy p,
+  .bitcoin-section .section-copy p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+
+
+
+
+

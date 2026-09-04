@@ -1,0 +1,35 @@
+[
+  {
+    "legacyId": "d65c8977-6ce4-429b-89aa-30b5d7df4f58",
+    "sourceUrl": "https://hdzfinance.vercel.app/noticias/d65c8977-6ce4-429b-89aa-30b5d7df4f58",
+    "title": "Como Começa, Se Desenvolve e Termina o Colapso de Uma Moeda",
+    "slug": "como-comeca-se-desenvolve-e-termina-o-colapso-de-uma-moeda",
+    "publishedAt": "2026-01-16T00:45:46.61+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/a4e5c8de-2add-4250-a0de-2341bdd060ef.png",
+    "localImage": "/images/materias/como-comeca-se-desenvolve-e-termina-o-colapso-de-uma-moeda/cover.webp",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "5a907f4f-c737-428f-bb7a-9a69ab40648b",
+    "sourceUrl": "https://hdzfinance.vercel.app/noticias/5a907f4f-c737-428f-bb7a-9a69ab40648b",
+    "title": "Ciclos de Mercado",
+    "slug": "ciclos-de-mercado",
+    "publishedAt": "2026-01-11T20:15:40.873+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/72d78b10-b5ee-45aa-808e-7d502d2d1275.png",
+    "localImage": "/images/materias/ciclos-de-mercado/cover.webp",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "c5d12f39-16d2-4371-8f60-728198c8940c",
+    "sourceUrl": "https://hdzfinance.vercel.app/noticias/c5d12f39-16d2-4371-8f60-728198c8940c",
+    "title": "O Que Foi o Padrão Ouro?",
+    "slug": "o-que-foi-o-padrao-ouro",
+    "publishedAt": "2026-01-09T17:41:56.26+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/adfe72b6-bb1b-4d81-a781-c39942368c73.png",
+    "localImage": "/images/materias/o-que-foi-o-padrao-ouro/cover.webp",
+    "contentImported": true,
+    "imageImported": true
+  }
+]
