@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <mask id="br-mask"><circle cx="256" cy="256" r="256" fill="#fff"/></mask>
+  <g mask="url(#br-mask)">
+    <rect width="512" height="512" fill="#009c3b"/>
+    <polygon points="256,40 472,256 256,472 40,256" fill="#ffdf00"/>
+    <circle cx="256" cy="256" r="120" fill="#002776"/>
+    <path fill="#fff" d="M136,260 Q256,220 376,270 Q256,236 136,260 Z"/>
+    <circle cx="220" cy="280" r="4" fill="#fff"/>
+    <circle cx="250" cy="290" r="4" fill="#fff"/>
+    <circle cx="280" cy="285" r="4" fill="#fff"/>
+    <circle cx="230" cy="310" r="4" fill="#fff"/>
+    <circle cx="270" cy="315" r="4" fill="#fff"/>
+  </g>
+</svg>

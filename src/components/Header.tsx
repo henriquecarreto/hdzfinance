@@ -12,6 +12,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  if (pathname?.startsWith("/admin")) return null;
+
   // Sequence: 1. Notícias (/noticias), 2. Matérias (/materias), 3. Mercados (/mercados), 4. Sobre (/sobre), 5. Educacional (/educacional)
   const navLinks = [
     { name: "Notícias", href: "/noticias", isCommercial: false },

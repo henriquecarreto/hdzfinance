@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 50" width="220" height="50">
+  <defs>
+    <linearGradient id="nasdaqCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00A3E0"/>
+      <stop offset="100%" stop-color="#0077C8"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(2, 4)">
+    <!-- Nasdaq Official Geometric Ribbon -->
+    <path fill="url(#nasdaqCyan)" d="M0,38 L16,6 L32,38 L48,6 L64,38 L48,50 L32,22 L16,50 Z"/>
+    <!-- NASDAQ Wordmark -->
+    <text x="74" y="36" fill="#00A3E0" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="30" letter-spacing="1.5">NASDAQ</text>
+  </g>
+</svg>

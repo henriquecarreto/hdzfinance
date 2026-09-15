@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <radialGradient id="silverCoin" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="30%" stop-color="#E2E8F0"/>
+      <stop offset="65%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </radialGradient>
+    <linearGradient id="silverRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#64748B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="128" r="122" fill="url(#silverCoin)" stroke="url(#silverRim)" stroke-width="8"/>
+  <circle cx="128" cy="128" r="110" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  <g transform="translate(128, 128) scale(0.088) translate(-960, -960)">
+    <polygon fill="#1E293B" points="959.8,180.7 420.1,1076.3 959.8,831"/>
+    <polygon fill="#0F172A" points="959.8,831 420.1,1076.3 959.8,1395.4"/>
+    <polygon fill="#334155" points="1499.6,1076.3 959.8,180.7 959.8,831"/>
+    <polygon fill="#020617" points="959.8,1395.4 1499.6,1076.3 959.8,831"/>
+    <polygon fill="#475569" points="420.1,1178.7 959.8,1719.3 959.8,1497.6"/>
+    <polygon fill="#1E293B" points="959.8,1497.6 959.8,1719.3 1499.9,1178.7"/>
+  </g>
+</svg>

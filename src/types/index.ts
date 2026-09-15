@@ -34,7 +34,7 @@ export interface Article {
   author: Author;
   publishDate: string;
   updateDate: string;
-  readTimeMinutes: number;
+  readTimeMinutes?: number;
   coverImage: string;
   coverAlt: string;
   content: string; // HTML/Formatted text
@@ -78,19 +78,19 @@ export interface Product {
   slug: string;
   title: string;
   shortDescription: string;
-  type: "Curso" | "E-book & Guia" | "Planilha & Ferramenta" | "Material Especial";
-  level: "Iniciante" | "Intermediário" | "Avançado";
-  benefits: string[];
+  type: string;
+  level?: "Iniciante" | "Intermediário" | "Avançado";
+  benefits?: string[];
   priceFormatted?: string;
-  status: "Disponível" | "Em breve";
-  coverImage: string;
-  buyUrl: string;
-  problemSolved: string;
-  targetAudience: string[];
-  excludedAudience: string[];
-  modules: { title: string; description: string }[];
-  deliverables: string[];
-  faq: { question: string; answer: string }[];
+  status?: "Disponível" | "Em breve";
+  coverImage?: string;
+  buyUrl?: string;
+  problemSolved?: string;
+  targetAudience?: string[];
+  excludedAudience?: string[];
+  modules?: { title: string; description: string }[];
+  deliverables?: string[];
+  faq?: { question: string; answer: string }[];
 }
 
 export interface MarketIndicator {

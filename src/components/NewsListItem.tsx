@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/types";
-import { Clock, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface NewsListItemProps {
   article: Article;
@@ -40,11 +40,6 @@ export default function NewsListItem({ article }: NewsListItemProps) {
             <span className="flex items-center">
               <Calendar className="h-3 w-3 mr-1 text-[#147BFF]" />
               {formatDate(article.publishDate)}
-            </span>
-            <span>•</span>
-            <span className="flex items-center">
-              <Clock className="h-3 w-3 mr-1 text-[#147BFF]" />
-              {article.readTimeMinutes} min de leitura
             </span>
           </div>
 

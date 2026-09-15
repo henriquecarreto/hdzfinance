@@ -15,7 +15,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div>
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#050607]">
           <Image
-            src={product.coverImage}
+            src={product.coverImage || "/images/materias/ciclos-de-mercado/cover.webp"}
             alt={product.title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -24,9 +24,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#F59A18] text-[#000000]">
               {product.type}
             </span>
-            <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#050607]/80 text-[#C7CDD4] backdrop-blur-sm">
-              {product.level}
-            </span>
+            {product.level && (
+              <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-[#050607]/80 text-[#C7CDD4] backdrop-blur-sm">
+                {product.level}
+              </span>
+            )}
           </div>
 
           {!isAvailable && (
@@ -49,19 +51,21 @@ export default function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
 
-          <div className="space-y-2 pt-3 border-t border-white/[0.08]">
-            <span className="text-[10px] font-bold text-[#F59A18] uppercase tracking-wider block">
-              Destaques:
-            </span>
-            <ul className="space-y-1.5">
-              {product.benefits.slice(0, 2).map((benefit, idx) => (
-                <li key={idx} className="flex items-start text-xs text-[#C7CDD4]">
-                  <CheckCircle2 className="h-3.5 w-3.5 mr-2 text-[#F59A18] shrink-0 mt-0.5" />
-                  <span className="line-clamp-1">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {product.benefits && product.benefits.length > 0 && (
+            <div className="space-y-2 pt-3 border-t border-white/[0.08]">
+              <span className="text-[10px] font-bold text-[#F59A18] uppercase tracking-wider block">
+                Destaques:
+              </span>
+              <ul className="space-y-1.5">
+                {product.benefits.slice(0, 2).map((benefit, idx) => (
+                  <li key={idx} className="flex items-start text-xs text-[#C7CDD4]">
+                    <CheckCircle2 className="h-3.5 w-3.5 mr-2 text-[#F59A18] shrink-0 mt-0.5" />
+                    <span className="line-clamp-1">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

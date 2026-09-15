@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/types";
-import { Clock, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface NewsCardProps {
   article: Article;
@@ -37,11 +37,6 @@ export default function NewsCard({ article }: NewsCardProps) {
             <span className="flex items-center">
               <Calendar className="h-3 w-3 mr-1 text-[#147BFF]" />
               {formatDate(article.publishDate)}
-            </span>
-            <span>•</span>
-            <span className="flex items-center">
-              <Clock className="h-3 w-3 mr-1 text-[#147BFF]" />
-              {article.readTimeMinutes} min
             </span>
           </div>
 

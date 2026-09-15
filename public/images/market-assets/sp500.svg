@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <g transform="translate(4, 5)">
+    <!-- Red S&P Emblem -->
+    <rect x="0" y="0" width="75" height="50" rx="6" fill="#ED1C24"/>
+    <text x="8" y="38" fill="#FFFFFF" font-family="'Outfit', 'Inter', 'Helvetica Neue', sans-serif" font-weight="900" font-size="34" letter-spacing="-0.5">S&amp;P</text>
+    <!-- 500 Typography -->
+    <text x="88" y="38" fill="#F5F7FA" font-family="'Outfit', 'Inter', 'Helvetica Neue', sans-serif" font-weight="800" font-size="38" letter-spacing="-1">500</text>
+  </g>
+</svg>

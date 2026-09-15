@@ -23,11 +23,6 @@ function formatPrice(val: number | null, currency: "BRL" | "USD" | "POINTS"): st
     }).format(val);
   }
   if (currency === "USD") {
-    if (val >= 1000) {
-      return `US$ ${new Intl.NumberFormat("pt-BR", {
-        maximumFractionDigits: 0,
-      }).format(val)}`;
-    }
     return `US$ ${new Intl.NumberFormat("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -35,11 +30,12 @@ function formatPrice(val: number | null, currency: "BRL" | "USD" | "POINTS"): st
   }
   // POINTS
   return new Intl.NumberFormat("pt-BR", {
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(val);
 }
 
-// 1. Fetcher for Brazil Assets via brapi.dev with AwesomeAPI & Yahoo fallbacks
+// 1. Fetcher for Currencies and Brazil Assets via brapi.dev with AwesomeAPI & Yahoo fallbacks
 async function fetchBrapiData(): Promise<Map<string, Partial<MarketTickerItem>>> {
   const map = new Map<string, Partial<MarketTickerItem>>();
   const token = process.env.BRAPI_TOKEN;
@@ -99,22 +95,23 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketTickerItem>>>
     }
   }
 
-  // Fallback 1: AwesomeAPI for USD/BRL
-  if (!map.has("USD/BRL")) {
+  // Fallback 1: AwesomeAPI for USD/BRL, EUR/BRL, GBP/BRL
+  const missingCurrencies = ["USD/BRL", "EUR/BRL", "GBP/BRL"].filter((k) => !map.has(k));
+  if (missingCurrencies.length > 0) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 4000);
     try {
-      const res = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL", {
+      const res = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,GBP-BRL", {
         signal: controller.signal,
         cache: "no-store",
       });
       clearTimeout(timeout);
       if (res.ok) {
         const json = await res.json();
-        const usdData = json.USDBRL;
-        if (usdData) {
-          const price = parseFloat(usdData.bid);
-          const change = parseFloat(usdData.pctChange);
+        
+        if (json.USDBRL && !map.has("USD/BRL")) {
+          const price = parseFloat(json.USDBRL.bid);
+          const change = parseFloat(json.USDBRL.pctChange);
           map.set("USD/BRL", {
             price,
             formattedPrice: formatPrice(price, "BRL"),
@@ -124,6 +121,36 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketTickerItem>>>
             marketState: "open",
             isStale: false,
             source: "AwesomeAPI (USD/BRL)",
+          });
+        }
+
+        if (json.EURBRL && !map.has("EUR/BRL")) {
+          const price = parseFloat(json.EURBRL.bid);
+          const change = parseFloat(json.EURBRL.pctChange);
+          map.set("EUR/BRL", {
+            price,
+            formattedPrice: formatPrice(price, "BRL"),
+            changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
+            direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+            lastUpdated: getBrasiliaTime(),
+            marketState: "open",
+            isStale: false,
+            source: "AwesomeAPI (EUR/BRL)",
+          });
+        }
+
+        if (json.GBPBRL && !map.has("GBP/BRL")) {
+          const price = parseFloat(json.GBPBRL.bid);
+          const change = parseFloat(json.GBPBRL.pctChange);
+          map.set("GBP/BRL", {
+            price,
+            formattedPrice: formatPrice(price, "BRL"),
+            changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
+            direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+            lastUpdated: getBrasiliaTime(),
+            marketState: "open",
+            isStale: false,
+            source: "AwesomeAPI (GBP/BRL)",
           });
         }
       }
@@ -173,60 +200,62 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketTickerItem>>>
   return map;
 }
 
-// 2. Fetcher for Crypto Assets via CoinGecko
-async function fetchCoinGeckoData(): Promise<Map<string, Partial<MarketTickerItem>>> {
+// 2. Fetcher for Crypto Assets via Bitstamp
+async function fetchBitstampData(): Promise<Map<string, Partial<MarketTickerItem>>> {
   const map = new Map<string, Partial<MarketTickerItem>>();
-  const apiKey = process.env.COINGECKO_API_KEY;
-  const headers: Record<string, string> = { Accept: "application/json" };
-  if (apiKey) {
-    headers["x-cg-demo-api-key"] = apiKey;
-  }
-
-  const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true";
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
 
   try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers,
-      cache: "no-store",
-    });
+    const [btcRes, ethRes] = await Promise.all([
+      fetch("https://www.bitstamp.net/api/v2/ticker/btcusd/", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).catch(() => null),
+      fetch("https://www.bitstamp.net/api/v2/ticker/ethusd/", {
+        signal: controller.signal,
+        cache: "no-store",
+      }).catch(() => null),
+    ]);
     clearTimeout(timeout);
 
-    if (res.ok) {
-      const data = await res.json();
-      if (data.bitcoin) {
-        const price = typeof data.bitcoin.usd === "number" ? data.bitcoin.usd : null;
-        const change = typeof data.bitcoin.usd_24h_change === "number" ? data.bitcoin.usd_24h_change : null;
+    if (btcRes && btcRes.ok) {
+      const btc = await btcRes.json();
+      const price = parseFloat(btc.last);
+      const change = parseFloat(btc.percent_change_24);
+      if (!isNaN(price)) {
         map.set("BTC/USD", {
           price,
           formattedPrice: formatPrice(price, "USD"),
-          changePercent: change !== null ? Number(change.toFixed(2)) : null,
-          direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+          changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
+          direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
           lastUpdated: getBrasiliaTime(),
           marketState: "open", // Crypto 24/7
           isStale: false,
-          source: "CoinGecko",
+          source: "Bitstamp",
         });
       }
-      if (data.ethereum) {
-        const price = typeof data.ethereum.usd === "number" ? data.ethereum.usd : null;
-        const change = typeof data.ethereum.usd_24h_change === "number" ? data.ethereum.usd_24h_change : null;
+    }
+
+    if (ethRes && ethRes.ok) {
+      const eth = await ethRes.json();
+      const price = parseFloat(eth.last);
+      const change = parseFloat(eth.percent_change_24);
+      if (!isNaN(price)) {
         map.set("ETH/USD", {
           price,
           formattedPrice: formatPrice(price, "USD"),
-          changePercent: change !== null ? Number(change.toFixed(2)) : null,
-          direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+          changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
+          direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
           lastUpdated: getBrasiliaTime(),
           marketState: "open", // Crypto 24/7
           isStale: false,
-          source: "CoinGecko",
+          source: "Bitstamp",
         });
       }
     }
   } catch (err) {
-    console.error("[CoinGecko fetch error]:", err);
+    console.error("[Bitstamp fetch error]:", err);
   }
   return map;
 }
@@ -237,7 +266,7 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketTickerItem>>
   const apiKey = process.env.TWELVE_DATA_API_KEY;
 
   if (apiKey) {
-    const url = `https://api.twelvedata.com/quote?symbol=SPX,IXIC,VIX,XAU/USD&apikey=${encodeURIComponent(apiKey)}`;
+    const url = `https://api.twelvedata.com/quote?symbol=SPX,IXIC,VIX,XAU/USD,DJI&apikey=${encodeURIComponent(apiKey)}`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
 
@@ -272,6 +301,7 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketTickerItem>>
         parseTwelveItem(data["IXIC"], "NASDAQ", "POINTS");
         parseTwelveItem(data["VIX"], "VIX", "POINTS");
         parseTwelveItem(data["XAU/USD"], "XAU/USD", "USD");
+        parseTwelveItem(data["DJI"], "DJI", "POINTS");
       }
     } catch (err) {
       console.error("[Twelve Data fetch error]:", err);
@@ -279,13 +309,14 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketTickerItem>>
   }
 
   // If Twelve Data key is missing or didn't return items, attempt public Yahoo Finance quote v8
-  const missingKeys = ["S&P 500", "NASDAQ", "VIX", "XAU/USD"].filter((k) => !map.has(k));
+  const missingKeys = ["S&P 500", "NASDAQ", "VIX", "XAU/USD", "DJI"].filter((k) => !map.has(k));
   if (missingKeys.length > 0) {
     const symbolMap: Record<string, string> = {
       "S&P 500": "^GSPC",
       NASDAQ: "^IXIC",
       VIX: "^VIX",
       "XAU/USD": "GC=F",
+      DJI: "^DJI",
     };
 
     for (const key of missingKeys) {
@@ -342,22 +373,25 @@ export async function getMarketTickerData(): Promise<MarketResponse> {
   // Run provider fetchers in parallel with error boundaries
   const [brapiData, cryptoData, twelveData] = await Promise.all([
     fetchBrapiData().catch(() => new Map()),
-    fetchCoinGeckoData().catch(() => new Map()),
+    fetchBitstampData().catch(() => new Map()),
     fetchTwelveData().catch(() => new Map()),
   ]);
 
   let hasErrors = false;
 
-  // Master asset list definition in mandatory exact order
+  // Master asset list definition
   const masterListConfig = [
     { symbol: "USD/BRL", name: "Dólar Comercial", currency: "BRL" as const, providerData: brapiData.get("USD/BRL") },
-    { symbol: "IBOV", name: "Ibovespa", currency: "POINTS" as const, providerData: brapiData.get("IBOV") },
+    { symbol: "EUR/BRL", name: "Euro", currency: "BRL" as const, providerData: brapiData.get("EUR/BRL") },
+    { symbol: "GBP/BRL", name: "Libra Esterlina", currency: "BRL" as const, providerData: brapiData.get("GBP/BRL") },
+    { symbol: "XAU/USD", name: "Ouro", currency: "USD" as const, providerData: twelveData.get("XAU/USD") },
     { symbol: "S&P 500", name: "S&P 500", currency: "POINTS" as const, providerData: twelveData.get("S&P 500") },
     { symbol: "NASDAQ", name: "Nasdaq Composite", currency: "POINTS" as const, providerData: twelveData.get("NASDAQ") },
+    { symbol: "IBOV", name: "Ibovespa", currency: "POINTS" as const, providerData: brapiData.get("IBOV") },
+    { symbol: "DJI", name: "Dow Jones", currency: "POINTS" as const, providerData: twelveData.get("DJI") },
     { symbol: "VIX", name: "VIX", currency: "POINTS" as const, providerData: twelveData.get("VIX") },
     { symbol: "BTC/USD", name: "Bitcoin", currency: "USD" as const, providerData: cryptoData.get("BTC/USD") },
     { symbol: "ETH/USD", name: "Ethereum", currency: "USD" as const, providerData: cryptoData.get("ETH/USD") },
-    { symbol: "XAU/USD", name: "Ouro", currency: "USD" as const, providerData: twelveData.get("XAU/USD") },
   ];
 
   const items: MarketTickerItem[] = masterListConfig.map((config) => {
@@ -416,3 +450,4 @@ export async function getMarketTickerData(): Promise<MarketResponse> {
     hasErrors,
   };
 }
+

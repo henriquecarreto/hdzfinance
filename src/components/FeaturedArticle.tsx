@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/types";
-import { Clock, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface FeaturedArticleProps {
   mainArticle: Article;
@@ -59,11 +59,6 @@ export default function FeaturedArticle({
                   <Calendar className="h-3.5 w-3.5 mr-1 text-[#147BFF]" />
                   {formatDate(mainArticle.publishDate)}
                 </span>
-                <span>•</span>
-                <span className="flex items-center">
-                  <Clock className="h-3.5 w-3.5 mr-1 text-[#147BFF]" />
-                  {mainArticle.readTimeMinutes} min de leitura
-                </span>
               </div>
 
               <h1 className="font-outfit font-extrabold text-2xl md:text-4xl lg:text-[46px] xl:text-[52px] text-[#F5F7FA] group-hover:text-[#3A91FF] transition-colors leading-[1.1] tracking-tight">
@@ -109,8 +104,6 @@ export default function FeaturedArticle({
                       </span>
                       <span>•</span>
                       <span>{formatDate(item.publishDate)}</span>
-                      <span>•</span>
-                      <span>{item.readTimeMinutes} min</span>
                     </div>
 
                     <h2 className="font-outfit font-bold text-lg md:text-xl text-[#F5F7FA] group-hover:text-[#3A91FF] transition-colors leading-snug line-clamp-2">

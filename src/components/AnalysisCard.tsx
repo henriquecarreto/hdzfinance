@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { AnalysisArticle } from "@/types";
-import { Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface AnalysisCardProps {
   analysis: AnalysisArticle;
@@ -31,11 +31,6 @@ export default function AnalysisCard({ analysis }: AnalysisCardProps) {
         <div className="p-6 pt-2 space-y-3">
           <div className="flex items-center space-x-2 text-xs text-[#9BA5B3]">
             <span>Por {analysis.author.name}</span>
-            <span>•</span>
-            <span className="flex items-center">
-              <Clock className="h-3 w-3 mr-1 text-[#147BFF]" />
-              {analysis.readTimeMinutes} min de leitura
-            </span>
           </div>
 
           <h3 className="font-outfit font-extrabold text-lg md:text-xl text-[#F5F7FA] group-hover:text-[#3A91FF] transition-colors leading-snug">

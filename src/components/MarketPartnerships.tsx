@@ -37,17 +37,19 @@ export default function MarketPartnerships() {
       {/* Section Header */}
       <div className="space-y-1.5 text-left">
         <div className="flex items-center space-x-3">
-          <div className="w-1.5 h-6 bg-[#F59A18] rounded-full" aria-hidden="true" />
-          <span className="text-[12px] md:text-[13px] font-bold text-[#F59A18] uppercase tracking-widest block">
+          <div className="w-1 h-5 bg-[#F59A18] rounded-full" aria-hidden="true" />
+          <span className="text-[12px] font-bold text-[#F59A18] uppercase tracking-widest block">
             PARCERIAS
           </span>
         </div>
 
-        <h2 className="font-outfit font-bold text-[24px] md:text-[28px] text-[#EEF4FA] tracking-tight">
-          Plataformas Parceiras
+        <h2 className="font-outfit font-bold text-[24px] md:text-[28px] text-[#F5F7FA] tracking-tight">
+          Soluções que ampliam suas possibilidades
         </h2>
 
-        <div className="w-12 h-[2px] bg-[#F59A18]/40 rounded-full mt-1 ml-4" />
+        <p className="text-[15px] md:text-[16px] text-[#A9B4C2] leading-relaxed max-w-3xl">
+          A HDZ Finance apresenta plataformas alinhadas a uma experiência financeira mais simples, transparente e conectada ao mundo.
+        </p>
       </div>
 
       {/* Cards Layout */}
@@ -58,7 +60,7 @@ export default function MarketPartnerships() {
       >
         {/* CARD 1: Picnic Commercial Presentation Card */}
         {partnerships.picnic.enabled && (
-          <div className="partnership-card p-7 md:p-9 w-full">
+          <div className="market-card p-7 md:p-9 w-full">
             <div
               className={
                 showQuantfury
@@ -74,7 +76,7 @@ export default function MarketPartnerships() {
 
                 {/* Brand Header with Official Symbol */}
                 <div className="flex items-center space-x-3.5 pt-1">
-                  <div className="relative w-[40px] h-[40px] md:w-[48px] md:h-[48px] shrink-0 bg-[#10151C] border border-white/[0.12] rounded-xl p-1.5 flex items-center justify-center shadow-inner">
+                  <div className="relative w-[40px] h-[40px] md:w-[48px] md:h-[48px] shrink-0 bg-[#0E1620] border border-white/[0.12] rounded-xl p-1.5 flex items-center justify-center shadow-inner">
                     <Image
                       src="/brands/picnic-symbol.svg"
                       alt="Símbolo oficial Picnic"
@@ -84,19 +86,19 @@ export default function MarketPartnerships() {
                       priority
                     />
                   </div>
-                  <h3 className="font-outfit font-bold text-[28px] text-[#F7F9FC]">
+                  <h3 className="font-outfit font-bold text-[28px] text-[#F5F7FA]">
                     Picnic
                   </h3>
                 </div>
 
                 {/* Chamada Principal */}
-                <h4 className="font-outfit font-bold text-[25px] md:text-[28px] text-[#EEF4FA] leading-[1.2]">
-                  Seu cartão internacional em dólar
+                <h4 className="font-outfit font-bold text-[24px] md:text-[27px] text-[#F5F7FA] leading-[1.2]">
+                  Seu dólar, pronto para acompanhar seus planos.
                 </h4>
 
                 {/* Descrição */}
-                <p className="text-[16px] md:text-[17px] text-[#D5DDE6] leading-[1.6]">
-                  Tenha uma conta internacional com cartão Visa aceito em mais de 180 países. Use seu cartão no exterior sem anuidade e sem IOF, com tudo acompanhado pelo aplicativo da Picnic.
+                <p className="text-[15px] md:text-[16px] text-[#A9B4C2] leading-[1.6]">
+                  Tenha uma conta internacional com cartão Visa aceito em mais de 180 países e gerencie seus dólares com praticidade e controle pelo aplicativo da Picnic.
                 </p>
               </div>
 
@@ -138,7 +140,7 @@ export default function MarketPartnerships() {
                     target="_blank"
                     rel="sponsored nofollow noopener noreferrer"
                     aria-label="Conhecer a Picnic (link de afiliado externo)"
-                    className="w-full h-[52px] min-h-[52px] inline-flex items-center justify-center space-x-2.5 px-6 rounded-[10px] bg-[#F59A18] hover:bg-[#FFAC36] text-[#090B0E] font-bold text-[16px] transition-all shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F59A18]"
+                    className="partner-cta w-full inline-flex items-center justify-center space-x-2.5 font-bold text-[15px] focus:outline-none"
                   >
                     <span>Conhecer a Picnic</span>
                     <ExternalLink className="h-4 w-4 shrink-0 text-[#090B0E]" aria-hidden="true" />

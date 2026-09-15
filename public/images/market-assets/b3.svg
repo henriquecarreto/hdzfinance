@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 50" width="210" height="50">
+  <defs>
+    <linearGradient id="b3Cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#00B0FF"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(2, 4)">
+    <!-- B3 Emblem Box -->
+    <rect x="0" y="0" width="42" height="42" rx="9" fill="url(#b3Cyan)"/>
+    <text x="8" y="31" fill="#080E15" font-family="'Outfit', sans-serif" font-weight="900" font-size="26">B3</text>
+    <!-- IBOVESPA Text -->
+    <text x="52" y="30" fill="#F5F7FA" font-family="'Outfit', sans-serif" font-weight="800" font-size="21" letter-spacing="1.2">IBOVESPA</text>
+  </g>
+</svg>

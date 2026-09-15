@@ -10,12 +10,14 @@ interface SymbolOption {
 }
 
 const AVAILABLE_SYMBOLS: SymbolOption[] = [
-  { symbol: "BMFBOVESPA:IBOV", label: "Ibovespa (IBOV)", shortLabel: "IBOV" },
   { symbol: "FX_IDC:USDBRL", label: "Dólar (USD/BRL)", shortLabel: "USD/BRL" },
-  { symbol: "SP:SPX", label: "S&P 500 (SPX)", shortLabel: "S&P 500" },
-  { symbol: "NASDAQ:IXIC", label: "Nasdaq (IXIC)", shortLabel: "NASDAQ" },
-  { symbol: "CBOE:VIX", label: "VIX Volatilidade", shortLabel: "VIX" },
+  { symbol: "FX_IDC:EURBRL", label: "Euro (EUR/BRL)", shortLabel: "EUR/BRL" },
+  { symbol: "FX_IDC:GBPBRL", label: "Libra (GBP/BRL)", shortLabel: "GBP/BRL" },
   { symbol: "OANDA:XAUUSD", label: "Ouro (XAU/USD)", shortLabel: "Ouro" },
+  { symbol: "SP:SPX", label: "S&P 500 (SPX)", shortLabel: "S&P 500" },
+  { symbol: "NASDAQ:IXIC", label: "Nasdaq (IXIC)", shortLabel: "Nasdaq" },
+  { symbol: "BMFBOVESPA:IBOV", label: "Ibovespa (IBOV)", shortLabel: "Ibovespa" },
+  { symbol: "TVC:DJI", label: "Dow Jones (DJI)", shortLabel: "Dow Jones" },
   { symbol: "BITSTAMP:BTCUSD", label: "Bitcoin (BTC/USD)", shortLabel: "Bitcoin" },
   { symbol: "BITSTAMP:ETHUSD", label: "Ethereum (ETH/USD)", shortLabel: "Ethereum" },
 ];
@@ -193,7 +195,7 @@ function TradingViewAdvancedChartComponent() {
   return (
     <div ref={containerRef} className="space-y-4">
       {/* Symbol Selector Pills Header */}
-      <div className="flex items-center justify-between gap-3 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex items-center justify-between gap-3 overflow-x-auto pb-1.5 scrollbar-none">
         <div className="flex items-center space-x-2 shrink-0">
           {AVAILABLE_SYMBOLS.map((item) => {
             const isActive = item.symbol === activeSymbol;
@@ -201,6 +203,7 @@ function TradingViewAdvancedChartComponent() {
               <button
                 key={item.symbol}
                 type="button"
+                aria-selected={isActive}
                 onClick={() => {
                   if (item.symbol !== activeSymbol) {
                     setActiveSymbol(item.symbol);
@@ -208,11 +211,7 @@ function TradingViewAdvancedChartComponent() {
                   }
                 }}
                 aria-label={`Exibir gráfico de ${item.label}`}
-                className={`px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 shrink-0 border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F59A18] ${
-                  isActive
-                    ? "bg-[#10151C] text-[#F59A18] border-[#F59A18]/50 shadow-md"
-                    : "bg-[#080C11]/80 text-[#B8C5D1] border-white/[0.10] hover:text-[#EEF4FA] hover:bg-[#10151C]"
-                }`}
+                className="market-symbol-button shrink-0"
               >
                 {item.shortLabel}
               </button>

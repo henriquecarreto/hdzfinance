@@ -116,7 +116,7 @@ export default async function ProductDetailPage({
           <div className="lg:col-span-5">
             <div className="relative aspect-[16/9] lg:aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#11151A] border border-[#252A32]">
               <Image
-                src={product.coverImage}
+                src={product.coverImage || "/images/materias/ciclos-de-mercado/cover.webp"}
                 alt={product.title}
                 fill
                 className="object-cover"
@@ -145,7 +145,7 @@ export default async function ProductDetailPage({
               <span>Para quem É recomendado</span>
             </div>
             <ul className="space-y-2.5 text-xs md:text-sm text-[#C7CDD4]">
-              {product.targetAudience.map((item, i) => (
+              {product.targetAudience?.map((item, i) => (
                 <li key={i} className="flex items-start">
                   <span className="text-emerald-400 font-bold mr-2">•</span>
                   <span>{item}</span>
@@ -161,7 +161,7 @@ export default async function ProductDetailPage({
               <span>Para quem NÃO é recomendado</span>
             </div>
             <ul className="space-y-2.5 text-xs md:text-sm text-[#C7CDD4]">
-              {product.excludedAudience.map((item, i) => (
+              {product.excludedAudience?.map((item, i) => (
                 <li key={i} className="flex items-start">
                   <span className="text-rose-400 font-bold mr-2">•</span>
                   <span>{item}</span>
@@ -172,47 +172,51 @@ export default async function ProductDetailPage({
         </section>
 
         {/* Included Modules */}
-        <section className="space-y-6">
-          <h2 className="font-outfit font-extrabold text-2xl text-[#F5F7FA]">
-            Conteúdo Incluído no Material
-          </h2>
+        {product.modules && product.modules.length > 0 && (
+          <section className="space-y-6">
+            <h2 className="font-outfit font-extrabold text-2xl text-[#F5F7FA]">
+              Conteúdo Incluído no Material
+            </h2>
 
-          <div className="space-y-4">
-            {product.modules.map((mod, idx) => (
-              <div
-                key={idx}
-                className="p-5 rounded-xl bg-[#0B0D10] border border-[#252A32] space-y-1.5"
-              >
-                <h3 className="font-outfit font-bold text-base text-[#F59A18]">
-                  {mod.title}
-                </h3>
-                <p className="text-xs md:text-sm text-[#A7AFBA]">
-                  {mod.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+            <div className="space-y-4">
+              {product.modules.map((mod, idx) => (
+                <div
+                  key={idx}
+                  className="p-5 rounded-xl bg-[#0B0D10] border border-[#252A32] space-y-1.5"
+                >
+                  <h3 className="font-outfit font-bold text-base text-[#F59A18]">
+                    {mod.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-[#A7AFBA]">
+                    {mod.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Deliverables (O que você receberá) */}
-        <section className="p-6 md:p-8 rounded-2xl bg-[#11151A] border border-[#252A32] space-y-4">
-          <div className="flex items-center space-x-2 font-outfit font-bold text-lg text-[#F5F7FA]">
-            <Package className="h-5 w-5 text-[#F59A18]" />
-            <span>O que você receberá na sua área de acesso</span>
-          </div>
+        {product.deliverables && product.deliverables.length > 0 && (
+          <section className="p-6 md:p-8 rounded-2xl bg-[#11151A] border border-[#252A32] space-y-4">
+            <div className="flex items-center space-x-2 font-outfit font-bold text-lg text-[#F5F7FA]">
+              <Package className="h-5 w-5 text-[#F59A18]" />
+              <span>O que você receberá na sua área de acesso</span>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm text-[#C7CDD4]">
-            {product.deliverables.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center space-x-2 p-3 rounded-lg bg-[#0B0D10] border border-[#252A32]"
-              >
-                <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm text-[#C7CDD4]">
+              {product.deliverables.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-center space-x-2 p-3 rounded-lg bg-[#0B0D10] border border-[#252A32]"
+                >
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* FAQ Section */}
         {product.faq && product.faq.length > 0 && (

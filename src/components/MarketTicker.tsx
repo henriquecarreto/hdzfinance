@@ -2,7 +2,9 @@
 
 import useSWR from "swr";
 import { MarketResponse, MarketTickerItem } from "@/types/market";
+import { usePathname } from "next/navigation";
 import { Clock } from "lucide-react";
+import { useLiveCryptoPrices, formatUsdPrice } from "@/context/CryptoMarketContext";
 
 const fetcher = async (url: string): Promise<MarketResponse> => {
   const separator = url.includes("?") ? "&" : "?";
@@ -22,6 +24,11 @@ const fetcher = async (url: string): Promise<MarketResponse> => {
 };
 
 export default function MarketTicker() {
+  const pathname = usePathname();
+  const liveCrypto = useLiveCryptoPrices();
+
+  if (pathname?.startsWith("/admin")) return null;
+
   const { data, error, isLoading } = useSWR<MarketResponse>(
     "/api/markets",
     fetcher,
@@ -36,8 +43,35 @@ export default function MarketTicker() {
     }
   );
 
-  const items: MarketTickerItem[] = data?.items || [];
+  const rawItems: MarketTickerItem[] = data?.items || [];
   const fetchedAt: string | null = data?.fetchedAt || null;
+
+  // Merge live crypto prices from central CryptoMarketProvider
+  const items: MarketTickerItem[] = rawItems.map((item) => {
+    if (item.symbol === "BTC/USD" && liveCrypto.BTC) {
+      return {
+        ...item,
+        price: liveCrypto.BTC.price,
+        formattedPrice: formatUsdPrice(liveCrypto.BTC.price),
+        changePercent: liveCrypto.BTC.change24h,
+        direction: liveCrypto.BTC.change24h > 0 ? "up" : liveCrypto.BTC.change24h < 0 ? "down" : "neutral",
+        isStale: liveCrypto.BTC.status === "stale",
+        source: "Bitstamp",
+      };
+    }
+    if (item.symbol === "ETH/USD" && liveCrypto.ETH) {
+      return {
+        ...item,
+        price: liveCrypto.ETH.price,
+        formattedPrice: formatUsdPrice(liveCrypto.ETH.price),
+        changePercent: liveCrypto.ETH.change24h,
+        direction: liveCrypto.ETH.change24h > 0 ? "up" : liveCrypto.ETH.change24h < 0 ? "down" : "neutral",
+        isStale: liveCrypto.ETH.status === "stale",
+        source: "Bitstamp",
+      };
+    }
+    return item;
+  });
 
   if (isLoading && !data) {
     return (

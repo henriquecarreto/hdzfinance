@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import MarketTicker from "@/components/MarketTicker";
 import Footer from "@/components/Footer";
+import { CryptoMarketProvider } from "@/context/CryptoMarketContext";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -90,15 +91,17 @@ export default function RootLayout({
       className={`${outfit.variable} ${plusJakartaSans.variable} ${lora.variable} dark`}
     >
       <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white">
-        {/* Sticky Container combining Header + MarketTicker pinned together at top z-[60] */}
-        <div className="sticky top-0 z-[60] w-full bg-[#050607]/95 backdrop-blur-md border-b border-white/[0.06] shadow-lg">
-          <Header />
-          <MarketTicker />
-        </div>
+        <CryptoMarketProvider>
+          {/* Sticky Container combining Header + MarketTicker pinned together at top z-[60] */}
+          <div className="sticky top-0 z-[60] w-full bg-[#050607]/95 backdrop-blur-md border-b border-white/[0.06] shadow-lg">
+            <Header />
+            <MarketTicker />
+          </div>
 
-        <main className="flex-1">{children}</main>
+          <main className="flex-1">{children}</main>
 
-        <Footer />
+          <Footer />
+        </CryptoMarketProvider>
       </body>
     </html>
   );

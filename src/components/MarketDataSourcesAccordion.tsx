@@ -72,7 +72,7 @@ export default function MarketDataSourcesAccordion({ lastFetchedAt }: MarketData
               </li>
               <li className="p-3 rounded-xl bg-[#10151C] border border-white/[0.06] md:col-span-2">
                 <span className="font-bold text-[#F7F8FA] block">Criptoativos (Bitcoin & Ethereum)</span>
-                <span>Cotações mundiais em tempo real via CoinGecko API (mercado 24/7).</span>
+                <span>Cotações mundiais em tempo real via Bitstamp (REST & WebSocket oficial, mercado 24/7).</span>
               </li>
             </ul>
           </div>
