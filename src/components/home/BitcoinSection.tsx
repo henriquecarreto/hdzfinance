@@ -34,7 +34,7 @@ export default function BitcoinSection() {
   ];
 
   return (
-    <section className="bitcoin-section relative isolate py-20 md:py-28 border-b border-white/[0.08] bg-[#05080d]">
+    <section id="bitcoin-section" className="bitcoin-section relative isolate py-20 md:py-28 border-b border-white/[0.08] bg-[#05080d]">
       {/* Background Image: Escassez Digital Institucional (Preservada) */}
       <div className="bitcoin-section__background" aria-hidden="true" />
 

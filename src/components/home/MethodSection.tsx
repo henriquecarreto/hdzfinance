@@ -10,6 +10,8 @@ export default function MethodSection() {
       text: "O que aconteceu, quando aconteceu e qual é a fonte?",
       pictogram: "fact" as const,
       colorScheme: "gold" as const,
+      badgeColor: "text-[#F59A18]",
+      borderColor: "border-[#F59A18]/40 hover:border-[#F59A18]",
     },
     {
       badge: "02",
@@ -17,6 +19,8 @@ export default function MethodSection() {
       text: "Juros, política, liquidez, energia, tecnologia ou confiança iniciaram o movimento?",
       pictogram: "cause" as const,
       colorScheme: "cyan" as const,
+      badgeColor: "text-[#18C6D8]",
+      borderColor: "border-[#18C6D8]/40 hover:border-[#18C6D8]",
     },
     {
       badge: "03",
@@ -24,6 +28,8 @@ export default function MethodSection() {
       text: "Como o efeito alcança moedas, títulos, empresas, bolsas e consumidores?",
       pictogram: "transmission" as const,
       colorScheme: "blue" as const,
+      badgeColor: "text-[#168BFF]",
+      borderColor: "border-[#168BFF]/40 hover:border-[#168BFF]",
     },
     {
       badge: "04",
@@ -31,57 +37,57 @@ export default function MethodSection() {
       text: "Quais dados podem confirmar, enfraquecer ou alterar essa interpretação?",
       pictogram: "signals" as const,
       colorScheme: "green" as const,
+      badgeColor: "text-[#10B981]",
+      borderColor: "border-[#10B981]/40 hover:border-[#10B981]",
     },
   ];
 
   const impactNodes = [
-    { label: "Juros americanos mais altos", accent: "border-[#F59A18] text-[#F59A18] bg-[#F59A18]/10" },
-    { label: "Títulos dos EUA mais atrativos", accent: "border-[#18C6D8] text-[#18C6D8] bg-[#18C6D8]/10" },
-    { label: "Dólar mais forte", accent: "border-[#168BFF] text-[#168BFF] bg-[#168BFF]/10" },
-    { label: "Pressão sobre moedas emergentes", accent: "border-[#8277FF] text-[#8277FF] bg-[#8277FF]/10" },
-    { label: "Mudança no crédito e nas importações", accent: "border-[#EEF4FA] text-[#EEF4FA] bg-[#EEF4FA]/10" },
+    { label: "Juros americanos mais altos", accent: "border-[#F59A18] text-[#F7F9FC] bg-[#F59A18]/15" },
+    { label: "Títulos dos EUA mais atrativos", accent: "border-[#18C6D8] text-[#F7F9FC] bg-[#18C6D8]/15" },
+    { label: "Dólar mais forte", accent: "border-[#168BFF] text-[#F7F9FC] bg-[#168BFF]/15" },
+    { label: "Pressão sobre moedas emergentes", accent: "border-[#9D8CFF] text-[#F7F9FC] bg-[#9D8CFF]/15" },
+    { label: "Mudança no crédito e nas importações", accent: "border-[#34D399] text-[#F7F9FC] bg-[#34D399]/15" },
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-28 border-b border-white/[0.08] bg-[#0B1118]">
-      <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 space-y-12">
+    <section className="relative isolate overflow-hidden py-12 md:py-16 border-b border-[#22272E] bg-[#000000]">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block */}
-        <div className="max-w-[780px] space-y-5">
-          <span className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#F59A18] block">
+        <div className="max-w-[780px] space-y-3.5">
+          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#F59A18] block">
             COMO A HDZ EXPLICA
           </span>
 
-          <h2 className="font-outfit font-extrabold text-[32px] md:text-[42px] lg:text-[46px] text-[#EEF4FA] tracking-tight leading-[1.18]">
+          <h2 className="font-outfit font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] text-[#F7F9FC] tracking-tight leading-[1.16]">
             Notícia informa. Contexto mostra por que ela importa.
           </h2>
 
-          <div className="space-y-3.5 text-[16px] md:text-[17px] text-[#D5DDE6] leading-[1.65] font-normal">
-            <p>
-              Todo conteúdo da HDZ deve responder a quatro perguntas: o que mudou, o que iniciou o movimento, por onde o efeito se espalha e quais sinais merecem acompanhamento.
-            </p>
-          </div>
+          <p className="text-[15px] md:text-[16px] text-[#E5EAF0] leading-[1.6]">
+            Todo conteúdo da HDZ deve responder a quatro perguntas: o que mudou, o que iniciou o movimento, por onde o efeito se espalha e quais sinais merecem acompanhamento.
+          </p>
         </div>
 
         {/* 4 Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-stretch">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="market-card p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#070D14]/90 backdrop-blur-md rounded-[14px] border border-white/10 hover:-translate-y-1 transition-all duration-200"
+              className={`p-6 flex flex-col justify-between space-y-4 bg-[#0A0C0F] rounded-xl border ${step.borderColor} transition-all duration-200`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <HdzPictogram type={step.pictogram} colorScheme={step.colorScheme} />
-                  <span className="font-mono text-[13px] font-bold text-[#F59A18]">
+                  <span className={`font-mono text-[13px] font-bold ${step.badgeColor}`}>
                     {step.badge}
                   </span>
                 </div>
 
-                <h3 className="font-outfit font-bold text-[19px] md:text-[20px] text-[#EEF4FA] leading-snug">
+                <h3 className="font-outfit font-bold text-[18px] md:text-[20px] text-[#F7F9FC] leading-snug">
                   {step.title}
                 </h3>
 
-                <p className="text-[15px] text-[#D5DDE6] leading-[1.6]">
+                <p className="text-[13.5px] md:text-[14px] text-[#E5EAF0] leading-[1.55]">
                   {step.text}
                 </p>
               </div>
@@ -90,41 +96,41 @@ export default function MethodSection() {
         </div>
 
         {/* Proprietary Block: MAPA DE IMPACTO HDZ */}
-        <div className="p-6 md:p-10 rounded-2xl bg-[#080E17] border border-white/10 space-y-6">
-          <div className="flex items-center gap-2.5 text-[#F59A18] font-outfit font-extrabold text-[13px] md:text-[14px] uppercase tracking-widest">
-            <Activity className="w-4.5 h-4.5 shrink-0" aria-hidden="true" />
+        <div className="p-6 md:p-8 rounded-2xl bg-[#0A0C0F] border border-[#22272E] space-y-6">
+          <div className="flex items-center gap-2.5 text-[#F59A18] font-outfit font-extrabold text-[12px] md:text-[13px] uppercase tracking-widest">
+            <Activity className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>MAPA DE IMPACTO HDZ</span>
           </div>
 
-          {/* Desktop Flow (Horizontal Nodes with Colors & Arrows) */}
-          <div className="hidden lg:flex items-center justify-between gap-2.5 pt-2">
+          {/* Desktop Flow (Horizontal Nodes with Colors & High Contrast Arrows) */}
+          <div className="hidden lg:flex items-center justify-between gap-3 pt-1">
             {impactNodes.map((node, idx) => (
               <React.Fragment key={idx}>
                 <div
-                  className={`flex-1 p-4 rounded-xl border text-center font-outfit font-semibold text-[13px] leading-snug ${node.accent}`}
+                  className={`flex-1 p-3.5 rounded-xl border text-center font-outfit font-semibold text-[13px] leading-snug transition-all ${node.accent}`}
                 >
                   {node.label}
                 </div>
                 {idx < impactNodes.length - 1 && (
-                  <ArrowRight className="w-4 h-4 text-[#9BA5B3] shrink-0" aria-hidden="true" />
+                  <ArrowRight className="w-4 h-4 text-[#C8D2DD] shrink-0" aria-hidden="true" />
                 )}
               </React.Fragment>
             ))}
           </div>
 
           {/* Mobile & Tablet Flow (Vertical Sequential Nodes) */}
-          <div className="lg:hidden space-y-3 pt-2">
+          <div className="lg:hidden space-y-3 pt-1">
             {impactNodes.map((node, idx) => (
               <React.Fragment key={idx}>
                 <div
-                  className={`p-4 rounded-xl border text-left font-outfit font-semibold text-[14px] flex items-center justify-between ${node.accent}`}
+                  className={`p-3.5 rounded-xl border text-left font-outfit font-semibold text-[13.5px] flex items-center justify-between ${node.accent}`}
                 >
-                  <span className="font-mono text-[12px] opacity-70 mr-3">0{idx + 1}</span>
+                  <span className="font-mono text-[11px] text-[#C8D2DD] font-bold mr-3">0{idx + 1}</span>
                   <span className="flex-1">{node.label}</span>
                 </div>
                 {idx < impactNodes.length - 1 && (
                   <div className="flex justify-center py-0.5">
-                    <ArrowDown className="w-4 h-4 text-[#9BA5B3]" aria-hidden="true" />
+                    <ArrowDown className="w-4 h-4 text-[#C8D2DD]" aria-hidden="true" />
                   </div>
                 )}
               </React.Fragment>
@@ -135,3 +141,4 @@ export default function MethodSection() {
     </section>
   );
 }
+

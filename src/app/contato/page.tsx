@@ -286,12 +286,12 @@ export default function ContactPage() {
 
               {/* Aviso de Privacidade */}
               <p className="text-[12.5px] text-[#A7AFBA] text-center pt-1 leading-relaxed font-normal">
-                Ao enviar a mensagem, você concorda com o tratamento dos dados informados conforme nossa{" "}
+                Ao enviar a mensagem, você concorda com o tratamento dos dados informados conforme nossas{" "}
                 <Link
-                  href="/privacidade"
+                  href="/diretrizes"
                   className="text-[#147BFF] hover:text-[#3A91FF] underline underline-offset-2 font-medium"
                 >
-                  Política de Privacidade
+                  Diretrizes
                 </Link>
                 .
               </p>
