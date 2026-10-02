@@ -17,11 +17,11 @@ export default function Header() {
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
       <header className="relative w-full bg-[#0B2545] border-b border-[#1E3A5F]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[54px] py-2.5 flex items-center justify-between gap-4">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[54px] py-2.5 flex items-center justify-between relative">
           {/* Left Aligned HDZ Symbol Icon */}
           <Link
             href="/"
-            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-0.5 shrink-0"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-0.5 shrink-0 z-10"
             aria-label="HDZ Finance - Página Inicial"
           >
             <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 overflow-hidden">
@@ -35,11 +35,14 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Right/Center Aligned Special Offer Text */}
-          <div className="flex items-center gap-2 text-white text-xs md:text-sm font-extrabold tracking-wide select-none mx-auto sm:mr-0 sm:ml-auto">
+          {/* Centered Special Offer Text */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 text-white text-xs md:text-sm font-extrabold tracking-wide select-none text-center whitespace-nowrap">
             <span className="text-[#FFC05A] text-sm md:text-base">⚡</span>
             <span className="uppercase tracking-wider">OFERTA ESPECIAL DISPONÍVEL APENAS HOJE</span>
           </div>
+
+          {/* Right Spacer for Flex Symmetry on small screens if logo is left */}
+          <div className="w-8 md:w-9 shrink-0 opacity-0 pointer-events-none" />
         </div>
       </header>
     );
