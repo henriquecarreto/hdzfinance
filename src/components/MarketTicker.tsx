@@ -27,7 +27,12 @@ export default function MarketTicker() {
   const pathname = usePathname();
   const liveCrypto = useLiveCryptoPrices();
 
-  if (pathname?.startsWith("/admin")) return null;
+  if (
+    pathname?.startsWith("/admin") ||
+    pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas"
+  ) {
+    return null;
+  }
 
   const { data, error, isLoading } = useSWR<MarketResponse>(
     "/api/markets",
