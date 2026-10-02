@@ -36,10 +36,10 @@ export default function AboutPage() {
         {/* ========================================================================= */}
         {/* 1. ABERTURA ALINHADA À ESQUERDA                                          */}
         {/* ========================================================================= */}
-        <header className="text-left space-y-4 px-7 sm:px-9 md:px-10">
-          {/* Logo & Small Identifier */}
-          <div className="inline-flex items-center space-x-3 text-left">
-            <div className="relative w-9 h-9 md:w-[38px] md:h-[38px] shrink-0">
+        <header className="text-left space-y-4">
+          {/* Centered Logo Symbol */}
+          <div className="flex justify-center pb-1">
+            <div className="relative w-10 h-10 md:w-12 md:h-12 shrink-0">
               <Image
                 src="/assets/hdz-symbol.png"
                 alt="Símbolo HDZ Finance"
@@ -48,20 +48,16 @@ export default function AboutPage() {
                 priority
               />
             </div>
-            <span className="font-outfit font-extrabold text-2xl md:text-3xl tracking-tight select-none">
-              <span className="text-[#FFFFFF]">HDZ</span>{" "}
-              <span className="text-[#FA9E1B]">FINANCE</span>
-            </span>
           </div>
 
           {/* Hero Main Title */}
-          <h1 className="font-outfit font-extrabold text-[#FFFFFF] tracking-tight leading-[1.15] text-3xl sm:text-4xl md:text-[42px] max-w-2xl">
+          <h1 className="font-outfit font-extrabold text-[#FFFFFF] tracking-tight leading-[1.15] text-3xl sm:text-4xl md:text-[42px] lg:text-[44px] w-full">
             Clareza para compreender o dinheiro.{" "}
             <span className="text-[#FA9E1B]">Conhecimento para decidir melhor.</span>
           </h1>
 
           {/* Supporting Text */}
-          <p className="text-[#D0D9E5] leading-[1.8] font-normal text-[16px] md:text-[17.5px] max-w-2xl">
+          <p className="text-[#D0D9E5] leading-[1.8] font-normal text-[16px] md:text-[17.5px] w-full">
             A HDZ Finance conecta Bitcoin, economia e mercados financeiros para ajudar você a compreender o que está por trás das notícias. Reunimos fatos, contexto e análises independentes em uma linguagem clara, sem perder a profundidade dos temas.
           </p>
         </header>

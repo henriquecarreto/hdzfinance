@@ -79,7 +79,7 @@ export default function FeaturedHomeSection() {
   }
 
   return (
-    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-14 md:pb-20 border-b border-white/[0.08] bg-[#050607]">
+    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-[#050607]">
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-6">
         {/* Header Navigation Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.08]">
@@ -116,7 +116,7 @@ export default function FeaturedHomeSection() {
           <div className="lg:col-span-8 flex flex-col min-w-0 h-full">
             <Link
               href={`/materias/${mainMateria.slug}`}
-              className="featured-main-card relative flex flex-col justify-end w-full h-full min-h-[460px] sm:min-h-[520px] lg:min-h-[560px] rounded-[18px] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#168BFF] shadow-2xl border border-white/10"
+              className="featured-main-card relative flex flex-col justify-end w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] rounded-[18px] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#168BFF] shadow-2xl border border-white/10"
             >
               {/* Background Cover Image filling 100% of card bounds */}
               <Image

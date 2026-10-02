@@ -51,29 +51,29 @@ export default function MethodSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-12 md:py-16 border-b border-[#22272E] bg-[#000000]">
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 space-y-10 md:space-y-12">
+    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]">
+      <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block */}
-        <div className="max-w-[780px] space-y-3.5">
-          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#F59A18] block">
+        <div className="max-w-[860px] space-y-3.5">
+          <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             COMO A HDZ EXPLICA
           </span>
 
-          <h2 className="font-outfit font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] text-[#F7F9FC] tracking-tight leading-[1.16]">
+          <h2 className="font-outfit font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] text-[#F7F9FC] tracking-tight leading-[1.16]">
             Notícia informa. Contexto mostra por que ela importa.
           </h2>
 
-          <p className="text-[15px] md:text-[16px] text-[#E5EAF0] leading-[1.6]">
+          <p className="text-[15.5px] md:text-[17px] text-[#E5EAF0] leading-[1.65] font-normal">
             Todo conteúdo da HDZ deve responder a quatro perguntas: o que mudou, o que iniciou o movimento, por onde o efeito se espalha e quais sinais merecem acompanhamento.
           </p>
         </div>
 
         {/* 4 Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className={`p-6 flex flex-col justify-between space-y-4 bg-[#0A0C0F] rounded-xl border ${step.borderColor} transition-all duration-200`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#0A0C0F] rounded-[16px] border ${step.borderColor} transition-all duration-200`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">

@@ -91,20 +91,20 @@ export default function DigitalDollarSection() {
   return (
     <section
       aria-label="Dinheiro em transformação"
-      className="relative isolate overflow-hidden py-12 md:py-16 border-b border-[#22272E] bg-[#000000]"
+      className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]"
     >
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 space-y-10 md:space-y-12">
+      <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* 1. TOPO: ETIQUETA, TÍTULO E INTRODUÇÃO */}
-        <div className="space-y-3.5 max-w-[760px]">
-          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-[#18C6D8] block">
+        <div className="space-y-3.5 max-w-[860px]">
+          <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#18C6D8] block">
             DINHEIRO EM TRANSFORMAÇÃO
           </span>
 
-          <h2 className="font-outfit font-extrabold text-[30px] sm:text-[36px] lg:text-[42px] text-[#F7F9FC] tracking-tight leading-[1.16]">
+          <h2 className="font-outfit font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] text-[#F7F9FC] tracking-tight leading-[1.16]">
             Dinheiro digital: quem emite e o que você realmente possui?
           </h2>
 
-          <p className="text-[15px] md:text-[16px] text-[#E5EAF0] leading-[1.6]">
+          <p className="text-[15.5px] md:text-[17px] text-[#E5EAF0] leading-[1.65] font-normal">
             Podem parecer semelhantes na tela. A diferença está em quem emite e no direito que cada forma de dinheiro representa.
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function DigitalDollarSection() {
           {faixas.map((f) => (
             <div
               key={f.id}
-              className="py-6 sm:py-8 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center transition-colors hover:bg-[#0A0C0F]"
+              className="py-6 sm:py-8 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center transition-colors hover:bg-[#0A0C0F] px-2 sm:px-4 rounded-lg"
             >
               {/* Esquerda: Símbolo Vetorial */}
               <div className="md:col-span-1 flex items-center shrink-0">
@@ -149,14 +149,14 @@ export default function DigitalDollarSection() {
         </div>
 
         {/* 3. FAIXA DE TRANSIÇÃO (BITCOIN) */}
-        <div className="pt-6 border-t-2 border-[#F59A18]/60">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-5 sm:p-6 rounded-xl bg-[#0A0C0F] border border-[#F59A18]/30 relative overflow-hidden">
+        <div className="pt-4 border-t-2 border-[#F59A18]/60">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-6 rounded-2xl bg-[#0A0C0F] border border-[#F59A18]/30 relative overflow-hidden">
             {/* Detalhe de fundo com ₿ sutil */}
             <div className="absolute right-4 bottom-[-10px] text-[80px] font-bold text-[#F59A18]/[0.05] select-none pointer-events-none font-mono">
               ₿
             </div>
 
-            <div className="space-y-1.5 max-w-[820px] relative z-10">
+            <div className="space-y-1.5 max-w-[860px] relative z-10">
               <div className="flex items-center gap-2">
                 <span className="text-[14px] font-bold text-[#F59A18] font-mono">₿</span>
                 <h3 className="font-outfit font-bold text-[18px] md:text-[20px] text-[#F7F9FC]">
