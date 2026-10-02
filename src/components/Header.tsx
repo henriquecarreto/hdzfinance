@@ -16,11 +16,11 @@ export default function Header() {
 
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
-      <header className="relative w-full h-[74px] md:h-[76px] bg-white border-b border-[#E2E8F0]">
+      <header className="relative w-full h-[74px] md:h-[76px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
         <div className="max-w-[1360px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center space-x-3.5 group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-1"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-1"
             aria-label="HDZ Finance - Página Inicial"
           >
             <div className="relative w-9 h-9 md:w-[40px] md:h-[40px] shrink-0 overflow-hidden">
@@ -32,10 +32,6 @@ export default function Header() {
                 priority
               />
             </div>
-            <span className="font-outfit font-extrabold text-xl md:text-2xl tracking-tight select-none">
-              <span className="text-[#080B10]">HDZ</span>{" "}
-              <span className="text-[#F59A18]">FINANCE</span>
-            </span>
           </Link>
         </div>
       </header>

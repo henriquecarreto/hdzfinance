@@ -2,9 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { YoutubeIcon, InstagramIcon } from "./SocialIcons";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
+    return null;
+  }
+
   return (
     <footer className="bg-[#000000] text-[#F5F7FA] relative py-10 md:py-12">
       <div className="w-[calc(100%-48px)] max-w-[1200px] mx-auto space-y-8 md:space-y-10">
