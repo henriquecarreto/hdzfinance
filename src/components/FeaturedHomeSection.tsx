@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, ArrowRight, ExternalLink, Percent, CalendarCheck, CreditCard, Globe } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 import { cmsStore, CMSContentItem } from "@/lib/cms-store";
 import { ANALYSES } from "@/data/analyses";
 
@@ -224,81 +224,6 @@ export default function FeaturedHomeSection() {
             })}
           </div>
         </div>
-
-        {/* ========================================================================= */}
-        {/* COMPACT PICNIC AFFILIATE AD BANNER                                       */}
-        {/* ========================================================================= */}
-        <div className="mt-8 rounded-[18px] bg-[#0A0E15] border border-white/10 p-5 sm:p-6 shadow-2xl overflow-hidden relative group">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5">
-            {/* Left Column: Publicidade Tag + Brand Header + Chamada + Descrição */}
-            <div className="space-y-2.5 flex-1 min-w-0">
-              <div className="flex items-center space-x-2">
-                <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 text-[11px] font-bold uppercase tracking-widest">
-                  PUBLICIDADE · LINK DE AFILIADO
-                </span>
-              </div>
-
-              <div className="flex items-center space-x-3 flex-wrap gap-y-1">
-                <div className="relative w-8 h-8 shrink-0 bg-[#0E1620] border border-white/[0.12] rounded-lg p-1 flex items-center justify-center shadow-inner">
-                  <Image
-                    src="/brands/picnic-symbol.svg"
-                    alt="Símbolo oficial Picnic"
-                    width={32}
-                    height={32}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <h3 className="font-outfit font-bold text-xl text-[#F5F7FA]">
-                  Picnic
-                </h3>
-                <span className="text-[#A9B4C2] hidden sm:inline">•</span>
-                <h4 className="font-outfit font-bold text-base md:text-lg text-[#F5F7FA]">
-                  Seu dólar, pronto para acompanhar seus planos.
-                </h4>
-              </div>
-
-              <p className="text-xs sm:text-sm text-[#A9B4C2] leading-relaxed max-w-3xl">
-                Tenha uma conta internacional com cartão Visa aceito em mais de 180 países e gerencie seus dólares com praticidade e controle pelo aplicativo da Picnic.
-              </p>
-            </div>
-
-            {/* Right Column: 4 Benefit Badges + Action Button */}
-            <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-4 shrink-0 justify-between">
-              {/* 4 Benefits in 2x2 compact grid */}
-              <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-[#EEF4FA]">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03]">
-                  <Percent className="h-3.5 w-3.5 text-[#F59A18] shrink-0" />
-                  <span>Sem IOF</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03]">
-                  <CalendarCheck className="h-3.5 w-3.5 text-[#F59A18] shrink-0" />
-                  <span>Sem anuidade</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03]">
-                  <CreditCard className="h-3.5 w-3.5 text-[#F59A18] shrink-0" />
-                  <span>Cartão Visa</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03]">
-                  <Globe className="h-3.5 w-3.5 text-[#F59A18] shrink-0" />
-                  <span>+180 países</span>
-                </div>
-              </div>
-
-              {/* Button */}
-              <a
-                href="https://promo.usepicnic.com/8pQU/HDZ"
-                target="_blank"
-                rel="sponsored nofollow noopener noreferrer"
-                aria-label="Conhecer a Picnic (link de afiliado externo)"
-                className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-bold text-sm hover:brightness-110 transition-all shadow-md shrink-0 whitespace-nowrap"
-              >
-                <span>Conhecer a Picnic</span>
-                <ExternalLink className="h-4 w-4 shrink-0 text-[#080B0F]" />
-              </a>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
   );
