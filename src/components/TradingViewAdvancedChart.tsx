@@ -14,10 +14,7 @@ const AVAILABLE_SYMBOLS: SymbolOption[] = [
   { symbol: "FX_IDC:EURBRL", label: "Euro (EUR/BRL)", shortLabel: "EUR/BRL" },
   { symbol: "FX_IDC:GBPBRL", label: "Libra (GBP/BRL)", shortLabel: "GBP/BRL" },
   { symbol: "OANDA:XAUUSD", label: "Ouro (XAU/USD)", shortLabel: "Ouro" },
-  { symbol: "SP:SPX", label: "S&P 500 (SPX)", shortLabel: "S&P 500" },
-  { symbol: "NASDAQ:IXIC", label: "Nasdaq (IXIC)", shortLabel: "Nasdaq" },
   { symbol: "BMFBOVESPA:IBOV", label: "Ibovespa (IBOV)", shortLabel: "Ibovespa" },
-  { symbol: "TVC:DJI", label: "Dow Jones (DJI)", shortLabel: "Dow Jones" },
   { symbol: "BITSTAMP:BTCUSD", label: "Bitcoin (BTC/USD)", shortLabel: "Bitcoin" },
   { symbol: "BITSTAMP:ETHUSD", label: "Ethereum (ETH/USD)", shortLabel: "Ethereum" },
 ];
