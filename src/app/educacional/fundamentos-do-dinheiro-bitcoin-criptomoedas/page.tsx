@@ -848,65 +848,6 @@ export default function BitcoinCourseSalesPage() {
 
         </div>
       </section>
-
-      {/* ========================================================================= */}
-      {/* RODAPÉ DA PÁGINA (INSTITUCIONAL HDZ FINANCE)                               */}
-      {/* ========================================================================= */}
-      <footer className="py-12 md:py-16 bg-[#040506] text-xs text-[#9BA5B3] border-t border-white/10">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
-            <div className="space-y-2 max-w-lg">
-              <span className="font-outfit font-extrabold text-xl tracking-tight text-white block">
-                HDZ <span className="text-[#F59A18]">FINANCE</span>
-              </span>
-              <p className="leading-relaxed">
-                Treinamento educacional sobre dinheiro, economia, Bitcoin, criptomoedas e tecnologia. Desenvolvido para construir uma base conceitual e estimular decisões mais conscientes.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <span className="font-bold text-white uppercase tracking-wider block">Atendimento & Suporte</span>
-              <a
-                href="mailto:contato@hdzfinance.com.br"
-                className="text-[#F59A18] hover:underline font-semibold block"
-              >
-                contato@hdzfinance.com.br
-              </a>
-
-              <div className="flex items-center space-x-3 pt-2">
-                <a
-                  href="https://instagram.com/hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#F59A18] text-white transition-colors"
-                  aria-label="Instagram da HDZ Finance"
-                >
-                  <InstagramIcon className="h-4 w-4 text-[#F59A18]" />
-                </a>
-                <a
-                  href="https://youtube.com/@hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#EF4444] text-white transition-colors"
-                  aria-label="YouTube da HDZ Finance"
-                >
-                  <YoutubeIcon className="h-4 w-4 text-[#EF4444]" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <p className="leading-relaxed text-[#8994A3]">
-              <strong>Aviso Legal:</strong> Este treinamento possui finalidade exclusivamente educacional. O conteúdo não constitui recomendação de investimento, promessa de rentabilidade ou indicação de compra ou venda de ativos. Criptomoedas são ativos voláteis e podem envolver riscos.
-            </p>
-            <p className="text-center md:text-left text-[#6C7685]">
-              © 2026 HDZ Finance. Todos os direitos reservados.
-            </p>
-          </div>
-        </div>
-      </footer>
-
     </div>
   );
 }
