@@ -838,9 +838,9 @@ export default function BitcoinCourseSalesPage() {
       {/* ========================================================================= */}
       {/* RODAPÉ SUPERIOR E INSTITUCIONAL (PADRÃO FISCAL SIMPLIFICADO)                */}
       {/* ========================================================================= */}
-      <footer className="py-12 md:py-16 bg-[#FAF7F2] text-xs text-[#475569] border-t border-[#E2E8F0]">
+      <footer className="py-12 md:py-16 bg-[#000000] text-xs text-[#9BA5B3] border-t border-white/10">
         <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-[#E2E8F0]">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div className="space-y-2.5 max-w-lg">
               <div className="flex items-center space-x-3">
                 <div className="relative w-8 h-8 shrink-0 overflow-hidden">
@@ -851,20 +851,20 @@ export default function BitcoinCourseSalesPage() {
                     className="object-contain"
                   />
                 </div>
-                <span className="font-outfit font-extrabold text-xl tracking-tight text-[#0B1F3A] block">
+                <span className="font-outfit font-extrabold text-xl tracking-tight text-white block">
                   HDZ <span className="text-[#F59A18]">FINANCE</span>
                 </span>
               </div>
-              <p className="leading-relaxed text-[#334155] text-xs md:text-sm">
+              <p className="leading-relaxed text-[#D5DDE6] text-xs md:text-sm">
                 Treinamento educacional sobre dinheiro, economia, Bitcoin, criptomoedas e tecnologia. Desenvolvido para construir uma base conceitual e estimular decisões mais conscientes.
               </p>
             </div>
 
             <div className="space-y-2.5">
-              <span className="font-bold text-[#0B1F3A] uppercase tracking-wider block text-xs">Atendimento & Suporte</span>
+              <span className="font-bold text-white uppercase tracking-wider block text-xs">Atendimento & Suporte</span>
               <a
                 href="mailto:contato@hdzfinance.com.br"
-                className="text-[#D97706] hover:underline font-semibold block text-sm"
+                className="text-[#F59A18] hover:underline font-semibold block text-sm"
               >
                 contato@hdzfinance.com.br
               </a>
@@ -874,16 +874,16 @@ export default function BitcoinCourseSalesPage() {
                   href="https://instagram.com/hdzfinance"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-white border border-[#E2E8F0] hover:border-[#F59A18] text-[#0B1F3A] transition-colors shadow-2xs"
+                  className="p-2.5 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#F59A18] text-white transition-colors"
                   aria-label="Instagram da HDZ Finance"
                 >
-                  <InstagramIcon className="h-4 w-4 text-[#D97706]" />
+                  <InstagramIcon className="h-4 w-4 text-[#F59A18]" />
                 </a>
                 <a
                   href="https://youtube.com/@hdzfinance"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-white border border-[#E2E8F0] hover:border-[#EF4444] text-[#0B1F3A] transition-colors shadow-2xs"
+                  className="p-2.5 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#EF4444] text-white transition-colors"
                   aria-label="YouTube da HDZ Finance"
                 >
                   <YoutubeIcon className="h-4 w-4 text-[#EF4444]" />
@@ -893,10 +893,10 @@ export default function BitcoinCourseSalesPage() {
           </div>
 
           <div className="space-y-3">
-            <p className="leading-relaxed text-[#64748B] text-[11px] md:text-xs">
-              <strong className="text-[#334155]">Aviso Legal:</strong> Este treinamento possui finalidade exclusivamente educacional. O conteúdo não constitui recomendação de investimento, promessa de rentabilidade ou indicação de compra ou venda de ativos. Criptomoedas são ativos voláteis e podem envolver riscos.
+            <p className="leading-relaxed text-[#8994A3] text-[11px] md:text-xs">
+              <strong className="text-white">Aviso Legal:</strong> Este treinamento possui finalidade exclusivamente educacional. O conteúdo não constitui recomendação de investimento, promessa de rentabilidade ou indicação de compra ou venda de ativos. Criptomoedas são ativos voláteis e podem envolver riscos.
             </p>
-            <p className="text-center md:text-left text-[#94A3B8] text-[11px] md:text-xs font-medium">
+            <p className="text-center md:text-left text-[#6C7685] text-[11px] md:text-xs font-medium">
               © 2026 HDZ Finance. Todos os direitos reservados.
             </p>
           </div>
