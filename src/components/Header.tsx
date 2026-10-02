@@ -16,31 +16,29 @@ export default function Header() {
 
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
-      <header className="relative w-full">
-        {/* Top Special Offer Bar (Dark Navy Blue) */}
-        <div className="w-full bg-[#0B2545] text-white py-2.5 px-4 text-center text-xs md:text-sm font-extrabold tracking-wide flex items-center justify-center gap-2 select-none border-b border-[#1E3A5F]">
-          <span className="text-[#FFC05A] text-sm md:text-base">⚡</span>
-          <span className="uppercase tracking-wider">OFERTA ESPECIAL DISPONÍVEL APENAS HOJE</span>
-        </div>
+      <header className="relative w-full bg-[#0B2545] border-b border-[#1E3A5F]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[54px] py-2.5 flex items-center justify-between gap-4">
+          {/* Left Aligned HDZ Symbol Icon */}
+          <Link
+            href="/"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-0.5 shrink-0"
+            aria-label="HDZ Finance - Página Inicial"
+          >
+            <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 overflow-hidden">
+              <Image
+                src="/assets/hdz-symbol.png"
+                alt="Símbolo HDZ Finance"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </Link>
 
-        {/* Off-White Logo Header */}
-        <div className="w-full h-[74px] md:h-[76px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
-          <div className="max-w-[1360px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-1"
-              aria-label="HDZ Finance - Página Inicial"
-            >
-              <div className="relative w-9 h-9 md:w-[40px] md:h-[40px] shrink-0 overflow-hidden">
-                <Image
-                  src="/assets/hdz-symbol.png"
-                  alt="Símbolo HDZ Finance"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </Link>
+          {/* Right/Center Aligned Special Offer Text */}
+          <div className="flex items-center gap-2 text-white text-xs md:text-sm font-extrabold tracking-wide select-none mx-auto sm:mr-0 sm:ml-auto">
+            <span className="text-[#FFC05A] text-sm md:text-base">⚡</span>
+            <span className="uppercase tracking-wider">OFERTA ESPECIAL DISPONÍVEL APENAS HOJE</span>
           </div>
         </div>
       </header>
