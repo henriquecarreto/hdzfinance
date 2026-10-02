@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Plus_Jakarta_Sans, Lora } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import MarketTicker from "@/components/MarketTicker";
+import HeaderWrapper from "@/components/HeaderWrapper";
 import Footer from "@/components/Footer";
 import { CryptoMarketProvider } from "@/context/CryptoMarketContext";
 
@@ -92,11 +91,7 @@ export default function RootLayout({
     >
       <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white">
         <CryptoMarketProvider>
-          {/* Sticky Container combining Header + MarketTicker pinned together at top z-[60] */}
-          <div className="sticky top-0 z-[60] w-full bg-[#050607]/95 backdrop-blur-md border-b border-white/[0.06] shadow-lg">
-            <Header />
-            <MarketTicker />
-          </div>
+          <HeaderWrapper />
 
           <main className="flex-1">{children}</main>
 

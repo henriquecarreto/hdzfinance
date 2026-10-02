@@ -16,23 +16,32 @@ export default function Header() {
 
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
-      <header className="relative w-full h-[74px] md:h-[76px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-1"
-            aria-label="HDZ Finance - Página Inicial"
-          >
-            <div className="relative w-9 h-9 md:w-[40px] md:h-[40px] shrink-0 overflow-hidden">
-              <Image
-                src="/assets/hdz-symbol.png"
-                alt="Símbolo HDZ Finance"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </Link>
+      <header className="relative w-full">
+        {/* Top Special Offer Bar (Dark Navy Blue) */}
+        <div className="w-full bg-[#0B2545] text-white py-2.5 px-4 text-center text-xs md:text-sm font-extrabold tracking-wide flex items-center justify-center gap-2 select-none border-b border-[#1E3A5F]">
+          <span className="text-[#FFC05A] text-sm md:text-base">⚡</span>
+          <span className="uppercase tracking-wider">OFERTA ESPECIAL DISPONÍVEL APENAS HOJE</span>
+        </div>
+
+        {/* Off-White Logo Header */}
+        <div className="w-full h-[74px] md:h-[76px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
+          <div className="max-w-[1360px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
+            <Link
+              href="/"
+              className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-1"
+              aria-label="HDZ Finance - Página Inicial"
+            >
+              <div className="relative w-9 h-9 md:w-[40px] md:h-[40px] shrink-0 overflow-hidden">
+                <Image
+                  src="/assets/hdz-symbol.png"
+                  alt="Símbolo HDZ Finance"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+          </div>
         </div>
       </header>
     );
