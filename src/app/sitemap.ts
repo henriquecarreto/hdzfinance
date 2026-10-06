@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/materias",
     "/educacional",
+    "/educacional/recomendacoes-de-leitura",
     "/aprenda",
     "/mercados",
     "/sobre",
