@@ -48,13 +48,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ticker Marquee Keyframe & Mask */
+/* Ticker Marquee Keyframe & Mask (Hardware Accelerated for Mobile 60FPS) */
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
+    -webkit-transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -63,7 +65,13 @@ body {
   width: max-content;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 40s linear infinite;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  animation: marquee 35s linear infinite;
 }
 
 .animate-marquee:hover {
