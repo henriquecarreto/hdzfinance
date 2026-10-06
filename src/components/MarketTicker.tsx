@@ -160,22 +160,6 @@ export default function MarketTicker() {
                 )}
 
                 {/* Market State or Stale Status Badges */}
-                {item.isStale && (
-                  <span
-                    className="text-[9px] px-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                    title="Cotação anterior"
-                  >
-                    Cotação anterior
-                  </span>
-                )}
-                {!item.isStale && item.marketState === "closed" && (
-                  <span
-                    className="text-[9px] text-[#9BA5B3]/60 hidden md:inline"
-                    title="Mercado fechado"
-                  >
-                    (Fechado)
-                  </span>
-                )}
               </div>
             );
           })}
