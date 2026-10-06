@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, logSecurityEvent } from "@/lib/security";
 
 const VALID_SUBJECTS = [
   "Dúvida geral",
@@ -11,6 +12,16 @@ const VALID_SUBJECTS = [
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "127.0.0.1";
+    const rateCheck = checkRateLimit(`contact_${ip}`);
+    if (!rateCheck.allowed) {
+      logSecurityEvent("CONTACT_FORM_RATE_LIMITED", { ip });
+      return NextResponse.json(
+        { error: "Muitas tentativas em pouco tempo. Por favor, aguarde alguns minutos antes de enviar outra mensagem." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, subject, message, hp_field } = body || {};
 

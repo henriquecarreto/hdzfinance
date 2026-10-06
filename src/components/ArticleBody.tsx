@@ -1,3 +1,4 @@
+import DOMPurify from "isomorphic-dompurify";
 import { Article } from "@/types";
 import { AlertCircle, ExternalLink } from "lucide-react";
 
@@ -6,12 +7,14 @@ interface ArticleBodyProps {
 }
 
 export default function ArticleBody({ article }: ArticleBodyProps) {
+  const sanitizedContent = DOMPurify.sanitize(article.content || "");
+
   return (
     <article className="max-w-3xl mx-auto py-8 space-y-8">
       {/* Editorial Content */}
       <div
         className="font-lora text-[#F5F7FA] text-base md:text-lg leading-relaxed space-y-6 [&>h2]:font-outfit [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:text-[#F5F7FA] [&>h2]:pt-4 [&>h2]:pb-2 [&>h3]:font-outfit [&>h3]:font-semibold [&>h3]:text-xl [&>h3]:text-[#F5F7FA] [&>p]:leading-loose [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ul]:my-4 [&>blockquote]:border-l-4 [&>blockquote]:border-[#147BFF] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#C7CDD4]"
-        dangerouslySetInnerHTML={{ __html: article.content }}
+        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
 
       {/* Sources Section */}
