@@ -15,38 +15,43 @@ export default function AdminLoginPage() {
   const [attempts, setAttempts] = useState(0);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
 
     if (attempts >= 5) {
-      setErrorMessage("Muitas tentativas incorretas. Por favor, aguarde 15 minutos e tente novamente.");
+      setErrorMessage("Muitas tentativas incorretas. Por razões de segurança, aguarde 15 minutos e tente novamente.");
       return;
     }
 
     setLoading(true);
 
-    setTimeout(() => {
-      // Local Dev Verification & Supabase Fallback
-      const validEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "henriquecarreto01@gmail.com";
-      const validPass = "Qwer1234.26";
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // Generic authentication check
-      if (
-        (email.trim().toLowerCase() === validEmail.toLowerCase() && password === validPass) ||
-        (email.trim() === "henriquecarreto01@gmail.com" && password === "Qwer1234.26")
-      ) {
-        if (typeof window !== "undefined") {
-          localStorage.setItem("hdz_admin_authenticated", "true");
-          localStorage.setItem("hdz_admin_user", JSON.stringify({ email, role: "admin", name: "Henrique Carreto" }));
-        }
-        router.push("/admin");
-      } else {
+      const data = await res.json();
+
+      if (!res.ok) {
         setAttempts((prev) => prev + 1);
-        setErrorMessage("Não foi possível entrar. Verifique os dados informados e tente novamente.");
+        setErrorMessage(data.error || "Não foi possível entrar. Verifique os dados informados.");
         setLoading(false);
+        return;
       }
-    }, 600);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("hdz_admin_authenticated", "true");
+        localStorage.setItem("hdz_admin_user", JSON.stringify({ email, role: "admin", name: "Henrique Carreto" }));
+      }
+
+      router.push("/admin");
+    } catch (err) {
+      setErrorMessage("Falha de conexão com o servidor de autenticação. Tente novamente.");
+      setLoading(false);
+    }
   };
 
   return (

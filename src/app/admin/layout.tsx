@@ -19,14 +19,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       return;
     }
 
-    if (typeof window !== "undefined") {
-      const isAuth = localStorage.getItem("hdz_admin_authenticated");
-      if (!isAuth) {
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        if (!res.ok) {
+          if (typeof window !== "undefined") {
+            localStorage.removeItem("hdz_admin_authenticated");
+            localStorage.removeItem("hdz_admin_user");
+          }
+          router.push("/admin/login");
+        } else {
+          setLoading(false);
+        }
+      } catch (err) {
         router.push("/admin/login");
-      } else {
-        setLoading(false);
       }
-    }
+    };
+
+    checkSession();
   }, [pathname, isLoginPage, router]);
 
   useEffect(() => {

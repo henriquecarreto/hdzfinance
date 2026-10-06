@@ -12,11 +12,18 @@ export default function AdminHeader({ onToggleMobileMenu }: AdminHeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLogout = () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("hdz_admin_authenticated");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (err) {
+      console.error("Error logging out:", err);
+    } finally {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("hdz_admin_authenticated");
+        localStorage.removeItem("hdz_admin_user");
+      }
+      router.push("/admin/login");
     }
-    router.push("/admin/login");
   };
 
   const getBreadcrumbs = () => {
