@@ -9,22 +9,22 @@ export default function FinalCtaSection() {
       aria-label="Conclusão HDZ Finance"
       className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]"
     >
-      {/* Background Image Layer occupying 100% of section */}
+      {/* Background Image Layer with Increased Luminosity & Clarity */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         <Image
           src="/backgrounds/final-cta-bg.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-30"
+          className="object-cover object-center opacity-60 brightness-110 saturate-[1.1]"
           priority
         />
-        {/* Dark Vignette Overlay for smooth edge blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/80 via-transparent to-[#050607]/85" />
+        {/* Soft Vignette Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/50 via-transparent to-[#050607]/65" />
       </div>
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8">
-        <div className="max-w-[900px] space-y-6 text-left p-6 sm:p-8 md:p-10 rounded-2xl bg-[#050607]/80 backdrop-blur-md border border-white/[0.08] shadow-2xl">
+        <div className="max-w-[900px] space-y-6 text-left p-6 sm:p-8 md:p-10 rounded-2xl bg-[#050607]/75 backdrop-blur-md border border-white/10 shadow-2xl">
           <span className="text-[12px] md:text-[13px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             VÁ ALÉM DA MANCHETE
           </span>

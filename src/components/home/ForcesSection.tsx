@@ -57,23 +57,23 @@ export default function ForcesSection() {
 
   return (
     <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
-      {/* Background Image Layer occupying 100% of section */}
+      {/* Background Image Layer with Increased Luminosity & Clarity */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         <Image
           src="/backgrounds/forces-bg.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-25"
+          className="object-cover object-center opacity-60 brightness-110 saturate-[1.1]"
           priority
         />
-        {/* Subtle Dark Vignette & Edge Blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/80 via-transparent to-[#050607]/85" />
+        {/* Soft Vignette Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/50 via-transparent to-[#050607]/65" />
       </div>
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block with Localized Backdrop Blur */}
-        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#050607]/75 backdrop-blur-md border border-white/[0.06] shadow-xl">
+        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#050607]/75 backdrop-blur-md border border-white/10 shadow-2xl">
           <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             ALÉM DAS MANCHETES
           </span>
@@ -92,12 +92,12 @@ export default function ForcesSection() {
           </div>
         </div>
 
-        {/* 4 Refined Cards Grid with Glassmorphic Card Backgrounds */}
+        {/* 4 Refined Cards Grid */}
         <div className="cards-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch">
           {cards.map((card, idx) => (
             <div
               key={idx}
-              className={`p-6 md:p-7 flex flex-col justify-between space-y-5 bg-[#0A0C0F]/90 backdrop-blur-md rounded-xl border ${card.borderColor} transition-all duration-200 cursor-default group shadow-lg`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-5 bg-[#0A0C0F]/85 backdrop-blur-md rounded-xl border ${card.borderColor} transition-all duration-200 cursor-default group shadow-xl`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
