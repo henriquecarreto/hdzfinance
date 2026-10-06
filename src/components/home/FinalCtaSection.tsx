@@ -9,8 +9,22 @@ export default function FinalCtaSection() {
       aria-label="Conclusão HDZ Finance"
       className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]"
     >
+      {/* Background Image Layer occupying 100% of section */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <Image
+          src="/backgrounds/final-cta-bg.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-30"
+          priority
+        />
+        {/* Dark Vignette Overlay for smooth edge blending */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/80 via-transparent to-[#050607]/85" />
+      </div>
+
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8">
-        <div className="max-w-[900px] space-y-6 text-left">
+        <div className="max-w-[900px] space-y-6 text-left p-6 sm:p-8 md:p-10 rounded-2xl bg-[#050607]/80 backdrop-blur-md border border-white/[0.08] shadow-2xl">
           <span className="text-[12px] md:text-[13px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             VÁ ALÉM DA MANCHETE
           </span>
@@ -37,7 +51,7 @@ export default function FinalCtaSection() {
             {/* Botão Principal com Destaque Máximo */}
             <Link
               href="/educacional/cursos"
-              className="px-7 py-4 rounded-xl bg-[#F59A18] hover:bg-[#FFB03A] text-[#05080D] font-outfit font-extrabold text-[15.5px] transition-all duration-200 inline-flex items-center gap-2.5 shadow-[0_4px_20px_rgba(245,154,24,0.3)] hover:scale-[1.02]"
+              className="px-7 py-4 rounded-xl bg-[#F59A18] hover:bg-[#FFB03A] text-[#05080D] font-outfit font-extrabold text-[15.5px] transition-all duration-200 inline-flex items-center gap-2.5 shadow-[0_4px_20px_rgba(245,154,24,0.3)] hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-[#147BFF]"
             >
               <span>Quero conhecer o treinamento</span>
               <ArrowRight className="w-4 h-4 text-[#05080D]" aria-hidden="true" />
@@ -46,7 +60,7 @@ export default function FinalCtaSection() {
             {/* Link Secundário */}
             <Link
               href="/noticias"
-              className="inline-flex items-center gap-2 text-[15px] font-outfit font-bold text-[#18C6D8] hover:text-[#52F0FF] transition-colors py-2 px-3"
+              className="inline-flex items-center gap-2 text-[15px] font-outfit font-bold text-[#18C6D8] hover:text-[#52F0FF] transition-colors py-2 px-3 focus-visible:outline-2 focus-visible:outline-[#147BFF]"
             >
               <span>Continuar nas notícias</span>
               <span>→</span>
@@ -57,5 +71,3 @@ export default function FinalCtaSection() {
     </section>
   );
 }
-
-

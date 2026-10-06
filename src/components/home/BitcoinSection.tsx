@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import HdzPictogram from "@/components/ui/HdzPictogram";
 
 export default function BitcoinSection() {
@@ -38,10 +39,24 @@ export default function BitcoinSection() {
   ];
 
   return (
-    <section id="bitcoin-section" className="relative isolate py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
+    <section id="bitcoin-section" className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
+      {/* Background Image Layer occupying 100% of section */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <Image
+          src="/backgrounds/bitcoin-bg.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-30"
+          priority
+        />
+        {/* Dark Vignette Overlay for smooth top/bottom edge transition */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/80 via-transparent to-[#050607]/85" />
+      </div>
+
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
-        {/* Header Block */}
-        <div className="max-w-[860px] space-y-3.5">
+        {/* Header Block with Localized Backdrop Blur */}
+        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#050607]/75 backdrop-blur-md border border-white/[0.06] shadow-xl">
           <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             DESCENTRALIZAÇÃO NA PRÁTICA
           </span>
@@ -60,12 +75,12 @@ export default function BitcoinSection() {
           </div>
         </div>
 
-        {/* 4 Refined Fundamentals Cards Grid with Dedicated Pictograms */}
+        {/* 4 Refined Fundamentals Cards Grid with Glassmorphic Card Backgrounds */}
         <div className="cards-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch">
           {fundamentals.map((item, idx) => (
             <div
               key={idx}
-              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#0A0C0F] rounded-xl border ${item.borderColor} transition-all duration-200 cursor-default group`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#0A0C0F]/90 backdrop-blur-md rounded-xl border ${item.borderColor} transition-all duration-200 cursor-default group shadow-lg`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -87,8 +102,8 @@ export default function BitcoinSection() {
           ))}
         </div>
 
-        {/* Featured Callout (Preservado) */}
-        <div className="p-6 md:p-8 rounded-2xl bg-[#0A0C0F] border border-[#F59A18]/40 text-center max-w-[860px] mx-auto">
+        {/* Featured Callout with Glassmorphism */}
+        <div className="p-6 md:p-8 rounded-2xl bg-[#0A0C0F]/90 backdrop-blur-md border border-[#F59A18]/40 text-center max-w-[860px] mx-auto shadow-xl">
           <p className="font-outfit font-bold text-[18px] md:text-[21px] text-[#EEF4FA] tracking-tight">
             “Antes de comparar preços, compare as regras.”
           </p>
