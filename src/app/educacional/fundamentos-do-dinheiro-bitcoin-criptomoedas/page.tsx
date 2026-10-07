@@ -409,12 +409,12 @@ export default function BitcoinCourseSalesPage() {
                     className="shrink-0 px-2.5 md:px-3 flex flex-col"
                   >
                     <div className="h-full flex flex-col justify-between p-4 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/40 transition-all text-left group">
-                      <div className="relative aspect-[9/16] w-full max-w-[280px] mx-auto rounded-xl overflow-hidden mb-3.5 bg-[#050607]">
+                      <div className="relative aspect-[16/9] w-full max-w-[440px] mx-auto rounded-xl overflow-hidden mb-3.5 bg-[#050607]">
                         <Image
                           src={mod.image}
                           alt={mod.title}
                           fill
-                          className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                       </div>
@@ -827,13 +827,13 @@ export default function BitcoinCourseSalesPage() {
                   >
                     <div
                       onClick={() => setActivePreviewIndex(mod.id)}
-                      className="cursor-pointer group relative aspect-[9/16] w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/60 transition-all shadow-xl"
+                      className="cursor-pointer group relative aspect-[16/9] w-full max-w-[440px] mx-auto rounded-2xl overflow-hidden bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/60 transition-all shadow-xl"
                     >
                       <Image
                         src={mod.image}
                         alt={mod.title}
                         fill
-                        className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                       <div className="absolute inset-0 bg-[#050607]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs">
@@ -1111,7 +1111,7 @@ export default function BitcoinCourseSalesPage() {
             >
               <X className="w-6 h-6" />
             </button>
-            <div className="relative w-full aspect-[9/16] max-h-[75vh]">
+            <div className="relative w-full aspect-[16/9] max-h-[75vh]">
               <Image
                 src={MODULES[activePreviewIndex].image}
                 alt={MODULES[activePreviewIndex].title}
