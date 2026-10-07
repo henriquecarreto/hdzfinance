@@ -199,7 +199,7 @@ export default function MarketsPage() {
                         SELIC
                       </span>
                       <h3 className="font-outfit font-bold text-[16px] md:text-[18px] text-[#F5F7FA]">
-                        Taxa Selic
+                        Meta Selic (Copom)
                       </h3>
                     </div>
                   </div>

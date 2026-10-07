@@ -8,7 +8,14 @@ import { MARKET_ASSETS_CONFIG } from "@/lib/market-config";
 import { formatAssetValue, formatMarketTimeUTC } from "@/lib/formatters";
 import { getMacroIndicatorsData } from "@/lib/macro-provider";
 
-// Server memory cache to preserve valid prices & prevent API rate limiting
+/**
+ * SERVER INSTANCE CACHE DOCUMENTATION:
+ * This in-memory server cache operates per Node.js process / serverless lambda warm instance.
+ * In multi-region or serverless environments without a global KV store (like Redis), separate
+ * lambda invocations manage individual 10-second cache windows.
+ * The client-side MarketDataProvider continuously polls the canonical `/api/market-data` endpoint
+ * and synchronizes all client components (ticker, cards, desktop, mobile) to the snapshot received.
+ */
 const serverCacheMap = new Map<string, MarketAssetSnapshot>();
 let lastSnapshot: MarketDataSnapshot | null = null;
 let lastSnapshotTime = 0;
@@ -17,7 +24,7 @@ function isValidNumber(val: unknown): val is number {
   return typeof val === "number" && !isNaN(val) && isFinite(val);
 }
 
-// 1. Fetcher for Crypto via Bitstamp REST
+// 1. Fetcher for Crypto via Bitstamp REST (Realtime 24/7 Feed)
 async function fetchCryptoData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
   const map = new Map<string, Partial<MarketAssetSnapshot>>();
   const controller = new AbortController();
@@ -57,7 +64,7 @@ async function fetchCryptoData(): Promise<Map<string, Partial<MarketAssetSnapsho
           receivedAt: nowIso,
           marketState: "open",
           quoteStatus: "realtime",
-          source: "Bitstamp",
+          source: "Bitstamp (Realtime 24/7)",
         });
       }
     }
@@ -82,7 +89,7 @@ async function fetchCryptoData(): Promise<Map<string, Partial<MarketAssetSnapsho
           receivedAt: nowIso,
           marketState: "open",
           quoteStatus: "realtime",
-          source: "Bitstamp",
+          source: "Bitstamp (Realtime 24/7)",
         });
       }
     }
@@ -96,6 +103,7 @@ async function fetchCryptoData(): Promise<Map<string, Partial<MarketAssetSnapsho
 async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
   const map = new Map<string, Partial<MarketAssetSnapshot>>();
   const token = process.env.BRAPI_TOKEN;
+  const hasRealtimeEntitlement = process.env.MARKET_DATA_REALTIME === "true";
   const nowIso = new Date().toISOString();
 
   if (token) {
@@ -142,6 +150,13 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
             const change = isValidNumber(item.regularMarketChangePercent) ? item.regularMarketChangePercent : null;
             const isOpen = item.marketState?.toLowerCase() === "open";
             if (price !== null) {
+              // Standard free brapi quotes carry a 15-min delay during open market hours unless realtime entitlement exists
+              const quoteStatus = isOpen
+                ? hasRealtimeEntitlement
+                  ? "realtime"
+                  : "delayed"
+                : "close";
+
               map.set("IBOV", {
                 symbol: "IBOV",
                 name: "Ibovespa",
@@ -153,7 +168,7 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
                 sourceTimestamp: item.regularMarketTime ? new Date(item.regularMarketTime).toISOString() : nowIso,
                 receivedAt: nowIso,
                 marketState: isOpen ? "open" : "closed",
-                quoteStatus: isOpen ? "realtime" : "close",
+                quoteStatus,
                 source: "brapi.dev",
               });
             }
@@ -161,7 +176,7 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
         }
       }
     } catch {
-      // Silently fall back to AwesomeAPI
+      // Fallback to AwesomeAPI
     }
   }
 
@@ -243,9 +258,9 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
               direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
               sourceTimestamp: meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toISOString() : nowIso,
               receivedAt: nowIso,
-              marketState: "open",
-              quoteStatus: "realtime",
-              source: "Yahoo Finance (IBOV)",
+              marketState: "closed", // Yahoo public chart feed is delayed/end-of-day
+              quoteStatus: "delayed",
+              source: "Yahoo Finance (Fallback)",
             });
           }
         }
@@ -262,6 +277,7 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
 async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
   const map = new Map<string, Partial<MarketAssetSnapshot>>();
   const apiKey = process.env.TWELVE_DATA_API_KEY;
+  const hasRealtimeEntitlement = process.env.MARKET_DATA_REALTIME === "true";
   const nowIso = new Date().toISOString();
 
   if (apiKey) {
@@ -283,6 +299,14 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapsho
           const price = parseFloat(String(itemData.close || itemData.price));
           const change = parseFloat(String(itemData.percent_change));
           const isOpen = Boolean(itemData.is_market_open);
+
+          // Free tier API returns 15-min delayed data during open market hours unless explicit realtime entitlement is configured
+          const quoteStatus = isOpen
+            ? hasRealtimeEntitlement
+              ? "realtime"
+              : "delayed"
+            : "close";
+
           if (isValidNumber(price)) {
             map.set(symbolKey, {
               symbol: symbolKey,
@@ -295,7 +319,7 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapsho
               sourceTimestamp: itemData.timestamp ? new Date(Number(itemData.timestamp) * 1000).toISOString() : nowIso,
               receivedAt: nowIso,
               marketState: isOpen ? "open" : "closed",
-              quoteStatus: isOpen ? "realtime" : "close",
+              quoteStatus,
               source: "Twelve Data",
             });
           }
@@ -355,9 +379,9 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapsho
               direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
               sourceTimestamp: meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toISOString() : nowIso,
               receivedAt: nowIso,
-              marketState: "open",
-              quoteStatus: "realtime",
-              source: "Yahoo Finance",
+              marketState: "closed",
+              quoteStatus: "delayed", // Public Yahoo Finance feed carries 15-min delay
+              source: "Yahoo Finance (Fallback)",
             });
           }
         }
@@ -421,7 +445,7 @@ export async function getCanonicalMarketSnapshot(): Promise<MarketDataSnapshot> 
         sourceTimestamp: fetched.sourceTimestamp || nowIso,
         receivedAt: nowIso,
         marketState: fetched.marketState || "open",
-        quoteStatus: fetched.quoteStatus || "realtime",
+        quoteStatus: fetched.quoteStatus || "delayed",
         source: fetched.source || "API",
       };
       serverCacheMap.set(config.symbol, snapshot);
@@ -460,7 +484,7 @@ export async function getCanonicalMarketSnapshot(): Promise<MarketDataSnapshot> 
   if (macroData) {
     assets["SELIC"] = {
       symbol: "SELIC",
-      name: "Taxa Selic",
+      name: "Meta Selic",
       price: macroData.selic.value,
       formattedPrice: macroData.selic.formattedValue,
       currency: "%",
@@ -470,7 +494,7 @@ export async function getCanonicalMarketSnapshot(): Promise<MarketDataSnapshot> 
       receivedAt: nowIso,
       marketState: "reference",
       quoteStatus: macroData.selic.status === "official" ? "reference" : "stale",
-      source: "BCB SGS 432",
+      source: "BCB SGS 432 (Copom)",
       referenceDate: macroData.selic.referenceDate,
     };
 
