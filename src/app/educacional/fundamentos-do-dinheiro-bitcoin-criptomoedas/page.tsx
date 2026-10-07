@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "@/components/Footer";
 import {
   Sparkles,
   CheckCircle2,
@@ -1039,9 +1038,6 @@ export default function BitcoinCourseSalesPage() {
           </div>
         </div>
       )}
-
-      {/* ==================== RODAPÉ OFICIAL DA HOME ==================== */}
-      <Footer />
 
     </div>
   );
