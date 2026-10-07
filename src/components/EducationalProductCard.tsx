@@ -21,8 +21,8 @@ export default function EducationalProductCard({ product }: EducationalProductCa
   return (
     <div className="educational-product-card p-6 flex flex-col justify-between">
       <div className="space-y-4 flex-1 flex flex-col">
-        {/* Cover Image Area (Vertical Portrait Format) */}
-        <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#070B10] shrink-0 group">
+        {/* Cover Image Area (9:16 Vertical Poster Format matching exact image aspect ratio) */}
+        <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#070B10] shrink-0 group">
           {product.image ? (
             <Image
               src={product.image}
