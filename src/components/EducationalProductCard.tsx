@@ -21,16 +21,29 @@ export default function EducationalProductCard({ product }: EducationalProductCa
   return (
     <div className="educational-product-card p-6 flex flex-col justify-between">
       <div className="space-y-4 flex-1 flex flex-col">
-        {/* Cover Image Area (16:9) with abstract metallic gradient fallback when image is null */}
-        <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-white/[0.08] bg-gradient-to-br from-[#0E141F] via-[#080B10] to-[#141B26] shrink-0">
+        {/* Cover Image Area with ambient blurred backdrop for full vertical poster framing */}
+        <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#070B10] shrink-0 group">
           {product.image ? (
-            <Image
-              src={product.image}
-              alt={product.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 700px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+            <>
+              {/* Subtle ambient blurred backdrop filling side margins */}
+              <Image
+                src={product.image}
+                alt=""
+                fill
+                aria-hidden="true"
+                className="object-cover blur-md opacity-35 scale-110 pointer-events-none select-none"
+              />
+              {/* Dark overlay for contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070B10]/80 via-transparent to-[#070B10]/40 z-1 pointer-events-none" />
+              {/* Full sharp poster image centered and fully contained without any clipping */}
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-contain p-1 relative z-10 transition-transform duration-300 group-hover:scale-[1.02]"
+                sizes="(max-width: 700px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </>
           ) : (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
               <div className="w-full h-full opacity-10 bg-[radial-gradient(#F59A18_1px,transparent_1px)] [background-size:16px_16px]" />

@@ -29,7 +29,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
     category: "Curso",
     title: "Fundamentos do Dinheiro, Bitcoin e Criptomoedas",
     price: null,
-    image: null,
+    image: "/images/products/money-bitcoin-course-cover.jpg",
     summary: null,
     salesPagePath: "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas",
     salesPageReady: true,
