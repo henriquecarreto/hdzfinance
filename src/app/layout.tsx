@@ -5,6 +5,8 @@ import HeaderWrapper from "@/components/HeaderWrapper";
 import Footer from "@/components/Footer";
 import { MarketDataProvider } from "@/context/MarketDataContext";
 import { CryptoMarketProvider } from "@/context/CryptoMarketContext";
+import { getCanonicalMarketSnapshot } from "@/lib/market-provider";
+import MarketDebugPanel from "@/components/MarketDebugPanel";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -80,24 +82,30 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // SERVER-SIDE INITIAL SNAPSHOT: Fetched synchronously on server render (SSR)
+  const initialSnapshot = await getCanonicalMarketSnapshot();
+
   return (
     <html
       lang="pt-BR"
       className={`${outfit.variable} ${plusJakartaSans.variable} ${lora.variable} dark`}
     >
-      <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white">
-        <MarketDataProvider>
+      <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white relative">
+        <MarketDataProvider initialSnapshot={initialSnapshot}>
           <CryptoMarketProvider>
             <HeaderWrapper />
 
             <main className="flex-1">{children}</main>
 
             <Footer />
+
+            {/* Diagnostic panel for production testing, active ONLY with ?marketdebug=1 */}
+            <MarketDebugPanel />
           </CryptoMarketProvider>
         </MarketDataProvider>
       </body>

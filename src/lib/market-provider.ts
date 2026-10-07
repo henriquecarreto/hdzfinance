@@ -1,3 +1,4 @@
+import { cache } from "react";
 import {
   MarketAssetSnapshot,
   MarketDataSnapshot,
@@ -176,7 +177,7 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
         }
       }
     } catch {
-      // Fallback to AwesomeAPI
+      // Fallback to AwesomeAPI / Yahoo
     }
   }
 
@@ -220,6 +221,56 @@ async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot
         processAwesomeItem("USDBRL", "USD/BRL", "Dólar Comercial");
         processAwesomeItem("EURBRL", "EUR/BRL", "Euro");
         processAwesomeItem("GBPBRL", "GBP/BRL", "Libra Esterlina");
+      }
+    } catch {
+      // Skip if offline
+    }
+  }
+
+  // Yahoo Finance Fallback for Currencies (in case AwesomeAPI & Brapi fail)
+  const stillMissingCurrencies = [
+    { key: "USD/BRL", yahooSymbol: "USDBRL=X", name: "Dólar Comercial" },
+    { key: "EUR/BRL", yahooSymbol: "EURBRL=X", name: "Euro" },
+    { key: "GBP/BRL", yahooSymbol: "GBPBRL=X", name: "Libra Esterlina" },
+  ].filter((item) => !map.has(item.key));
+
+  for (const item of stillMissingCurrencies) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+    try {
+      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${item.yahooSymbol}?interval=1d&range=1d`, {
+        signal: controller.signal,
+        headers: { "User-Agent": "Mozilla/5.0" },
+        cache: "no-store",
+      }).catch(() => null);
+      clearTimeout(timeout);
+      if (res && res.ok) {
+        const json = await res.json();
+        const meta = json?.chart?.result?.[0]?.meta;
+        if (meta) {
+          const price = isValidNumber(meta.regularMarketPrice) ? meta.regularMarketPrice : null;
+          const prevClose = isValidNumber(meta.chartPreviousClose) ? meta.chartPreviousClose : meta.previousClose;
+          let changePercent: number | null = null;
+          if (price !== null && isValidNumber(prevClose) && prevClose > 0) {
+            changePercent = Number((((price - prevClose) / prevClose) * 100).toFixed(2));
+          }
+          if (price !== null) {
+            map.set(item.key, {
+              symbol: item.key,
+              name: item.name,
+              price,
+              formattedPrice: formatAssetValue(price, "BRL"),
+              currency: "BRL",
+              changePercent,
+              direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
+              sourceTimestamp: meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toISOString() : nowIso,
+              receivedAt: nowIso,
+              marketState: "open",
+              quoteStatus: "delayed",
+              source: "Yahoo Finance (Fallback)",
+            });
+          }
+        }
       }
     } catch {
       // Skip if offline
@@ -394,139 +445,141 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapsho
   return map;
 }
 
-// Master Server Snapshot Generator
-export async function getCanonicalMarketSnapshot(): Promise<MarketDataSnapshot> {
-  const nowMs = Date.now();
-  const nowIso = new Date(nowMs).toISOString();
+// Master Server Snapshot Generator (React cache request-deduplicated)
+export const getCanonicalMarketSnapshot = cache(
+  async (): Promise<MarketDataSnapshot> => {
+    const nowMs = Date.now();
+    const nowIso = new Date(nowMs).toISOString();
 
-  // Return server-cached snapshot if generated < 10 seconds ago
-  if (lastSnapshot && nowMs - lastSnapshotTime < 10000) {
-    return lastSnapshot;
-  }
+    // Return server-cached snapshot if generated < 10 seconds ago
+    if (lastSnapshot && nowMs - lastSnapshotTime < 10000) {
+      return lastSnapshot;
+    }
 
-  // Fetch all categories in parallel with error boundaries
-  const [cryptoData, brapiData, twelveData, macroData] = await Promise.all([
-    fetchCryptoData().catch(() => new Map()),
-    fetchBrapiData().catch(() => new Map()),
-    fetchTwelveData().catch(() => new Map()),
-    getMacroIndicatorsData().catch(() => null),
-  ]);
+    // Fetch all categories in parallel with error boundaries
+    const [cryptoData, brapiData, twelveData, macroData] = await Promise.all([
+      fetchCryptoData().catch(() => new Map()),
+      fetchBrapiData().catch(() => new Map()),
+      fetchTwelveData().catch(() => new Map()),
+      getMacroIndicatorsData().catch(() => null),
+    ]);
 
-  const assets: Record<string, MarketAssetSnapshot> = {};
-  let hasErrors = false;
+    const assets: Record<string, MarketAssetSnapshot> = {};
+    let hasErrors = false;
 
-  const masterList = [
-    { key: "USD/BRL", data: brapiData.get("USD/BRL") },
-    { key: "EUR/BRL", data: brapiData.get("EUR/BRL") },
-    { key: "GBP/BRL", data: brapiData.get("GBP/BRL") },
-    { key: "XAU/USD", data: twelveData.get("XAU/USD") },
-    { key: "S&P 500", data: twelveData.get("S&P 500") },
-    { key: "NASDAQ", data: twelveData.get("NASDAQ") },
-    { key: "IBOV", data: brapiData.get("IBOV") },
-    { key: "DJI", data: twelveData.get("DJI") },
-    { key: "VIX", data: twelveData.get("VIX") },
-    { key: "BTC/USD", data: cryptoData.get("BTC/USD") },
-    { key: "ETH/USD", data: cryptoData.get("ETH/USD") },
-  ];
+    const masterList = [
+      { key: "USD/BRL", data: brapiData.get("USD/BRL") },
+      { key: "EUR/BRL", data: brapiData.get("EUR/BRL") },
+      { key: "GBP/BRL", data: brapiData.get("GBP/BRL") },
+      { key: "XAU/USD", data: twelveData.get("XAU/USD") },
+      { key: "S&P 500", data: twelveData.get("S&P 500") },
+      { key: "NASDAQ", data: twelveData.get("NASDAQ") },
+      { key: "IBOV", data: brapiData.get("IBOV") },
+      { key: "DJI", data: twelveData.get("DJI") },
+      { key: "VIX", data: twelveData.get("VIX") },
+      { key: "BTC/USD", data: cryptoData.get("BTC/USD") },
+      { key: "ETH/USD", data: cryptoData.get("ETH/USD") },
+    ];
 
-  for (const item of masterList) {
-    const config = MARKET_ASSETS_CONFIG[item.key];
-    const fetched = item.data;
+    for (const item of masterList) {
+      const config = MARKET_ASSETS_CONFIG[item.key];
+      const fetched = item.data;
 
-    if (fetched && isValidNumber(fetched.price) && fetched.price > 0) {
-      const snapshot: MarketAssetSnapshot = {
-        symbol: config.symbol,
-        name: config.name,
-        price: fetched.price,
-        formattedPrice: fetched.formattedPrice || formatAssetValue(fetched.price, config.currency),
-        currency: config.currency,
-        changePercent: fetched.changePercent ?? null,
-        direction: fetched.direction || "neutral",
-        sourceTimestamp: fetched.sourceTimestamp || nowIso,
-        receivedAt: nowIso,
-        marketState: fetched.marketState || "open",
-        quoteStatus: fetched.quoteStatus || "delayed",
-        source: fetched.source || "API",
-      };
-      serverCacheMap.set(config.symbol, snapshot);
-      assets[config.symbol] = snapshot;
-    } else {
-      // Use cached snapshot if available on server
-      const cached = serverCacheMap.get(config.symbol);
-      if (cached && cached.price !== null) {
-        assets[config.symbol] = {
-          ...cached,
-          quoteStatus: "stale",
-          source: `${cached.source} (Cache)`,
-        };
-      } else {
-        hasErrors = true;
-        // Fallback for unavailable assets (NO fake hardcoded prices pretending to be live)
-        assets[config.symbol] = {
+      if (fetched && isValidNumber(fetched.price) && fetched.price > 0) {
+        const snapshot: MarketAssetSnapshot = {
           symbol: config.symbol,
           name: config.name,
-          price: null,
-          formattedPrice: "—",
+          price: fetched.price,
+          formattedPrice: fetched.formattedPrice || formatAssetValue(fetched.price, config.currency),
           currency: config.currency,
-          changePercent: null,
-          direction: "neutral",
-          sourceTimestamp: nowIso,
+          changePercent: fetched.changePercent ?? null,
+          direction: fetched.direction || "neutral",
+          sourceTimestamp: fetched.sourceTimestamp || nowIso,
           receivedAt: nowIso,
-          marketState: "closed",
-          quoteStatus: "unavailable",
-          source: "Servidor HDZ",
+          marketState: fetched.marketState || "open",
+          quoteStatus: fetched.quoteStatus || "delayed",
+          source: fetched.source || "API",
         };
+        serverCacheMap.set(config.symbol, snapshot);
+        assets[config.symbol] = snapshot;
+      } else {
+        // Use cached snapshot if available on server
+        const cached = serverCacheMap.get(config.symbol);
+        if (cached && cached.price !== null) {
+          assets[config.symbol] = {
+            ...cached,
+            quoteStatus: "stale",
+            source: `${cached.source} (Cache)`,
+          };
+        } else {
+          hasErrors = true;
+          // Fallback for unavailable assets (NO fake hardcoded prices pretending to be live)
+          assets[config.symbol] = {
+            symbol: config.symbol,
+            name: config.name,
+            price: null,
+            formattedPrice: "—",
+            currency: config.currency,
+            changePercent: null,
+            direction: "neutral",
+            sourceTimestamp: nowIso,
+            receivedAt: nowIso,
+            marketState: "closed",
+            quoteStatus: "unavailable",
+            source: "Servidor HDZ",
+          };
+        }
       }
     }
-  }
 
-  // Macro Indicators (Selic & IPCA)
-  if (macroData) {
-    assets["SELIC"] = {
-      symbol: "SELIC",
-      name: "Meta Selic",
-      price: macroData.selic.value,
-      formattedPrice: macroData.selic.formattedValue,
-      currency: "%",
-      changePercent: null,
-      direction: "neutral",
-      sourceTimestamp: nowIso,
-      receivedAt: nowIso,
-      marketState: "reference",
-      quoteStatus: macroData.selic.status === "official" ? "reference" : "stale",
-      source: "BCB SGS 432 (Copom)",
-      referenceDate: macroData.selic.referenceDate,
+    // Macro Indicators (Selic & IPCA)
+    if (macroData) {
+      assets["SELIC"] = {
+        symbol: "SELIC",
+        name: "Meta Selic",
+        price: macroData.selic.value,
+        formattedPrice: macroData.selic.formattedValue,
+        currency: "%",
+        changePercent: null,
+        direction: "neutral",
+        sourceTimestamp: nowIso,
+        receivedAt: nowIso,
+        marketState: "reference",
+        quoteStatus: macroData.selic.status === "official" ? "reference" : "stale",
+        source: "BCB SGS 432 (Copom)",
+        referenceDate: macroData.selic.referenceDate,
+      };
+
+      assets["IPCA12M"] = {
+        symbol: "IPCA12M",
+        name: "IPCA 12m",
+        price: macroData.ipca12m.value,
+        formattedPrice: macroData.ipca12m.formattedValue,
+        currency: "%",
+        changePercent: null,
+        direction: "neutral",
+        sourceTimestamp: nowIso,
+        receivedAt: nowIso,
+        marketState: "reference",
+        quoteStatus: macroData.ipca12m.status === "official" ? "reference" : "stale",
+        source: "IBGE / BCB SGS 13522",
+        referenceMonth: macroData.ipca12m.referenceMonth,
+      };
+    }
+
+    const snapshot: MarketDataSnapshot = {
+      snapshotId: `snap_${nowMs.toString(36)}`,
+      generatedAt: nowIso,
+      timezone: "UTC",
+      assets,
+      hasErrors,
     };
 
-    assets["IPCA12M"] = {
-      symbol: "IPCA12M",
-      name: "IPCA 12m",
-      price: macroData.ipca12m.value,
-      formattedPrice: macroData.ipca12m.formattedValue,
-      currency: "%",
-      changePercent: null,
-      direction: "neutral",
-      sourceTimestamp: nowIso,
-      receivedAt: nowIso,
-      marketState: "reference",
-      quoteStatus: macroData.ipca12m.status === "official" ? "reference" : "stale",
-      source: "IBGE / BCB SGS 13522",
-      referenceMonth: macroData.ipca12m.referenceMonth,
-    };
+    lastSnapshot = snapshot;
+    lastSnapshotTime = nowMs;
+    return snapshot;
   }
-
-  const snapshot: MarketDataSnapshot = {
-    snapshotId: `snap_${nowMs.toString(36)}`,
-    generatedAt: nowIso,
-    timezone: "UTC",
-    assets,
-    hasErrors,
-  };
-
-  lastSnapshot = snapshot;
-  lastSnapshotTime = nowMs;
-  return snapshot;
-}
+);
 
 // Backwards Compatible Wrapper for Legacy `/api/markets` Consumers
 export async function getMarketTickerData(): Promise<MarketResponse> {
