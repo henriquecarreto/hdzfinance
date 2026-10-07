@@ -138,31 +138,25 @@ body {
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background-image: image-set(
-    url("/images/markets/markets-background.avif") type("image/avif"),
-    url("/images/markets/markets-background.webp") type("image/webp")
-  );
+  background-image: url("/images/markets/markets-background.png");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
   filter:
-    saturate(1.45)
-    brightness(1.12)
-    contrast(1.10);
+    saturate(1.2)
+    brightness(1.05)
+    contrast(1.05);
   opacity: 1;
 }
 
 @media (max-width: 768px) {
   .markets-page::before {
     position: absolute;
-    background-image: image-set(
-      url("/images/markets/markets-background-mobile.avif") type("image/avif"),
-      url("/images/markets/markets-background-mobile.webp") type("image/webp")
-    );
+    background-image: url("/images/markets/markets-background.png");
     filter:
-      saturate(1.25)
-      brightness(1.06)
-      contrast(1.08);
+      saturate(1.15)
+      brightness(1.02)
+      contrast(1.05);
   }
 }
 
