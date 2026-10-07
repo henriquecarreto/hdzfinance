@@ -18,11 +18,11 @@ export default function EducacionalPage() {
         <div className="relative isolate overflow-hidden p-6 md:p-10 rounded-2xl bg-[#0D1117] border border-[#F59A18]/30 space-y-4">
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <Image
-              src="/backgrounds/hdz-education.webp"
+              src="/backgrounds/training-bg.png"
               alt=""
               fill
               aria-hidden="true"
-              className="select-none object-contain object-right opacity-70 brightness-125 filter"
+              className="select-none object-cover object-right opacity-50 brightness-110 saturate-[1.1]"
               priority
               sizes="100vw"
             />

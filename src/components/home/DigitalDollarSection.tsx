@@ -93,8 +93,20 @@ export default function DigitalDollarSection() {
   return (
     <section
       aria-label="Dinheiro em transformação"
-      className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]"
+      className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#050607]"
     >
+      {/* Background Image Layer (Old Site Style: ecosystem-bg.png) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <Image
+          src="/backgrounds/ecosystem-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-40 brightness-110 saturate-[1.1]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/60 via-[#050607]/30 to-[#050607]/80" />
+      </div>
+
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* 1. TOPO: ETIQUETA, TÍTULO E INTRODUÇÃO */}
         <div className="space-y-3.5 max-w-[860px]">

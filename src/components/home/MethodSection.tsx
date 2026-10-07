@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import HdzPictogram from "@/components/ui/HdzPictogram";
 import { ArrowRight, ArrowDown, Activity } from "lucide-react";
 
@@ -51,7 +52,20 @@ export default function MethodSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]">
+    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#050607]">
+      {/* Background Image Layer: COMO A HDZ EXPLICA */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <Image
+          src="/backgrounds/method-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-85 brightness-110 saturate-[1.1]"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/40 via-transparent to-[#050607]/60" />
+      </div>
+
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block */}
         <div className="max-w-[860px] space-y-3.5">

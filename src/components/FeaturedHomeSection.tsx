@@ -80,6 +80,19 @@ export default function FeaturedHomeSection() {
 
   return (
     <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-[#050607]">
+      {/* Background Image Layer (Old Site Style: hero-bg.png) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <Image
+          src="/backgrounds/hero-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-30 brightness-110 saturate-[1.1]"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/70 via-[#050607]/40 to-[#050607]/90" />
+      </div>
+
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-6">
         {/* Header Navigation Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.08]">

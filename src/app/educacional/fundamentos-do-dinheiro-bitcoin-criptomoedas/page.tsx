@@ -8,6 +8,10 @@ import {
   ChevronDown,
   ArrowRight,
   Lock,
+  X,
+  Maximize2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { YoutubeIcon, InstagramIcon } from "@/components/SocialIcons";
 
@@ -24,8 +28,49 @@ const trainingOffer = {
   guaranteeDays: null,
 };
 
+// Configurable Preview Images (10 slots)
+interface PreviewImageItem {
+  src?: string;
+  alt?: string;
+  title?: string;
+}
+
+const previewImages: PreviewImageItem[] = [
+  {
+    src: "/images/previews/apresentacao.jpg",
+    alt: "Apresentação do Treinamento",
+    title: "Apresentação",
+  },
+  {
+    src: "/images/previews/fundamentos-do-dinheiro.jpg",
+    alt: "Fundamentos do Dinheiro",
+    title: "Fundamentos do Dinheiro",
+  },
+  {
+    src: "/images/previews/o-que-e-bitcoin.jpg",
+    alt: "O que é Bitcoin",
+    title: "O que é Bitcoin",
+  },
+  {
+    src: "/images/previews/seja-seu-proprio-banco.jpg",
+    alt: "Seja Você Seu Próprio Banco",
+    title: "Seja Você Seu Próprio Banco",
+  },
+  {
+    src: "/images/previews/gerenciamento-de-carteira.jpg",
+    alt: "Gerenciamento de Carteira e Exposição",
+    title: "Gerenciamento de Carteira",
+  },
+  {
+    src: "/images/previews/ciclos-de-mercado.jpg",
+    alt: "Ciclos de Mercado",
+    title: "Ciclos de Mercado",
+  },
+];
+
 export default function BitcoinCourseSalesPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [activePreviewIndex, setActivePreviewIndex] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -38,6 +83,40 @@ export default function BitcoinCourseSalesPage() {
         el.scrollIntoView({ behavior: "smooth" });
       }
     }
+  };
+
+  const openLightbox = (index: number) => {
+    if (previewImages[index]?.src) {
+      setActivePreviewIndex(index);
+    }
+  };
+
+  const closeLightbox = () => {
+    setActivePreviewIndex(null);
+  };
+
+  const prevLightbox = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activePreviewIndex === null) return;
+    const filledIndices = previewImages
+      .map((img, i) => (img.src ? i : -1))
+      .filter((i) => i !== -1);
+    if (filledIndices.length === 0) return;
+    const currentPos = filledIndices.indexOf(activePreviewIndex);
+    const prevPos = (currentPos - 1 + filledIndices.length) % filledIndices.length;
+    setActivePreviewIndex(filledIndices[prevPos]);
+  };
+
+  const nextLightbox = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activePreviewIndex === null) return;
+    const filledIndices = previewImages
+      .map((img, i) => (img.src ? i : -1))
+      .filter((i) => i !== -1);
+    if (filledIndices.length === 0) return;
+    const currentPos = filledIndices.indexOf(activePreviewIndex);
+    const nextPos = (currentPos + 1) % filledIndices.length;
+    setActivePreviewIndex(filledIndices[nextPos]);
   };
 
   const faqItems = [
@@ -161,19 +240,17 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            {/* Right Side Visual Area */}
-            <div className="lg:col-span-5">
-              <div
-                aria-hidden="true"
-                className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-xl bg-gradient-to-br from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] select-none"
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(#F59A18_1px,transparent_1px)] [background-size:20px_20px] opacity-15" />
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80" />
-                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-white/90 border border-[#E2E8F0] backdrop-blur-md space-y-2 shadow-sm">
-                  <div className="w-16 h-2 rounded bg-[#F59A18]/60" />
-                  <div className="w-3/4 h-2.5 rounded bg-[#94A3B8]/30" />
-                  <div className="w-1/2 h-2.5 rounded bg-[#94A3B8]/20" />
-                </div>
+            {/* Right Side Visual Area - Livros do Treinamento */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-2xl bg-gradient-to-b from-white via-[#FAF8F5] to-[#F1F5F9] p-2.5 transition-all duration-300 hover:shadow-[0_12px_36px_rgba(11,31,58,0.12)] hover:-translate-y-1">
+                <Image
+                  src="/images/previews/hero-books-stack.jpg"
+                  alt="Coleção de Livros do Treinamento HDZ Finance"
+                  fill
+                  priority
+                  className="object-contain rounded-xl p-1"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
               </div>
             </div>
           </div>
@@ -198,23 +275,117 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* 10 Visual Placeholder Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {[...Array(10)].map((_, idx) => (
+          {/* 6 Visual Preview Grid - 3x2 Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {previewImages.map((item, idx) => (
               <div
                 key={`preview-slot-${idx}`}
-                aria-hidden="true"
-                className="aspect-[16/10] w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] shadow-2xs relative overflow-hidden select-none"
+                onClick={() => item.src && openLightbox(idx)}
+                className={`group aspect-[16/10] w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] shadow-2xs relative overflow-hidden transition-all duration-300 ${
+                  item.src
+                    ? "cursor-pointer hover:shadow-xl hover:border-[#F59A18] hover:-translate-y-1"
+                    : "select-none"
+                }`}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] opacity-90" />
-                <div className="absolute bottom-3 left-3 right-3 space-y-1.5 opacity-40">
-                  <div className="w-12 h-1.5 rounded bg-[#F59A18]" />
-                  <div className="w-full h-1.5 rounded bg-[#94A3B8]" />
-                </div>
+                {item.src ? (
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={item.src}
+                      alt={item.alt || `Prévia do Treinamento ${idx + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    {/* Hover Overlay with Expand Icon */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="p-2.5 rounded-full bg-white/90 text-[#0B1F3A] shadow-md backdrop-blur-xs flex items-center gap-1.5 text-xs font-bold">
+                        <Maximize2 className="h-4 w-4 text-[#F59A18]" />
+                        <span>Ampliar</span>
+                      </span>
+                    </div>
+
+                    {item.title && (
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3 pt-6 text-white text-[12px] font-bold leading-tight">
+                        {item.title}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div aria-hidden="true" className="w-full h-full relative select-none">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] opacity-90" />
+                    <div className="absolute bottom-3 left-3 right-3 space-y-1.5 opacity-40">
+                      <div className="w-12 h-1.5 rounded bg-[#F59A18]" />
+                      <div className="w-full h-1.5 rounded bg-[#94A3B8]" />
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
+
+        {/* Lightbox Modal Fullscreen */}
+        {activePreviewIndex !== null && previewImages[activePreviewIndex]?.src && (
+          <div
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-200"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={closeLightbox}
+              className="absolute top-5 right-5 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
+              aria-label="Fechar prévia"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Navigation Arrows */}
+            <button
+              type="button"
+              onClick={prevLightbox}
+              className="absolute left-4 md:left-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
+              aria-label="Prévia anterior"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            <button
+              type="button"
+              onClick={nextLightbox}
+              className="absolute right-4 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
+              aria-label="Próxima prévia"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Main Lightbox Content */}
+            <div
+              className="relative max-w-5xl w-full max-h-[85vh] aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={previewImages[activePreviewIndex].src!}
+                alt={previewImages[activePreviewIndex].alt || "Prévia em tela cheia"}
+                fill
+                className="object-contain bg-black/60"
+                priority
+                sizes="100vw"
+              />
+
+              {previewImages[activePreviewIndex].title && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-5 text-white">
+                  <h3 className="font-outfit font-extrabold text-xl md:text-2xl">
+                    {previewImages[activePreviewIndex].title}
+                  </h3>
+                  <p className="text-xs text-white/70">
+                    Prévia {activePreviewIndex + 1} de {previewImages.filter((i) => i.src).length}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ========================================================================= */}

@@ -40,18 +40,18 @@ export default function BitcoinSection() {
 
   return (
     <section id="bitcoin-section" className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
-      {/* Background Image Layer with Right-Aligned Bitcoin Symbol & Increased Luminosity */}
+      {/* Background Image Layer: DESCENTRALIZAÇÃO NA PRÁTICA */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         <Image
           src="/backgrounds/bitcoin-bg.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-right opacity-65 brightness-110 saturate-[1.1]"
+          className="object-cover object-center opacity-85 brightness-110 saturate-[1.1]"
           priority
         />
         {/* Soft Vignette Overlay for smooth top/bottom edge transition */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/50 via-transparent to-[#050607]/65" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/40 via-transparent to-[#050607]/60" />
       </div>
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
