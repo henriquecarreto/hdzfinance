@@ -87,7 +87,7 @@ export default function FeaturedHomeSection() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-30 brightness-110 saturate-[1.1]"
+          className="object-cover object-[70%_top] md:object-center opacity-30 brightness-110 saturate-[1.1]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/70 via-[#050607]/40 to-[#050607]/90" />
