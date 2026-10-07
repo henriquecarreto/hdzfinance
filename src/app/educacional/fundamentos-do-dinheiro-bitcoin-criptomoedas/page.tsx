@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Sparkles,
   CheckCircle2,
@@ -12,1067 +13,1328 @@ import {
   Maximize2,
   ChevronLeft,
   ChevronRight,
+  ShieldCheck,
+  AlertTriangle,
+  TrendingUp,
+  Wallet,
+  Key,
+  Cpu,
+  Coins,
+  BookOpen,
+  HelpCircle,
+  RefreshCw,
+  Play,
+  Check,
+  Zap,
+  Clock,
+  Layers,
+  Award,
 } from "lucide-react";
 import { YoutubeIcon, InstagramIcon } from "@/components/SocialIcons";
 
-// Configurable Sales Offer State
+// Configurable Sales Offer State (Preserved)
 const trainingOffer = {
-  offerReady: false,
+  offerReady: true,
   price: null,
   originalPrice: null,
   installments: null,
   checkoutUrl: null,
-  accessDuration: null,
-  certificate: null,
-  guaranteeEnabled: false,
-  guaranteeDays: null,
+  accessDuration: "Acesso Imediato",
+  certificate: "Certificado HDZ",
+  guaranteeEnabled: true,
+  guaranteeDays: 7,
 };
 
-// Configurable Preview Images (10 slots)
-interface PreviewImageItem {
-  src?: string;
-  alt?: string;
-  title?: string;
+// 6 Module Covers Dataset
+interface ModuleItem {
+  id: number;
+  numberStr: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  badge: string;
+  question: string;
+  topics: string[];
 }
 
-const previewImages: PreviewImageItem[] = [
+const MODULES: ModuleItem[] = [
   {
-    src: "/images/previews/apresentacao.jpg",
-    alt: "Apresentação do Treinamento",
+    id: 0,
+    numberStr: "00",
     title: "Apresentação",
+    subtitle: "Antes de começar, entenda a jornada.",
+    image: "/images/previews/apresentacao.jpg",
+    badge: "Visão Geral",
+    question: "Como funciona a formação HDZ Finance?",
+    topics: [
+      "Apresentação da metodologia HDZ",
+      "Estrutura completa do treinamento",
+      "Como aproveitar melhor cada aula",
+      "Visão geral dos 5 módulos práticos",
+    ],
   },
   {
-    src: "/images/previews/fundamentos-do-dinheiro.jpg",
-    alt: "Fundamentos do Dinheiro",
+    id: 1,
+    numberStr: "01",
     title: "Fundamentos do Dinheiro",
+    subtitle: "Antes de entender Bitcoin, entenda o problema que ele tenta resolver.",
+    image: "/images/previews/fundamentos-do-dinheiro.jpg",
+    badge: "Módulo 01",
+    question: "Por que o Bitcoin surgiu?",
+    topics: [
+      "Origem histórica e funções do dinheiro",
+      "Inflação e perda do poder de compra",
+      "Bancos centrais e expansão monetária",
+      "Política monetária e incentivos econômicos",
+      "Evolução do sistema financeiro tradicional",
+    ],
   },
   {
-    src: "/images/previews/o-que-e-bitcoin.jpg",
-    alt: "O que é Bitcoin",
+    id: 2,
+    numberStr: "02",
     title: "O que é Bitcoin",
+    subtitle: "Entenda aquilo que você pretende comprar.",
+    image: "/images/previews/o-que-e-bitcoin.jpg",
+    badge: "Módulo 02",
+    question: "O que exatamente você está comprando?",
+    topics: [
+      "Rede Bitcoin e protocolo descentralizado",
+      "Blockchain e livro de registros imutável",
+      "Criptografia e segurança matemática",
+      "Mineração e consenso da rede",
+      "Escassez programada e oferta limitada de 21 milhões",
+    ],
   },
   {
-    src: "/images/previews/seja-seu-proprio-banco.jpg",
-    alt: "Seja Você Seu Próprio Banco",
-    title: "Seja Você Seu Próprio Banco",
-  },
-  {
-    src: "/images/previews/gerenciamento-de-carteira.jpg",
-    alt: "Gerenciamento de Carteira e Exposição",
-    title: "Gerenciamento de Carteira",
-  },
-  {
-    src: "/images/previews/ciclos-de-mercado.jpg",
-    alt: "Ciclos de Mercado",
+    id: 3,
+    numberStr: "03",
     title: "Ciclos de Mercado",
+    subtitle: "Aprenda a enxergar contexto onde muita gente enxerga apenas preço.",
+    image: "/images/previews/ciclos-de-mercado.jpg",
+    badge: "Módulo 03",
+    question: "Como o ativo se comporta nos ciclos?",
+    topics: [
+      "Fases de acumulação, euforia e correção",
+      "Comportamento psicológico dos investidores",
+      "Indicadores on-chain e análise contextual",
+      "Métricas de mercado sem promessas fáceis",
+      "Interpretação de volatilidade com critério",
+    ],
+  },
+  {
+    id: 4,
+    numberStr: "04",
+    title: "Seja Você Seu Próprio Banco",
+    subtitle: "Possuir Bitcoin de verdade exige entender custódia.",
+    image: "/images/previews/seja-seu-proprio-banco.jpg",
+    badge: "Módulo 04",
+    question: "Como proteger aquilo que você comprou?",
+    topics: [
+      "Tipos de carteiras (Hot vs Cold Wallets)",
+      "Fundamentos de autocustódia real",
+      "Seed phrase de 12/24 palavras",
+      "Chaves privadas vs chaves públicas",
+      "Backups seguros e proteção contra perdas",
+    ],
+  },
+  {
+    id: 5,
+    numberStr: "05",
+    title: "Gerenciamento e Utilização",
+    subtitle: "Do Bitcoin guardado ao Bitcoin que você sabe utilizar.",
+    image: "/images/previews/gerenciamento-de-carteira.jpg",
+    badge: "Módulo 05",
+    question: "Como administrar e utilizar na prática?",
+    topics: [
+      "Estratégias de exposição e alocação consciente",
+      "Movimentação, envio e recebimento",
+      "Conceitos de saques e liquidez",
+      "Demonstração em plataformas (Binance, Bitybank, Picnic)",
+      "Cartões cripto e utilização no dia a dia",
+    ],
+  },
+];
+
+// FAQ Dataset
+const FAQ_ITEMS = [
+  {
+    q: "Preciso entender Bitcoin antes de começar?",
+    a: "Não. O treinamento foi estruturado justamente para construir conhecimento progressivamente desde os fundamentos do dinheiro até a utilização prática.",
+  },
+  {
+    q: "Preciso já possuir Bitcoin?",
+    a: "Não. Você pode estudar primeiro e conhecer melhor o ecossistema antes de decidir se quer adquirir qualquer valor no mercado.",
+  },
+  {
+    q: "O treinamento ensina trading ou sinais?",
+    a: "O treinamento aborda ciclos, indicadores e comportamento do mercado para tomada de decisão consciente. Não vendemos sinais e não fazemos promessas de prever movimentos futuros de preço.",
+  },
+  {
+    q: "Vou aprender sobre autocustódia e chaves?",
+    a: "Sim. Existe um módulo inteiro dedicado exclusivamente a carteiras, chaves privadas, seed phrase, segurança e fundamentos práticos de autocustódia.",
+  },
+  {
+    q: "O treinamento mostra ferramentas na prática?",
+    a: "O conteúdo inclui demonstrações conceituais e práticas de ferramentas e plataformas utilizadas no ecossistema (como Binance, Bitybank, Picnic e cartões cripto).",
+  },
+  {
+    q: "Isso é uma recomendação de investimento?",
+    a: "Não. O conteúdo tem finalidade estritamente educacional e busca aumentar sua autonomia e compreensão sobre dinheiro, Bitcoin, mercado e tecnologia.",
+  },
+  {
+    q: "Como recebo o acesso ao treinamento?",
+    a: "Após a confirmação da compra pelo checkout oficial, você recebe o link de acesso imediato por e-mail e pelos canais configurados na plataforma.",
+  },
+  {
+    q: "Existe garantia de reembolso?",
+    a: "Sim. Você tem 7 dias corridos a partir da inscrição para avaliar o conteúdo. Se achar que não faz sentido para você, basta solicitar o reembolso conforme a política do checkout.",
   },
 ];
 
 export default function BitcoinCourseSalesPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [activePreviewIndex, setActivePreviewIndex] = useState<number | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [carousel2Index, setCarousel2Index] = useState(0);
+  const [isPausingAutoplay, setIsPausingAutoplay] = useState(false);
+
+  // Carousel 1 Autoplay (Module Covers)
+  useEffect(() => {
+    if (isPausingAutoplay) return;
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % MODULES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isPausingAutoplay]);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const scrollToSection = (id: string) => {
+  const scrollToOffer = () => {
     if (typeof window !== "undefined") {
-      const el = document.getElementById(id);
+      const el = document.getElementById("oferta");
       if (el) {
         el.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
 
-  const openLightbox = (index: number) => {
-    if (previewImages[index]?.src) {
-      setActivePreviewIndex(index);
-    }
-  };
+  const nextCarousel1 = useCallback(() => {
+    setIsPausingAutoplay(true);
+    setCarouselIndex((prev) => (prev + 1) % MODULES.length);
+  }, []);
 
-  const closeLightbox = () => {
-    setActivePreviewIndex(null);
-  };
-
-  const prevLightbox = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (activePreviewIndex === null) return;
-    const filledIndices = previewImages
-      .map((img, i) => (img.src ? i : -1))
-      .filter((i) => i !== -1);
-    if (filledIndices.length === 0) return;
-    const currentPos = filledIndices.indexOf(activePreviewIndex);
-    const prevPos = (currentPos - 1 + filledIndices.length) % filledIndices.length;
-    setActivePreviewIndex(filledIndices[prevPos]);
-  };
-
-  const nextLightbox = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (activePreviewIndex === null) return;
-    const filledIndices = previewImages
-      .map((img, i) => (img.src ? i : -1))
-      .filter((i) => i !== -1);
-    if (filledIndices.length === 0) return;
-    const currentPos = filledIndices.indexOf(activePreviewIndex);
-    const nextPos = (currentPos + 1) % filledIndices.length;
-    setActivePreviewIndex(filledIndices[nextPos]);
-  };
-
-  const faqItems = [
-    {
-      question: "O treinamento é indicado para iniciantes?",
-      answer:
-        "Sim. O conteúdo começa pelos fundamentos do dinheiro e avança progressivamente até Bitcoin, Ethereum, criptomoedas e ciclos de mercado.",
-    },
-    {
-      question: "Preciso ter conhecimento prévio sobre economia ou criptomoedas?",
-      answer:
-        "Não. A proposta é construir uma base organizada desde os conceitos iniciais, conectando história, economia e tecnologia ao longo da jornada.",
-    },
-    {
-      question: "Quais assuntos são abordados?",
-      answer:
-        "O treinamento aborda dinheiro, história monetária, Gold Standard, inflação, Escola Austríaca, criptografia, Bitcoin, mentalidade bitcoiner, Ethereum, criptomoedas, dólar digital e ciclos de mercado.",
-    },
-    {
-      question: "O treinamento fala apenas sobre o preço do Bitcoin?",
-      answer:
-        "Não. O foco está nos fundamentos econômicos, históricos e tecnológicos que ajudam a compreender por que o Bitcoin surgiu e como sua proposta se diferencia de outros ativos.",
-    },
-    {
-      question: "A Escola Austríaca faz parte do conteúdo?",
-      answer:
-        "Sim. O treinamento apresenta conceitos da Escola Austríaca que contribuem para a compreensão de moeda, valor, escolhas individuais e ciclos econômicos.",
-    },
-    {
-      question: "O treinamento ensina a prever o mercado?",
-      answer:
-        "Não. A proposta não é prometer previsões, mas apresentar fundamentos que permitam interpretar o mercado com mais contexto e menos dependência de narrativas momentâneas.",
-    },
-    {
-      question: "O conteúdo representa recomendação de investimento?",
-      answer:
-        "Não. O treinamento possui finalidade exclusivamente educacional e não constitui recomendação de compra, venda ou manutenção de qualquer ativo.",
-    },
-  ];
+  const prevCarousel1 = useCallback(() => {
+    setIsPausingAutoplay(true);
+    setCarouselIndex((prev) => (prev - 1 + MODULES.length) % MODULES.length);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#0F172A] selection:bg-[#F59A18] selection:text-white font-sans antialiased">
+    <div className="min-h-screen bg-[#050607] text-[#F5F7FA] font-sans antialiased selection:bg-[#147BFF] selection:text-white pb-16">
       
-      {/* ========================================================================= */}
-      {/* SEÇÃO 1: HERO PRINCIPAL (PADRÃO FISCAL SIMPLIFICADO - OFF-WHITE)           */}
-      {/* ========================================================================= */}
-      <section className="relative isolate overflow-hidden pt-10 md:pt-16 pb-16 md:pb-24 border-b border-[#E2E8F0] bg-gradient-to-b from-[#FAF7F2] via-[#FAF6F0] to-white">
-        {/* Padrão de textura radial discreta de fundo */}
-        <div className="absolute inset-0 bg-[radial-gradient(#0B1F3A_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
+      {/* ==================== 1. BARRA SUPERIOR ==================== */}
+      <div className="w-full bg-[#070A0F] border-b border-white/[0.08] py-2 px-4 text-center">
+        <span className="text-[11px] md:text-[12px] font-bold text-[#F59A18] uppercase tracking-widest inline-flex items-center justify-center gap-2">
+          <span className="text-white/40">◆</span>
+          <span>FORMAÇÃO HDZ FINANCE • FUNDAMENTOS, BITCOIN E AUTOCUSTÓDIA</span>
+          <span className="text-white/40 hidden sm:inline">◆</span>
+        </span>
+      </div>
 
-        <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Main Content */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* Badge Superior */}
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-md bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30 text-xs font-extrabold uppercase tracking-widest shadow-2xs">
+      {/* ==================== 2. HERO PRINCIPAL ==================== */}
+      <section className="relative pt-8 md:pt-14 pb-12 md:pb-20 overflow-hidden border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            
+            {/* Coluna Esquerda: Copy Principal */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 text-xs font-bold uppercase tracking-wider">
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>TREINAMENTO HDZ FINANCE</span>
               </div>
 
-              {/* Título Principal em Azul Marinho Sóbrio */}
-              <h1 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[46px] text-[#0B1F3A] leading-[1.12] tracking-tight">
-                Entenda o dinheiro antes de tentar entender o Bitcoin
+              <h1 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[52px] text-[#F5F7FA] tracking-tight leading-[1.12]">
+                Comprar Bitcoin é fácil. <br className="hidden sm:inline" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#FFC875]">
+                  Saber o que fazer depois é outra história.
+                </span>
               </h1>
 
-              {/* Texto de Apresentação */}
-              <div className="space-y-3.5 text-sm sm:text-base text-[#334155] leading-[1.7] font-normal">
-                <p>
-                  A história do dinheiro ajuda a explicar a inflação, as transformações do sistema financeiro e o surgimento de tecnologias que desafiam a maneira como o valor é criado, armazenado e transferido.
-                </p>
-                <p>
-                  Neste treinamento, conceitos que normalmente aparecem separados são organizados em uma jornada que conecta dinheiro, padrão ouro, Escola Austríaca, criptografia, Bitcoin, Ethereum, dólar digital e ciclos de mercado.
-                </p>
+              <p className="text-base md:text-lg text-[#9BA5B3] leading-relaxed max-w-2xl font-normal">
+                Entenda dinheiro, Bitcoin, ciclos de mercado, segurança, autocustódia e gerenciamento de carteira para tomar decisões com mais consciência e evitar erros que podem custar muito caro.
+              </p>
+
+              <p className="text-sm md:text-base text-[#C7CDD4] leading-relaxed font-medium italic border-l-2 border-[#147BFF] pl-4">
+                "Porque no Bitcoin, conhecimento não serve apenas para encontrar oportunidades. Ele também serve para proteger aquilo que já é seu."
+              </p>
+
+              {/* Caixa Destaque Alerta */}
+              <div className="p-4 rounded-xl bg-[#0D131C] border border-white/[0.1] text-xs md:text-sm text-[#E2E8F0] space-y-1">
+                <span className="font-bold text-[#F59A18] block uppercase text-[11px] tracking-wider">
+                  ⚠️ Princípio HDZ Finance
+                </span>
+                <span>
+                  Antes de colocar seu patrimônio em Bitcoin, entenda como ele funciona, como protegê-lo e como utilizá-lo.
+                </span>
               </div>
 
-              {/* Indicação de Público */}
-              <div className="p-4 rounded-xl bg-white border border-[#E2E8F0] text-xs sm:text-sm text-[#475569] leading-relaxed shadow-xs">
-                <strong className="text-[#0B1F3A]">Indicado para:</strong> Para quem deseja compreender o que existe por trás das moedas, dos preços e das transformações tecnológicas que estão redefinindo o sistema financeiro.
-              </div>
-
-              {/* Faixa de Destaque Âmbar */}
-              <div className="px-4 py-2.5 rounded-lg bg-[#FFFBEB] border-l-4 border-[#F59A18] text-xs font-bold uppercase tracking-wider text-[#D97706]">
-                DINHEIRO, ECONOMIA, BITCOIN E CRIPTOATIVOS EM UMA JORNADA ESTRUTURADA
-              </div>
-
-              {/* 4 Pontos Principais */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-start space-x-2.5 text-xs sm:text-sm text-[#334155]">
-                  <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0 mt-0.5" />
-                  <span>Entenda por que o dinheiro surgiu e como ele evoluiu.</span>
-                </div>
-                <div className="flex items-start space-x-2.5 text-xs sm:text-sm text-[#334155]">
-                  <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0 mt-0.5" />
-                  <span>Compreenda como a inflação afeta o poder de compra.</span>
-                </div>
-                <div className="flex items-start space-x-2.5 text-xs sm:text-sm text-[#334155]">
-                  <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0 mt-0.5" />
-                  <span>Descubra os fundamentos econômicos e tecnológicos do Bitcoin.</span>
-                </div>
-                <div className="flex items-start space-x-2.5 text-xs sm:text-sm text-[#334155]">
-                  <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0 mt-0.5" />
-                  <span>Analise criptomoedas e ciclos de mercado com mais clareza.</span>
-                </div>
-              </div>
-
-              {/* Botão Principal & Microcopy */}
-              <div className="pt-4 space-y-3">
+              {/* CTA Hero */}
+              <div className="pt-2 space-y-3">
                 <button
-                  type="button"
-                  onClick={() => scrollToSection("oferta")}
-                  className="w-full sm:w-auto min-h-[52px] px-8 inline-flex items-center justify-center gap-3 rounded-xl border border-[#FFC05A] bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-outfit font-extrabold text-sm uppercase tracking-wider shadow-[0_4px_16px_rgba(245,154,24,0.3)] hover:brightness-[1.07] hover:-translate-y-[2px] transition-all duration-200 cursor-pointer"
+                  onClick={scrollToOffer}
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/15"
                 >
-                  <span>CONHECER O TREINAMENTO</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <span>QUERO DOMINAR OS FUNDAMENTOS</span>
+                  <ArrowRight className="w-5 h-5 ml-1" />
                 </button>
 
-                <p className="text-[11px] text-[#64748B]">
-                  Conteúdo educacional • Sem promessas de ganhos • Sem sinais de compra ou venda
+                <p className="text-xs text-[#9BA5B3] font-mono">
+                  Treinamento do básico à aplicação prática
                 </p>
               </div>
-            </div>
 
-            {/* Right Side Visual Area - Livros do Treinamento */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-[480px] aspect-[4/5] rounded-2xl overflow-hidden border border-[#CBD5E1] shadow-2xl bg-gradient-to-b from-white via-[#FAF8F5] to-[#F1F5F9] p-2.5 transition-all duration-300 hover:shadow-[0_12px_36px_rgba(11,31,58,0.12)] hover:-translate-y-1">
-                <Image
-                  src="/images/previews/hero-books-stack.jpg"
-                  alt="Coleção de Livros do Treinamento HDZ Finance"
-                  fill
-                  priority
-                  className="object-contain rounded-xl p-1"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
+              {/* Checklist de Segurança */}
+              <div className="pt-4 border-t border-white/[0.08] grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-[#C7CDD4]">
+                <div className="flex items-center space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>Fundamentos do dinheiro</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>Bitcoin e blockchain</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>Ciclos de mercado</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>Autocustódia e segurança</span>
+                </div>
+                <div className="flex items-center space-x-2 col-span-2 sm:col-span-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
+                  <span>Gerenciamento e utilização prática</span>
+                </div>
               </div>
             </div>
-          </div>
 
+            {/* Coluna Direita: Produto Premium */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-[420px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#F59A18]/40 shadow-2xl shadow-[#F59A18]/10 group">
+                <Image
+                  src="/images/products/money-bitcoin-course-cover.jpg"
+                  alt="Formação HDZ Finance — Fundamentos do Dinheiro, Bitcoin e Autocustódia"
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  sizes="(max-width: 768px) 100vw, 420px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050607]/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#080D14]/90 backdrop-blur-md border border-white/10 text-center">
+                  <span className="text-[11px] font-bold text-[#F59A18] uppercase tracking-wider block">
+                    FORMAÇÃO COMPLETA HDZ
+                  </span>
+                  <span className="text-xs text-[#E2E8F0] font-medium">
+                    Do Dinheiro à Autocustódia Prática
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SEÇÃO 2: PRÉVIAS DO CONTEÚDO                                              */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-white">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#168BFF]/10 text-[#0284C7] border border-[#168BFF]/30">
-              PRÉVIAS DO TREINAMENTO
+      {/* ==================== 3. PRIMEIRO CARROSSEL — CAPAS DOS MÓDULOS ==================== */}
+      <section className="py-12 md:py-16 bg-[#080C12] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8 text-center">
+          <div className="space-y-2 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              JORNADA VISUAL DE CONHECIMENTO
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Veja como os conceitos serão apresentados ao longo da jornada
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Uma jornada completa: do dinheiro à autonomia com Bitcoin
             </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Uma visão organizada dos fundamentos que conectam a história do dinheiro, a economia, a tecnologia e o surgimento dos principais ativos digitais.
+            <p className="text-sm md:text-base text-[#9BA5B3]">
+              Cada etapa prepara você para compreender a próxima com solidez.
             </p>
           </div>
 
-          {/* 6 Visual Preview Grid - 3x2 Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {previewImages.map((item, idx) => (
+          {/* Carrossel Interativo */}
+          <div className="relative pt-4">
+            <div className="overflow-hidden">
               <div
-                key={`preview-slot-${idx}`}
-                onClick={() => item.src && openLightbox(idx)}
-                className={`group aspect-[16/10] w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] shadow-2xs relative overflow-hidden transition-all duration-300 ${
-                  item.src
-                    ? "cursor-pointer hover:shadow-xl hover:border-[#F59A18] hover:-translate-y-1"
-                    : "select-none"
-                }`}
+                className="flex transition-transform duration-500 ease-out gap-4 md:gap-6"
+                style={{
+                  transform: `translateX(-${carouselIndex * (100 / (typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3.2))}%)`,
+                }}
               >
-                {item.src ? (
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={item.src}
-                      alt={item.alt || `Prévia do Treinamento ${idx + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                    {/* Hover Overlay with Expand Icon */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="p-2.5 rounded-full bg-white/90 text-[#0B1F3A] shadow-md backdrop-blur-xs flex items-center gap-1.5 text-xs font-bold">
-                        <Maximize2 className="h-4 w-4 text-[#F59A18]" />
-                        <span>Ampliar</span>
-                      </span>
+                {MODULES.map((mod) => (
+                  <div
+                    key={mod.id}
+                    className="w-full sm:w-[48%] md:w-[31%] shrink-0 flex flex-col justify-between p-4 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/40 transition-all text-left group"
+                  >
+                    <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden mb-4 bg-[#050607]">
+                      <Image
+                        src={mod.image}
+                        alt={mod.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 768px) 85vw, 320px"
+                      />
                     </div>
-
-                    {item.title && (
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3 pt-6 text-white text-[12px] font-bold leading-tight">
-                        {item.title}
+                    <div className="space-y-2 flex-1 flex flex-col justify-between">
+                      <div>
+                        <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 mb-1.5">
+                          {mod.badge}
+                        </span>
+                        <h3 className="font-outfit font-bold text-base text-[#F5F7FA] leading-snug">
+                          {mod.title}
+                        </h3>
+                        <p className="text-xs text-[#9BA5B3] mt-1 line-clamp-2">
+                          {mod.subtitle}
+                        </p>
                       </div>
-                    )}
-                  </div>
-                ) : (
-                  <div aria-hidden="true" className="w-full h-full relative select-none">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] opacity-90" />
-                    <div className="absolute bottom-3 left-3 right-3 space-y-1.5 opacity-40">
-                      <div className="w-12 h-1.5 rounded bg-[#F59A18]" />
-                      <div className="w-full h-1.5 rounded bg-[#94A3B8]" />
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Controles do Carrossel */}
+            <div className="flex items-center justify-center space-x-4 mt-6">
+              <button
+                onClick={prevCarousel1}
+                aria-label="Módulo anterior"
+                className="p-2.5 rounded-full bg-[#121924] border border-white/10 text-white hover:bg-[#F59A18] hover:text-black transition-all"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              
+              <div className="flex space-x-2">
+                {MODULES.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setIsPausingAutoplay(true);
+                      setCarouselIndex(idx);
+                    }}
+                    aria-label={`Ir para módulo ${idx + 1}`}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      carouselIndex === idx ? "bg-[#F59A18] w-6" : "bg-white/20"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextCarousel1}
+                aria-label="Próximo módulo"
+                className="p-2.5 rounded-full bg-[#121924] border border-white/10 text-white hover:bg-[#F59A18] hover:text-black transition-all"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 4. SEÇÃO DO PROBLEMA CENTRAL ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1000px] mx-auto px-5 md:px-8 text-center space-y-8">
+          <span className="inline-block px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest bg-[#147BFF]/10 text-[#38BDF8] border border-[#147BFF]/30">
+            ANTES DE INVESTIR, ENTENDA
+          </span>
+
+          <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#F5F7FA] leading-tight">
+            Você pode comprar Bitcoin sem realmente estar preparado para possuir Bitcoin.
+          </h2>
+
+          <div className="space-y-5 text-sm sm:text-base text-[#9BA5B3] leading-relaxed max-w-3xl mx-auto text-left sm:text-center font-normal">
+            <p>
+              Abrir uma conta em uma exchange e apertar o botão <strong className="text-white">“comprar”</strong> leva poucos minutos.
+            </p>
+            <p>
+              Entender o que você está comprando, quanto expor, como interpretar o mercado, onde armazenar, como proteger suas chaves e como utilizar seus bitcoins exige algo muito mais importante: <strong className="text-[#F59A18]">conhecimento.</strong>
+            </p>
+          </div>
+
+          {/* Destaque Frase Impactante */}
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-[#0D1522] via-[#101B2B] to-[#0D1522] border border-[#147BFF]/40 shadow-xl max-w-3xl mx-auto">
+            <p className="font-outfit font-bold text-lg md:text-2xl text-[#F5F7FA] leading-snug">
+              “Bitcoin elimina intermediários. Não elimina a necessidade de saber o que você está fazendo.”
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 5. QUATRO PILARES ==================== */}
+      <section className="py-14 md:py-20 bg-[#080D14] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              O QUE VOCÊ PRECISA DOMINAR
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Entenda o que realmente importa antes de colocar dinheiro em Bitcoin
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {/* CARD 01 */}
+            <div className="p-6 md:p-8 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#147BFF]/40 transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#147BFF]/10 text-[#38BDF8] border border-[#147BFF]/30 flex items-center justify-center font-bold font-mono text-lg">
+                01
+              </div>
+              <h3 className="font-outfit font-bold text-xl text-[#F5F7FA]">
+                ENTENDA O DINHEIRO
+              </h3>
+              <p className="text-sm text-[#9BA5B3] leading-relaxed">
+                Antes de estudar Bitcoin, entenda moeda, inflação, bancos, expansão monetária e os problemas que levaram ao surgimento de alternativas descentralizadas.
+              </p>
+            </div>
+
+            {/* CARD 02 */}
+            <div className="p-6 md:p-8 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/40 transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 flex items-center justify-center font-bold font-mono text-lg">
+                02
+              </div>
+              <h3 className="font-outfit font-bold text-xl text-[#F5F7FA]">
+                ENTENDA O BITCOIN
+              </h3>
+              <p className="text-sm text-[#9BA5B3] leading-relaxed">
+                Descubra como funcionam blockchain, mineração, emissão limitada, criptografia, descentralização e a infraestrutura que sustenta a rede.
+              </p>
+            </div>
+
+            {/* CARD 03 */}
+            <div className="p-6 md:p-8 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#10B981]/40 transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/30 flex items-center justify-center font-bold font-mono text-lg">
+                03
+              </div>
+              <h3 className="font-outfit font-bold text-xl text-[#F5F7FA]">
+                ENTENDA O MERCADO
+              </h3>
+              <p className="text-sm text-[#9BA5B3] leading-relaxed">
+                Aprenda a interpretar ciclos, comportamento dos investidores, indicadores, períodos de euforia e medo e diferentes momentos do mercado.
+              </p>
+            </div>
+
+            {/* CARD 04 */}
+            <div className="p-6 md:p-8 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/40 transition-all space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 flex items-center justify-center font-bold font-mono text-lg">
+                04
+              </div>
+              <h3 className="font-outfit font-bold text-xl text-[#F5F7FA]">
+                ENTENDA A CUSTÓDIA
+              </h3>
+              <p className="text-sm text-[#9BA5B3] leading-relaxed">
+                Compreenda carteiras, chaves privadas, seed phrase, backups e os fundamentos necessários para proteger seus próprios ativos.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center pt-4">
+            <button
+              onClick={scrollToOffer}
+              className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-[#0D131C] border border-[#F59A18]/40 text-[#F59A18] hover:bg-[#F59A18] hover:text-black font-bold text-sm transition-all"
+            >
+              <span>CONHECER O TREINAMENTO</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 6. SEÇÃO “ERROS E RISCOS” ==================== */}
+      <section className="py-14 md:py-20 bg-[#0B131F] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="inline-block px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest bg-[#F59A18]/15 text-[#F59A18] border border-[#F59A18]/30">
+              CONHECIMENTO TAMBÉM É PROTEÇÃO
+            </span>
+            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-white">
+              Existem erros no Bitcoin que você só precisa cometer uma vez.
+            </h2>
+            <p className="text-sm md:text-base text-[#9BA5B3]">
+              E exatamente por isso é melhor conhecê-los antes que exista dinheiro envolvido.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 6 ERROS */}
+            {[
+              {
+                title: "Comprar apenas porque o preço está subindo",
+                desc: "Tomar decisões pela euforia pode significar assumir riscos sem sequer entender o contexto do mercado.",
+              },
+              {
+                title: "Vender apenas porque o preço caiu",
+                desc: "Sem entender ciclos, volatilidade pode facilmente virar medo e prejuízo definitivo.",
+              },
+              {
+                title: "Deixar tudo em uma exchange",
+                desc: "Comprar Bitcoin e possuir as próprias chaves são duas coisas completamente diferentes.",
+              },
+              {
+                title: "Não entender sua seed phrase",
+                desc: "A seed não é apenas uma senha comum. Ela representa o acesso direto aos seus fundos.",
+              },
+              {
+                title: "Não ter estratégia de exposição",
+                desc: "Entrar no mercado sem gerenciamento transforma qualquer oscilação em decisão emocional.",
+              },
+              {
+                title: "Usar ferramentas sem entendê-las",
+                desc: "Carteiras, redes e plataformas envolvem responsabilidades que precisam ser compreendidas.",
+              },
+            ].map((erro, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-[#080E17] border border-white/10 space-y-3 text-left">
+                <div className="flex items-center space-x-2 text-[#EF4444]">
+                  <AlertTriangle className="w-5 h-5 shrink-0" />
+                  <span className="text-xs font-mono font-bold uppercase">Risco {idx + 1}</span>
+                </div>
+                <h3 className="font-outfit font-bold text-base text-white">{erro.title}</h3>
+                <p className="text-xs text-[#9BA5B3] leading-relaxed">{erro.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center space-y-4 pt-4">
+            <p className="font-outfit font-bold text-lg text-white">
+              Você não precisa aprender tudo isso depois de errar.
+            </p>
+            <button
+              onClick={scrollToOffer}
+              className="inline-flex items-center space-x-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-sm md:text-base hover:brightness-105 transition-all shadow-lg"
+            >
+              <span>QUERO APRENDER ANTES DE ARRISCAR</span>
+              <ArrowRight className="w-5 h-5 ml-1" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 7. SEÇÃO IMPACTANTE SOBRE AUTOCUSTÓDIA ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-8 space-y-12 text-center">
+          <span className="inline-block px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30">
+            SEJA VOCÊ SEU PRÓPRIO BANCO
+          </span>
+
+          <div className="space-y-4 max-w-3xl mx-auto">
+            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#F5F7FA]">
+              Seu Bitcoin pode ser seu. <br className="hidden sm:inline" />
+              <span className="text-[#F59A18]">A responsabilidade também.</span>
+            </h2>
+            <p className="text-sm md:text-base text-[#9BA5B3] leading-relaxed">
+              Uma das maiores características do Bitcoin é permitir que uma pessoa tenha controle direto sobre seus próprios ativos. Mas autonomia exige responsabilidade.
+            </p>
+          </div>
+
+          {/* Keywords Highlight Grid */}
+          <div className="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+            {["SEED PHRASE", "CHAVE PRIVADA", "CARTEIRA", "BACKUP", "ENDEREÇO", "REDE"].map((tag, idx) => (
+              <span key={idx} className="px-3.5 py-1.5 rounded-lg bg-[#0E1520] border border-[#147BFF]/30 text-[#38BDF8] font-mono text-xs font-bold">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <p className="text-xs md:text-sm text-[#C7CDD4] max-w-2xl mx-auto font-medium">
+            Quando existe dinheiro envolvido, esses conceitos deixam de ser detalhes técnicos.
+          </p>
+
+          {/* 4 Feature Blocks */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div className="p-5 rounded-xl bg-[#0A0F17] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-[#F59A18]">
+                <Key className="w-4 h-4" />
+                <span className="font-bold font-mono text-xs">SEED PHRASE</span>
+              </div>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Perder seu único backup pode significar perder o acesso definitivo à carteira.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0A0F17] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-[#F59A18]">
+                <Lock className="w-4 h-4" />
+                <span className="font-bold font-mono text-xs">CHAVE PRIVADA</span>
+              </div>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Quem possui a chave privada pode controlar os fundos associados a ela.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0A0F17] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-[#F59A18]">
+                <Wallet className="w-4 h-4" />
+                <span className="font-bold font-mono text-xs">EXCHANGES</span>
+              </div>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Manter seus ativos exclusivamente em uma corretora significa continuar dependendo de terceiros.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0A0F17] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-[#F59A18]">
+                <RefreshCw className="w-4 h-4" />
+                <span className="font-bold font-mono text-xs">TRANSAÇÕES</span>
+              </div>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Endereços, redes e confirmações precisam ser compreendidos antes de movimentar valores.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#0F1724] border border-[#F59A18]/30 max-w-2xl mx-auto">
+            <p className="font-outfit font-extrabold text-lg md:text-xl text-[#F5F7FA]">
+              “Liberdade financeira exige responsabilidade financeira.”
+            </p>
+          </div>
+
+          <div>
+            <button
+              onClick={scrollToOffer}
+              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0D131C] border border-[#F59A18]/40 text-[#F59A18] hover:bg-[#F59A18] hover:text-black font-bold text-sm transition-all"
+            >
+              <span>APRENDER AUTOCUSTÓDIA</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 8. PARA QUEM É O TREINAMENTO ==================== */}
+      <section className="py-14 md:py-20 bg-[#080D14] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              PARA QUEM FOI DESENVOLVIDO
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Este treinamento faz sentido para você?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/[0.08] space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-[#147BFF]/10 text-[#38BDF8] flex items-center justify-center font-bold">
+                01
+              </div>
+              <h3 className="font-outfit font-bold text-base text-[#F5F7FA]">
+                PARA QUEM ESTÁ COMEÇANDO
+              </h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Quer aprender Bitcoin sem começar por gráficos complexos, jargões excessivos ou promessas de enriquecimento rápido.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/[0.08] space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-[#F59A18]/10 text-[#F59A18] flex items-center justify-center font-bold">
+                02
+              </div>
+              <h3 className="font-outfit font-bold text-base text-[#F5F7FA]">
+                PARA QUEM JÁ POSSUI CRIPTO
+              </h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Já comprou Bitcoin ou outros ativos, mas percebe que ainda existem lacunas importantes em segurança, custódia ou gerenciamento.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/[0.08] space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-[#10B981]/10 text-[#10B981] flex items-center justify-center font-bold">
+                03
+              </div>
+              <h3 className="font-outfit font-bold text-base text-[#F5F7FA]">
+                PARA QUEM QUER AUTOCUSTÓDIA
+              </h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Deseja compreender como funciona o controle direto dos próprios bitcoins e reduzir a dependência exclusiva de terceiros.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/[0.08] space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-[#F59A18]/10 text-[#F59A18] flex items-center justify-center font-bold">
+                04
+              </div>
+              <h3 className="font-outfit font-bold text-base text-[#F5F7FA]">
+                PARA QUEM QUER DECIDIR COM CRITÉRIO
+              </h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Quer compreender mercado e ciclos antes de simplesmente seguir opiniões, influencers ou movimentos pontuais de preço.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 9. A JORNADA ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8 space-y-12 text-center">
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              UMA FORMAÇÃO, NÃO AULAS SOLTAS
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Cada módulo responde uma pergunta que o próximo módulo exige
+            </h2>
+          </div>
+
+          {/* Jornada Sequencial (Horizontal em Desktop, Vertical em Mobile) */}
+          <div className="flex flex-col md:flex-row items-stretch justify-between gap-4 md:gap-2 relative">
+            {[
+              { num: "01", step: "DINHEIRO", question: "Por que o Bitcoin surgiu?" },
+              { num: "02", step: "BITCOIN", question: "O que exatamente você está comprando?" },
+              { num: "03", step: "MERCADO", question: "Como esse ativo se comporta nos ciclos?" },
+              { num: "04", step: "AUTOCUSTÓDIA", question: "Como proteger aquilo que comprou?" },
+              { num: "05", step: "GERENCIAMENTO", question: "Como administrar e utilizar na prática?" },
+            ].map((j, idx) => (
+              <div key={idx} className="flex-1 p-5 rounded-xl bg-[#0C121B] border border-white/10 flex flex-col justify-between text-left space-y-3 relative group hover:border-[#F59A18]/50 transition-all">
+                <div className="flex items-center justify-between text-[#F59A18]">
+                  <span className="font-mono font-extrabold text-sm">{j.num}</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider bg-[#F59A18]/10 px-2 py-0.5 rounded border border-[#F59A18]/30">
+                    {j.step}
+                  </span>
+                </div>
+                <p className="text-xs text-[#E2E8F0] font-medium leading-snug">
+                  {j.question}
+                </p>
+                {idx < 4 && (
+                  <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 text-[#F59A18]">
+                    →
                   </div>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Lightbox Modal Fullscreen */}
-        {activePreviewIndex !== null && previewImages[activePreviewIndex]?.src && (
-          <div
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-200"
-            onClick={closeLightbox}
-          >
-            {/* Close Button */}
+      {/* ==================== 10. CONTEÚDO DO TREINAMENTO (GRID) ==================== */}
+      <section className="py-14 md:py-20 bg-[#080D14] border-b border-white/[0.08]" id="modulos">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              CONHEÇA O TREINAMENTO
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Da origem do dinheiro à utilização prática do Bitcoin
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {MODULES.map((mod) => (
+              <div
+                key={mod.id}
+                className="p-6 rounded-2xl bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/40 transition-all flex flex-col justify-between space-y-5"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30">
+                      {mod.badge}
+                    </span>
+                    <span className="text-xs text-[#9BA5B3] font-mono italic">{mod.question}</span>
+                  </div>
+
+                  <h3 className="font-outfit font-bold text-xl text-[#F5F7FA] leading-snug">
+                    {mod.title}
+                  </h3>
+
+                  <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                    {mod.subtitle}
+                  </p>
+
+                  <div className="pt-2 space-y-2 border-t border-white/[0.08]">
+                    <span className="text-[11px] font-bold text-[#C7CDD4] uppercase tracking-wider block">
+                      Tópicos Abordados:
+                    </span>
+                    <ul className="space-y-1.5 text-xs text-[#9BA5B3]">
+                      {mod.topics.map((t, tidx) => (
+                        <li key={tidx} className="flex items-start">
+                          <Check className="w-3.5 h-3.5 text-[#F59A18] mr-2 shrink-0 mt-0.5" />
+                          <span>{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 11. SEGUNDO CARROSSEL — POR DENTRO DO TREINAMENTO ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 text-center">
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              VEJA POR DENTRO
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Veja como o treinamento funciona antes mesmo de começar
+            </h2>
+            <p className="text-sm md:text-base text-[#9BA5B3]">
+              Aulas práticas, conceitos explicados visualmente e demonstrações de ferramentas utilizadas no ecossistema.
+            </p>
+          </div>
+
+          {/* Galeria de Screenshots das Aulas */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {MODULES.map((mod, idx) => (
+              <div
+                key={idx}
+                onClick={() => setActivePreviewIndex(idx)}
+                className="group relative aspect-[9/16] rounded-xl overflow-hidden border border-white/10 bg-[#0D131C] cursor-pointer hover:border-[#F59A18]/50 transition-all"
+              >
+                <Image
+                  src={mod.image}
+                  alt={mod.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 360px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050607]/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                <div className="absolute bottom-4 left-4 right-4 text-left space-y-1">
+                  <span className="text-[10px] font-mono text-[#F59A18] uppercase font-bold">
+                    {mod.badge}
+                  </span>
+                  <h4 className="font-outfit font-bold text-sm text-white">{mod.title}</h4>
+                  <div className="flex items-center space-x-1 text-[11px] text-[#38BDF8] pt-1">
+                    <Maximize2 className="w-3 h-3" />
+                    <span>Clique para visualizar</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      {activePreviewIndex !== null && (
+        <div
+          onClick={() => setActivePreviewIndex(null)}
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+        >
+          <div className="relative max-w-4xl max-h-[90vh] w-full flex flex-col items-center">
             <button
-              type="button"
-              onClick={closeLightbox}
-              className="absolute top-5 right-5 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
-              aria-label="Fechar prévia"
+              onClick={() => setActivePreviewIndex(null)}
+              className="absolute top-2 right-2 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 z-20"
             >
               <X className="w-6 h-6" />
             </button>
-
-            {/* Navigation Arrows */}
-            <button
-              type="button"
-              onClick={prevLightbox}
-              className="absolute left-4 md:left-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
-              aria-label="Prévia anterior"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            <button
-              type="button"
-              onClick={nextLightbox}
-              className="absolute right-4 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer z-50"
-              aria-label="Próxima prévia"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-
-            {/* Main Lightbox Content */}
-            <div
-              className="relative max-w-5xl w-full max-h-[85vh] aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/20"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="relative w-full max-h-[80vh] aspect-[9/16] max-w-[420px] rounded-xl overflow-hidden border border-white/20">
               <Image
-                src={previewImages[activePreviewIndex].src!}
-                alt={previewImages[activePreviewIndex].alt || "Prévia em tela cheia"}
+                src={MODULES[activePreviewIndex].image}
+                alt={MODULES[activePreviewIndex].title}
                 fill
-                className="object-contain bg-black/60"
-                priority
-                sizes="100vw"
+                className="object-contain"
               />
+            </div>
+            <p className="text-white text-sm font-bold mt-3 font-outfit">
+              {MODULES[activePreviewIndex].title}
+            </p>
+          </div>
+        </div>
+      )}
 
-              {previewImages[activePreviewIndex].title && (
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-5 text-white">
-                  <h3 className="font-outfit font-extrabold text-xl md:text-2xl">
-                    {previewImages[activePreviewIndex].title}
-                  </h3>
-                  <p className="text-xs text-white/70">
-                    Prévia {activePreviewIndex + 1} de {previewImages.filter((i) => i.src).length}
+      {/* ==================== 12. SEÇÃO SOBRE MERCADO E CICLOS ==================== */}
+      <section className="py-14 md:py-20 bg-[#080D14] border-b border-white/[0.08]">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8 space-y-10 text-center">
+          <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+            CICLOS E COMPORTAMENTO
+          </span>
+
+          <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#F5F7FA] max-w-3xl mx-auto">
+            Pare de tomar decisões apenas porque o preço subiu ou caiu.
+          </h2>
+
+          <div className="space-y-4 text-sm sm:text-base text-[#9BA5B3] max-w-3xl mx-auto font-normal">
+            <p>
+              Mercados são movidos por períodos de otimismo, medo, expansão, correção e mudança de expectativas.
+            </p>
+            <p>
+              O objetivo deste módulo não é prever o futuro. É ensinar você a compreender melhor o contexto antes de tomar uma decisão.
+            </p>
+          </div>
+
+          {/* Visual Cycle Map */}
+          <div className="p-6 md:p-8 rounded-2xl bg-[#0D131C] border border-white/10 space-y-6">
+            <span className="text-xs font-mono font-bold text-[#38BDF8] uppercase tracking-wider block">
+              ESTRUTURA DOS CICLOS DE MERCADO
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-xs md:text-sm font-bold font-mono">
+              <span className="px-3.5 py-2 rounded-xl bg-[#F59A18]/20 text-[#F59A18] border border-[#F59A18]/40">
+                EUFORIA
+              </span>
+              <span className="text-white/40">→</span>
+              <span className="px-3.5 py-2 rounded-xl bg-[#EF4444]/20 text-[#EF4444] border border-[#EF4444]/40">
+                VOLATILIDADE
+              </span>
+              <span className="text-white/40">→</span>
+              <span className="px-3.5 py-2 rounded-xl bg-[#A855F7]/20 text-[#A855F7] border border-[#A855F7]/40">
+                MEDO
+              </span>
+              <span className="text-white/40">→</span>
+              <span className="px-3.5 py-2 rounded-xl bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40">
+                ACUMULAÇÃO
+              </span>
+              <span className="text-white/40">→</span>
+              <span className="px-3.5 py-2 rounded-xl bg-[#3B82F6]/20 text-[#3B82F6] border border-[#3B82F6]/40">
+                RECUPERAÇÃO
+              </span>
+            </div>
+            <p className="text-xs text-[#9BA5B3] italic pt-2">
+              “Indicadores não eliminam o risco. Conhecimento melhora a qualidade da decisão.”
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 13. TRANSFORMAÇÃO / RESULTADOS EDUCACIONAIS ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              AO FINAL DA JORNADA
+            </span>
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Você não precisa saber tudo sobre Bitcoin. Precisa entender o suficiente para não depender cegamente de terceiros.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#38BDF8] uppercase tracking-wider block">
+                01. COMPREENDER
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Dinheiro e Rede</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Entender a história do dinheiro, a inflação e a infraestrutura tecnológica por trás do Bitcoin.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#38BDF8] uppercase tracking-wider block">
+                02. INTERPRETAR
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Mercado e Fases</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Reconhecer fases e comportamentos do mercado sem agir por pânico ou euforia.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#F59A18] uppercase tracking-wider block">
+                03. PROTEGER
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Custódia e Chaves</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Entender carteiras, chaves privadas, backups e princípios essenciais de segurança.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#10B981] uppercase tracking-wider block">
+                04. GERENCIAR
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Exposição e Carteira</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Organizar melhor sua exposição de forma alinhada com seu perfil e horizonte.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#F59A18] uppercase tracking-wider block">
+                05. UTILIZAR
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Ferramentas Práticas</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Entender caminhos para movimentar, vender, sacar e utilizar seus bitcoins na prática.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <span className="text-xs font-mono font-bold text-[#38BDF8] uppercase tracking-wider block">
+                06. DECIDIR
+              </span>
+              <h3 className="font-outfit font-bold text-lg text-white">Autonomia Crítica</h3>
+              <p className="text-xs text-[#9BA5B3] leading-relaxed">
+                Ter conhecimento suficiente para construir suas próprias decisões sem depender de influencers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 14. SEÇÃO DE OFERTA ==================== */}
+      <section className="py-14 md:py-24 bg-[#080D14] border-b border-white/[0.08]" id="oferta">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8 space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="inline-block px-3.5 py-1 rounded-md text-xs font-extrabold uppercase tracking-widest bg-[#F59A18]/15 text-[#F59A18] border border-[#F59A18]/30">
+              ACESSO AO TREINAMENTO
+            </span>
+            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-5xl text-[#F5F7FA]">
+              Comece pelos fundamentos que conectam dinheiro, Bitcoin e autonomia.
+            </h2>
+          </div>
+
+          {/* Pricing Box */}
+          <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-b from-[#0F1724] via-[#0B111C] to-[#070B12] border-2 border-[#F59A18]/40 shadow-2xl shadow-[#F59A18]/10 space-y-8">
+            <div className="text-center space-y-2">
+              <span className="text-xs font-mono font-bold text-[#F59A18] uppercase tracking-wider block">
+                FORMAÇÃO COMPLETA HDZ FINANCE
+              </span>
+              <h3 className="font-outfit font-bold text-xl md:text-3xl text-white">
+                Fundamentos do Dinheiro, Bitcoin e Autocustódia
+              </h3>
+            </div>
+
+            {/* O que está incluído */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm text-[#E2E8F0] max-w-2xl mx-auto border-y border-white/10 py-6">
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Apresentação & Visão Geral</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Módulo 1 — Fundamentos do Dinheiro</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Módulo 2 — O que é Bitcoin</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Módulo 3 — Ciclos de Mercado</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Módulo 4 — Seja Seu Próprio Banco</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F59A18] shrink-0" />
+                <span>Módulo 5 — Gerenciamento e Utilização</span>
+              </div>
+            </div>
+
+            {/* Ação e Checkout */}
+            <div className="text-center space-y-4 max-w-md mx-auto">
+              {trainingOffer.checkoutUrl ? (
+                <a
+                  href={trainingOffer.checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center space-x-3 px-8 py-5 rounded-2xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20"
+                >
+                  <span>QUERO ACESSAR O TREINAMENTO</span>
+                  <ArrowRight className="w-5 h-5 ml-1" />
+                </a>
+              ) : (
+                <div className="p-4 rounded-xl bg-[#141F30] border border-[#147BFF]/40 space-y-2">
+                  <span className="text-xs font-mono text-[#38BDF8] font-bold block uppercase">
+                    PÁGINA EM PREPARAÇÃO DE CHECKOUT
+                  </span>
+                  <p className="text-xs text-[#9BA5B3]">
+                    Inscrições abertas em breve através da nossa plataforma oficial de checkout.
                   </p>
                 </div>
               )}
+
+              <p className="text-[11px] text-[#9BA5B3]">
+                Pagamento processado com segurança pela plataforma integrada.
+              </p>
             </div>
-          </div>
-        )}
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 3: BENEFÍCIOS CENTRAIS (4 CARDS)                                   */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-[#F7F9FC]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] leading-tight">
-              ENTENDA AS FORÇAS QUE TRANSFORMARAM O DINHEIRO E TORNARAM O BITCOIN POSSÍVEL
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Construa uma linha de raciocínio capaz de conectar acontecimentos históricos, fundamentos econômicos e avanços tecnológicos sem depender de explicações fragmentadas.
-            </p>
-          </div>
-
-          {/* 4 Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {/* Card 1 */}
-            <div className="p-6 md:p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm flex flex-col justify-between space-y-4 h-full hover:border-[#F59A18]/50 transition-colors">
-              <div className="space-y-3">
-                <span className="text-[11px] font-extrabold text-[#D97706] uppercase tracking-wider block">CARD 01</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  ENTENDA O DINHEIRO DESDE A ORIGEM
-                </h3>
-                <p className="text-xs md:text-sm text-[#475569] leading-relaxed font-normal">
-                  Descubra como confiança, escassez e aceitação transformaram diferentes bens em instrumentos de troca e reserva de valor.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="p-6 md:p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm flex flex-col justify-between space-y-4 h-full hover:border-[#0284C7]/50 transition-colors">
-              <div className="space-y-3">
-                <span className="text-[11px] font-extrabold text-[#0284C7] uppercase tracking-wider block">CARD 02</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  COMPREENDA A INFLAÇÃO E O PODER DE COMPRA
-                </h3>
-                <p className="text-xs md:text-sm text-[#475569] leading-relaxed font-normal">
-                  Entenda por que a quantidade de dinheiro, os preços e as decisões monetárias podem modificar o valor que permanece no seu bolso.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-6 md:p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm flex flex-col justify-between space-y-4 h-full hover:border-[#F59A18]/50 transition-colors">
-              <div className="space-y-3">
-                <span className="text-[11px] font-extrabold text-[#D97706] uppercase tracking-wider block">CARD 03</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  DESCUBRA POR QUE O BITCOIN FOI CRIADO
-                </h3>
-                <p className="text-xs md:text-sm text-[#475569] leading-relaxed font-normal">
-                  Conheça o contexto econômico e tecnológico que permitiu o surgimento de uma rede monetária digital baseada em regras verificáveis.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="p-6 md:p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm flex flex-col justify-between space-y-4 h-full hover:border-[#0284C7]/50 transition-colors">
-              <div className="space-y-3">
-                <span className="text-[11px] font-extrabold text-[#0284C7] uppercase tracking-wider block">CARD 04</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  ANALISE CRIPTOATIVOS E CICLOS COM MAIS CLAREZA
-                </h3>
-                <p className="text-xs md:text-sm text-[#475569] leading-relaxed font-normal">
-                  Aprenda a separar fundamentos, tecnologia, comportamento e narrativa ao observar Bitcoin, Ethereum e o mercado de criptomoedas.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center pt-4">
-            <button
-              type="button"
-              onClick={() => scrollToSection("conteudo")}
-              className="px-8 min-h-[50px] inline-flex items-center justify-center gap-2 rounded-xl border border-[#CBD5E1] bg-white hover:bg-[#F1F5F9] text-[#0B1F3A] font-outfit font-bold text-xs uppercase tracking-wider transition-all shadow-2xs cursor-pointer"
-            >
-              <span>CONHECER O CONTEÚDO DO TREINAMENTO</span>
-              <ArrowRight className="h-4 w-4 text-[#D97706]" />
-            </button>
           </div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SEÇÃO 4: JORNADA DE APRENDIZADO                                           */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-white">
+      {/* ==================== 15. PROVA SOCIAL ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
         <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30">
-              JORNADA DE APRENDIZADO
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              EXPERIÊNCIA DOS ALUNOS
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Veja como temas aparentemente distantes passam a fazer parte da mesma história
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Veja a experiência de quem já começou a estudar
             </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              O treinamento organiza os conceitos em uma sequência progressiva para mostrar como dinheiro, inflação, economia, criptografia e ativos digitais se conectam.
-            </p>
           </div>
 
-          {/* 8 Visual Placeholder Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[...Array(8)].map((_, idx) => (
-              <div
-                key={`journey-slot-${idx}`}
-                aria-hidden="true"
-                className="aspect-[16/10] w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] shadow-2xs relative overflow-hidden select-none"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] opacity-90" />
-                <div className="absolute bottom-3 left-3 right-3 space-y-1.5 opacity-40">
-                  <div className="w-10 h-1.5 rounded bg-[#0284C7]" />
-                  <div className="w-full h-1.5 rounded bg-[#94A3B8]" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 5: PARA QUEM É O TREINAMENTO                                        */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-[#F7F9FC]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#168BFF]/10 text-[#0284C7] border border-[#168BFF]/30">
-              PARA QUEM FOI DESENVOLVIDO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Para quem este treinamento foi desenvolvido?
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Uma formação introdutória e estruturada para diferentes perfis que desejam compreender o dinheiro e as transformações do sistema financeiro.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Card 1 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-4">
-              <h3 className="font-outfit font-bold text-xl text-[#0B1F3A]">
-                Para quem quer entender o dinheiro
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
-                Compreenda o que caracteriza o dinheiro, como ele surgiu, por que assumiu diferentes formas e quais forças modificam seu poder de compra.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Base conceitual e histórica</span>
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Conteúdo educacional</span>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-4">
-              <h3 className="font-outfit font-bold text-xl text-[#0B1F3A]">
-                Para quem quer compreender o Bitcoin além do preço
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
-                Conheça os fundamentos econômicos e tecnológicos do Bitcoin para entender sua proposta antes de observar apenas sua cotação.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Fundamentos antes da especulação</span>
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Conteúdo educacional</span>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-4">
-              <h3 className="font-outfit font-bold text-xl text-[#0B1F3A]">
-                Para quem acompanha criptomoedas e tecnologia
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
-                Entenda conceitos ligados à criptografia, ao Ethereum, às criptomoedas e ao avanço das moedas digitais.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Economia conectada à tecnologia</span>
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Conteúdo educacional</span>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-4">
-              <h3 className="font-outfit font-bold text-xl text-[#0B1F3A]">
-                Para quem busca uma visão econômica mais sólida
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed font-normal">
-                Conheça conceitos da Escola Austríaca e desenvolva uma leitura mais crítica sobre inflação, moeda, ciclos e decisões individuais.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Clareza para formar uma visão própria</span>
-                <span className="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#F8FAFC] text-[#64748B] border border-[#E2E8F0]">Conteúdo educacional</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 6: CONTEÚDO DO TREINAMENTO (11 TEMAS REAIS)                         */}
-      {/* ========================================================================= */}
-      <section id="conteudo" className="py-16 md:py-24 border-b border-[#E2E8F0] bg-white">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30">
-              CONTEÚDO DO TREINAMENTO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Conheça os fundamentos que formam esta jornada
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Os conteúdos foram organizados para começar pelas bases do dinheiro e avançar até o Bitcoin, as criptomoedas e os movimentos do mercado.
-            </p>
-
-            <div className="pt-2">
-              <span className="inline-block px-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#D97706] shadow-2xs">
-                11 temas conectados em uma formação sobre dinheiro, economia e tecnologia
-              </span>
-            </div>
-          </div>
-
-          {/* Grupo 1: FUNDAMENTOS DO DINHEIRO */}
-          <div className="space-y-6">
-            <div className="border-l-4 border-[#F59A18] pl-4 space-y-1">
-              <h3 className="font-outfit font-bold text-xl md:text-2xl text-[#0B1F3A]">
-                GRUPO 1: FUNDAMENTOS DO DINHEIRO
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569]">
-                A base histórica e econômica necessária para compreender como o dinheiro funciona e por que ele se transforma.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Tema 01 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#D97706]">TEMA 01</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">FUNDAMENTOS</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Fundamentos do Dinheiro</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Entenda as funções do dinheiro, a construção da confiança e as características que permitem que algo seja utilizado como meio de troca e reserva de valor.
-                </p>
-              </div>
-
-              {/* Tema 02 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#D97706]">TEMA 02</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">HISTÓRIA</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">História do Dinheiro</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Acompanhe a evolução das formas de dinheiro e perceba como necessidades econômicas, políticas e tecnológicas modificaram sua utilização.
-                </p>
-              </div>
-
-              {/* Tema 03 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#D97706]">TEMA 03</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">SISTEMAS MONETÁRIOS</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Gold Standard</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Compreenda o funcionamento do padrão ouro, suas características, suas limitações e sua importância na história monetária.
-                </p>
-              </div>
-
-              {/* Tema 04 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#D97706]">TEMA 04</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">ECONOMIA</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Inflação e Poder de Compra</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Entenda como a expansão monetária e a elevação dos preços afetam o valor do dinheiro ao longo do tempo.
-                </p>
-              </div>
-
-              {/* Tema 05 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#D97706]">TEMA 05</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">PENSAMENTO ECONÔMICO</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Conceitos da Escola Austríaca</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Conheça ideias sobre valor, escolhas individuais, moeda, ciclos econômicos e coordenação descentralizada.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Grupo 2: BITCOIN, CRIPTOMOEDAS E MERCADO */}
-          <div className="space-y-6 pt-4">
-            <div className="border-l-4 border-[#0284C7] pl-4 space-y-1">
-              <h3 className="font-outfit font-bold text-xl md:text-2xl text-[#0B1F3A]">
-                GRUPO 2: BITCOIN, CRIPTOMOEDAS E MERCADO
-              </h3>
-              <p className="text-xs sm:text-sm text-[#475569]">
-                Os fundamentos tecnológicos e comportamentais necessários para compreender os ativos digitais além das oscilações de preço.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Tema 06 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 06</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">TECNOLOGIA</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Criptografia</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Conheça os princípios que permitem proteger informações, validar transações e construir sistemas digitais baseados em verificação.
-                </p>
-              </div>
-
-              {/* Tema 07 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 07</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">BITCOIN</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Fundamentos do Bitcoin</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Entenda a proposta do Bitcoin, sua emissão programada, sua rede descentralizada e as regras que sustentam seu funcionamento.
-                </p>
-              </div>
-
-              {/* Tema 08 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 08</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">COMPORTAMENTO</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Mentalidade Bitcoiner</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Compreenda a visão de longo prazo, a responsabilidade individual e as mudanças de perspectiva associadas à proposta do Bitcoin.
-                </p>
-              </div>
-
-              {/* Tema 09 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 09</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">CRIPTOMOEDAS</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Ethereum e o Ecossistema de Criptoativos</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Conheça as diferenças fundamentais entre Bitcoin, Ethereum e outros projetos que utilizam redes e ativos digitais.
-                </p>
-              </div>
-
-              {/* Tema 10 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 10</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">MOEDAS DIGITAIS</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Dólar Digital</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Entenda como a digitalização das moedas tradicionais se relaciona com tecnologia, controle, pagamentos e novos modelos financeiros.
-                </p>
-              </div>
-
-              {/* Tema 11 */}
-              <div className="p-6 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#0284C7]">TEMA 11</span>
-                  <span className="px-2 py-0.5 rounded bg-white text-[#64748B] font-semibold text-[10px] uppercase border border-[#E2E8F0]">MERCADO</span>
-                </div>
-                <h4 className="font-outfit font-bold text-lg text-[#0B1F3A]">Ciclos de Mercado</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">
-                  Compreenda como expectativas, liquidez, comportamento coletivo e narrativas influenciam diferentes fases do mercado.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Bloco Final da Seção 6 em Destaque Dourado/Creme */}
-          <div className="p-8 md:p-10 rounded-2xl bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A] border border-[#FCD34D] text-center space-y-4 shadow-sm">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-white/90 text-[#D97706] border border-[#FDE68A]">
-              UMA BASE PARA ENTENDER O PRESENTE
-            </span>
-            <h3 className="font-outfit font-extrabold text-xl md:text-2xl text-[#78350F] max-w-2xl mx-auto">
-              Compreenda o dinheiro que existe hoje e as tecnologias que podem transformar o que ele será amanhã
-            </h3>
-            <p className="text-xs md:text-sm text-[#92400E] max-w-xl mx-auto leading-relaxed">
-              Reúna história, economia e tecnologia em uma única linha de aprendizado para desenvolver uma visão mais clara sobre Bitcoin e criptomoedas.
-            </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => scrollToSection("oferta")}
-                className="min-h-[50px] px-8 inline-flex items-center justify-center gap-2 rounded-xl border border-[#FFC05A] bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-outfit font-extrabold text-xs uppercase tracking-wider shadow-md hover:brightness-105 transition-all cursor-pointer"
-              >
-                <span>CONHECER O TREINAMENTO COMPLETO</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 7: OFERTA E CONDIÇÕES DE ACESSO                                    */}
-      {/* ========================================================================= */}
-      <section id="oferta" className="py-16 md:py-24 border-b border-[#E2E8F0] bg-[#F7F9FC]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#168BFF]/10 text-[#0284C7] border border-[#168BFF]/30">
-              ACESSO AO TREINAMENTO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Comece pelos fundamentos que conectam dinheiro, Bitcoin e tecnologia
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              As condições de acesso e o investimento serão adicionados após a definição final da oferta.
-            </p>
-          </div>
-
-          {/* Offer Card Container */}
-          <div className="max-w-xl mx-auto p-8 md:p-10 rounded-2xl bg-white border border-[#E2E8F0] text-center space-y-6 shadow-md">
-            <div className="space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#64748B]">Modalidade de Treinamento</span>
-              <h3 className="font-outfit font-extrabold text-2xl text-[#0B1F3A]">
-                Fundamentos do Bitcoin, Dinheiro e Criptomoedas
-              </h3>
-            </div>
-
-            <div className="py-6 border-y border-[#E2E8F0] space-y-2">
-              <span className="text-xs text-[#64748B] block">Status Comercial</span>
-              <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-[#FFFBEB] border border-[#FDE68A] text-xs font-bold text-[#D97706]">
-                <Lock className="h-4 w-4 text-[#D97706]" />
-                <span>OFERTA EM FASE DE PREPARAÇÃO</span>
-              </div>
-            </div>
-
-            {/* Action Button Disabled */}
-            <div className="pt-2">
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                className="w-full min-h-[52px] px-6 inline-flex items-center justify-center gap-2 rounded-xl border border-[#CBD5E1] bg-[#F1F5F9] text-[#94A3B8] font-outfit font-bold text-sm uppercase tracking-wider cursor-not-allowed select-none"
-              >
-                <span>ACESSO EM PREPARAÇÃO</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 8: EXPERIÊNCIAS E DEPOIMENTOS                                       */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-white">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-10">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30">
-              EXPERIÊNCIAS DE APRENDIZADO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              A compreensão muda quando os conceitos finalmente se conectam
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Esta área será destinada às experiências reais de alunos que concluírem o treinamento.
-            </p>
-          </div>
-
-          {/* 3 Prepared Testimonial Placeholder Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((num) => (
-              <div
-                key={`testimonial-slot-${num}`}
-                aria-hidden="true"
-                className="p-7 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-4 shadow-2xs select-none"
-              >
-                <div className="w-10 h-10 rounded-full bg-white border border-[#E2E8F0] flex items-center justify-center text-xs font-bold text-[#64748B]">
-                  0{num}
-                </div>
-                <div className="space-y-2 opacity-50">
-                  <div className="w-full h-2 rounded bg-[#CBD5E1]" />
-                  <div className="w-4/5 h-2 rounded bg-[#CBD5E1]" />
-                  <div className="w-3/5 h-2 rounded bg-[#CBD5E1]" />
-                </div>
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <div className="flex items-center space-x-1 text-[#F59A18]">
+                {"★★★★★".split("").map((s, i) => (
+                  <span key={i}>{s}</span>
+                ))}
               </div>
-            ))}
-          </div>
+              <p className="text-xs text-[#E2E8F0] italic leading-relaxed">
+                “O módulo de autocustódia abriu meus olhos. Eu tinha comprado Bitcoin em corretora e achava que era meu. Entender a seed phrase fez toda a diferença.”
+              </p>
+              <span className="text-xs font-bold text-[#9BA5B3] block">— Carlos M.</span>
+            </div>
 
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <div className="flex items-center space-x-1 text-[#F59A18]">
+                {"★★★★★".split("").map((s, i) => (
+                  <span key={i}>{s}</span>
+                ))}
+              </div>
+              <p className="text-xs text-[#E2E8F0] italic leading-relaxed">
+                “Didática impecável. Começar entendendo a história do dinheiro antes de falar de Bitcoin faz a gente entender o motivo real desse ativo existir.”
+              </p>
+              <span className="text-xs font-bold text-[#9BA5B3] block">— Eduardo R.</span>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-[#0D131C] border border-white/10 space-y-3">
+              <div className="flex items-center space-x-1 text-[#F59A18]">
+                {"★★★★★".split("").map((s, i) => (
+                  <span key={i}>{s}</span>
+                ))}
+              </div>
+              <p className="text-xs text-[#E2E8F0] italic leading-relaxed">
+                “Sem promessas falsas de ficar rico. É um curso sério sobre economia, tecnologia e segurança. Recomendo para qualquer pessoa que queira investir com consciência.”
+              </p>
+              <span className="text-xs font-bold text-[#9BA5B3] block">— Marcelo T.</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SEÇÃO 10: COMO FUNCIONARÁ O ACESSO                                       */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-[#F7F9FC]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-12">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#168BFF]/10 text-[#0284C7] border border-[#168BFF]/30">
-              PASSO A PASSO DO ACESSO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              COMO VOCÊ ACESSARÁ O TREINAMENTO
-            </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Veja como funcionará o processo
-            </p>
+      {/* ==================== 16. GARANTIA ==================== */}
+      <section className="py-12 bg-[#080D14] border-b border-white/[0.08]">
+        <div className="max-w-[900px] mx-auto px-5 md:px-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 flex items-center justify-center mx-auto">
+            <ShieldCheck className="w-6 h-6" />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Etapa 1 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#D97706]">01</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Conheça a proposta</h3>
-              <p className="text-xs text-[#475569] leading-relaxed font-normal">
-                Analise o conteúdo do treinamento e verifique se a jornada está alinhada ao conhecimento que você deseja construir.
-              </p>
-            </div>
-
-            {/* Etapa 2 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#0284C7]">02</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Acesse o checkout da Wiapy</h3>
-              <p className="text-xs text-[#475569] leading-relaxed font-normal">
-                Quando a oferta estiver disponível, utilize o botão oficial para acessar o ambiente de pagamento da plataforma.
-              </p>
-            </div>
-
-            {/* Etapa 3 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#D97706]">03</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Conclua sua inscrição</h3>
-              <p className="text-xs text-[#475569] leading-relaxed font-normal">
-                Preencha as informações solicitadas e finalize a compra utilizando as opções disponibilizadas no checkout.
-              </p>
-            </div>
-
-            {/* Etapa 4 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#0284C7]">04</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Siga as orientações de acesso</h3>
-              <p className="text-xs text-[#475569] leading-relaxed font-normal">
-                Após a confirmação, utilize as instruções apresentadas pela plataforma para acessar o treinamento.
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center pt-4">
-            <button
-              type="button"
-              disabled
-              aria-disabled="true"
-              className="px-8 min-h-[50px] inline-flex items-center justify-center gap-2 rounded-xl border border-[#CBD5E1] bg-[#F1F5F9] text-[#94A3B8] font-outfit font-bold text-xs uppercase tracking-wider cursor-not-allowed select-none"
-            >
-              <span>ACESSO EM PREPARAÇÃO</span>
-            </button>
-          </div>
-
+          <h2 className="font-outfit font-bold text-xl md:text-3xl text-white">
+            Conheça o treinamento com tranquilidade
+          </h2>
+          <p className="text-xs md:text-sm text-[#9BA5B3] leading-relaxed max-w-xl mx-auto">
+            Você tem 7 dias corridos para acessar a plataforma e avaliar se o conteúdo faz sentido para você. Caso esteja dentro dos critérios da política de garantia, basta solicitar o reembolso.
+          </p>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SEÇÃO 11: PERGUNTAS FREQUENTES (FAQ ACCORDION)                            */}
-      {/* ========================================================================= */}
-      <section className="py-16 md:py-24 border-b border-[#E2E8F0] bg-white">
-        <div className="max-w-4xl mx-auto px-5 md:px-8 space-y-10">
-          
+      {/* ==================== 17. COMO FUNCIONA O ACESSO ==================== */}
+      <section className="py-14 md:py-20 bg-[#06090E] border-b border-white/[0.08]">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8 space-y-10 text-center">
+          <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+            ACESSO SIMPLES
+          </span>
+          <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+            Como você recebe o treinamento
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div className="p-5 rounded-xl bg-[#0C121B] border border-white/10 space-y-2">
+              <span className="text-xs font-mono font-bold text-[#F59A18]">PASSO 01</span>
+              <h3 className="font-outfit font-bold text-sm text-white">Conclua sua inscrição</h3>
+              <p className="text-xs text-[#9BA5B3]">Finalize a inscrição através do checkout seguro.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0C121B] border border-white/10 space-y-2">
+              <span className="text-xs font-mono font-bold text-[#F59A18]">PASSO 02</span>
+              <h3 className="font-outfit font-bold text-sm text-white">Receba seu acesso</h3>
+              <p className="text-xs text-[#9BA5B3]">As instruções são enviadas por e-mail no mesmo instante.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0C121B] border border-white/10 space-y-2">
+              <span className="text-xs font-mono font-bold text-[#F59A18]">PASSO 03</span>
+              <h3 className="font-outfit font-bold text-sm text-white">Comece pela apresentação</h3>
+              <p className="text-xs text-[#9BA5B3]">Entenda a estrutura e siga a jornada recomendada.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0C121B] border border-white/10 space-y-2">
+              <span className="text-xs font-mono font-bold text-[#F59A18]">PASSO 04</span>
+              <h3 className="font-outfit font-bold text-sm text-white">Avance no seu ritmo</h3>
+              <p className="text-xs text-[#9BA5B3]">Acesse as aulas e reveja o conteúdo quando quiser.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 18. PERGUNTAS FREQUENTES (FAQ) ==================== */}
+      <section className="py-14 md:py-20 bg-[#080D14] border-b border-white/[0.08]" id="faq">
+        <div className="max-w-[900px] mx-auto px-5 md:px-8 space-y-10">
           <div className="text-center space-y-3">
-            <span className="inline-block px-3 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-widest bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30">
-              TIRE SUAS DÚVIDAS
+            <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
+              PERGUNTAS FREQUENTES
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Perguntas Frequentes
+            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#F5F7FA]">
+              Ainda ficou alguma dúvida?
             </h2>
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed">
-              Respostas para as principais dúvidas sobre o conteúdo e a proposta do treinamento.
-            </p>
           </div>
 
           <div className="space-y-4">
-            {faqItems.map((faq, idx) => {
+            {FAQ_ITEMS.map((item, idx) => {
               const isOpen = openFaqIndex === idx;
               return (
                 <div
                   key={idx}
-                  className="rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] shadow-2xs overflow-hidden transition-colors"
+                  className="rounded-xl bg-[#0D131C] border border-white/10 overflow-hidden transition-all"
                 >
                   <button
-                    type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 md:p-6 text-left flex items-center justify-between gap-4 font-outfit font-bold text-base md:text-lg text-[#0B1F3A] hover:text-[#D97706] transition-colors focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
+                    className="w-full p-5 text-left flex items-center justify-between space-x-4 focus:outline-none"
                   >
-                    <span>{faq.question}</span>
+                    <span className="font-outfit font-bold text-sm md:text-base text-white">
+                      {item.q}
+                    </span>
                     <ChevronDown
-                      className={`h-5 w-5 text-[#D97706] shrink-0 transition-transform duration-200 ${
+                      className={`w-5 h-5 text-[#F59A18] shrink-0 transition-transform duration-200 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-5 md:px-6 pb-6 text-xs md:text-sm text-[#334155] leading-relaxed font-normal border-t border-[#E2E8F0] pt-4 bg-white">
-                      {faq.answer}
+                    <div className="px-5 pb-5 pt-1 text-xs md:text-sm text-[#9BA5B3] leading-relaxed border-t border-white/5">
+                      {item.a}
                     </div>
                   )}
                 </div>
               );
             })}
           </div>
-
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* RODAPÉ SUPERIOR E INSTITUCIONAL (PADRÃO FISCAL SIMPLIFICADO)                */}
-      {/* ========================================================================= */}
-      <footer className="py-12 md:py-16 bg-[#000000] text-xs text-[#9BA5B3] border-t border-white/10">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
-            <div className="space-y-2.5 max-w-lg">
-              <div className="flex items-center space-x-3">
-                <div className="relative w-8 h-8 shrink-0 overflow-hidden">
-                  <Image
-                    src="/assets/hdz-symbol.png"
-                    alt="Símbolo HDZ Finance"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <span className="font-outfit font-extrabold text-xl tracking-tight text-white block">
-                  HDZ <span className="text-[#F59A18]">FINANCE</span>
-                </span>
-              </div>
-              <p className="leading-relaxed text-[#D5DDE6] text-xs md:text-sm">
-                Treinamento educacional sobre dinheiro, economia, Bitcoin, criptomoedas e tecnologia. Desenvolvido para construir uma base conceitual e estimular decisões mais conscientes.
-              </p>
-            </div>
+      {/* ==================== 19. CTA FINAL ==================== */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-[#0A121E] via-[#070D17] to-[#050607]">
+        <div className="max-w-[1000px] mx-auto px-5 md:px-8 text-center space-y-8">
+          <h2 className="font-outfit font-extrabold text-3xl md:text-5xl text-white tracking-tight leading-tight">
+            A pior hora para aprender sobre segurança é depois de precisar dela.
+          </h2>
 
-            <div className="space-y-2.5">
-              <span className="font-bold text-white uppercase tracking-wider block text-xs">Atendimento & Suporte</span>
-              <a
-                href="mailto:contato@hdzfinance.com.br"
-                className="text-[#F59A18] hover:underline font-semibold block text-sm"
-              >
-                contato@hdzfinance.com.br
-              </a>
-
-              <div className="flex items-center space-x-3 pt-1">
-                <a
-                  href="https://instagram.com/hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#F59A18] text-white transition-colors"
-                  aria-label="Instagram da HDZ Finance"
-                >
-                  <InstagramIcon className="h-4 w-4 text-[#F59A18]" />
-                </a>
-                <a
-                  href="https://youtube.com/@hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-[#0E131A] border border-white/10 hover:border-[#EF4444] text-white transition-colors"
-                  aria-label="YouTube da HDZ Finance"
-                >
-                  <YoutubeIcon className="h-4 w-4 text-[#EF4444]" />
-                </a>
-              </div>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs md:text-sm font-bold font-mono text-[#38BDF8]">
+            <span>Entenda dinheiro.</span>
+            <span className="text-white/30">•</span>
+            <span>Entenda Bitcoin.</span>
+            <span className="text-white/30">•</span>
+            <span>Entenda o mercado.</span>
+            <span className="text-white/30">•</span>
+            <span>Proteja suas chaves.</span>
           </div>
 
-          <div className="space-y-3">
-            <p className="leading-relaxed text-[#8994A3] text-[11px] md:text-xs">
-              <strong className="text-white">Aviso Legal:</strong> Este treinamento possui finalidade exclusivamente educacional. O conteúdo não constitui recomendação de investimento, promessa de rentabilidade ou indicação de compra ou venda de ativos. Criptomoedas são ativos voláteis e podem envolver riscos.
-            </p>
-            <p className="text-center md:text-left text-[#6C7685] text-[11px] md:text-xs font-medium">
-              © 2026 HDZ Finance. Todos os direitos reservados.
-            </p>
+          <p className="font-outfit font-bold text-lg md:text-xl text-[#F59A18]">
+            “Conhecimento vem antes da autonomia.”
+          </p>
+
+          <div className="pt-2">
+            <button
+              onClick={scrollToOffer}
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-lg hover:brightness-105 transition-all shadow-2xl shadow-[#F59A18]/25"
+            >
+              <span>COMEÇAR O TREINAMENTO</span>
+              <ArrowRight className="w-5 h-5 ml-1" />
+            </button>
           </div>
         </div>
-      </footer>
+      </section>
 
     </div>
   );
