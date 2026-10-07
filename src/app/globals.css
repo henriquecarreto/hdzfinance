@@ -142,10 +142,6 @@ body {
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  filter:
-    saturate(1.2)
-    brightness(1.05)
-    contrast(1.05);
   opacity: 1;
 }
 
@@ -153,10 +149,6 @@ body {
   .markets-page::before {
     position: absolute;
     background-image: url("/images/markets/markets-background.png");
-    filter:
-      saturate(1.15)
-      brightness(1.02)
-      contrast(1.05);
   }
 }
 
