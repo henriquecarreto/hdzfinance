@@ -42,9 +42,33 @@ export default function MarketsPage() {
     }
   };
 
+  const defaultCardMeta: Record<string, { name: string; currency: "BRL" | "USD" | "POINTS" | "%" }> = {
+    "USD/BRL": { name: "Dólar Comercial", currency: "BRL" },
+    "EUR/BRL": { name: "Euro", currency: "BRL" },
+    "GBP/BRL": { name: "Libra Esterlina", currency: "BRL" },
+    "XAU/USD": { name: "Ouro Spot", currency: "USD" },
+    "S&P 500": { name: "S&P 500", currency: "POINTS" },
+    "NASDAQ": { name: "Nasdaq Composite", currency: "POINTS" },
+    "IBOV": { name: "Ibovespa", currency: "POINTS" },
+    "DJI": { name: "Dow Jones", currency: "POINTS" },
+  };
+
   const renderCompactCard = (assetKey: string) => {
-    const asset = assets[assetKey];
-    if (!asset) return null;
+    const meta = defaultCardMeta[assetKey] || { name: assetKey, currency: "BRL" as const };
+    const asset: MarketAssetSnapshot = assets[assetKey] || {
+      symbol: assetKey,
+      name: meta.name,
+      price: null,
+      formattedPrice: "—",
+      currency: meta.currency,
+      changePercent: null,
+      direction: "neutral",
+      sourceTimestamp: new Date().toISOString(),
+      receivedAt: new Date().toISOString(),
+      marketState: "closed",
+      quoteStatus: "delayed",
+      source: "HDZ Finance",
+    };
 
     const isPositive = (asset.changePercent ?? 0) > 0;
     const isNegative = (asset.changePercent ?? 0) < 0;
@@ -105,7 +129,7 @@ export default function MarketsPage() {
               {formatChangePercent(asset.changePercent)}
             </span>
           ) : (
-            <span className="text-[11px] font-mono text-[#A9B4C2]">Dados indisponíveis</span>
+            <span className="text-[11px] font-mono text-[#A9B4C2]">—</span>
           )}
         </div>
       </div>

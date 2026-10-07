@@ -21,17 +21,22 @@ export default function MarketTicker() {
   );
 
   const displayItems = tickerItems.length > 0 ? tickerItems : [];
-  const duplicatedItems = [...displayItems, ...displayItems];
+  // Quadruple array for 100% smooth infinite marquee on mobile and high-res displays
+  const duplicatedItems = [
+    ...displayItems,
+    ...displayItems,
+    ...displayItems,
+    ...displayItems,
+  ];
 
   return (
     <div
-      className="w-full bg-[#080A0D] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden ticker-mask relative z-20"
+      className="w-full bg-[#080A0D] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden relative z-20"
       aria-label="Esteira de preços de mercados ao vivo"
     >
       <div className="w-full flex items-center justify-between overflow-hidden">
         <div className="animate-marquee flex items-center transform-gpu">
           {duplicatedItems.map((item, index) => {
-            const copyIndex = index < displayItems.length ? 1 : 2;
             const isVix = item.symbol === "VIX";
             const isPositive = (item.changePercent ?? 0) > 0;
             const isNegative = (item.changePercent ?? 0) < 0;
@@ -62,10 +67,10 @@ export default function MarketTicker() {
 
             return (
               <div
-                key={`${item.symbol}-${copyIndex}`}
-                className="flex items-center space-x-2.5 px-5 py-1 shrink-0 border-r border-white/[0.08] text-[11px] md:text-[12px] font-sans"
+                key={`${item.symbol}-${index}`}
+                className="flex items-center space-x-2.5 px-4 md:px-5 py-1 shrink-0 border-r border-white/[0.08] text-[11px] md:text-[12px] font-sans"
               >
-                {/* Name / Symbol (Desktop: Name, Mobile: Symbol) */}
+                {/* Name / Symbol */}
                 <span className="text-[#9BA5B3] uppercase tracking-wider font-medium">
                   <span className="hidden sm:inline">{item.name}</span>
                   <span className="sm:hidden">{item.symbol}</span>
