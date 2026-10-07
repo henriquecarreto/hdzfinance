@@ -40,9 +40,9 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
   {
     id: "ebook-bundle",
     category: "Combo de E-books",
-    title: "Combo com 2 E-books",
+    title: "90 Guias Visuais sobre: Educação Financeira, Investimentos, Economia, Bitcoin e Dólar Digital",
     price: null,
-    image: null,
+    image: "/images/products/ebook-bundle-cover.jpg",
     summary: null,
     salesPagePath: "/educacional/combo-ebooks",
     salesPageReady: true,
