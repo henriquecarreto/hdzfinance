@@ -1,210 +1,28 @@
-import { MarketTickerItem, MarketResponse } from "@/types/market";
+import {
+  MarketAssetSnapshot,
+  MarketDataSnapshot,
+  MarketResponse,
+  MarketTickerItem,
+} from "@/types/market";
+import { MARKET_ASSETS_CONFIG } from "@/lib/market-config";
+import { formatAssetValue, formatMarketTimeUTC } from "@/lib/formatters";
+import { getMacroIndicatorsData } from "@/lib/macro-provider";
 
-// In-memory server cache to preserve valid prices if APIs rate-limit or fail temporarily
-const serverMemoryCache: Map<string, MarketTickerItem> = new Map();
+// Server memory cache to preserve valid prices & prevent API rate limiting
+const serverCacheMap = new Map<string, MarketAssetSnapshot>();
+let lastSnapshot: MarketDataSnapshot | null = null;
+let lastSnapshotTime = 0;
 
-function getBrasiliaTime(): string {
-  return new Date().toLocaleTimeString("pt-BR", {
-    timeZone: "America/Sao_Paulo",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+function isValidNumber(val: unknown): val is number {
+  return typeof val === "number" && !isNaN(val) && isFinite(val);
 }
 
-function formatPrice(val: number | null, currency: "BRL" | "USD" | "POINTS"): string {
-  if (val === null || isNaN(val)) return "—";
-  if (currency === "BRL") {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(val);
-  }
-  if (currency === "USD") {
-    return `US$ ${new Intl.NumberFormat("pt-BR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(val)}`;
-  }
-  // POINTS
-  return new Intl.NumberFormat("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(val);
-}
-
-// 1. Fetcher for Currencies and Brazil Assets via brapi.dev with AwesomeAPI & Yahoo fallbacks
-async function fetchBrapiData(): Promise<Map<string, Partial<MarketTickerItem>>> {
-  const map = new Map<string, Partial<MarketTickerItem>>();
-  const token = process.env.BRAPI_TOKEN;
-  const tokenQuery = token ? `?token=${encodeURIComponent(token)}` : "";
-
-  // Primary: brapi.dev API
-  if (token) {
-    const url = `https://brapi.dev/api/quote/USD-BRL,%5EBVSP${tokenQuery}`;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 4000);
-
-    try {
-      const res = await fetch(url, {
-        signal: controller.signal,
-        cache: "no-store",
-        headers: { Accept: "application/json" },
-      });
-      clearTimeout(timeout);
-
-      if (res.ok) {
-        const data = await res.json();
-        const results = data.results || [];
-
-        for (const item of results) {
-          if (item.symbol === "USD-BRL") {
-            const price = typeof item.regularMarketPrice === "number" ? item.regularMarketPrice : null;
-            const change = typeof item.regularMarketChangePercent === "number" ? item.regularMarketChangePercent : null;
-            map.set("USD/BRL", {
-              price,
-              formattedPrice: formatPrice(price, "BRL"),
-              changePercent: change !== null ? Number(change.toFixed(2)) : null,
-              direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-              lastUpdated: getBrasiliaTime(),
-              marketState: item.marketState?.toLowerCase() === "open" ? "open" : "closed",
-              isStale: false,
-              source: "brapi.dev",
-            });
-          }
-          if (item.symbol === "^BVSP") {
-            const price = typeof item.regularMarketPrice === "number" ? item.regularMarketPrice : null;
-            const change = typeof item.regularMarketChangePercent === "number" ? item.regularMarketChangePercent : null;
-            map.set("IBOV", {
-              price,
-              formattedPrice: formatPrice(price, "POINTS"),
-              changePercent: change !== null ? Number(change.toFixed(2)) : null,
-              direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-              lastUpdated: getBrasiliaTime(),
-              marketState: item.marketState?.toLowerCase() === "open" ? "open" : "closed",
-              isStale: false,
-              source: "brapi.dev",
-            });
-          }
-        }
-      }
-    } catch {
-      // Silently proceed to fallbacks if brapi.dev fails
-    }
-  }
-
-  // Fallback 1: AwesomeAPI for USD/BRL, EUR/BRL, GBP/BRL
-  const missingCurrencies = ["USD/BRL", "EUR/BRL", "GBP/BRL"].filter((k) => !map.has(k));
-  if (missingCurrencies.length > 0) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 4000);
-    try {
-      const res = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,GBP-BRL", {
-        signal: controller.signal,
-        cache: "no-store",
-      });
-      clearTimeout(timeout);
-      if (res.ok) {
-        const json = await res.json();
-        
-        if (json.USDBRL && !map.has("USD/BRL")) {
-          const price = parseFloat(json.USDBRL.bid);
-          const change = parseFloat(json.USDBRL.pctChange);
-          map.set("USD/BRL", {
-            price,
-            formattedPrice: formatPrice(price, "BRL"),
-            changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-            direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-            lastUpdated: getBrasiliaTime(),
-            marketState: "open",
-            isStale: false,
-            source: "AwesomeAPI (USD/BRL)",
-          });
-        }
-
-        if (json.EURBRL && !map.has("EUR/BRL")) {
-          const price = parseFloat(json.EURBRL.bid);
-          const change = parseFloat(json.EURBRL.pctChange);
-          map.set("EUR/BRL", {
-            price,
-            formattedPrice: formatPrice(price, "BRL"),
-            changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-            direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-            lastUpdated: getBrasiliaTime(),
-            marketState: "open",
-            isStale: false,
-            source: "AwesomeAPI (EUR/BRL)",
-          });
-        }
-
-        if (json.GBPBRL && !map.has("GBP/BRL")) {
-          const price = parseFloat(json.GBPBRL.bid);
-          const change = parseFloat(json.GBPBRL.pctChange);
-          map.set("GBP/BRL", {
-            price,
-            formattedPrice: formatPrice(price, "BRL"),
-            changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-            direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-            lastUpdated: getBrasiliaTime(),
-            marketState: "open",
-            isStale: false,
-            source: "AwesomeAPI (GBP/BRL)",
-          });
-        }
-      }
-    } catch {
-      // Skip fallback if offline
-    }
-  }
-
-  // Fallback 2: Yahoo Finance for ^BVSP (Ibovespa)
-  if (!map.has("IBOV")) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 4000);
-    try {
-      const res = await fetch("https://query1.finance.yahoo.com/v8/finance/chart/%5EBVSP?interval=1d&range=1d", {
-        signal: controller.signal,
-        headers: { "User-Agent": "Mozilla/5.0" },
-        cache: "no-store",
-      });
-      clearTimeout(timeout);
-      if (res.ok) {
-        const json = await res.json();
-        const meta = json?.chart?.result?.[0]?.meta;
-        if (meta) {
-          const price = typeof meta.regularMarketPrice === "number" ? meta.regularMarketPrice : null;
-          const prevClose = typeof meta.chartPreviousClose === "number" ? meta.chartPreviousClose : meta.previousClose;
-          let changePercent: number | null = null;
-          if (price !== null && typeof prevClose === "number" && prevClose > 0) {
-            changePercent = Number((((price - prevClose) / prevClose) * 100).toFixed(2));
-          }
-          map.set("IBOV", {
-            price,
-            formattedPrice: formatPrice(price, "POINTS"),
-            changePercent,
-            direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
-            lastUpdated: getBrasiliaTime(),
-            marketState: "open",
-            isStale: false,
-            source: "Yahoo Finance (IBOV)",
-          });
-        }
-      }
-    } catch {
-      // Skip fallback if offline
-    }
-  }
-
-  return map;
-}
-
-// 2. Fetcher for Crypto Assets via Bitstamp
-async function fetchBitstampData(): Promise<Map<string, Partial<MarketTickerItem>>> {
-  const map = new Map<string, Partial<MarketTickerItem>>();
+// 1. Fetcher for Crypto via Bitstamp REST
+async function fetchCryptoData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
+  const map = new Map<string, Partial<MarketAssetSnapshot>>();
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
+  const nowIso = new Date().toISOString();
 
   try {
     const [btcRes, ethRes] = await Promise.all([
@@ -223,15 +41,22 @@ async function fetchBitstampData(): Promise<Map<string, Partial<MarketTickerItem
       const btc = await btcRes.json();
       const price = parseFloat(btc.last);
       const change = parseFloat(btc.percent_change_24);
-      if (!isNaN(price)) {
+      const tsMs = parseInt(btc.timestamp, 10) * 1000;
+      const sourceTsIso = !isNaN(tsMs) ? new Date(tsMs).toISOString() : nowIso;
+
+      if (isValidNumber(price) && price > 0) {
         map.set("BTC/USD", {
+          symbol: "BTC/USD",
+          name: "Bitcoin",
           price,
-          formattedPrice: formatPrice(price, "USD"),
-          changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-          direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-          lastUpdated: getBrasiliaTime(),
-          marketState: "open", // Crypto 24/7
-          isStale: false,
+          formattedPrice: formatAssetValue(price, "USD"),
+          currency: "USD",
+          changePercent: isValidNumber(change) ? Number(change.toFixed(2)) : 0,
+          direction: isValidNumber(change) && change > 0 ? "up" : change < 0 ? "down" : "neutral",
+          sourceTimestamp: sourceTsIso,
+          receivedAt: nowIso,
+          marketState: "open",
+          quoteStatus: "realtime",
           source: "Bitstamp",
         });
       }
@@ -241,29 +66,203 @@ async function fetchBitstampData(): Promise<Map<string, Partial<MarketTickerItem
       const eth = await ethRes.json();
       const price = parseFloat(eth.last);
       const change = parseFloat(eth.percent_change_24);
-      if (!isNaN(price)) {
+      const tsMs = parseInt(eth.timestamp, 10) * 1000;
+      const sourceTsIso = !isNaN(tsMs) ? new Date(tsMs).toISOString() : nowIso;
+
+      if (isValidNumber(price) && price > 0) {
         map.set("ETH/USD", {
+          symbol: "ETH/USD",
+          name: "Ethereum",
           price,
-          formattedPrice: formatPrice(price, "USD"),
-          changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-          direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-          lastUpdated: getBrasiliaTime(),
-          marketState: "open", // Crypto 24/7
-          isStale: false,
+          formattedPrice: formatAssetValue(price, "USD"),
+          currency: "USD",
+          changePercent: isValidNumber(change) ? Number(change.toFixed(2)) : 0,
+          direction: isValidNumber(change) && change > 0 ? "up" : change < 0 ? "down" : "neutral",
+          sourceTimestamp: sourceTsIso,
+          receivedAt: nowIso,
+          marketState: "open",
+          quoteStatus: "realtime",
           source: "Bitstamp",
         });
       }
     }
   } catch (err) {
-    console.error("[Bitstamp fetch error]:", err);
+    console.error("[Bitstamp REST fetch error]:", err);
   }
   return map;
 }
 
+// 2. Fetcher for Forex & B3 Indices via brapi.dev & AwesomeAPI Fallback
+async function fetchBrapiData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
+  const map = new Map<string, Partial<MarketAssetSnapshot>>();
+  const token = process.env.BRAPI_TOKEN;
+  const nowIso = new Date().toISOString();
+
+  if (token) {
+    const url = `https://brapi.dev/api/quote/USD-BRL,%5EBVSP?token=${encodeURIComponent(token)}`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+
+    try {
+      const res = await fetch(url, {
+        signal: controller.signal,
+        cache: "no-store",
+        headers: { Accept: "application/json" },
+      });
+      clearTimeout(timeout);
+
+      if (res.ok) {
+        const data = await res.json();
+        const results = data.results || [];
+
+        for (const item of results) {
+          if (item.symbol === "USD-BRL") {
+            const price = isValidNumber(item.regularMarketPrice) ? item.regularMarketPrice : null;
+            const change = isValidNumber(item.regularMarketChangePercent) ? item.regularMarketChangePercent : null;
+            const isOpen = item.marketState?.toLowerCase() === "open";
+            if (price !== null) {
+              map.set("USD/BRL", {
+                symbol: "USD/BRL",
+                name: "Dólar Comercial",
+                price,
+                formattedPrice: formatAssetValue(price, "BRL"),
+                currency: "BRL",
+                changePercent: change !== null ? Number(change.toFixed(2)) : null,
+                direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+                sourceTimestamp: item.regularMarketTime ? new Date(item.regularMarketTime).toISOString() : nowIso,
+                receivedAt: nowIso,
+                marketState: isOpen ? "open" : "closed",
+                quoteStatus: isOpen ? "realtime" : "close",
+                source: "brapi.dev",
+              });
+            }
+          }
+          if (item.symbol === "^BVSP") {
+            const price = isValidNumber(item.regularMarketPrice) ? item.regularMarketPrice : null;
+            const change = isValidNumber(item.regularMarketChangePercent) ? item.regularMarketChangePercent : null;
+            const isOpen = item.marketState?.toLowerCase() === "open";
+            if (price !== null) {
+              map.set("IBOV", {
+                symbol: "IBOV",
+                name: "Ibovespa",
+                price,
+                formattedPrice: formatAssetValue(price, "POINTS"),
+                currency: "POINTS",
+                changePercent: change !== null ? Number(change.toFixed(2)) : null,
+                direction: change === null || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+                sourceTimestamp: item.regularMarketTime ? new Date(item.regularMarketTime).toISOString() : nowIso,
+                receivedAt: nowIso,
+                marketState: isOpen ? "open" : "closed",
+                quoteStatus: isOpen ? "realtime" : "close",
+                source: "brapi.dev",
+              });
+            }
+          }
+        }
+      }
+    } catch {
+      // Silently fall back to AwesomeAPI
+    }
+  }
+
+  // AwesomeAPI Fallback for Currencies
+  const missingCurrencies = ["USD/BRL", "EUR/BRL", "GBP/BRL"].filter((k) => !map.has(k));
+  if (missingCurrencies.length > 0) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+    try {
+      const res = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,GBP-BRL", {
+        signal: controller.signal,
+        cache: "no-store",
+      });
+      clearTimeout(timeout);
+      if (res.ok) {
+        const json = await res.json();
+        const processAwesomeItem = (key: string, symbol: string, name: string) => {
+          if (json[key] && !map.has(symbol)) {
+            const price = parseFloat(json[key].bid);
+            const change = parseFloat(json[key].pctChange);
+            const tsMs = parseInt(json[key].timestamp, 10) * 1000;
+            if (isValidNumber(price)) {
+              map.set(symbol, {
+                symbol,
+                name,
+                price,
+                formattedPrice: formatAssetValue(price, "BRL"),
+                currency: "BRL",
+                changePercent: isValidNumber(change) ? Number(change.toFixed(2)) : null,
+                direction: !isValidNumber(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+                sourceTimestamp: !isNaN(tsMs) ? new Date(tsMs).toISOString() : nowIso,
+                receivedAt: nowIso,
+                marketState: "open",
+                quoteStatus: "realtime",
+                source: `AwesomeAPI (${symbol})`,
+              });
+            }
+          }
+        };
+
+        processAwesomeItem("USDBRL", "USD/BRL", "Dólar Comercial");
+        processAwesomeItem("EURBRL", "EUR/BRL", "Euro");
+        processAwesomeItem("GBPBRL", "GBP/BRL", "Libra Esterlina");
+      }
+    } catch {
+      // Skip if offline
+    }
+  }
+
+  // Yahoo Finance Fallback for Ibovespa
+  if (!map.has("IBOV")) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+    try {
+      const res = await fetch("https://query1.finance.yahoo.com/v8/finance/chart/%5EBVSP?interval=1d&range=1d", {
+        signal: controller.signal,
+        headers: { "User-Agent": "Mozilla/5.0" },
+        cache: "no-store",
+      });
+      clearTimeout(timeout);
+      if (res.ok) {
+        const json = await res.json();
+        const meta = json?.chart?.result?.[0]?.meta;
+        if (meta) {
+          const price = isValidNumber(meta.regularMarketPrice) ? meta.regularMarketPrice : null;
+          const prevClose = isValidNumber(meta.chartPreviousClose) ? meta.chartPreviousClose : meta.previousClose;
+          let changePercent: number | null = null;
+          if (price !== null && isValidNumber(prevClose) && prevClose > 0) {
+            changePercent = Number((((price - prevClose) / prevClose) * 100).toFixed(2));
+          }
+          if (price !== null) {
+            map.set("IBOV", {
+              symbol: "IBOV",
+              name: "Ibovespa",
+              price,
+              formattedPrice: formatAssetValue(price, "POINTS"),
+              currency: "POINTS",
+              changePercent,
+              direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
+              sourceTimestamp: meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toISOString() : nowIso,
+              receivedAt: nowIso,
+              marketState: "open",
+              quoteStatus: "realtime",
+              source: "Yahoo Finance (IBOV)",
+            });
+          }
+        }
+      }
+    } catch {
+      // Skip if offline
+    }
+  }
+
+  return map;
+}
+
 // 3. Fetcher for International Indices & Gold via Twelve Data or Yahoo Finance Fallback
-async function fetchTwelveData(): Promise<Map<string, Partial<MarketTickerItem>>> {
-  const map = new Map<string, Partial<MarketTickerItem>>();
+async function fetchTwelveData(): Promise<Map<string, Partial<MarketAssetSnapshot>>> {
+  const map = new Map<string, Partial<MarketAssetSnapshot>>();
   const apiKey = process.env.TWELVE_DATA_API_KEY;
+  const nowIso = new Date().toISOString();
 
   if (apiKey) {
     const url = `https://api.twelvedata.com/quote?symbol=SPX,IXIC,VIX,XAU/USD,DJI&apikey=${encodeURIComponent(apiKey)}`;
@@ -279,189 +278,258 @@ async function fetchTwelveData(): Promise<Map<string, Partial<MarketTickerItem>>
 
       if (res.ok) {
         const data = await res.json();
-        const parseTwelveItem = (itemData: Record<string, unknown> | undefined, symbolKey: string, currency: "USD" | "POINTS") => {
+        const parseTwelveItem = (itemData: Record<string, unknown> | undefined, symbolKey: string, name: string, currency: "USD" | "POINTS") => {
           if (!itemData || itemData.code) return;
           const price = parseFloat(String(itemData.close || itemData.price));
           const change = parseFloat(String(itemData.percent_change));
-          if (!isNaN(price)) {
+          const isOpen = Boolean(itemData.is_market_open);
+          if (isValidNumber(price)) {
             map.set(symbolKey, {
+              symbol: symbolKey,
+              name,
               price,
-              formattedPrice: formatPrice(price, currency),
-              changePercent: !isNaN(change) ? Number(change.toFixed(2)) : null,
-              direction: isNaN(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
-              lastUpdated: getBrasiliaTime(),
-              marketState: itemData.is_market_open ? "open" : "closed",
-              isStale: false,
+              formattedPrice: formatAssetValue(price, currency),
+              currency,
+              changePercent: isValidNumber(change) ? Number(change.toFixed(2)) : null,
+              direction: !isValidNumber(change) || change === 0 ? "neutral" : change > 0 ? "up" : "down",
+              sourceTimestamp: itemData.timestamp ? new Date(Number(itemData.timestamp) * 1000).toISOString() : nowIso,
+              receivedAt: nowIso,
+              marketState: isOpen ? "open" : "closed",
+              quoteStatus: isOpen ? "realtime" : "close",
               source: "Twelve Data",
             });
           }
         };
 
-        parseTwelveItem(data["SPX"], "S&P 500", "POINTS");
-        parseTwelveItem(data["IXIC"], "NASDAQ", "POINTS");
-        parseTwelveItem(data["VIX"], "VIX", "POINTS");
-        parseTwelveItem(data["XAU/USD"], "XAU/USD", "USD");
-        parseTwelveItem(data["DJI"], "DJI", "POINTS");
+        parseTwelveItem(data["SPX"], "S&P 500", "S&P 500", "POINTS");
+        parseTwelveItem(data["IXIC"], "NASDAQ", "Nasdaq Composite", "POINTS");
+        parseTwelveItem(data["VIX"], "VIX", "VIX Volatilidade", "POINTS");
+        parseTwelveItem(data["XAU/USD"], "XAU/USD", "Ouro Spot", "USD");
+        parseTwelveItem(data["DJI"], "DJI", "Dow Jones", "POINTS");
       }
     } catch (err) {
       console.error("[Twelve Data fetch error]:", err);
     }
   }
 
-  // If Twelve Data key is missing or didn't return items, attempt public Yahoo Finance quote v8
-  const missingKeys = ["S&P 500", "NASDAQ", "VIX", "XAU/USD", "DJI"].filter((k) => !map.has(k));
-  if (missingKeys.length > 0) {
-    const symbolMap: Record<string, string> = {
-      "S&P 500": "^GSPC",
-      NASDAQ: "^IXIC",
-      VIX: "^VIX",
-      "XAU/USD": "GC=F",
-      DJI: "^DJI",
-    };
+  // Public Yahoo Finance Fallback
+  const missingKeys = [
+    { key: "S&P 500", symbol: "^GSPC", name: "S&P 500", curr: "POINTS" as const },
+    { key: "NASDAQ", symbol: "^IXIC", name: "Nasdaq Composite", curr: "POINTS" as const },
+    { key: "VIX", symbol: "^VIX", name: "VIX Volatilidade", curr: "POINTS" as const },
+    { key: "XAU/USD", symbol: "GC=F", name: "Ouro Spot", curr: "USD" as const },
+    { key: "DJI", symbol: "^DJI", name: "Dow Jones", curr: "POINTS" as const },
+  ].filter((k) => !map.has(k.key));
 
-    for (const key of missingKeys) {
-      const yahooSymbol = symbolMap[key];
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooSymbol)}?interval=1d&range=1d`;
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 4000);
+  for (const item of missingKeys) {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(item.symbol)}?interval=1d&range=1d`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
 
-      try {
-        const res = await fetch(url, {
-          signal: controller.signal,
-          headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-          },
-          cache: "no-store",
-        }).catch(() => null);
-        clearTimeout(timeout);
+    try {
+      const res = await fetch(url, {
+        signal: controller.signal,
+        headers: { "User-Agent": "Mozilla/5.0" },
+        cache: "no-store",
+      }).catch(() => null);
+      clearTimeout(timeout);
 
-        if (res && res.ok) {
-          const json = await res.json();
-          const meta = json?.chart?.result?.[0]?.meta;
-          if (meta) {
-            const price = typeof meta.regularMarketPrice === "number" ? meta.regularMarketPrice : null;
-            const prevClose = typeof meta.chartPreviousClose === "number" ? meta.chartPreviousClose : meta.previousClose;
-            let changePercent: number | null = null;
-            if (price !== null && typeof prevClose === "number" && prevClose > 0) {
-              changePercent = Number((((price - prevClose) / prevClose) * 100).toFixed(2));
-            }
-            map.set(key, {
+      if (res && res.ok) {
+        const json = await res.json();
+        const meta = json?.chart?.result?.[0]?.meta;
+        if (meta) {
+          const price = isValidNumber(meta.regularMarketPrice) ? meta.regularMarketPrice : null;
+          const prevClose = isValidNumber(meta.chartPreviousClose) ? meta.chartPreviousClose : meta.previousClose;
+          let changePercent: number | null = null;
+          if (price !== null && isValidNumber(prevClose) && prevClose > 0) {
+            changePercent = Number((((price - prevClose) / prevClose) * 100).toFixed(2));
+          }
+          if (price !== null) {
+            map.set(item.key, {
+              symbol: item.key,
+              name: item.name,
               price,
-              formattedPrice: formatPrice(price, key === "XAU/USD" ? "USD" : "POINTS"),
+              formattedPrice: formatAssetValue(price, item.curr),
+              currency: item.curr,
               changePercent,
               direction: changePercent === null || changePercent === 0 ? "neutral" : changePercent > 0 ? "up" : "down",
-              lastUpdated: getBrasiliaTime(),
+              sourceTimestamp: meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toISOString() : nowIso,
+              receivedAt: nowIso,
               marketState: "open",
-              isStale: false,
-              source: "Yahoo Finance (Public)",
+              quoteStatus: "realtime",
+              source: "Yahoo Finance",
             });
           }
         }
-      } catch {
-        // Silently skip if public endpoint fails
       }
+    } catch {
+      // Skip if offline
     }
   }
 
   return map;
 }
 
-// Master Market Data Provider
-export async function getMarketTickerData(): Promise<MarketResponse> {
-  const brasiliaTime = getBrasiliaTime();
+// Master Server Snapshot Generator
+export async function getCanonicalMarketSnapshot(): Promise<MarketDataSnapshot> {
+  const nowMs = Date.now();
+  const nowIso = new Date(nowMs).toISOString();
 
-  // Run provider fetchers in parallel with error boundaries
-  const [brapiData, cryptoData, twelveData] = await Promise.all([
+  // Return server-cached snapshot if generated < 10 seconds ago
+  if (lastSnapshot && nowMs - lastSnapshotTime < 10000) {
+    return lastSnapshot;
+  }
+
+  // Fetch all categories in parallel with error boundaries
+  const [cryptoData, brapiData, twelveData, macroData] = await Promise.all([
+    fetchCryptoData().catch(() => new Map()),
     fetchBrapiData().catch(() => new Map()),
-    fetchBitstampData().catch(() => new Map()),
     fetchTwelveData().catch(() => new Map()),
+    getMacroIndicatorsData().catch(() => null),
   ]);
 
+  const assets: Record<string, MarketAssetSnapshot> = {};
   let hasErrors = false;
 
-  // Master asset list definition
-  const masterListConfig = [
-    { symbol: "USD/BRL", name: "Dólar Comercial", currency: "BRL" as const, providerData: brapiData.get("USD/BRL") },
-    { symbol: "EUR/BRL", name: "Euro", currency: "BRL" as const, providerData: brapiData.get("EUR/BRL") },
-    { symbol: "GBP/BRL", name: "Libra Esterlina", currency: "BRL" as const, providerData: brapiData.get("GBP/BRL") },
-    { symbol: "XAU/USD", name: "Ouro", currency: "USD" as const, providerData: twelveData.get("XAU/USD") },
-    { symbol: "S&P 500", name: "S&P 500", currency: "POINTS" as const, providerData: twelveData.get("S&P 500") },
-    { symbol: "NASDAQ", name: "Nasdaq Composite", currency: "POINTS" as const, providerData: twelveData.get("NASDAQ") },
-    { symbol: "IBOV", name: "Ibovespa", currency: "POINTS" as const, providerData: brapiData.get("IBOV") },
-    { symbol: "DJI", name: "Dow Jones", currency: "POINTS" as const, providerData: twelveData.get("DJI") },
-    { symbol: "VIX", name: "VIX", currency: "POINTS" as const, providerData: twelveData.get("VIX") },
-    { symbol: "BTC/USD", name: "Bitcoin", currency: "USD" as const, providerData: cryptoData.get("BTC/USD") },
-    { symbol: "ETH/USD", name: "Ethereum", currency: "USD" as const, providerData: cryptoData.get("ETH/USD") },
+  const masterList = [
+    { key: "USD/BRL", data: brapiData.get("USD/BRL") },
+    { key: "EUR/BRL", data: brapiData.get("EUR/BRL") },
+    { key: "GBP/BRL", data: brapiData.get("GBP/BRL") },
+    { key: "XAU/USD", data: twelveData.get("XAU/USD") },
+    { key: "S&P 500", data: twelveData.get("S&P 500") },
+    { key: "NASDAQ", data: twelveData.get("NASDAQ") },
+    { key: "IBOV", data: brapiData.get("IBOV") },
+    { key: "DJI", data: twelveData.get("DJI") },
+    { key: "VIX", data: twelveData.get("VIX") },
+    { key: "BTC/USD", data: cryptoData.get("BTC/USD") },
+    { key: "ETH/USD", data: cryptoData.get("ETH/USD") },
   ];
 
-  // Default baseline market values if APIs are offline or loading on cold start
-  const baselineFallbacks: Record<string, { price: number; formattedPrice: string; changePercent: number }> = {
-    "USD/BRL": { price: 5.68, formattedPrice: "R$ 5,68", changePercent: 0.24 },
-    "EUR/BRL": { price: 6.15, formattedPrice: "R$ 6,15", changePercent: 0.18 },
-    "GBP/BRL": { price: 7.32, formattedPrice: "R$ 7,32", changePercent: 0.31 },
-    "XAU/USD": { price: 2685.50, formattedPrice: "US$ 2.685,50", changePercent: 0.45 },
-    "S&P 500": { price: 5920.40, formattedPrice: "5.920,40", changePercent: 0.35 },
-    "NASDAQ": { price: 18950.20, formattedPrice: "18.950,20", changePercent: 0.52 },
-    "IBOV": { price: 131250.00, formattedPrice: "131.250,00", changePercent: 0.28 },
-    "DJI": { price: 43850.10, formattedPrice: "43.850,10", changePercent: 0.15 },
-    "VIX": { price: 14.80, formattedPrice: "14,80", changePercent: -1.20 },
-    "BTC/USD": { price: 96450.00, formattedPrice: "US$ 96.450,00", changePercent: 1.85 },
-    "ETH/USD": { price: 3420.00, formattedPrice: "US$ 3.420,00", changePercent: 2.10 },
-  };
+  for (const item of masterList) {
+    const config = MARKET_ASSETS_CONFIG[item.key];
+    const fetched = item.data;
 
-  const items: MarketTickerItem[] = masterListConfig.map((config) => {
-    const fetched = config.providerData;
-
-    // Check if we received fresh valid data
-    if (fetched && fetched.price !== undefined && fetched.price !== null) {
-      const item: MarketTickerItem = {
+    if (fetched && isValidNumber(fetched.price) && fetched.price > 0) {
+      const snapshot: MarketAssetSnapshot = {
         symbol: config.symbol,
         name: config.name,
         price: fetched.price,
-        formattedPrice: fetched.formattedPrice || formatPrice(fetched.price, config.currency),
+        formattedPrice: fetched.formattedPrice || formatAssetValue(fetched.price, config.currency),
         currency: config.currency,
         changePercent: fetched.changePercent ?? null,
         direction: fetched.direction || "neutral",
-        lastUpdated: fetched.lastUpdated || brasiliaTime,
+        sourceTimestamp: fetched.sourceTimestamp || nowIso,
+        receivedAt: nowIso,
         marketState: fetched.marketState || "open",
-        isStale: false,
-        source: fetched.source || "API Direct",
+        quoteStatus: fetched.quoteStatus || "realtime",
+        source: fetched.source || "API",
       };
-      serverMemoryCache.set(config.symbol, item);
-      return item;
+      serverCacheMap.set(config.symbol, snapshot);
+      assets[config.symbol] = snapshot;
+    } else {
+      // Use cached snapshot if available on server
+      const cached = serverCacheMap.get(config.symbol);
+      if (cached && cached.price !== null) {
+        assets[config.symbol] = {
+          ...cached,
+          quoteStatus: "stale",
+          source: `${cached.source} (Cache)`,
+        };
+      } else {
+        hasErrors = true;
+        // Fallback for unavailable assets (NO fake hardcoded prices pretending to be live)
+        assets[config.symbol] = {
+          symbol: config.symbol,
+          name: config.name,
+          price: null,
+          formattedPrice: "—",
+          currency: config.currency,
+          changePercent: null,
+          direction: "neutral",
+          sourceTimestamp: nowIso,
+          receivedAt: nowIso,
+          marketState: "closed",
+          quoteStatus: "unavailable",
+          source: "Servidor HDZ",
+        };
+      }
     }
+  }
 
-    // Check if we have a previously cached valid item in memory
-    const cachedItem = serverMemoryCache.get(config.symbol);
-    if (cachedItem && cachedItem.price !== null) {
-      return {
-        ...cachedItem,
-        isStale: true,
-        source: "Cotação anterior",
-      };
-    }
-
-    // Baseline fallback to guarantee 100% immediate quote display on mobile
-    const fallback = baselineFallbacks[config.symbol] || { price: 100, formattedPrice: "100,00", changePercent: 0 };
-    return {
-      symbol: config.symbol,
-      name: config.name,
-      price: fallback.price,
-      formattedPrice: fallback.formattedPrice,
-      currency: config.currency,
-      changePercent: fallback.changePercent,
-      direction: fallback.changePercent > 0 ? "up" : fallback.changePercent < 0 ? "down" : "neutral",
-      lastUpdated: brasiliaTime,
-      marketState: "open",
-      isStale: true,
-      source: "Mercado Base",
+  // Macro Indicators (Selic & IPCA)
+  if (macroData) {
+    assets["SELIC"] = {
+      symbol: "SELIC",
+      name: "Taxa Selic",
+      price: macroData.selic.value,
+      formattedPrice: macroData.selic.formattedValue,
+      currency: "%",
+      changePercent: null,
+      direction: "neutral",
+      sourceTimestamp: nowIso,
+      receivedAt: nowIso,
+      marketState: "reference",
+      quoteStatus: macroData.selic.status === "official" ? "reference" : "stale",
+      source: "BCB SGS 432",
+      referenceDate: macroData.selic.referenceDate,
     };
-  });
+
+    assets["IPCA12M"] = {
+      symbol: "IPCA12M",
+      name: "IPCA 12m",
+      price: macroData.ipca12m.value,
+      formattedPrice: macroData.ipca12m.formattedValue,
+      currency: "%",
+      changePercent: null,
+      direction: "neutral",
+      sourceTimestamp: nowIso,
+      receivedAt: nowIso,
+      marketState: "reference",
+      quoteStatus: macroData.ipca12m.status === "official" ? "reference" : "stale",
+      source: "IBGE / BCB SGS 13522",
+      referenceMonth: macroData.ipca12m.referenceMonth,
+    };
+  }
+
+  const snapshot: MarketDataSnapshot = {
+    snapshotId: `snap_${nowMs.toString(36)}`,
+    generatedAt: nowIso,
+    timezone: "UTC",
+    assets,
+    hasErrors,
+  };
+
+  lastSnapshot = snapshot;
+  lastSnapshotTime = nowMs;
+  return snapshot;
+}
+
+// Backwards Compatible Wrapper for Legacy `/api/markets` Consumers
+export async function getMarketTickerData(): Promise<MarketResponse> {
+  const snapshot = await getCanonicalMarketSnapshot();
+  const brasiliaTime = formatMarketTimeUTC(snapshot.generatedAt);
+
+  const items: MarketTickerItem[] = Object.values(snapshot.assets).map((asset) => ({
+    symbol: asset.symbol,
+    name: asset.name,
+    price: asset.price,
+    formattedPrice: asset.formattedPrice,
+    currency: asset.currency,
+    changePercent: asset.changePercent,
+    direction: asset.direction,
+    lastUpdated: brasiliaTime,
+    marketState: asset.marketState === "closed" ? "closed" : "open",
+    isStale: asset.quoteStatus === "stale" || asset.quoteStatus === "unavailable",
+    source: asset.source,
+    quoteStatus: asset.quoteStatus,
+    sourceTimestamp: asset.sourceTimestamp,
+  }));
 
   return {
     items,
     fetchedAt: brasiliaTime,
-    hasErrors,
+    hasErrors: snapshot.hasErrors,
+    snapshotId: snapshot.snapshotId,
+    generatedAt: snapshot.generatedAt,
   };
 }
-

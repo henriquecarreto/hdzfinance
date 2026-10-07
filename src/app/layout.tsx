@@ -3,6 +3,7 @@ import { Outfit, Plus_Jakarta_Sans, Lora } from "next/font/google";
 import "./globals.css";
 import HeaderWrapper from "@/components/HeaderWrapper";
 import Footer from "@/components/Footer";
+import { MarketDataProvider } from "@/context/MarketDataContext";
 import { CryptoMarketProvider } from "@/context/CryptoMarketContext";
 
 const outfit = Outfit({
@@ -90,13 +91,15 @@ export default function RootLayout({
       className={`${outfit.variable} ${plusJakartaSans.variable} ${lora.variable} dark`}
     >
       <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white">
-        <CryptoMarketProvider>
-          <HeaderWrapper />
+        <MarketDataProvider>
+          <CryptoMarketProvider>
+            <HeaderWrapper />
 
-          <main className="flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
 
-          <Footer />
-        </CryptoMarketProvider>
+            <Footer />
+          </CryptoMarketProvider>
+        </MarketDataProvider>
       </body>
     </html>
   );

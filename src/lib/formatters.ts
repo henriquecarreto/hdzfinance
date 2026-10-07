@@ -31,10 +31,14 @@ export function formatUsdCustom(val: number | null): string {
   return `US$ ${formatted}`;
 }
 
-export function formatAssetValue(val: number | null, currency: "BRL" | "USD" | "POINTS"): string {
+export function formatAssetValue(
+  val: number | null,
+  currency: "BRL" | "USD" | "POINTS" | "%"
+): string {
   if (val === null || isNaN(val)) return "—";
   if (currency === "BRL") return formatBRL.format(val);
   if (currency === "USD") return formatUsdCustom(val);
+  if (currency === "%") return `${formatPercent.format(val)}%`;
   return formatPoints.format(val);
 }
 
@@ -48,4 +52,20 @@ export function formatChangePercent(val: number | null): string {
   if (normalized > 0) return `+${formatted}%`;
   if (normalized < 0) return `-${formatted}%`;
   return `${formatted}%`;
+}
+
+export function formatMarketTimeUTC(isoString: string): string {
+  if (!isoString) return "";
+  try {
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return isoString;
+    return new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(d);
+  } catch {
+    return isoString;
+  }
 }

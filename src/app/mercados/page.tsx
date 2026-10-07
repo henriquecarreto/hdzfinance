@@ -1,112 +1,66 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { MarketTickerItem, MarketResponse } from "@/types/market";
-import { MacroDataResponse } from "@/lib/macro-provider";
+import { useMarketData } from "@/context/MarketDataContext";
+import { MarketAssetSnapshot } from "@/types/market";
 import { PremiumMarketIcon } from "@/components/MarketIcons";
 import TradingViewAdvancedChart from "@/components/TradingViewAdvancedChart";
 import MarketPartnerships from "@/components/MarketPartnerships";
-import { TrendingUp, TrendingDown, ShieldCheck } from "lucide-react";
-import { useLiveCryptoPrices } from "@/context/CryptoMarketContext";
+import { TrendingUp, TrendingDown, ShieldCheck, Clock } from "lucide-react";
 import { formatAssetValue, formatChangePercent } from "@/lib/formatters";
 
 export default function MarketsPage() {
-  const liveCrypto = useLiveCryptoPrices();
-  const [marketItems, setMarketItems] = useState<MarketTickerItem[]>([]);
-  const [macroData, setMacroData] = useState<MacroDataResponse | null>(null);
-  const [macroLoading, setMacroLoading] = useState(true);
-  const [tickerLoading, setTickerLoading] = useState(true);
+  const { assets, loading, lastFetchedAt } = useMarketData();
 
-  // Fetch Macro Indicators (/api/market/macro)
-  const fetchMacro = useCallback(() => {
-    fetch("/api/market/macro")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: MacroDataResponse | null) => {
-        if (data && data.selic && data.ipca12m) {
-          setMacroData(data);
-        }
-        setMacroLoading(false);
-      })
-      .catch(() => setMacroLoading(false));
-  }, []);
+  const renderBadge = (status: MarketAssetSnapshot["quoteStatus"], source?: string) => {
+    switch (status) {
+      case "realtime":
+        return (
+          <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#19d3a2] animate-pulse" aria-hidden="true" />
+            <span>Tempo real</span>
+          </span>
+        );
+      case "close":
+        return (
+          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#A9B4C2] bg-[#A9B4C2]/10 border border-[#A9B4C2]/30 rounded">
+            Último fechamento
+          </span>
+        );
+      case "delayed":
+        return (
+          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
+            Atraso 15 min
+          </span>
+        );
+      case "stale":
+        return (
+          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
+            Com atraso
+          </span>
+        );
+      case "reference":
+        return (
+          <span className="inline-flex items-center space-x-1 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
+            <ShieldCheck className="h-3 w-3 mr-1" />
+            <span>{source || "Oficial"}</span>
+          </span>
+        );
+      case "unavailable":
+      default:
+        return (
+          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#FF5967] bg-[#FF5967]/10 border border-[#FF5967]/30 rounded">
+            Indisponível
+          </span>
+        );
+    }
+  };
 
-  // Fetch Market Ticker Quotes (/api/markets)
-  const fetchTicker = useCallback(() => {
-    fetch("/api/markets")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: MarketResponse | null) => {
-        if (data && data.items) {
-          setMarketItems(data.items);
-        }
-        setTickerLoading(false);
-      })
-      .catch(() => setTickerLoading(false));
-  }, []);
+  const renderCompactCard = (assetKey: string) => {
+    const asset = assets[assetKey];
+    if (!asset) return null;
 
-  useEffect(() => {
-    fetchMacro();
-    fetchTicker();
-
-    // Controlled polling intervals
-    const tickerInterval = setInterval(() => {
-      if (document.visibilityState === "visible") {
-        fetchTicker();
-      }
-    }, 15000); // 15s controlled polling
-
-    const macroInterval = setInterval(() => {
-      if (document.visibilityState === "visible") {
-        fetchMacro();
-      }
-    }, 3600000); // 1 hr controlled polling for macro
-
-    const handleVisibility = () => {
-      if (document.visibilityState === "visible") {
-        fetchTicker();
-        fetchMacro();
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      clearInterval(tickerInterval);
-      clearInterval(macroInterval);
-      document.removeEventListener("visibilitychange", handleVisibility);
-    };
-  }, [fetchMacro, fetchTicker]);
-
-  // Order definitions for Moedas e Proteção (4 cards) and Índices (4 cards)
-  const currencySymbolsOrder = ["USD/BRL", "EUR/BRL", "GBP/BRL", "XAU/USD"];
-  const indexSymbolsOrder = ["S&P 500", "NASDAQ", "IBOV", "DJI"];
-
-  const currencyIndicators = currencySymbolsOrder
-    .map((sym) => marketItems.find((m) => m.symbol === sym))
-    .filter((item): item is MarketTickerItem => Boolean(item));
-
-  const indexIndicators = indexSymbolsOrder
-    .map((sym) => marketItems.find((m) => m.symbol === sym))
-    .filter((item): item is MarketTickerItem => Boolean(item));
-
-  // Crypto cards data definitions bound to single Bitstamp source
-  const cryptoCards = [
-    {
-      symbol: "BTC/USD",
-      name: "Bitcoin",
-      quote: liveCrypto.BTC,
-      fallbackItem: marketItems.find((m) => m.symbol === "BTC/USD"),
-    },
-    {
-      symbol: "ETH/USD",
-      name: "Ethereum",
-      quote: liveCrypto.ETH,
-      fallbackItem: marketItems.find((m) => m.symbol === "ETH/USD"),
-    },
-  ];
-
-  const renderCompactCard = (item: MarketTickerItem) => {
-    const isPositive = (item.changePercent ?? 0) > 0;
-    const isNegative = (item.changePercent ?? 0) < 0;
+    const isPositive = (asset.changePercent ?? 0) > 0;
+    const isNegative = (asset.changePercent ?? 0) < 0;
 
     const changeColor = isPositive
       ? "text-[#19d3a2]"
@@ -115,55 +69,53 @@ export default function MarketsPage() {
       : "text-[#a9b4c2]";
 
     const displaySymbol =
-      item.symbol === "NASDAQ"
+      asset.symbol === "NASDAQ"
         ? "IXIC"
-        : item.symbol === "S&P 500"
+        : asset.symbol === "S&P 500"
         ? "SPX"
-        : item.symbol;
+        : asset.symbol;
 
     return (
       <div
-        key={item.symbol}
+        key={asset.symbol}
         className="market-card--compact flex flex-col justify-between space-y-3.5"
       >
         <div className="flex items-center justify-between">
           <div className="market-card-header min-w-0 flex-1">
             <div className="market-card-brand">
-              <PremiumMarketIcon symbol={item.symbol} />
+              <PremiumMarketIcon symbol={asset.symbol} />
             </div>
             <div className="market-card-identification">
               <span className="market-card-symbol text-[#A9B4C2] uppercase block tracking-wider">
                 {displaySymbol}
               </span>
               <h3 className="font-outfit market-card-name text-[#F5F7FA] truncate">
-                {item.name}
+                {asset.name}
               </h3>
             </div>
           </div>
 
-          {item.isStale && (
-            <span className="px-1.5 py-0.5 text-[9px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded shrink-0 ml-2">
-              Com atraso
-            </span>
-          )}
+          <div className="shrink-0 ml-2">
+            {renderBadge(asset.quoteStatus, asset.source)}
+          </div>
         </div>
 
         <div className="flex items-baseline justify-between border-t border-white/[0.08] pt-3">
           <span className="market-card-value text-[#F5F7FA]">
-            {item.price !== null ? formatAssetValue(item.price, item.currency) : "—"}
+            {asset.price !== null ? formatAssetValue(asset.price, asset.currency) : "—"}
           </span>
 
-          {item.changePercent !== null ? (
+          {asset.changePercent !== null ? (
             <span
               className={`inline-flex items-center market-card-change ${changeColor}`}
-              aria-label={`Variação de ${formatChangePercent(item.changePercent)}`}
+              aria-label={`Variação de ${formatChangePercent(asset.changePercent)}`}
             >
               {isPositive ? (
                 <TrendingUp className="h-3.5 w-3.5 mr-0.5 shrink-0" aria-hidden="true" />
               ) : isNegative ? (
                 <TrendingDown className="h-3.5 w-3.5 mr-0.5 shrink-0" aria-hidden="true" />
               ) : null}
-              {formatChangePercent(item.changePercent)}
+              {formatChangePercent(asset.changePercent)}
             </span>
           ) : (
             <span className="text-[11px] font-mono text-[#A9B4C2]">Dados indisponíveis</span>
@@ -173,6 +125,11 @@ export default function MarketsPage() {
     );
   };
 
+  const selicAsset = assets["SELIC"];
+  const ipcaAsset = assets["IPCA12M"];
+  const btcAsset = assets["BTC/USD"];
+  const ethAsset = assets["ETH/USD"];
+
   return (
     <div className="markets-page markets-main py-10 md:py-16 font-sans">
       <div className="markets-container space-y-14 md:space-y-16">
@@ -180,9 +137,17 @@ export default function MarketsPage() {
         {/* ==================== 1. PAINEL INTRODUTÓRIO ==================== */}
         <header className="markets-hero text-left">
           <div className="space-y-4 max-w-4xl">
-            <span className="text-[12px] font-bold text-[#F59A18] uppercase tracking-widest block">
-              PAINEL DE MERCADOS
-            </span>
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="text-[12px] font-bold text-[#F59A18] uppercase tracking-widest block">
+                PAINEL DE MERCADOS
+              </span>
+              {lastFetchedAt && (
+                <span className="inline-flex items-center space-x-1 text-[11px] font-mono text-[#A9B4C2]">
+                  <Clock className="h-3 w-3 text-[#147BFF]" />
+                  <span>Snapshot sincronizado às {lastFetchedAt}</span>
+                </span>
+              )}
+            </div>
 
             <h1 className="font-outfit font-extrabold text-[28px] sm:text-[36px] md:text-[44px] text-[#F5F7FA] tracking-tight leading-[1.15]">
               Mercados em movimento. Contexto para enxergar além do preço.
@@ -213,7 +178,7 @@ export default function MarketsPage() {
             </p>
           </div>
 
-          {macroLoading ? (
+          {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {[1, 2].map((idx) => (
                 <div key={idx} className="market-card p-6 min-h-[132px] animate-pulse space-y-4">
@@ -239,28 +204,21 @@ export default function MarketsPage() {
                     </div>
                   </div>
 
-                  {macroData?.selic.status === "official" ? (
-                    <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
-                      <ShieldCheck className="h-3 w-3 mr-1" />
-                      Oficial BCB
-                    </span>
-                  ) : (
-                    <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
-                      Atualização pendente
-                    </span>
-                  )}
+                  {renderBadge(selicAsset?.quoteStatus || "reference", "BCB SGS")}
                 </div>
 
                 <div className="flex items-baseline justify-between border-t border-white/[0.08] pt-3.5">
                   <div className="flex items-baseline space-x-1.5">
                     <span className="market-card-value text-[#F5F7FA]">
-                      {macroData?.selic.value !== undefined ? `${macroData.selic.value.toFixed(2).replace(".", ",")}%` : "14,00%"}
+                      {selicAsset?.price !== null && selicAsset?.price !== undefined
+                        ? `${selicAsset.price.toFixed(2).replace(".", ",")}%`
+                        : "14,00%"}
                     </span>
                     <span className="text-[13px] font-mono text-[#A9B4C2]">a.a.</span>
                   </div>
 
                   <span className="text-[12px] font-mono font-medium text-[#A9B4C2] px-3 py-1 rounded-lg bg-[#0E1620] border border-white/[0.08] tabular-nums">
-                    Vigente desde {macroData?.selic.referenceDate || "06/08/2026"}
+                    Vigente desde {selicAsset?.referenceDate || "06/08/2026"}
                   </span>
                 </div>
               </div>
@@ -280,25 +238,18 @@ export default function MarketsPage() {
                     </div>
                   </div>
 
-                  {macroData?.ipca12m.status === "official" ? (
-                    <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
-                      <ShieldCheck className="h-3 w-3 mr-1" />
-                      Oficial IBGE
-                    </span>
-                  ) : (
-                    <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
-                      Atualização pendente
-                    </span>
-                  )}
+                  {renderBadge(ipcaAsset?.quoteStatus || "reference", "IBGE")}
                 </div>
 
                 <div className="flex items-baseline justify-between border-t border-white/[0.08] pt-3.5">
                   <span className="market-card-value text-[#F5F7FA]">
-                    {macroData?.ipca12m.value !== undefined ? `${macroData.ipca12m.value.toFixed(2).replace(".", ",")}%` : "4,44%"}
+                    {ipcaAsset?.price !== null && ipcaAsset?.price !== undefined
+                      ? `${ipcaAsset.price.toFixed(2).replace(".", ",")}%`
+                      : "4,44%"}
                   </span>
 
                   <span className="text-[12px] font-mono font-medium text-[#A9B4C2] px-3 py-1 rounded-lg bg-[#0E1620] border border-white/[0.08] tabular-nums">
-                    Referência: {macroData?.ipca12m.referenceMonth || "Jul/2026"}
+                    Referência: {ipcaAsset?.referenceMonth || "Jul/2026"}
                   </span>
                 </div>
               </div>
@@ -331,7 +282,7 @@ export default function MarketsPage() {
               MOEDAS E PROTEÇÃO
             </span>
 
-            {tickerLoading ? (
+            {loading ? (
               <div className="market-assets-grid">
                 {[1, 2, 3, 4].map((idx) => (
                   <div key={idx} className="market-card--compact p-4 min-h-[126px] animate-pulse space-y-3">
@@ -348,7 +299,10 @@ export default function MarketsPage() {
               </div>
             ) : (
               <div className="market-assets-grid">
-                {currencyIndicators.map(renderCompactCard)}
+                {renderCompactCard("USD/BRL")}
+                {renderCompactCard("EUR/BRL")}
+                {renderCompactCard("GBP/BRL")}
+                {renderCompactCard("XAU/USD")}
               </div>
             )}
           </div>
@@ -359,7 +313,7 @@ export default function MarketsPage() {
               ÍNDICES
             </span>
 
-            {tickerLoading ? (
+            {loading ? (
               <div className="market-assets-grid">
                 {[1, 2, 3, 4].map((idx) => (
                   <div key={idx} className="market-card--compact p-4 min-h-[126px] animate-pulse space-y-3">
@@ -376,7 +330,10 @@ export default function MarketsPage() {
               </div>
             ) : (
               <div className="market-assets-grid">
-                {indexIndicators.map(renderCompactCard)}
+                {renderCompactCard("S&P 500")}
+                {renderCompactCard("NASDAQ")}
+                {renderCompactCard("IBOV")}
+                {renderCompactCard("DJI")}
               </div>
             )}
           </div>
@@ -402,11 +359,12 @@ export default function MarketsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            {cryptoCards.map(({ symbol, name, quote, fallbackItem }) => {
-              const price = quote?.price ?? fallbackItem?.price ?? null;
-              const changePercent = quote?.change24h ?? fallbackItem?.changePercent ?? null;
-              const isStale = quote?.status === "stale" || (fallbackItem?.isStale ?? false);
-
+            {[
+              { symbol: "BTC/USD", name: "Bitcoin", asset: btcAsset },
+              { symbol: "ETH/USD", name: "Ethereum", asset: ethAsset },
+            ].map(({ symbol, name, asset }) => {
+              const price = asset?.price ?? null;
+              const changePercent = asset?.changePercent ?? null;
               const isPositive = (changePercent ?? 0) > 0;
               const isNegative = (changePercent ?? 0) < 0;
               const changeColor = isPositive ? "text-[#19d3a2]" : isNegative ? "text-[#ff5967]" : "text-[#a9b4c2]";
@@ -429,16 +387,7 @@ export default function MarketsPage() {
                       </div>
                     </div>
 
-                    {isStale ? (
-                      <span className="px-2 py-0.5 text-[10px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
-                        Com atraso
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#19d3a2] animate-pulse" aria-hidden="true" />
-                        <span>Bitstamp 24/7</span>
-                      </span>
-                    )}
+                    {renderBadge(asset?.quoteStatus || "realtime", asset?.source || "Bitstamp 24/7")}
                   </div>
 
                   <div className="flex items-baseline justify-between border-t border-white/[0.08] pt-3.5">
