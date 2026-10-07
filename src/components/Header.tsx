@@ -16,8 +16,8 @@ export default function Header() {
 
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
-      <header className="relative w-full bg-[#0B2545] border-b border-[#1E3A5F]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[54px] py-2.5 flex items-center justify-between relative">
+      <header className="relative w-full bg-white border-b border-[#E3D7BE]/80 shadow-sm">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[52px] py-2 flex items-center justify-between relative">
           {/* Left Aligned HDZ Symbol Icon */}
           <Link
             href="/"
@@ -35,13 +35,22 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Centered Special Offer Text */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 text-white text-xs md:text-sm font-extrabold tracking-wide select-none text-center whitespace-nowrap">
-            <span className="text-[#FFC05A] text-sm md:text-base">⚡</span>
-            <span className="uppercase tracking-wider">OFERTA ESPECIAL DISPONÍVEL APENAS HOJE</span>
+          {/* Centered Authority / Content Callout */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center text-center select-none z-0 px-2">
+            {/* Desktop Version */}
+            <div className="hidden sm:flex items-center gap-1.5 text-xs md:text-sm font-extrabold tracking-wider uppercase">
+              <span className="text-[#D97706] font-bold">⚡ MAIS DE 4 HORAS</span>
+              <span className="text-[#08182E]">DE AULAS EM VÍDEO • DO DINHEIRO À AUTOCUSTÓDIA</span>
+            </div>
+
+            {/* Mobile Compact Version */}
+            <div className="flex sm:hidden items-center gap-1 text-[11px] font-extrabold tracking-wide uppercase">
+              <span className="text-[#D97706] font-bold">⚡ +4 HORAS</span>
+              <span className="text-[#08182E]">DE AULAS • DO DINHEIRO À AUTOCUSTÓDIA</span>
+            </div>
           </div>
 
-          {/* Right Spacer for Flex Symmetry on small screens if logo is left */}
+          {/* Right Spacer for Flex Symmetry */}
           <div className="w-8 md:w-9 shrink-0 opacity-0 pointer-events-none" />
         </div>
       </header>

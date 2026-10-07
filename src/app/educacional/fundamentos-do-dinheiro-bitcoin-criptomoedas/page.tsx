@@ -250,14 +250,6 @@ export default function BitcoinCourseSalesPage() {
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] font-sans antialiased selection:bg-[#147BFF] selection:text-white overflow-x-hidden">
       
-      {/* ==================== BARRA SUPERIOR ==================== */}
-      <div className="w-full bg-[#070A0F] border-b border-white/[0.08] py-2 px-4 text-center">
-        <span className="text-[11px] md:text-[12px] font-bold text-[#F59A18] uppercase tracking-widest inline-flex items-center justify-center gap-2">
-          <span className="text-white/40">◆</span>
-          <span>FORMAÇÃO HDZ FINANCE • FUNDAMENTOS, BITCOIN E AUTOCUSTÓDIA</span>
-          <span className="text-white/40 hidden sm:inline">◆</span>
-        </span>
-      </div>
 
       {/* ==================== 01 — HERO PRINCIPAL (DARK - SIMPLIFICADO) ==================== */}
       <section className="relative pt-8 md:pt-14 pb-10 md:pb-16 overflow-hidden border-b border-white/[0.08] bg-[#050607]">
