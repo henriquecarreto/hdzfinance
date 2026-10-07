@@ -152,6 +152,25 @@ const MODULES: ModuleItem[] = [
   },
 ];
 
+// 3 Real Course Lesson Screenshots dataset for Section 07 (Fixed Grid)
+const INSIDE_LESSONS = [
+  {
+    id: 0,
+    title: "Módulo 1 - Apresentação",
+    image: "/images/inside-course/aula-01-apresentacao.png",
+  },
+  {
+    id: 1,
+    title: "Módulo 1 - Fundamentos do Dinheiro",
+    image: "/images/inside-course/aula-02-fundamentos-do-dinheiro.png",
+  },
+  {
+    id: 2,
+    title: "Módulo 2 - O que é o Bitcoin?",
+    image: "/images/inside-course/aula-03-o-que-e-bitcoin.png",
+  },
+];
+
 // 6 Essential FAQ items
 const FAQ_ITEMS = [
   {
@@ -187,9 +206,7 @@ export default function BitcoinCourseSalesPage() {
   // Responsive Carousel Cards Per Page
   const [cardsPerPage, setCardsPerPage] = useState(3);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const [carousel2Index, setCarousel2Index] = useState(0);
   const [isHoveringCarousel1, setIsHoveringCarousel1] = useState(false);
-  const [isHoveringCarousel2, setIsHoveringCarousel2] = useState(false);
 
   // Responsive Window Size Handler
   useEffect(() => {
@@ -217,16 +234,6 @@ export default function BitcoinCourseSalesPage() {
     return () => clearInterval(timer);
   }, [isHoveringCarousel1, cardsPerPage]);
 
-  // Carousel 2 Autoplay (~4s)
-  useEffect(() => {
-    if (isHoveringCarousel2) return;
-    const maxIndex = MODULES.length - cardsPerPage;
-    const timer = setInterval(() => {
-      setCarousel2Index((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    }, 4200);
-    return () => clearInterval(timer);
-  }, [isHoveringCarousel2, cardsPerPage]);
-
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
@@ -250,13 +257,6 @@ export default function BitcoinCourseSalesPage() {
     setCarouselIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   }, [maxIndex]);
 
-  const prevCarousel2 = useCallback(() => {
-    setCarousel2Index((prev) => (prev <= 0 ? maxIndex : prev - 1));
-  }, [maxIndex]);
-
-  const nextCarousel2 = useCallback(() => {
-    setCarousel2Index((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  }, [maxIndex]);
 
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] font-sans antialiased selection:bg-[#147BFF] selection:text-white pb-12 overflow-x-hidden">
@@ -791,12 +791,8 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 07 — CARROSSEL "POR DENTRO" ==================== */}
-      <section
-        className="py-10 md:py-14 bg-[#050607] border-b border-white/[0.08]"
-        onMouseEnter={() => setIsHoveringCarousel2(true)}
-        onMouseLeave={() => setIsHoveringCarousel2(false)}
-      >
+      {/* ==================== 07 — VEJA POR DENTRO (IMAGENS FIXAS) ==================== */}
+      <section className="py-10 md:py-14 bg-[#050607] border-b border-white/[0.08]">
         <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-6 text-center">
           <div className="space-y-2 max-w-3xl mx-auto">
             <span className="text-xs font-bold text-[#F59A18] uppercase tracking-widest block">
@@ -810,75 +806,27 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* Carrossel 2 — Imagens Inteiras sem corte */}
-          <div className="relative pt-2">
-            <div className="overflow-hidden">
+          {/* Grid Fixo de 3 Colunas com as 3 Aulas Reais */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 pt-2">
+            {INSIDE_LESSONS.map((item, idx) => (
               <div
-                className="flex transition-transform duration-500 ease-out"
-                style={{
-                  transform: `translateX(-${(carousel2Index * 100) / cardsPerPage}%)`,
-                }}
+                key={item.id}
+                onClick={() => setActivePreviewIndex(idx)}
+                className="cursor-pointer group relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#0D131C] border border-white/[0.1] hover:border-[#F59A18]/60 transition-all shadow-xl"
               >
-                {MODULES.map((mod) => (
-                  <div
-                    key={mod.id}
-                    style={{ width: `${100 / cardsPerPage}%` }}
-                    className="shrink-0 px-2.5 md:px-3 flex flex-col"
-                  >
-                    <div
-                      onClick={() => setActivePreviewIndex(mod.id)}
-                      className="cursor-pointer group relative aspect-[16/9] w-full max-w-[440px] mx-auto rounded-2xl overflow-hidden bg-[#0D131C] border border-white/[0.08] hover:border-[#F59A18]/60 transition-all shadow-xl"
-                    >
-                      <Image
-                        src={mod.image}
-                        alt={mod.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-[#050607]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs">
-                        <Maximize2 className="w-5 h-5 text-[#F59A18]" />
-                        <span>EXPANDIR AULA</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-[#050607]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs">
+                  <Maximize2 className="w-5 h-5 text-[#F59A18]" />
+                  <span>EXPANDIR AULA</span>
+                </div>
               </div>
-            </div>
-
-            {/* Controles de Navegação */}
-            <div className="flex items-center justify-between mt-6 max-w-[240px] mx-auto">
-              <button
-                onClick={prevCarousel2}
-                aria-label="Anterior"
-                className="p-2.5 rounded-full bg-[#111827] border border-white/10 hover:border-[#F59A18] text-[#9BA5B3] hover:text-white transition-all"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center space-x-2">
-                {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCarousel2Index(idx)}
-                    aria-label={`Ir para o slide ${idx + 1}`}
-                    className={`h-2 rounded-full transition-all ${
-                      carousel2Index === idx
-                        ? "w-6 bg-[#F59A18]"
-                        : "w-2 bg-white/20 hover:bg-white/40"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={nextCarousel2}
-                aria-label="Próximo"
-                className="p-2.5 rounded-full bg-[#111827] border border-white/10 hover:border-[#F59A18] text-[#9BA5B3] hover:text-white transition-all"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1104,7 +1052,7 @@ export default function BitcoinCourseSalesPage() {
       {/* ==================== MODAL LIGHTBOX PREVIEW ==================== */}
       {activePreviewIndex !== null && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col items-center bg-[#0D131C] border border-white/20 rounded-2xl overflow-hidden p-4">
+          <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col items-center bg-[#0D131C] border border-white/20 rounded-2xl overflow-hidden p-4 md:p-6">
             <button
               onClick={() => setActivePreviewIndex(null)}
               className="absolute top-3 right-3 p-2 rounded-full bg-black/60 text-white hover:text-[#F59A18] transition-colors z-10"
@@ -1113,19 +1061,16 @@ export default function BitcoinCourseSalesPage() {
             </button>
             <div className="relative w-full aspect-[16/9] max-h-[75vh]">
               <Image
-                src={MODULES[activePreviewIndex].image}
-                alt={MODULES[activePreviewIndex].title}
+                src={INSIDE_LESSONS[activePreviewIndex]?.image || MODULES[activePreviewIndex]?.image}
+                alt={INSIDE_LESSONS[activePreviewIndex]?.title || MODULES[activePreviewIndex]?.title}
                 fill
                 className="object-contain"
               />
             </div>
             <div className="mt-3 text-center">
-              <h4 className="font-outfit font-bold text-base text-[#F5F7FA]">
-                {MODULES[activePreviewIndex].title}
+              <h4 className="font-outfit font-bold text-base md:text-lg text-[#F5F7FA]">
+                {INSIDE_LESSONS[activePreviewIndex]?.title || MODULES[activePreviewIndex]?.title}
               </h4>
-              <p className="text-xs text-[#9BA5B3]">
-                {MODULES[activePreviewIndex].subtitle}
-              </p>
             </div>
           </div>
         </div>
