@@ -60,7 +60,7 @@ export default function MethodSection() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-85 brightness-110 saturate-[1.1]"
+          className="object-cover object-center opacity-90 brightness-110 saturate-[1.1]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/40 via-transparent to-[#050607]/60" />
