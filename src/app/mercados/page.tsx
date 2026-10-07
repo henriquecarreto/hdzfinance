@@ -11,31 +11,14 @@ import { formatAssetValue, formatChangePercent } from "@/lib/formatters";
 export default function MarketsPage() {
   const { assets, loading, lastFetchedAt } = useMarketData();
 
-  const renderBadge = (status: MarketAssetSnapshot["quoteStatus"], source?: string) => {
+  const renderBadge = (status?: MarketAssetSnapshot["quoteStatus"], source?: string) => {
+    if (!status) return null;
+
     switch (status) {
-      case "realtime":
-        return (
-          <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#19d3a2] bg-[#19d3a2]/10 border border-[#19d3a2]/30 rounded">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#19d3a2] animate-pulse" aria-hidden="true" />
-            <span>Tempo real</span>
-          </span>
-        );
       case "close":
         return (
           <span className="px-2 py-0.5 text-[9px] font-semibold text-[#A9B4C2] bg-[#A9B4C2]/10 border border-[#A9B4C2]/30 rounded">
             Último fechamento
-          </span>
-        );
-      case "delayed":
-        return (
-          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
-            Atraso 15 min
-          </span>
-        );
-      case "stale":
-        return (
-          <span className="px-2 py-0.5 text-[9px] font-semibold text-[#F59A18] bg-[#F59A18]/10 border border-[#F59A18]/30 rounded">
-            Com atraso
           </span>
         );
       case "reference":
@@ -46,12 +29,16 @@ export default function MarketsPage() {
           </span>
         );
       case "unavailable":
-      default:
         return (
           <span className="px-2 py-0.5 text-[9px] font-semibold text-[#FF5967] bg-[#FF5967]/10 border border-[#FF5967]/30 rounded">
             Indisponível
           </span>
         );
+      case "realtime":
+      case "delayed":
+      case "stale":
+      default:
+        return null;
     }
   };
 
