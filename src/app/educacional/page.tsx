@@ -56,34 +56,11 @@ export default function EducacionalPage() {
           </div>
         </div>
 
-        {/* Clean 3 Educational Products Grid (Filters temporarily hidden) */}
+        {/* Clean 3 Educational Products Grid */}
         <div className="educational-products-grid">
           {EDUCATIONAL_PRODUCTS.map((product) => (
             <EducationalProductCard key={product.id} product={product} />
           ))}
-        </div>
-
-        {/* Reading Recommendations Banner Link */}
-        <div className="p-6 md:p-8 rounded-2xl bg-[#0D1117] border border-[#F59A18]/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30">
-              <Library className="h-3 w-3" />
-              <span>BIBLIOTECA HDZ</span>
-            </div>
-            <h2 className="font-outfit font-bold text-xl md:text-2xl text-[#F5F7FA]">
-              Recomendações de Leitura
-            </h2>
-            <p className="text-xs md:text-sm text-[#9BA5B3] leading-relaxed">
-              Uma seleção curada de livros sobre economia, dinheiro, filosofia, mentalidade e sociedade para ampliar perspectivas e fortalecer seu pensamento crítico.
-            </p>
-          </div>
-          <Link
-            href="/educacional/recomendacoes-de-leitura"
-            className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-sm hover:brightness-105 transition-all shadow-md shrink-0 focus-visible:outline-2 focus-visible:outline-[#147BFF]"
-          >
-            <span>Explorar Biblioteca</span>
-            <ArrowRight className="w-4 h-4 ml-1" />
-          </Link>
         </div>
       </div>
     </div>

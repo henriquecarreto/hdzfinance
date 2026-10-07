@@ -14,14 +14,14 @@ export interface EducationalProduct {
 
 export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
   {
-    id: "expense-spreadsheets",
-    category: "Planilhas e Ferramentas",
-    title: "Planilhas para Controle de Gastos",
-    price: 9.9,
-    image: null,
+    id: "reading-recommendations",
+    category: "Biblioteca HDZ",
+    title: "Recomendações de Leitura",
+    price: null,
+    image: "/images/products/reading-recommendations-cover.jpg",
     summary: null,
-    salesPagePath: "/educacional/planilhas-controle-gastos",
-    salesPageReady: false,
+    salesPagePath: "/educacional/recomendacoes-de-leitura",
+    salesPageReady: true,
     checkoutUrl: null,
   },
   {
