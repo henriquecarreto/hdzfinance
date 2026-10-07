@@ -43,11 +43,11 @@ export default function BitcoinSection() {
       {/* Background Image Layer: DESCENTRALIZAÇÃO NA PRÁTICA */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         <Image
-          src="/backgrounds/bitcoin-bg.jpg"
+          src="/backgrounds/bitcoin-bg.png"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-85 brightness-110 saturate-[1.1]"
+          className="object-cover object-center opacity-90 brightness-110 saturate-[1.1]"
           priority
         />
         {/* Soft Vignette Overlay for smooth top/bottom edge transition */}
