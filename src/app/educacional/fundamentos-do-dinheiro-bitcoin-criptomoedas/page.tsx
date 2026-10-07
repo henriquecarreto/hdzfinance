@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -237,6 +237,8 @@ export default function BitcoinCourseSalesPage() {
     }
   };
 
+  const touchStartX = useRef<number | null>(null);
+
   const maxIndex = Math.max(0, MODULES.length - cardsPerPage);
 
   const prevCarousel1 = useCallback(() => {
@@ -246,6 +248,24 @@ export default function BitcoinCourseSalesPage() {
   const nextCarousel1 = useCallback(() => {
     setCarouselIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   }, [maxIndex]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 35) {
+      if (diff > 0) {
+        nextCarousel1();
+      } else {
+        prevCarousel1();
+      }
+    }
+    touchStartX.current = null;
+  };
 
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] font-sans antialiased selection:bg-[#147BFF] selection:text-white overflow-x-hidden">
@@ -358,7 +378,7 @@ export default function BitcoinCourseSalesPage() {
 
           {/* Carrossel 1 */}
           <div className="relative pt-2">
-            <div className="overflow-hidden">
+            <div className="overflow-hidden" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
               <div
                 className="flex transition-transform duration-500 ease-out"
                 style={{
