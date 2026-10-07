@@ -78,7 +78,7 @@ export default function EducationalProductCard({ product }: EducationalProductCa
             href={product.salesPagePath}
             className="product-card-action group"
           >
-            <span>Conhecer o produto</span>
+            <span>{product.actionText || "Conhecer o produto"}</span>
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
           </Link>
         ) : (

@@ -10,6 +10,7 @@ export interface EducationalProduct {
   salesPagePath: string;
   salesPageReady: boolean;
   checkoutUrl: string | null;
+  actionText?: string;
 }
 
 export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
@@ -23,6 +24,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
     salesPagePath: "/educacional/recomendacoes-de-leitura",
     salesPageReady: true,
     checkoutUrl: null,
+    actionText: "Explorar conteúdos",
   },
   {
     id: "money-bitcoin-course",
