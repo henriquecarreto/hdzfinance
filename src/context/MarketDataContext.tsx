@@ -123,9 +123,14 @@ export function MarketDataProvider({ children }: { children: React.ReactNode }) 
       fetchMarketData();
     };
 
+    const handlePageShow = () => {
+      fetchMarketData();
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityOrFocus);
     window.addEventListener("focus", handleVisibilityOrFocus);
     window.addEventListener("online", handleOnline);
+    window.addEventListener("pageshow", handlePageShow);
 
     return () => {
       isMountedRef.current = false;
@@ -133,6 +138,7 @@ export function MarketDataProvider({ children }: { children: React.ReactNode }) 
       document.removeEventListener("visibilitychange", handleVisibilityOrFocus);
       window.removeEventListener("focus", handleVisibilityOrFocus);
       window.removeEventListener("online", handleOnline);
+      window.removeEventListener("pageshow", handlePageShow);
     };
   }, [fetchMarketData]);
 
