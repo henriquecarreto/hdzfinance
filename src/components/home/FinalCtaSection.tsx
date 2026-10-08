@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function FinalCtaSection() {
   return (
     <section
       aria-label="Conclusão HDZ Finance"
-      className="relative isolate overflow-hidden py-16 md:py-24 border-b border-white/[0.08] bg-[#050607]"
+      className="relative isolate overflow-hidden py-12 md:py-16 border-b border-white/[0.08] bg-[#050607]"
     >
       {/* Background Image Layer: Preservada conforme especificação */}
       <div className="absolute top-0 left-0 right-0 h-full z-0 overflow-hidden pointer-events-none select-none">
@@ -16,122 +16,99 @@ export default function FinalCtaSection() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-[75%_top] md:object-center opacity-85 brightness-110 saturate-[1.1]"
+          className="object-cover object-[75%_top] md:object-center opacity-80 brightness-105 saturate-[1.05]"
           priority
         />
-        {/* Soft Vignette & Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/40 via-[#050607]/70 to-[#050607] md:from-[#050607]/50 md:via-[#050607]/40 md:to-[#050607]/70" />
+        {/* Soft Dark Vignette & Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/60 via-[#050607]/80 to-[#050607]" />
       </div>
 
-      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 md:px-8">
-        {/* Container Principal Escuro/Translúcido */}
-        <div className="max-w-[920px] mx-auto space-y-6 sm:space-y-8 text-left p-6 sm:p-8 md:p-10 rounded-2xl bg-[#050607]/80 backdrop-blur-md border border-white/10 shadow-2xl">
-          
-          {/* 1. BADGE */}
-          <span className="text-[12px] md:text-[13px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
-            VÁ ALÉM DA MANCHETE
-          </span>
-
-          {/* 2. HEADLINE PRINCIPAL */}
-          <h2 className="font-outfit font-extrabold text-[28px] sm:text-[36px] md:text-[42px] lg:text-[46px] text-[#F7F9FC] tracking-tight leading-[1.18]">
-            O preço chama atenção. <br className="hidden sm:inline" />
-            Entender o que está por trás dele{" "}
-            <span className="text-[#F59A18]">muda tudo.</span>
-          </h2>
-
-          {/* 3. COPY EDITORIAL */}
-          <div className="space-y-4 text-[15.5px] sm:text-[16.5px] md:text-[17.5px] text-[#E5EAF0] leading-[1.65]">
-            <p>
-              Todos os dias surgem novas previsões, quedas, altas, indicadores e opiniões sobre Bitcoin. O problema é que acompanhar informação não significa necessariamente compreender o que está acontecendo.
-            </p>
-            <p>
-              Sem fundamentos, é fácil confundir volatilidade com mudança de tendência, opinião com análise e euforia com oportunidade.
-            </p>
-          </div>
-
-          {/* 4. FRASE DE TRANSIÇÃO DE IMPACTO */}
-          <div className="pl-4 sm:pl-5 border-l-4 border-[#F59A18] py-3 px-4 bg-[#F59A18]/[0.08] rounded-r-xl">
-            <p className="text-[16px] sm:text-[17.5px] md:text-[18.5px] text-[#F7F9FC] font-semibold leading-[1.6]">
-              E quando existe dinheiro envolvido, depender apenas da interpretação de outras pessoas pode custar caro.
-            </p>
-          </div>
-
-          {/* 5. CARD CLARO DO TREINAMENTO (#F7F3E8) */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#F7F3E8] border border-[#E3D7BE] text-[#08182E] shadow-md space-y-6">
+      <div className="relative z-10 max-w-[1140px] mx-auto px-4 sm:px-6 md:px-8">
+        {/* Container Principal Escuro/Translúcido - Proporção Horizontal */}
+        <div className="p-6 sm:p-8 md:p-9 rounded-2xl bg-[#05080D]/85 backdrop-blur-md border border-white/10 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
-            {/* Header do Card */}
-            <div className="space-y-1.5">
-              <span className="text-[11px] sm:text-[12px] font-extrabold uppercase tracking-[0.12em] text-[#D97706] block">
-                TREINAMENTO HDZ FINANCE
+            {/* COLUNA ESQUERDA: COPY EDITORIAL (58% aprox.) */}
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-left">
+              {/* Badge */}
+              <span className="text-[11px] sm:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
+                VÁ ALÉM DA MANCHETE
               </span>
-              <h3 className="font-outfit font-bold text-[21px] sm:text-[25px] md:text-[27px] text-[#08182E] leading-[1.25]">
-                Comprar Bitcoin é fácil. <br className="hidden sm:inline" />
-                Saber o que fazer depois é outra história.
-              </h3>
-            </div>
 
-            {/* Copy do Treinamento */}
-            <div className="space-y-3 text-[14.5px] sm:text-[15.5px] text-[#4F5964] leading-[1.6]">
-              <p>
-                O treinamento HDZ Finance foi desenvolvido para quem quer deixar de apenas acompanhar o mercado e começar a compreender seus fundamentos.
+              {/* Headline Principal */}
+              <h2 className="font-outfit font-extrabold text-[26px] sm:text-[34px] md:text-[38px] lg:text-[40px] text-[#F7F9FC] tracking-tight leading-[1.18]">
+                O preço chama atenção. <br className="hidden sm:inline" />
+                Entender o que está por trás dele{" "}
+                <span className="text-[#F59A18]">muda tudo.</span>
+              </h2>
+
+              {/* Parágrafo Único Curto */}
+              <p className="text-[15px] sm:text-[16px] text-[#D0D7E1] leading-[1.6]">
+                Notícias mostram o que aconteceu. Fundamentos ajudam a entender por quê. Sem compreender dinheiro, Bitcoin, ciclos e custódia, é fácil continuar dependendo da interpretação dos outros.
               </p>
-              <p>
-                Você vai estudar{" "}
-                <strong className="text-[#08182E] font-bold">DINHEIRO</strong>,{" "}
-                <strong className="text-[#08182E] font-bold">BITCOIN</strong>,{" "}
-                <strong className="text-[#08182E] font-bold">CICLOS DE MERCADO</strong>, indicadores,{" "}
-                <strong className="text-[#08182E] font-bold">SEGURANÇA</strong>,{" "}
-                <strong className="text-[#08182E] font-bold">AUTOCUSTÓDIA</strong> e gerenciamento, avançando da compreensão do ativo até formas práticas de proteger e utilizar aquilo que é seu.
-              </p>
-            </div>
 
-            {/* 3 Benefícios */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-[#E3D7BE]/80">
-              <div className="flex items-center space-x-2 text-[13.5px] sm:text-[14px] font-bold text-[#08182E]">
-                <Check className="w-4 h-4 text-[#D97706] shrink-0" />
-                <span>Entenda antes de investir</span>
-              </div>
-              <div className="flex items-center space-x-2 text-[13.5px] sm:text-[14px] font-bold text-[#08182E]">
-                <Check className="w-4 h-4 text-[#D97706] shrink-0" />
-                <span>Aprenda a interpretar o mercado</span>
-              </div>
-              <div className="flex items-center space-x-2 text-[13.5px] sm:text-[14px] font-bold text-[#08182E]">
-                <Check className="w-4 h-4 text-[#D97706] shrink-0" />
-                <span>Conheça segurança e autocustódia</span>
+              {/* Frase de Transição Curta */}
+              <div className="pl-3.5 border-l-3 border-[#F59A18] py-1.5 bg-[#F59A18]/[0.06] rounded-r-lg">
+                <p className="text-[14.5px] sm:text-[15.5px] text-[#F7F9FC] font-medium leading-[1.55]">
+                  Informação acompanha o mercado. Conhecimento muda a forma como você o interpreta.
+                </p>
               </div>
             </div>
 
-            {/* Duração */}
-            <div className="pt-2 text-xs sm:text-sm text-[#4F5964] font-medium border-t border-[#E3D7BE]/80">
-              <span className="font-extrabold text-[#D97706] tracking-wide">
-                +4 HORAS DE AULAS EM VÍDEO
-              </span>{" "}
-              — <span className="italic">Do dinheiro à autocustódia.</span>
-            </div>
+            {/* COLUNA DIREITA: BLOCO ESCURO COMPACTO DO TREINAMENTO (42% aprox.) */}
+            <div className="lg:col-span-5">
+              <div className="p-5 sm:p-6 rounded-xl bg-[#0D1420] border border-[#F59A18]/30 shadow-lg space-y-4 text-left">
+                
+                {/* Header & Selo do Treinamento */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#F59A18]">
+                      TREINAMENTO HDZ FINANCE
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-[#F59A18]/15 text-[#F59A18] border border-[#F59A18]/30">
+                      +4 HORAS DE AULAS
+                    </span>
+                  </div>
 
-            {/* CTAs no Rodapé do Card */}
-            <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5">
-              {/* Botão Principal */}
-              <Link
-                href="/educacional/cursos"
-                className="px-7 py-3.5 sm:py-4 rounded-xl bg-[#F59A18] hover:bg-[#E0880D] text-[#05080D] font-outfit font-extrabold text-[15px] sm:text-[16px] transition-all duration-200 inline-flex items-center justify-center gap-2.5 shadow-md hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-[#D97706]"
-              >
-                <span>QUERO CONHECER O TREINAMENTO</span>
-                <ArrowRight className="w-4 h-4 text-[#05080D]" aria-hidden="true" />
-              </Link>
+                  <h3 className="font-outfit font-bold text-[18px] sm:text-[20px] text-[#F7F9FC] leading-[1.28]">
+                    Comprar Bitcoin é fácil. <br className="hidden sm:inline" />
+                    Saber o que fazer depois é outra história.
+                  </h3>
+                </div>
 
-              {/* Link Secundário */}
-              <Link
-                href="/noticias"
-                className="inline-flex items-center justify-center gap-2 text-[14px] sm:text-[15px] font-outfit font-bold text-[#147BFF] hover:text-[#0056B3] transition-colors py-2 px-3 focus-visible:outline-2 focus-visible:outline-[#147BFF]"
-              >
-                <span>Continuar nas notícias</span>
-                <span>→</span>
-              </Link>
+                {/* Copy Reduzida do Treinamento */}
+                <p className="text-[13.5px] sm:text-[14px] text-[#A6B2C2] leading-[1.55]">
+                  Mais de 4 horas de aulas para entender dinheiro, Bitcoin, ciclos de mercado, segurança, autocustódia e utilização prática. <span className="text-[#F7F9FC] font-medium block mt-1">Do fundamento à autonomia.</span>
+                </p>
+
+                {/* Linha Única de Temas */}
+                <div className="text-[11px] sm:text-[12px] font-mono font-semibold text-[#F59A18] tracking-tight pt-1 border-t border-white/[0.08]">
+                  DINHEIRO &bull; BITCOIN &bull; CICLOS &bull; SEGURANÇA &bull; AUTOCUSTÓDIA
+                </div>
+
+                {/* Ações: CTA Principal + Link Secundário */}
+                <div className="pt-2 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-3">
+                  <Link
+                    href="/educacional/cursos"
+                    className="w-full sm:w-auto flex-1 px-5 py-3 rounded-lg bg-[#F59A18] hover:bg-[#FFB03A] text-[#05080D] font-outfit font-extrabold text-[14px] transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md hover:scale-[1.01]"
+                  >
+                    <span>QUERO CONHECER O TREINAMENTO</span>
+                    <ArrowRight className="w-4 h-4 text-[#05080D]" aria-hidden="true" />
+                  </Link>
+
+                  <Link
+                    href="/noticias"
+                    className="inline-flex items-center justify-center gap-1.5 text-[13.5px] font-outfit font-bold text-[#18C6D8] hover:text-[#52F0FF] transition-colors py-1.5 px-2"
+                  >
+                    <span>Continuar nas notícias</span>
+                    <span>→</span>
+                  </Link>
+                </div>
+
+              </div>
             </div>
 
           </div>
-
         </div>
       </div>
     </section>
