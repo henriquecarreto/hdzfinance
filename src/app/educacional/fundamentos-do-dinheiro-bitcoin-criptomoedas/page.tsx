@@ -997,33 +997,6 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 11 — CTA FINAL (DARK) ==================== */}
-      <section className="py-12 md:py-16 bg-[#070B12] text-center">
-        <div className="max-w-[900px] mx-auto px-5 md:px-8 space-y-6">
-          <h2 className="font-outfit font-extrabold text-2xl md:text-4xl text-[#F5F7FA] leading-tight">
-            A pior hora para aprender sobre segurança é depois de precisar dela.
-          </h2>
-
-          <p className="text-sm md:text-base text-[#9BA5B3] max-w-xl mx-auto leading-relaxed">
-            Entenda o dinheiro. Entenda o Bitcoin. Proteja suas chaves. Aprenda a utilizar aquilo que é seu.
-          </p>
-
-          <div className="p-3.5 rounded-xl bg-[#0D1522] border border-[#F59A18]/30 max-w-md mx-auto text-xs md:text-sm font-semibold text-[#F59A18]">
-            Conhecimento vem antes da autonomia.
-          </div>
-
-          <div>
-            <button
-              onClick={scrollToOffer}
-              className="inline-flex items-center space-x-3 px-9 py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20"
-            >
-              <span>COMEÇAR O TREINAMENTO</span>
-              <ArrowRight className="w-5 h-5 ml-1" />
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* ==================== MODAL LIGHTBOX PREVIEW ==================== */}
       {activePreviewIndex !== null && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
