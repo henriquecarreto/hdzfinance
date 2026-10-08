@@ -76,15 +76,15 @@ export default function MarketsPage() {
     const changeColor = isPositive
       ? "text-[#19d3a2]"
       : isNegative
-      ? "text-[#ff5967]"
-      : "text-[#a9b4c2]";
+        ? "text-[#ff5967]"
+        : "text-[#a9b4c2]";
 
     const displaySymbol =
       asset.symbol === "NASDAQ"
         ? "IXIC"
         : asset.symbol === "S&P 500"
-        ? "SPX"
-        : asset.symbol;
+          ? "SPX"
+          : asset.symbol;
 
     return (
       <div
@@ -144,7 +144,7 @@ export default function MarketsPage() {
   return (
     <div className="markets-page markets-main py-10 md:py-16 font-sans">
       <div className="markets-container space-y-14 md:space-y-16">
-        
+
         {/* ==================== 1. PAINEL INTRODUTÓRIO ==================== */}
         <header className="markets-hero text-left">
           <div className="space-y-4 max-w-4xl">

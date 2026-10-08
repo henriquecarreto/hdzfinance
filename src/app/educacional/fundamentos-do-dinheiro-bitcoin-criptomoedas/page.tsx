@@ -291,9 +291,9 @@ export default function BitcoinCourseSalesPage() {
             </span>
           </h1>
 
-          {/* 3 — TEXTO EXPLICATIVO */}
-          <p className="text-[16px] sm:text-[17px] md:text-[18px] text-[#F5F5F5] leading-relaxed max-w-[640px] mx-auto font-normal">
-            Um treinamento em vídeo sobre dinheiro, Bitcoin, ciclos de mercado e autocustódia para entender antes de decidir.
+          {/* 3 — TEXTO EXPLICATIVO (EXPANDIDO E PERSUASIVO) */}
+          <p className="text-[15px] sm:text-[16px] md:text-[17.5px] text-[#FFFFFF] leading-[1.45] max-w-[720px] mx-auto font-normal">
+            Seu dinheiro merece mais do que decisões por impulso. Entenda o dinheiro e o Bitcoin, compreenda os ciclos de mercado e aprenda os cuidados para proteger seus ativos. Comece hoje a construir mais clareza para decidir e autonomia para cuidar do que é seu.
           </p>
 
           {/* 4 — IMAGEM DAS CAPAS DOS MÓDULOS (COMPACTA) */}
@@ -311,30 +311,30 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* 5 — BENEFÍCIOS DO TREINAMENTO */}
-          <div className="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-5 text-xs sm:text-sm md:text-[15px] text-white font-medium max-w-xl mx-auto">
-            <div className="flex items-center space-x-2">
+          {/* 5 — BENEFÍCIOS DO TREINAMENTO (UNIDADES INTEIRAS E LEGÍVEIS) */}
+          <div className="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-6 text-[13px] sm:text-[14px] text-white font-medium max-w-xl mx-auto">
+            <div className="flex items-center space-x-2 whitespace-nowrap shrink-0">
               <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-              <span>Fundamentos do dinheiro e Bitcoin.</span>
+              <span>Dinheiro e Bitcoin</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 whitespace-nowrap shrink-0">
               <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-              <span>Ciclos de mercado e segurança.</span>
+              <span>Ciclos e segurança</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 whitespace-nowrap shrink-0">
               <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-              <span>Autocustódia na prática.</span>
+              <span>Autocustódia na prática</span>
             </div>
           </div>
 
-          {/* 6 — BOTÃO PRINCIPAL */}
+          {/* 6 — BOTÃO PRINCIPAL (TEXTO E SETA EM BRANCO PURO #FFFFFF) */}
           <div className="pt-1">
             <button
               onClick={scrollToOffer}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 sm:px-9 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-sm sm:text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 sm:px-9 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-white hover:text-white font-extrabold text-sm sm:text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20 focus-visible:outline-2 focus-visible:outline-[#F59A18]"
             >
-              <span>QUERO COMEÇAR O TREINAMENTO</span>
-              <ArrowRight className="w-5 h-5 ml-1 text-[#080B0F]" />
+              <span className="text-white">QUERO COMEÇAR O TREINAMENTO</span>
+              <ArrowRight className="w-5 h-5 ml-1 text-white shrink-0" />
             </button>
           </div>
 
