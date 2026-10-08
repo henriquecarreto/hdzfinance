@@ -271,89 +271,78 @@ export default function BitcoinCourseSalesPage() {
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] font-sans antialiased selection:bg-[#147BFF] selection:text-white overflow-x-hidden">
       
 
-      {/* ==================== 01 — HERO PRINCIPAL (DARK - SIMPLIFICADO) ==================== */}
-      <section className="relative pt-8 md:pt-14 pb-10 md:pb-16 overflow-hidden border-b border-white/[0.08] bg-[#050607]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Coluna Esquerda: Copy Principal (55% desktop) */}
-            <div className="lg:col-span-7 space-y-5 text-left">
-              {/* 1 — BADGE */}
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-[#F59A18]/10 text-[#F59A18] border border-[#F59A18]/30 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>TREINAMENTO HDZ FINANCE</span>
-              </div>
-
-              {/* 2 — HEADLINE */}
-              <h1 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[50px] text-[#F5F7FA] tracking-tight leading-[1.12]">
-                Comprar Bitcoin é fácil. <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#FFC875]">
-                  Saber o que fazer depois é outra história.
-                </span>
-              </h1>
-
-              {/* 3 — SUBHEADLINE */}
-              <p className="text-base md:text-lg text-[#9BA5B3] leading-relaxed max-w-2xl font-normal">
-                Entenda dinheiro, Bitcoin, ciclos de mercado, segurança e autocustódia para tomar decisões com mais consciência e proteger aquilo que é seu.
-              </p>
-
-              {/* 4 — PEQUENO DESTAQUE */}
-              <div className="p-3.5 rounded-xl bg-[#0D131C] border border-[#F59A18]/40 text-xs md:text-sm text-[#E2E8F0] font-medium">
-                <span className="text-[#F59A18] font-bold">Bitcoin elimina intermediários.</span> Não elimina a necessidade de saber o que você está fazendo.
-              </div>
-
-              {/* 5 — CTA */}
-              <div className="pt-1">
-                <button
-                  onClick={scrollToOffer}
-                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/15"
-                >
-                  <span>QUERO DOMINAR OS FUNDAMENTOS</span>
-                  <ArrowRight className="w-5 h-5 ml-1" />
-                </button>
-              </div>
-
-              {/* 6 — TRÊS MICROBENEFÍCIOS */}
-              <div className="pt-3 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center gap-3 text-xs md:text-sm text-[#C7CDD4]">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-                  <span>Fundamentos do dinheiro e Bitcoin</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-                  <span>Ciclos, segurança e autocustódia</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle2 className="h-4 w-4 text-[#F59A18] shrink-0" />
-                  <span>Aplicação prática do início ao uso</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 7 — COLUNA DIREITA: IMAGEM DO PRODUTO (45% desktop) */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-[380px] aspect-[9/16] rounded-2xl overflow-hidden border-2 border-[#F59A18]/40 shadow-2xl shadow-[#F59A18]/10 group">
-                <Image
-                  src="/images/products/money-bitcoin-course-cover.jpg"
-                  alt="Formação HDZ Finance — Fundamentos do Dinheiro, Bitcoin e Autocustódia"
-                  fill
-                  priority
-                  className="object-contain bg-[#050607] transition-transform duration-500 group-hover:scale-[1.02]"
-                  sizes="(max-width: 768px) 100vw, 380px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050607]/80 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#080D14]/90 backdrop-blur-md border border-white/10 text-center">
-                  <span className="text-[11px] font-bold text-[#F59A18] uppercase tracking-wider block">
-                    FORMAÇÃO COMPLETA HDZ
-                  </span>
-                  <span className="text-xs text-[#E2E8F0] font-medium">
-                    Do Dinheiro à Autocustódia Prática
-                  </span>
-                </div>
-              </div>
-            </div>
-
+      {/* ==================== 01 — HERO PRINCIPAL (OFF-WHITE - FISCAL SIMPLIFICADO STYLE) ==================== */}
+      <section className="relative pt-10 md:pt-16 pb-12 md:pb-20 overflow-hidden border-b border-[#E3D7BE] bg-[#F7F3E8]">
+        <div className="max-w-[960px] mx-auto px-5 md:px-8 text-center space-y-6 md:space-y-8">
+          
+          {/* 1 — BADGE */}
+          <div>
+            <span className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#FFFCF6] text-[#D97706] border border-[#E3D7BE] text-xs font-bold uppercase tracking-wider shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-[#D97706]" />
+              <span>TREINAMENTO HDZ FINANCE</span>
+            </span>
           </div>
+
+          {/* 2 — HEADLINE PRINCIPAL */}
+          <h1 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[48px] text-[#08182E] tracking-tight leading-[1.15] max-w-3xl mx-auto">
+            Comprar Bitcoin é fácil. <br />
+            <span className="text-[#D97706]">
+              Saber o que fazer depois é outra história.
+            </span>
+          </h1>
+
+          {/* 3 — TEXTO EXPLICATIVO */}
+          <p className="text-base sm:text-lg md:text-xl text-[#53606F] leading-relaxed max-w-2xl mx-auto font-normal">
+            Entenda dinheiro, Bitcoin, ciclos de mercado, segurança e autocustódia para tomar decisões com mais consciência e proteger aquilo que é seu.
+          </p>
+
+          {/* 4 — FRASE DE REFORÇO COMPACTA */}
+          <div className="max-w-xl mx-auto text-xs sm:text-sm text-[#7C2D12] font-semibold bg-[#FFF9EE] border border-[#F59A18]/40 px-4 py-2.5 rounded-xl">
+            <span className="text-[#D97706] font-bold">Bitcoin elimina intermediários.</span> Não elimina a necessidade de saber o que você está fazendo.
+          </div>
+
+          {/* 5 — NOVA IMAGEM COM AS CAPAS DOS MÓDULOS */}
+          <div className="pt-2">
+            <div className="relative w-full max-w-[540px] md:max-w-[580px] mx-auto rounded-2xl md:rounded-3xl p-3 sm:p-4 bg-[#FFFCF6] border-2 border-[#F59A18]/40 shadow-2xl shadow-[#D97706]/10">
+              <Image
+                src="/images/products/training-books-cover.jpg"
+                alt="Formação HDZ Finance — Módulos do Treinamento"
+                width={580}
+                height={700}
+                priority
+                className="w-full h-auto object-contain rounded-xl"
+                sizes="(max-width: 768px) 100vw, 580px"
+              />
+            </div>
+          </div>
+
+          {/* 6 — BENEFÍCIOS DO TREINAMENTO */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm md:text-base text-[#08182E] font-semibold max-w-2xl mx-auto">
+            <div className="flex items-center space-x-2">
+              <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0" />
+              <span>Fundamentos do dinheiro e Bitcoin</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0" />
+              <span>Ciclos, segurança e autocustódia</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle2 className="h-4 w-4 text-[#D97706] shrink-0" />
+              <span>Aplicação prática do início ao uso</span>
+            </div>
+          </div>
+
+          {/* 7 — BOTÃO PRINCIPAL */}
+          <div className="pt-2">
+            <button
+              onClick={scrollToOffer}
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-[#080B0F] font-extrabold text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/25"
+            >
+              <span>QUERO DOMINAR OS FUNDAMENTOS</span>
+              <ArrowRight className="w-5 h-5 ml-1 text-[#080B0F]" />
+            </button>
+          </div>
+
         </div>
       </section>
 
