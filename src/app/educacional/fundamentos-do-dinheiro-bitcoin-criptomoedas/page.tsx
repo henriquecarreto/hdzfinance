@@ -327,14 +327,28 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* 6 — BOTÃO PRINCIPAL (TEXTO E SETA EM BRANCO PURO #FFFFFF) */}
+          {/* 6 — BOTÃO PRINCIPAL (TEXTO BRANCO COM BORDA DAS LETRAS E SETA EM VERDE LIMÃO CLARO #A3E635) */}
           <div className="pt-1">
             <button
               onClick={scrollToOffer}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 sm:px-9 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] text-white hover:text-white font-extrabold text-sm sm:text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20 focus-visible:outline-2 focus-visible:outline-[#F59A18]"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 sm:px-9 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-[#FFB12B] via-[#F59A18] to-[#E98508] font-extrabold text-sm sm:text-base md:text-lg hover:brightness-105 transition-all shadow-xl shadow-[#F59A18]/20 focus-visible:outline-2 focus-visible:outline-[#F59A18]"
             >
-              <span className="text-white">QUERO COMEÇAR O TREINAMENTO</span>
-              <ArrowRight className="w-5 h-5 ml-1 text-white shrink-0" />
+              <span
+                className="text-white"
+                style={{
+                  WebkitTextStroke: "0.8px #A3E635",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                QUERO COMEÇAR O TREINAMENTO
+              </span>
+              <ArrowRight
+                className="w-5 h-5 ml-1 text-white shrink-0"
+                style={{
+                  filter:
+                    "drop-shadow(-1px 0 0 #A3E635) drop-shadow(1px 0 0 #A3E635) drop-shadow(0 -1px 0 #A3E635) drop-shadow(0 1px 0 #A3E635)",
+                }}
+              />
             </button>
           </div>
 
