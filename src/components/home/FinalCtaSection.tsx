@@ -86,23 +86,28 @@ export default function FinalCtaSection() {
                   DINHEIRO &bull; BITCOIN &bull; CICLOS &bull; SEGURANÇA &bull; AUTOCUSTÓDIA
                 </div>
 
-                {/* Ações: CTA Principal + Link Secundário */}
-                <div className="pt-2 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-3">
+                {/* Área de Ação: Botão Horizontal Premium (100% largura) + Link Secundário Abaixo */}
+                <div className="pt-3.5 space-y-3">
+                  {/* Botão Principal CTA */}
                   <Link
                     href="/educacional/cursos"
-                    className="w-full sm:w-auto flex-1 px-5 py-3 rounded-lg bg-[#F59A18] hover:bg-[#FFB03A] text-[#05080D] font-outfit font-extrabold text-[14px] transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md hover:scale-[1.01]"
+                    className="group w-full min-h-[52px] px-6 py-3.5 rounded-lg bg-[#D97706] hover:bg-[#EA8508] text-[#FFF9ED] font-outfit font-extrabold text-[14.5px] sm:text-[15px] tracking-wide transition-all duration-200 flex items-center justify-between shadow-md hover:shadow-lg hover:shadow-[#D97706]/20 hover:-translate-y-[1px] focus-visible:outline-2 focus-visible:outline-[#D97706]"
                   >
-                    <span>QUERO CONHECER O TREINAMENTO</span>
-                    <ArrowRight className="w-4 h-4 text-[#05080D]" aria-hidden="true" />
+                    <span className="whitespace-nowrap hidden sm:inline">QUERO CONHECER O TREINAMENTO</span>
+                    <span className="whitespace-nowrap sm:hidden">CONHECER O TREINAMENTO</span>
+                    <ArrowRight className="w-4 h-4 text-[#FFF9ED] shrink-0 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                   </Link>
 
-                  <Link
-                    href="/noticias"
-                    className="inline-flex items-center justify-center gap-1.5 text-[13.5px] font-outfit font-bold text-[#18C6D8] hover:text-[#52F0FF] transition-colors py-1.5 px-2"
-                  >
-                    <span>Continuar nas notícias</span>
-                    <span>→</span>
-                  </Link>
+                  {/* Link Secundário Posicionado Abaixo */}
+                  <div className="text-center pt-0.5">
+                    <Link
+                      href="/noticias"
+                      className="inline-flex items-center gap-1.5 text-[13.5px] font-outfit font-semibold text-[#18C6D8] hover:text-[#52F0FF] transition-colors py-1 px-2"
+                    >
+                      <span>Continuar nas notícias</span>
+                      <span>→</span>
+                    </Link>
+                  </div>
                 </div>
 
               </div>
