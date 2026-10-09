@@ -75,6 +75,36 @@ const previewSlides = [
     subtitle: "Análise de direitos econômicos, de decisão e tratamento jurídico aplicável.",
     image: "/images/products/carousel/slide-5.jpg",
   },
+  {
+    id: 6,
+    title: "Como a Caderneta de Poupança Rende",
+    subtitle: "Regras de remuneração, Meta Selic e efeito da data de aniversário.",
+    image: "/images/products/carousel/slide-6.jpg",
+  },
+  {
+    id: 7,
+    title: "Fundos, ETFs e FIIs: Estruturas Diferentes",
+    subtitle: "Políticas de investimento, negociação e riscos de cada estrutura.",
+    image: "/images/products/carousel/slide-7.jpg",
+  },
+  {
+    id: 8,
+    title: "Escassez e Custo de Oportunidade",
+    subtitle: "Como recursos limitados e decisões orientam escolhas financeiras.",
+    image: "/images/products/carousel/slide-8.jpg",
+  },
+  {
+    id: 9,
+    title: "Oferta, Demanda e Preços",
+    subtitle: "A interação entre oferta e demanda na definição dos preços.",
+    image: "/images/products/carousel/slide-9.jpg",
+  },
+  {
+    id: 10,
+    title: "Retorno Nominal e Real",
+    subtitle: "Entenda a diferença entre variação em dinheiro e poder de compra.",
+    image: "/images/products/carousel/slide-10.jpg",
+  },
 ];
 
 // Duplicated array for seamless 60fps infinite marquee loop
