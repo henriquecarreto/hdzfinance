@@ -663,7 +663,7 @@ export default function EbookBundleSalesPage() {
       {/* ========================================================================= */}
       {/* 4. SEÇÃO DE PÚBLICO (#hdz-publico)                                         */}
       {/* ========================================================================= */}
-      <section id="hdz-publico" className="py-[48px] max-md:py-[32px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
+      <section id="hdz-publico" className="py-[48px] max-md:py-[32px] bg-[#0B1F3A] border-b border-[#0B1F3A]">
         <div className="max-w-[1040px] mx-auto px-5 md:px-6">
           
           {/* CABEÇALHO CENTRALIZADO */}
@@ -674,12 +674,12 @@ export default function EbookBundleSalesPage() {
             </span>
 
             {/* Título */}
-            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[30px] md:text-[34px] text-[#0B1F3A] leading-[1.15] mb-3">
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[30px] md:text-[34px] text-white leading-[1.15] mb-3">
               Para quem esta coleção foi desenvolvida?
             </h2>
 
             {/* Descrição */}
-            <p className="text-[15px] text-[#334155] leading-[1.5]">
+            <p className="text-[15px] text-[#D5DDE6] leading-[1.5]">
               Materiais visuais e didáticos para quem quer organizar as finanças, compreender investimentos e ampliar seus conhecimentos sobre dinheiro e ativos digitais.
             </p>
           </div>
