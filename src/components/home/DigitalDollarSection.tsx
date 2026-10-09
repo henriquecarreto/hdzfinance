@@ -93,7 +93,7 @@ export default function DigitalDollarSection() {
   return (
     <section
       aria-label="Dinheiro em transformação"
-      className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]"
+      className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-transparent"
     >
 
 
