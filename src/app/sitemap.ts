@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/materias",
     "/educacional",
+    "/educacional/guia-visual-financas",
     "/educacional/recomendacoes-de-leitura",
     "/aprenda",
     "/mercados",
