@@ -6,9 +6,11 @@ import MarketTicker from "@/components/MarketTicker";
 
 export default function HeaderWrapper() {
   const pathname = usePathname();
-  const isTrainingPage = pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas";
+  const isSalesPage =
+    pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas" ||
+    pathname === "/educacional/combo-ebooks";
 
-  if (isTrainingPage) {
+  if (isSalesPage) {
     return (
       <div className="w-full relative z-[60]">
         <Header />
