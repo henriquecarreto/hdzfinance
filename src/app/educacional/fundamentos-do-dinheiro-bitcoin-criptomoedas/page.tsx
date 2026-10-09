@@ -480,24 +480,25 @@ export default function BitcoinCourseSalesPage() {
           
           {/* ETIQUETA EMOJI */}
           <div>
-            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#FAF5E8] text-[#0B1F3A] border border-[#D5BE97] text-xs font-bold uppercase tracking-widest shadow-xs">
+            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE] text-xs font-bold uppercase tracking-widest shadow-xs">
               <span className="text-sm">🎥</span>
               <span>TREINAMENTO DE BITCOIN E CRIPTOMOEDAS</span>
             </span>
           </div>
 
-          {/* TÍTULO PRINCIPAL REFORMULADO COM CORES POR TRECHO */}
+          {/* TÍTULO PRINCIPAL COM CORES DA MARCA HDZ */}
           <h1 className="font-outfit font-extrabold text-[28px] sm:text-[36px] md:text-[44px] lg:text-[48px] tracking-tight leading-[1.18] max-w-[840px] mx-auto">
-            <span className="text-[#0B1F3A]">Entenda o Bitcoin </span>
-            <span className="text-[#1769D1]">sem confusão </span>
-            <span className="text-[#138A60]">e sem termos complicados.</span>
+            <span className="text-[#0B1F3A]">Entenda o </span>
+            <span className="text-[#D96F00]">Bitcoin </span>
+            <span className="text-[#0072FC]">sem confusão </span>
+            <span className="text-[#D96F00]">e sem termos complicados.</span>
           </h1>
 
-          {/* TEXTO DE APOIO REFORMULADO */}
-          <p className="text-[16px] sm:text-[17px] md:text-[19px] text-[#1F2937] leading-[1.55] max-w-[760px] mx-auto font-normal">
+          {/* TEXTO DE APOIO COM DESTAQUES DA PALETA HDZ */}
+          <p className="text-[16px] sm:text-[17px] md:text-[19px] text-[#0B1F3A] leading-[1.55] max-w-[760px] mx-auto font-normal">
             Aprenda sobre dinheiro, blockchain, ciclos de mercado e autocustódia em{" "}
-            <span className="text-[#1769D1] font-bold">5 módulos</span> com{" "}
-            <span className="text-[#138A60] font-bold">mais de 4 horas de videoaulas e tutoriais</span>. Um caminho organizado para entender antes de agir.
+            <span className="text-[#005ECC] font-bold">5 módulos</span> com{" "}
+            <span className="text-[#B85C00] font-bold">mais de 4 horas de videoaulas e tutoriais</span>. Um caminho organizado para entender antes de agir.
           </p>
 
           {/* LINHA DE IDENTIFICAÇÃO COM O PÚBLICO */}
@@ -507,9 +508,9 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* CAPA DOS MÓDULOS (BORDA DOURADA 3PX #E9991C) */}
+          {/* CAPA DOS MÓDULOS (BORDA LARANJA ORIGINAL HDZ #FE9409 DE 2PX) */}
           <div className="pt-2">
-            <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[340px] mx-auto rounded-2xl p-3 bg-[#FFFFFF] border-[3px] border-[#E9991C] shadow-md">
+            <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[340px] mx-auto rounded-2xl p-3 bg-[#FFFFFF] border-2 border-[#FE9409] shadow-md">
               <Image
                 src="/images/products/training-books-cover.jpg"
                 alt="Treinamento HDZ Finance — Módulos do Treinamento"
@@ -525,15 +526,15 @@ export default function BitcoinCourseSalesPage() {
           {/* LEGENDA ABAIXO DA IMAGEM */}
           <div className="pt-1">
             <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug max-w-xl mx-auto">
-              📚 <span className="text-[#1769D1]">5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span className="text-[#138A60]">2 E-BOOKS GRÁTIS</span> PARA LEITURA
+              📚 <span className="text-[#005ECC]">5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span className="text-[#B85C00]">2 E-BOOKS GRÁTIS</span> PARA LEITURA
             </p>
           </div>
 
-          {/* QUATRO PEQUENOS BLOCOS DE BENEFÍCIOS REFORMULADOS (2 COLUNAS X 2 LINHAS) */}
+          {/* QUATRO PEQUENOS BLOCOS DE BENEFÍCIOS COM CORES ALTERNADAS EM AZUL E LARANJA */}
           <div className="pt-2 max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-            {/* BLOCO 1 */}
+            {/* BLOCO 1 — LARANJA */}
             <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FFF7E5] border border-[#FDE68A] flex items-center justify-center text-xl shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#FFF3E6] border border-[#FE9409]/30 flex items-center justify-center text-xl shrink-0">
                 🪙
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
@@ -541,9 +542,9 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            {/* BLOCO 2 */}
+            {/* BLOCO 2 — AZUL */}
             <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-xl shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] border border-[#0072FC]/30 flex items-center justify-center text-xl shrink-0">
                 🔐
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
@@ -551,9 +552,9 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            {/* BLOCO 3 */}
+            {/* BLOCO 3 — LARANJA */}
             <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-xl shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#FFF3E6] border border-[#FE9409]/30 flex items-center justify-center text-xl shrink-0">
                 📈
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
@@ -561,9 +562,9 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            {/* BLOCO 4 */}
+            {/* BLOCO 4 — AZUL */}
             <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center text-xl shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] border border-[#0072FC]/30 flex items-center justify-center text-xl shrink-0">
                 👛
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
@@ -572,7 +573,7 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* BOTÃO HERO VERDE REFORMA TRIBUTÁRIA #00A859 */}
+          {/* BOTÃO HERO VERDE REFORMA TRIBUTÁRIA #00A859 (PRESERVADO) */}
           <div className="pt-2">
             <button
               onClick={scrollToOffer}
@@ -601,7 +602,7 @@ export default function BitcoinCourseSalesPage() {
               <span>💠</span>
               <span>Pix</span>
             </span>
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#1769D1]/10 text-[#1769D1] border border-[#1769D1]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#0072FC]/10 text-[#0072FC] border border-[#0072FC]/30 shadow-2xs">
               <span>💳</span>
               <span>Cartão de crédito</span>
             </span>
