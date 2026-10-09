@@ -142,6 +142,90 @@ const MODULES: ModuleItem[] = [
   },
 ];
 
+// Exact copy & data for Section 06 (Reformulated 6 Modules)
+interface SectionModuleCard {
+  id: number;
+  moduleLabel: string;
+  title: string;
+  description: string;
+  topics: string[];
+}
+
+const SECTION_MODULES: SectionModuleCard[] = [
+  {
+    id: 1,
+    moduleLabel: "MÓDULO 01",
+    title: "Apresentação",
+    description:
+      "Conheça a proposta do treinamento e como as aulas estão organizadas. Veja como os assuntos se conectam e por onde começar para aproveitar melhor o conteúdo, mesmo que você ainda esteja dando os primeiros passos.",
+    topics: [
+      "Como acompanhar as aulas.",
+      "Visão geral dos assuntos.",
+      "Por onde começar.",
+    ],
+  },
+  {
+    id: 2,
+    moduleLabel: "MÓDULO 02",
+    title: "Fundamentos do Dinheiro",
+    description:
+      "Para entender o Bitcoin, vale começar pelo dinheiro. Conheça sua origem, suas funções e como a inflação e a expansão monetária afetam o poder de compra e as decisões do dia a dia.",
+    topics: [
+      "Origem e funções do dinheiro.",
+      "Inflação e poder de compra.",
+      "Moeda, crédito e bancos centrais.",
+    ],
+  },
+  {
+    id: 3,
+    moduleLabel: "MÓDULO 03",
+    title: "O que é Bitcoin",
+    description:
+      "Entenda por que o Bitcoin surgiu e o que torna seu funcionamento diferente do dinheiro tradicional. Conheça os fundamentos da rede e os conceitos que ajudam a enxergar além da cotação.",
+    topics: [
+      "Origem e proposta do Bitcoin.",
+      "Blockchain e descentralização.",
+      "Mineração e oferta programada.",
+    ],
+  },
+  {
+    id: 4,
+    moduleLabel: "MÓDULO 04",
+    title: "Ciclos de Mercado",
+    description:
+      "As altas chamam atenção, mas as quedas também fazem parte do mercado. Entenda os ciclos, a volatilidade e como o entusiasmo e o medo podem influenciar suas decisões.",
+    topics: [
+      "Fases dos ciclos de mercado.",
+      "Preço, volatilidade e contexto.",
+      "Emoções e decisões por impulso.",
+    ],
+  },
+  {
+    id: 5,
+    moduleLabel: "MÓDULO 05",
+    title: "Seja Você Seu Próprio Banco",
+    description:
+      "Ter Bitcoin também exige entender como guardá-lo. Conheça as carteiras, as chaves e os cuidados da autocustódia para compreender o que significa assumir a responsabilidade pelos seus próprios ativos.",
+    topics: [
+      "Carteiras e chaves privadas.",
+      "Frase de recuperação e backups.",
+      "Cuidados ao guardar e transferir.",
+    ],
+  },
+  {
+    id: 6,
+    moduleLabel: "MÓDULO 06",
+    title: "Gerenciamento e Utilização",
+    description:
+      "Conecte o que aprendeu à organização da sua carteira. Entenda a relação entre risco, exposição e diversificação, além dos cuidados envolvidos na movimentação e no uso dos ativos.",
+    topics: [
+      "Organização da carteira.",
+      "Risco, exposição e diversificação.",
+      "Cuidados no uso dos ativos.",
+    ],
+  },
+];
+
 // 3 Real Course Lesson Screenshots dataset for Section 07 (Fixed Grid)
 const INSIDE_LESSONS = [
   {
@@ -691,73 +775,55 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 06 — CONTEÚDO DO TREINAMENTO (OFF-WHITE) ==================== */}
-      <section className="py-10 md:py-14 bg-[#F7F3E8] border-b border-[#E3D7BE]">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 space-y-8 text-center">
-          <div className="space-y-2 max-w-3xl mx-auto">
-            <span className="text-xs font-bold text-[#D97706] uppercase tracking-widest px-3 py-1 rounded-md bg-[#FFFCF6] border border-[#E3D7BE] inline-block">
+      {/* ==================== 06 — CONTEÚDO DO TREINAMENTO (OFF-WHITE REFORMULADO) ==================== */}
+      <section className="py-12 md:py-16 bg-[#F7F3E8] border-b border-[#E3D7BE]">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-10 text-center">
+          {/* Introdução Centralizada Compacta */}
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-[#D97706] uppercase tracking-widest px-3.5 py-1 rounded-md bg-[#FFFCF6] border border-[#E3D7BE] inline-block">
               CONHEÇA O TREINAMENTO
             </span>
-            <h2 className="font-outfit font-bold text-2xl md:text-4xl text-[#08182E]">
-              Da origem do dinheiro à utilização prática do Bitcoin
+            <h2 className="font-outfit font-bold text-2xl sm:text-3xl md:text-4xl text-[#08182E] leading-tight">
+              Entenda o caminho do dinheiro até o Bitcoin.
             </h2>
+            <p className="text-[15px] sm:text-base text-[#475569] leading-relaxed max-w-2xl mx-auto font-normal">
+              Seis módulos para conectar os fundamentos à prática: entender o dinheiro, conhecer o Bitcoin e aprender a cuidar dos seus ativos com mais consciência.
+            </p>
           </div>
 
-          {/* Grid Completo dos 6 Módulos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-            {MODULES.map((mod) => (
+          {/* Grid dos 6 Módulos Limpo e Padronizado */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left items-stretch">
+            {SECTION_MODULES.map((mod) => (
               <div
                 key={mod.id}
-                className="p-6 rounded-2xl bg-[#FFFCF6] border border-[#E3D7BE] hover:border-[#D97706] transition-all flex flex-col justify-between space-y-4 shadow-sm"
+                className="p-5 sm:p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2E8F0] shadow-sm hover:border-[#D97706]/60 transition-all flex flex-col justify-start space-y-4"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-[#F59A18]/10 text-[#D97706] border border-[#F59A18]/30">
-                      {mod.badge}
-                    </span>
-                    <span className="text-xs font-mono text-[#53606F] font-semibold">
-                      #{mod.numberStr}
-                    </span>
-                  </div>
-
-                  <h3 className="font-outfit font-bold text-lg md:text-xl text-[#08182E]">
-                    {mod.title}
-                  </h3>
-
-                  <p className="text-xs md:text-sm text-[#53606F]">
-                    {mod.subtitle}
-                  </p>
-
-                  {/* Destaque da pergunta respondida */}
-                  <div className="p-2.5 rounded-lg bg-[#F7F3E8] border border-[#E3D7BE] text-xs text-[#D97706] font-semibold">
-                    <span className="block text-[10px] text-[#53606F] uppercase font-bold tracking-wider mb-0.5">
-                      Pergunta respondida:
-                    </span>
-                    "{mod.question}"
-                  </div>
-
-                  {/* Diagrama de ciclos no Módulo 03 */}
-                  {mod.id === 3 && (
-                    <div className="my-2 p-2.5 rounded-lg bg-[#FFF9EE] border border-[#F59A18]/40 text-center">
-                      <span className="text-[10px] font-bold text-[#D97706] uppercase tracking-wider block mb-1">
-                        Mapas de Ciclos de Mercado:
-                      </span>
-                      <div className="text-[11px] font-mono text-[#7C2D12] font-semibold flex items-center justify-center gap-1 flex-wrap">
-                        <span>EUFORIA</span> <span>→</span> <span>VOLATILIDADE</span> <span>→</span> <span>MEDO</span> <span>→</span> <span>ACUMULAÇÃO</span> <span>→</span> <span>RECUPERAÇÃO</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Lista de tópicos */}
-                  <div className="space-y-1.5 pt-2 border-t border-[#E3D7BE]">
-                    {mod.topics.map((topic, i) => (
-                      <div key={i} className="flex items-start space-x-2 text-xs md:text-sm text-[#08182E]">
-                        <Check className="h-3.5 w-3.5 text-[#D97706] shrink-0 mt-0.5" />
-                        <span>{topic}</span>
-                      </div>
-                    ))}
-                  </div>
+                {/* Identificação do Módulo */}
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#FFF9EE] text-[#D97706] border border-[#F59A18]/30">
+                    {mod.moduleLabel}
+                  </span>
                 </div>
+
+                {/* Título */}
+                <h3 className="font-outfit font-bold text-[19px] sm:text-[20px] text-[#08182E] leading-snug">
+                  {mod.title}
+                </h3>
+
+                {/* Parágrafo Explicativo Direto */}
+                <p className="text-[15px] text-[#334155] leading-[1.55] font-normal flex-1">
+                  {mod.description}
+                </p>
+
+                {/* Lista Limpa de 3 Tópicos Curtos com Marcadores Discretos */}
+                <ul className="space-y-2 pt-3 border-t border-[#F1F5F9] text-[14.5px] text-[#334155]">
+                  {mod.topics.map((topic, i) => (
+                    <li key={i} className="flex items-start space-x-2.5 leading-snug">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] shrink-0 mt-2" aria-hidden="true" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
