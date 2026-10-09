@@ -1364,40 +1364,6 @@ export default function EbookBundleSalesPage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 13. NOVA CHAMADA FINAL (#hdz-final)                                       */}
-      {/* ========================================================================= */}
-      <section id="hdz-final" className="py-12 md:py-20 bg-[#0B1F3A] text-white">
-        <div className="max-w-[760px] mx-auto px-5 md:px-6 text-center space-y-6">
-          
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider border border-white/10">
-            COMECE SEUS ESTUDOS
-          </span>
-
-          <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-white leading-[1.2]">
-            Escolha sua coleção e organize seu aprendizado financeiro.
-          </h2>
-
-          <p className="text-[16px] text-[#D5DDE6] leading-[1.65] font-normal">
-            Nove guias visuais e dois e-books bônus construídos para trazer clareza para o estudo de finanças, economia e Bitcoin. Escolha a opção ideal para o seu momento.
-          </p>
-
-          <div className="pt-2 space-y-3">
-            <button
-              type="button"
-              onClick={() => scrollToSection("oferta")}
-              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-white/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
-            >
-              ESCOLHER MINHA COLEÇÃO
-            </button>
-
-            <p className="text-xs text-[#D5DDE6]/80 font-medium">
-              Materiais digitais em PDF com download imediato após a confirmação.
-            </p>
-          </div>
-
-        </div>
-      </section>
 
     </div>
   );
