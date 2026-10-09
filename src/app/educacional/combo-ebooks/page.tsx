@@ -109,79 +109,128 @@ const previewSlides = [
 // Array duplicado para loop infinito 60fps sem solavancos
 const marqueeItems = [...previewSlides, ...previewSlides];
 
+// Miniatura de Livro/Guia em HTML/CSS
+function CssBookThumbnail({ shortTitle, isBonus = false }: { shortTitle: string; isBonus?: boolean }) {
+  return (
+    <div
+      className={`w-[60px] h-[82px] bg-[#FFFBEB] rounded-[4px] shadow-sm flex flex-col justify-between p-1 shrink-0 relative overflow-hidden ${
+        isBonus ? "border border-[#34D399] border-l-[5px] border-l-[#059669]" : "border border-[#F5C84B] border-l-[5px] border-l-[#0B1F3A]"
+      }`}
+    >
+      <div className="flex-1 flex items-center justify-center pt-1 px-0.5">
+        <span className="text-[8px] font-bold text-[#0B1F3A] text-center leading-[1.15] uppercase tracking-tighter line-clamp-3">
+          {shortTitle}
+        </span>
+      </div>
+      <div className="text-[7px] font-bold text-[#0B1F3A]/60 text-center tracking-wider uppercase border-t border-amber-200/60 pt-0.5">
+        PDF
+      </div>
+    </div>
+  );
+}
+
 // Catálogo dos 9 Guias Visuais
 const catalogGuias = [
   {
     number: "01",
     title: "Guia Visual Educação Financeira",
+    shortTitle: "Educação Financeira",
     description:
-      "Compreenda orçamento, reserva de emergência, crédito, metas e hábitos e diferencie renda de patrimônio.",
+      "Compreenda orçamento, dívidas, reserva de emergência e metas e aprenda a diferenciar renda de patrimônio.",
     badge: "INICIAL E COMPLETA",
     type: "initial",
   },
   {
     number: "02",
     title: "Guia Visual Economia, Juros e Inflação",
+    shortTitle: "Economia & Inflação",
     description:
-      "Relacione escassez, preços, juros, inflação e câmbio e entenda a diferença entre retorno nominal e real.",
+      "Entenda como preços, juros, inflação e câmbio se relacionam e conheça a diferença entre retorno nominal e real.",
     badge: "INICIAL E COMPLETA",
     type: "initial",
   },
   {
     number: "03",
     title: "Guia Visual Investimentos",
+    shortTitle: "Investimentos",
     description:
-      "Diferencie renda fixa, ações e formas de retorno e estude risco, liquidez, custos e diversificação.",
+      "Conheça conceitos de renda fixa e ações e compreenda risco, retorno, liquidez e diversificação.",
     badge: "INICIAL E COMPLETA",
     type: "initial",
   },
   {
     number: "04",
     title: "Guia Visual Fundamentos do Bitcoin",
+    shortTitle: "Fundamentos Bitcoin",
     description:
-      "Entenda emissão, halving, transações, nós, mineração e custódia antes de aprofundar a discussão sobre preço.",
+      "Compreenda emissão, transações, mineração e custódia para estudar o funcionamento do Bitcoin.",
     badge: "INICIAL E COMPLETA",
     type: "initial",
   },
   {
     number: "05",
     title: "Guia Visual Criptografia",
+    shortTitle: "Criptografia",
     description:
-      "Entenda chaves, hashes, assinaturas e recuperação de carteiras e reconheça pontos de atenção em golpes e permissões.",
+      "Entenda chaves, hashes, assinaturas e recuperação de carteiras e reconheça pontos de atenção em segurança.",
     badge: "COLEÇÃO COMPLETA",
     type: "complete",
   },
   {
     number: "06",
     title: "Guia Visual Dólar Digital",
+    shortTitle: "Dólar Digital",
     description:
-      "Diferencie stablecoins e moedas digitais e examine os conceitos de reservas, paridade, resgate, câmbio e redes.",
+      "Conheça stablecoins e os conceitos de reservas, paridade, resgate, câmbio e redes.",
     badge: "COLEÇÃO COMPLETA",
     type: "complete",
   },
   {
     number: "07",
     title: "Guia Visual Blockchain",
+    shortTitle: "Blockchain",
     description:
-      "Compare mecanismos de consenso, modelos de registro, governança e bridges e entenda quando a tecnologia faz sentido.",
+      "Compreenda mecanismos de consenso, modelos de registro e governança e entenda quando a tecnologia faz sentido.",
     badge: "COLEÇÃO COMPLETA",
     type: "complete",
   },
   {
     number: "08",
     title: "Guia Visual Tokenização",
+    shortTitle: "Tokenização",
     description:
-      "Relacione tokens, NFTs e RWA aos direitos e ativos representados e conheça o ciclo de emissão, circulação e encerramento.",
+      "Entenda como tokens, NFTs e ativos tokenizados representam direitos e conheça seu ciclo de emissão e circulação.",
     badge: "COLEÇÃO COMPLETA",
     type: "complete",
   },
   {
     number: "09",
     title: "Guia Visual Mentalidade Bitcoiner",
+    shortTitle: "Mentalidade Bitcoiner",
     description:
-      "Um guia dedicado à mentalidade bitcoiner para complementar seus estudos sobre Bitcoin.",
+      "Complemente seus estudos sobre Bitcoin com um guia dedicado à mentalidade bitcoiner.",
     badge: "COLEÇÃO COMPLETA",
     type: "complete",
+  },
+];
+
+// Catálogo dos 2 Bônus
+const catalogBonus = [
+  {
+    number: "01",
+    title: "Do Clique ao Bloco",
+    shortTitle: "Do Clique ao Bloco",
+    description:
+      "Acompanhe o caminho de uma transação, do envio ao registro na blockchain, em uma leitura complementar aos guias.",
+    badge: "🎁 BÔNUS DA COLEÇÃO COMPLETA",
+  },
+  {
+    number: "02",
+    title: "Meu Primeiro Bitcoin",
+    shortTitle: "Meu Primeiro Bitcoin",
+    description:
+      "Uma leitura introdutória para compreender o essencial e contextualizar os primeiros passos no universo Bitcoin.",
+    badge: "🎁 BÔNUS DA COLEÇÃO COMPLETA",
   },
 ];
 
@@ -608,181 +657,170 @@ export default function EbookBundleSalesPage() {
 
 
       {/* ========================================================================= */}
-      {/* 6. NOVO CATÁLOGO DOS 9 GUIAS VISUAIS (#hdz-guias)                         */}
+      {/* 6. CATÁLOGO UNIFICADO DE MATERIAIS (#hdz-guias)                           */}
       {/* ========================================================================= */}
-      <section id="hdz-guias" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+      <section id="hdz-guias" className="pt-[56px] pb-[48px] max-md:py-[36px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[1040px] mx-auto px-4 sm:px-6">
           
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              CONTEÚDO DAS COLEÇÕES
+          {/* CABEÇALHO CENTRALIZADO */}
+          <div className="text-center max-w-[720px] mx-auto">
+            {/* Selo */}
+            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white text-[#047857] border border-[#99D5C6] mb-3">
+              📚 COLEÇÃO VISUAL HDZ FINANCE
             </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Conheça os guias e escolha o alcance dos seus estudos.
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[32px] md:text-[36px] text-[#0B1F3A] leading-[1.15] mb-3">
+              Conheça os 11 materiais da coleção completa
             </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              A Coleção Inicial reúne quatro guias para construir sua base. A Coleção Completa inclui esses mesmos materiais e acrescenta cinco guias e dois e-books bônus.
+
+            {/* Descrição */}
+            <p className="text-[16px] text-[#334155] leading-[1.5] mb-3.5">
+              Guias visuais para compreender educação financeira, economia, investimentos e Bitcoin, com duas leituras complementares para continuar seus estudos.
             </p>
+
+            {/* Etiqueta */}
+            <span className="inline-block px-[10px] py-[6px] rounded-full text-[12px] font-semibold bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE]">
+              9 GUIAS VISUAIS + 2 E-BOOKS BÔNUS • MATERIAIS DIGITAIS EM PDF
+            </span>
           </div>
 
-          {/* GRID DOS 9 GUIAS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {catalogGuias.map((guia) => {
-              const isInitial = guia.type === "initial";
-              return (
+          {/* GRUPO 1: 9 GUIAS VISUAIS */}
+          <div className="mt-8">
+            {/* Linha de identificação */}
+            <div className="border-b-2 border-[#F5C84B] pb-2 mb-[20px] max-sm:mb-[16px]">
+              <h3 className="font-outfit font-bold text-[18px] text-[#0B1F3A]">
+                📚 9 guias visuais
+              </h3>
+            </div>
+
+            {/* Grade dos 9 guias */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px] max-sm:gap-[16px] items-stretch">
+              {catalogGuias.map((guia) => {
+                const isInitial = guia.type === "initial";
+                return (
+                  <div
+                    key={guia.number}
+                    className="p-[20px] rounded-[12px] bg-white border border-[#E5DED0] shadow-[0_2px_6px_rgba(11,31,58,0.06)] flex flex-col justify-between text-left"
+                  >
+                    <div className="space-y-3">
+                      {/* Número + Selo */}
+                      <div className="flex items-center justify-between">
+                        <div className="w-[28px] h-[28px] rounded-[6px] bg-[#0B1F3A] text-white font-outfit font-bold text-xs flex items-center justify-center">
+                          {guia.number}
+                        </div>
+                        <span
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+                            isInitial
+                              ? "bg-[#EFF6FF] text-[#1D4ED8]"
+                              : "bg-[#FFFBEB] text-[#92400E]"
+                          }`}
+                        >
+                          {guia.badge}
+                        </span>
+                      </div>
+
+                      {/* Nome do Guia */}
+                      <h4 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                        {guia.title}
+                      </h4>
+
+                      {/* Descrição + Miniatura */}
+                      <div className="flex items-start gap-3 justify-between">
+                        <p className="text-[14px] text-[#475569] leading-[1.5] flex-1">
+                          {guia.description}
+                        </p>
+                        <CssBookThumbnail shortTitle={guia.shortTitle} />
+                      </div>
+                    </div>
+
+                    {/* Divisória + Rodapé */}
+                    <div>
+                      <div className="my-3 border-t border-[#E2E8F0]" />
+                      <p className="text-[11px] font-medium text-[#059669]">
+                        📄 Guia digital em PDF
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* GRUPO 2: 2 BÔNUS DENTRO DA MESMA SEÇÃO */}
+          <div id="ebooks" className="mt-[32px]">
+            {/* Linha de identificação bônus */}
+            <div className="border-b-2 border-[#A7F3D0] pb-2 mb-[20px] max-sm:mb-[16px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+              <h3 className="font-outfit font-bold text-[18px] text-[#059669]">
+                🎁 2 bônus para complementar seus estudos
+              </h3>
+              <span className="text-sm font-medium text-[#047857]">
+                Incluídos na Coleção Completa
+              </span>
+            </div>
+
+            {/* Grade dos 2 bônus */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[20px] max-sm:gap-[16px] items-stretch">
+              {catalogBonus.map((bonus) => (
                 <div
-                  key={guia.number}
-                  className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4 text-left"
+                  key={bonus.number}
+                  className="p-[20px] rounded-[12px] bg-white border border-[#34D399] border-t-[3px] border-t-[#059669] shadow-[0_2px_6px_rgba(11,31,58,0.06)] flex flex-col justify-between text-left"
                 >
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={`w-11 h-11 rounded-xl font-outfit font-bold text-lg flex items-center justify-center ${
-                          isInitial
-                            ? "bg-[#EFF6FF] text-[#1D4ED8]"
-                            : "bg-[#FFFBEB] text-[#B45309]"
-                        }`}
-                      >
-                        {guia.number}
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${
-                          isInitial
-                            ? "bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]"
-                            : "bg-[#FFFBEB] text-[#B45309] border border-[#FFFBEB]"
-                        }`}
-                      >
-                        {guia.badge}
+                    {/* Selo Bônus */}
+                    <div>
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#ECFDF5] text-[#047857]">
+                        {bonus.badge}
                       </span>
                     </div>
 
-                    <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                      {guia.title}
-                    </h3>
+                    {/* Título Bônus */}
+                    <h4 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                      {bonus.title}
+                    </h4>
 
-                    <p className="text-[16px] text-[#475569] leading-[1.65]">
-                      {guia.description}
+                    {/* Descrição + Miniatura */}
+                    <div className="flex items-start gap-3 justify-between">
+                      <p className="text-[14px] text-[#475569] leading-[1.5] flex-1">
+                        {bonus.description}
+                      </p>
+                      <CssBookThumbnail shortTitle={bonus.shortTitle} isBonus={true} />
+                    </div>
+                  </div>
+
+                  {/* Divisória + Rodapé */}
+                  <div>
+                    <div className="my-3 border-t border-[#E2E8F0]" />
+                    <p className="text-[11px] font-medium text-[#059669]">
+                      📄 E-book digital em PDF
                     </p>
                   </div>
-
-                  <div className="pt-3 border-t border-[#E2E8F0] text-xs font-semibold text-[#475569] flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-[#1D4ED8]" />
-                    <span>Guia digital em PDF</span>
-                  </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
 
-          {/* BOTÃO ABAIXO DO CATÁLOGO */}
-          <div className="text-center pt-2">
+          {/* FAIXA FINAL INTEGRADA AO CATÁLOGO */}
+          <div className="mt-[28px] p-[24px] rounded-[14px] bg-white border border-[#E5DED0] shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 text-left">
+            <div className="space-y-1 text-center md:text-left">
+              <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-[#EFF6FF] text-[#1D4ED8]">
+                ✨ COLEÇÃO COMPLETA
+              </span>
+              <h3 className="font-outfit font-bold text-[18px] md:text-[20px] text-[#0B1F3A]">
+                Acesse os 11 materiais da coleção completa
+              </h3>
+              <p className="text-[14px] text-[#475569]">
+                Nove guias visuais e dois e-books bônus para estudar e consultar no seu ritmo.
+              </p>
+            </div>
+
             <button
               type="button"
               onClick={() => scrollToSection("oferta")}
-              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+              className="w-full md:w-auto min-h-[48px] px-6 py-3 rounded-[8px] bg-[#00B86B] hover:bg-[#009E5C] text-white font-outfit font-bold text-sm uppercase tracking-wide transition-all shrink-0 cursor-pointer shadow-sm text-center flex items-center justify-center"
             >
-              ESCOLHER MINHA COLEÇÃO
+              QUERO A COLEÇÃO COMPLETA →
             </button>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 7. SEÇÃO EXISTENTE #ebooks (APRESENTADA COMO BÔNUS DA COMPLETA)           */}
-      {/* ========================================================================= */}
-      <section id="ebooks" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
-          
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#FFFBEB] text-[#B45309] border border-[#FFFBEB]">
-              2 E-BOOKS BÔNUS NA COLEÇÃO COMPLETA
-            </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Continue a leitura com dois e-books complementares.
-            </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Além dos nove guias visuais, a Coleção Completa inclui duas leituras para aprofundar sua compreensão do Bitcoin e das transações em blockchain.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* E-BOOK 01 */}
-            <div className="p-6 md:p-8 rounded-[20px] bg-[#FFFFFF] border-2 border-[#1D4ED8]/30 shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-5 flex flex-col justify-between text-left">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-md bg-[#EFF6FF] text-[#1D4ED8] text-xs font-bold border border-[#EFF6FF] uppercase">
-                    BÔNUS 01 | PDF DIGITAL
-                  </span>
-                  <span className="text-xs font-semibold text-[#475569]">Formato PDF</span>
-                </div>
-                
-                <h3 className="font-outfit font-bold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  📘 {ebookBundle.ebookOne.title}
-                </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  {ebookBundle.ebookOne.description}
-                </p>
-
-                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-2 text-xs sm:text-sm text-[#475569]">
-                  <div className="flex items-center justify-between font-medium">
-                    <span>Assunto principal:</span>
-                    <span className="font-bold text-[#0B1F3A]">Blockchain e transações</span>
-                  </div>
-                  <div className="flex items-center justify-between font-medium">
-                    <span>Formato de entrega:</span>
-                    <span className="font-bold text-[#0B1F3A]">E-book digital em PDF</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
-                <span className="text-[#047857]">✓ INCLUÍDO NA COLEÇÃO COMPLETA</span>
-                <span>Download em PDF</span>
-              </div>
-            </div>
-
-            {/* E-BOOK 02 */}
-            <div className="p-6 md:p-8 rounded-[20px] bg-[#FFFFFF] border-2 border-[#F59E0B]/40 shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-5 flex flex-col justify-between text-left">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-md bg-[#FFFBEB] text-[#B45309] text-xs font-bold border border-[#FFFBEB] uppercase">
-                    BÔNUS 02 | PDF DIGITAL
-                  </span>
-                  <span className="text-xs font-semibold text-[#475569]">Formato PDF</span>
-                </div>
-                
-                <h3 className="font-outfit font-bold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  📙 {ebookBundle.ebookTwo.title}
-                </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  {ebookBundle.ebookTwo.description}
-                </p>
-
-                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-2 text-xs sm:text-sm text-[#475569]">
-                  <div className="flex items-center justify-between font-medium">
-                    <span>Assunto principal:</span>
-                    <span className="font-bold text-[#0B1F3A]">Introdução ao Bitcoin</span>
-                  </div>
-                  <div className="flex items-center justify-between font-medium">
-                    <span>Formato de entrega:</span>
-                    <span className="font-bold text-[#0B1F3A]">E-book digital em PDF</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
-                <span className="text-[#047857]">✓ INCLUÍDO NA COLEÇÃO COMPLETA</span>
-                <span>Download em PDF</span>
-              </div>
-            </div>
-          </div>
-
-          {/* NOTA ABAIXO DOS CARDS */}
-          <div className="text-center pt-1">
-            <p className="text-xs sm:text-sm text-[#475569] font-medium max-w-2xl mx-auto">
-              Os dois e-books bônus estão incluídos na Coleção Completa. A Coleção Inicial contém os quatro guias apresentados acima.
-            </p>
           </div>
 
         </div>
