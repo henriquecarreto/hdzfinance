@@ -486,19 +486,26 @@ export default function BitcoinCourseSalesPage() {
             </span>
           </div>
 
-          {/* TÍTULO PRINCIPAL COM CORES DA MARCA HDZ */}
+          {/* TÍTULO PRINCIPAL REORGANIZADO EM AZUL E LARANJA */}
           <h1 className="font-outfit font-extrabold text-[28px] sm:text-[36px] md:text-[44px] lg:text-[48px] tracking-tight leading-[1.18] max-w-[840px] mx-auto">
-            <span className="text-[#0B1F3A]">Entenda o </span>
+            <span className="text-[#0072FC]">Entenda o </span>
             <span className="text-[#D96F00]">Bitcoin </span>
-            <span className="text-[#0072FC]">sem confusão </span>
+            <span className="text-[#0072FC]">sem confusão</span>{" "}
+            <br className="hidden sm:inline" />
             <span className="text-[#D96F00]">e sem termos complicados.</span>
           </h1>
 
-          {/* TEXTO DE APOIO COM DESTAQUES DA PALETA HDZ */}
+          {/* TEXTO DE APOIO COM VERMELHO, VERDE E AZUL */}
           <p className="text-[16px] sm:text-[17px] md:text-[19px] text-[#0B1F3A] leading-[1.55] max-w-[760px] mx-auto font-normal">
-            Aprenda sobre dinheiro, blockchain, ciclos de mercado e autocustódia em{" "}
-            <span className="text-[#005ECC] font-bold">5 módulos</span> com{" "}
-            <span className="text-[#B85C00] font-bold">mais de 4 horas de videoaulas e tutoriais</span>. Um caminho organizado para entender antes de agir.
+            Aprenda sobre{" "}
+            <span className="text-[#0072FC] font-bold">
+              dinheiro, blockchain, ciclos de mercado e autocustódia
+            </span>{" "}
+            em <span className="text-[#E32636] font-bold">5 módulos</span> com{" "}
+            <span className="text-[#138A60] font-bold">
+              mais de 4 horas de videoaulas e tutoriais
+            </span>
+            . Um caminho organizado para entender antes de agir.
           </p>
 
           {/* LINHA DE IDENTIFICAÇÃO COM O PÚBLICO */}
@@ -526,7 +533,9 @@ export default function BitcoinCourseSalesPage() {
           {/* LEGENDA ABAIXO DA IMAGEM */}
           <div className="pt-1">
             <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug max-w-xl mx-auto">
-              📚 <span className="text-[#005ECC]">5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span className="text-[#B85C00]">2 E-BOOKS GRÁTIS</span> PARA LEITURA
+              📚 <span className="text-[#E32636]">5 MÓDULOS</span>{" "}
+              <span className="text-[#0072FC]">COM VIDEOAULAS</span> + 🎁{" "}
+              <span className="text-[#138A60]">2 E-BOOKS GRÁTIS</span> PARA LEITURA
             </p>
           </div>
 
