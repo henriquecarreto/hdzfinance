@@ -468,7 +468,7 @@ export default function EbookBundleSalesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[960px] mx-auto text-left">
             
             {/* Caixa 1 */}
-            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#253B5F] border border-white/10 shadow-md flex items-start gap-3.5">
               <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
                 <Check className="w-4 h-4 text-white stroke-[3]" />
               </div>
@@ -483,7 +483,7 @@ export default function EbookBundleSalesPage() {
             </div>
 
             {/* Caixa 2 */}
-            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#253B5F] border border-white/10 shadow-md flex items-start gap-3.5">
               <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
                 <Check className="w-4 h-4 text-white stroke-[3]" />
               </div>
@@ -498,7 +498,7 @@ export default function EbookBundleSalesPage() {
             </div>
 
             {/* Caixa 3 */}
-            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#253B5F] border border-white/10 shadow-md flex items-start gap-3.5">
               <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
                 <Check className="w-4 h-4 text-white stroke-[3]" />
               </div>
@@ -513,7 +513,7 @@ export default function EbookBundleSalesPage() {
             </div>
 
             {/* Caixa 4 */}
-            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#253B5F] border border-white/10 shadow-md flex items-start gap-3.5">
               <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
                 <Check className="w-4 h-4 text-white stroke-[3]" />
               </div>
