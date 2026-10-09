@@ -435,87 +435,98 @@ export default function EbookBundleSalesPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 3. EXPERIÊNCIA DE LEITURA EXISTENTE REESCRITA                            */}
+      {/* 3. EXPERIÊNCIA DE LEITURA (PADRÃO VISUAL REFORMA TRIBUTÁRIA - #0B1F3A)     */}
       {/* ========================================================================= */}
-      <section className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              CONHECIMENTO ORGANIZADO
-            </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Conecte os conceitos que aparecem na sua vida financeira.
+      <section className="py-12 md:py-16 bg-[#0B1F3A] text-white border-b border-[#0B1F3A]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-6 space-y-8 md:space-y-10 text-center">
+          
+          {/* TÍTULO E SUBTÍTULO */}
+          <div className="max-w-[780px] mx-auto space-y-3">
+            <h2 className="font-outfit font-extrabold text-[24px] sm:text-[30px] md:text-[36px] tracking-tight uppercase leading-[1.2]">
+              <span className="text-white block">CONECTE OS CONCEITOS QUE APARECEM</span>
+              <span className="text-[#E9991C] block">NA SUA VIDA FINANCEIRA</span>
             </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Você encontra termos sobre juros, inflação, investimentos e Bitcoin em muitos lugares. A coleção reúne uma base visual para estudar esses assuntos com uma ordem sugerida e voltar aos pontos que ainda geram dúvida.
+            <p className="text-[14px] sm:text-[15px] md:text-[16px] text-[#D5DDE6] leading-[1.5] max-w-[720px] mx-auto font-normal">
+              Entenda educação financeira, investimentos, inflação e juros com mapas mentais organizados de forma visual, clara e fácil de consultar.
             </p>
           </div>
 
-          {/* 4 CARDS DE EXPERIÊNCIA DE LEITURA */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {/* Card 1 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <span className="text-[12px] font-bold text-[#B45309] uppercase tracking-wider block">01. BASE</span>
-                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  Organize sua base financeira.
+          {/* GRADE 2X2 DE CAIXAS HORIZONTAIS COMPACTAS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[960px] mx-auto text-left">
+            
+            {/* Caixa 1 */}
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+              <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
+                <Check className="w-4 h-4 text-white stroke-[3]" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-outfit font-bold text-[15px] sm:text-[16px] text-white tracking-wide uppercase leading-tight">
+                  ORGANIZE SUAS FINANÇAS
                 </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  Compreenda orçamento, reserva, dívidas, metas e a diferença entre renda e patrimônio.
+                <p className="text-[13px] sm:text-[14px] text-[#D5DDE6] leading-[1.4] font-normal">
+                  Compreenda orçamento, reserva financeira, dívidas e planejamento.
                 </p>
               </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <span className="text-[12px] font-bold text-[#1D4ED8] uppercase tracking-wider block">02. CONTEXTO</span>
-                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  Entenda o contexto dos números.
+            {/* Caixa 2 */}
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+              <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
+                <Check className="w-4 h-4 text-white stroke-[3]" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-outfit font-bold text-[15px] sm:text-[16px] text-white tracking-wide uppercase leading-tight">
+                  ENTENDA A ECONOMIA
                 </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  Relacione juros, inflação e poder de compra, distinguindo o crescimento do saldo do resultado em termos reais.
+                <p className="text-[13px] sm:text-[14px] text-[#D5DDE6] leading-[1.4] font-normal">
+                  Conecte os conceitos econômicos às decisões do seu dia a dia.
                 </p>
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <span className="text-[12px] font-bold text-[#B45309] uppercase tracking-wider block">03. COMPARAÇÃO</span>
-                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  Compare conceitos antes de decidir.
+            {/* Caixa 3 */}
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+              <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
+                <Check className="w-4 h-4 text-white stroke-[3]" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-outfit font-bold text-[15px] sm:text-[16px] text-white tracking-wide uppercase leading-tight">
+                  COMPARE INVESTIMENTOS
                 </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  Estude formas de retorno, risco, liquidez e diversificação e entenda como esses critérios se relacionam.
+                <p className="text-[13px] sm:text-[14px] text-[#D5DDE6] leading-[1.4] font-normal">
+                  Entenda como risco, retorno, liquidez e diversificação se relacionam.
                 </p>
               </div>
             </div>
 
-            {/* Card 4 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <span className="text-[12px] font-bold text-[#1D4ED8] uppercase tracking-wider block">04. BITCOIN</span>
-                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                  Conheça o Bitcoin além da cotação.
+            {/* Caixa 4 */}
+            <div className="p-4 sm:p-5 rounded-[12px] bg-[#1E3456] border border-white/10 shadow-md flex items-start gap-3.5">
+              <div className="w-7 h-7 rounded-full bg-[#00A859] flex items-center justify-center text-white shrink-0 font-bold mt-0.5">
+                <Check className="w-4 h-4 text-white stroke-[3]" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-outfit font-bold text-[15px] sm:text-[16px] text-white tracking-wide uppercase leading-tight">
+                  COMPREENDA INFLAÇÃO E JUROS
                 </h3>
-                <p className="text-[16px] text-[#475569] leading-[1.65]">
-                  Compreenda emissão, transações, verificação e custódia, com uma base para continuar seus estudos.
+                <p className="text-[13px] sm:text-[14px] text-[#D5DDE6] leading-[1.4] font-normal">
+                  Veja como afetam seu poder de compra, suas dívidas e seus investimentos.
                 </p>
               </div>
             </div>
+
           </div>
 
-          {/* BOTÃO APÓS OS 4 CARDS */}
-          <div className="text-center pt-2">
+          {/* BOTÃO PRINCIPAL VERDE */}
+          <div className="pt-2">
             <button
               type="button"
               onClick={() => scrollToSection("oferta")}
-              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+              className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 rounded-[10px] bg-[#00A859] hover:bg-[#008A54] focus:outline-none text-white font-outfit font-bold text-[15px] uppercase tracking-wide shadow-md transition-all cursor-pointer inline-flex items-center justify-center gap-2"
             >
-              VER AS DUAS COLEÇÕES
+              <span>CONHECER A COLEÇÃO COMPLETA →</span>
             </button>
           </div>
+
         </div>
       </section>
 
