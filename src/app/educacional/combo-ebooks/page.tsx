@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Sparkles,
   ChevronDown,
@@ -9,40 +10,42 @@ import {
   Check,
   ZoomIn,
   X,
+  FileText,
+  ShieldCheck,
+  BookOpen,
 } from "lucide-react";
 
-// Configurable Ebook Bundle Sales State
+// =============================================================================
+// CONFIGURAÇÕES COMERCIAIS DAS COLEÇÕES (Valores nulos até definição comercial)
+// =============================================================================
+const precoColecaoInicial: number | null = null;
+const precoColecaoCompleta: number | null = null;
+const checkoutColecaoInicial: string | null = null;
+const checkoutColecaoCompleta: string | null = null;
+
+// Configuração interna dos materiais da Coleção
 const ebookBundle = {
   pageStatus: "published",
-  collectionName: "Combo com 2 E-books",
+  collectionName: "Coleção Visual HDZ Finance",
   ebookOne: {
     title: "Do Clique ao Bloco",
     subject: "Blockchain & Transações",
     description:
-      "Entenda o caminho de uma transação na blockchain depois de clicar em enviar.",
+      "Acompanhe o caminho de uma transação, do envio ao registro na blockchain.",
     coverImage: null,
-    pages: "72 páginas",
-    format: "PDF Digital",
+    format: "E-book digital em PDF",
   },
   ebookTwo: {
     title: "Meu Primeiro Bitcoin",
-    subject: "Fundamentos & Prática",
+    subject: "Introdução ao Bitcoin",
     description:
-      "Um guia para compreender o essencial e dar seus primeiros passos no universo Bitcoin.",
+      "Uma leitura introdutória para compreender o essencial e contextualizar os primeiros passos no universo Bitcoin.",
     coverImage: null,
-    pages: "64 páginas",
-    format: "PDF Digital",
+    format: "E-book digital em PDF",
   },
-  price: 49.9,
-  originalPrice: 99.9,
-  installments: null,
-  checkoutUrl: null,
-  guaranteeEnabled: true,
-  guaranteeDays: 7,
-  offerReady: true,
 };
 
-// Preview Carousel Slides Data
+// Carrossel Marquee Infinito — Prévias dos Guias Visuais (10 Slides)
 const previewSlides = [
   {
     id: 1,
@@ -106,16 +109,84 @@ const previewSlides = [
   },
 ];
 
-// Duplicated array for seamless 60fps infinite marquee loop
+// Array duplicado para loop infinito 60fps sem solavancos
 const marqueeItems = [...previewSlides, ...previewSlides];
 
-// Style helper for white text with fine black stroke (same as training page CTA button)
-const whiteButtonTextStroke = {
-  color: "#FFFFFF",
-  WebkitTextFillColor: "#FFFFFF",
-  WebkitTextStroke: "0.7px #000000",
-  paintOrder: "stroke fill",
-};
+// Catálogo dos 9 Guias Visuais
+const catalogGuias = [
+  {
+    number: "01",
+    title: "Guia Visual Educação Financeira",
+    description:
+      "Compreenda orçamento, reserva de emergência, crédito, metas e hábitos e diferencie renda de patrimônio.",
+    badge: "INICIAL E COMPLETA",
+    type: "initial",
+  },
+  {
+    number: "02",
+    title: "Guia Visual Economia, Juros e Inflação",
+    description:
+      "Relacione escassez, preços, juros, inflação e câmbio e entenda a diferença entre retorno nominal e real.",
+    badge: "INICIAL E COMPLETA",
+    type: "initial",
+  },
+  {
+    number: "03",
+    title: "Guia Visual Investimentos",
+    description:
+      "Diferencie renda fixa, ações e formas de retorno e estude risco, liquidez, custos e diversificação.",
+    badge: "INICIAL E COMPLETA",
+    type: "initial",
+  },
+  {
+    number: "04",
+    title: "Guia Visual Fundamentos do Bitcoin",
+    description:
+      "Entenda emissão, halving, transações, nós, mineração e custódia antes de aprofundar a discussão sobre preço.",
+    badge: "INICIAL E COMPLETA",
+    type: "initial",
+  },
+  {
+    number: "05",
+    title: "Guia Visual Criptografia",
+    description:
+      "Entenda chaves, hashes, assinaturas e recuperação de carteiras e reconheça pontos de atenção em golpes e permissões.",
+    badge: "COLEÇÃO COMPLETA",
+    type: "complete",
+  },
+  {
+    number: "06",
+    title: "Guia Visual Dólar Digital",
+    description:
+      "Diferencie stablecoins e moedas digitais e examine os conceitos de reservas, paridade, resgate, câmbio e redes.",
+    badge: "COLEÇÃO COMPLETA",
+    type: "complete",
+  },
+  {
+    number: "07",
+    title: "Guia Visual Blockchain",
+    description:
+      "Compare mecanismos de consenso, modelos de registro, governança e bridges e entenda quando a tecnologia faz sentido.",
+    badge: "COLEÇÃO COMPLETA",
+    type: "complete",
+  },
+  {
+    number: "08",
+    title: "Guia Visual Tokenização",
+    description:
+      "Relacione tokens, NFTs e RWA aos direitos e ativos representados e conheça o ciclo de emissão, circulação e encerramento.",
+    badge: "COLEÇÃO COMPLETA",
+    type: "complete",
+  },
+  {
+    number: "09",
+    title: "Guia Visual Mentalidade Bitcoiner",
+    description:
+      "Um guia dedicado à mentalidade bitcoiner para complementar seus estudos sobre Bitcoin.",
+    badge: "COLEÇÃO COMPLETA",
+    type: "complete",
+  },
+];
 
 export default function EbookBundleSalesPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -134,101 +205,118 @@ export default function EbookBundleSalesPage() {
     }
   };
 
-  // FAQ Items
+  // FAQ Items (Ampliado para 9 perguntas conforme briefing)
   const allFaqItems = [
     {
-      status: "published",
-      question: "O que está incluído na coleção?",
+      question: "O que está incluído em cada coleção?",
       answer:
-        "A coleção é formada por dois e-books digitais ('Do Clique ao Bloco' e 'Meu Primeiro Bitcoin') entregues juntos em formato PDF digital.",
+        "A Coleção Inicial reúne quatro guias visuais (Educação Financeira; Economia, Juros e Inflação; Investimentos; Fundamentos do Bitcoin). A Coleção Completa inclui esses mesmos quatro guias, mais cinco guias adicionais (Criptografia, Dólar Digital, Blockchain, Tokenização e Mentalidade Bitcoiner) e dois e-books bônus (Do Clique ao Bloco e Meu Primeiro Bitcoin), somando 11 materiais.",
     },
     {
-      status: "published",
-      question: "Os e-books serão vendidos separadamente?",
+      question: "Em qual formato os materiais são entregues?",
       answer:
-        "Nesta oferta especial do combo, os dois e-books são disponibilizados juntos como um conjunto completo de leitura.",
+        "Todos os guias visuais e e-books bônus são entregues em formato PDF digital de alta resolução, otimizados para leitura e consulta em celulares, tablets, leitores digitais e computadores.",
     },
     {
-      status: "published",
-      question: "Em qual formato os e-books são entregues?",
+      question: "Os guias e e-books são vendidos separadamente?",
       answer:
-        "Os materiais são entregues em formato PDF de alta qualidade, otimizados para leitura em celulares, tablets, leitores digitais e computadores.",
+        "Nesta oferta, os materiais estão organizados em duas coleções fechadas (Inicial e Completa) para garantir uma sequência lógica de estudo com condições especiais.",
     },
     {
-      status: "published",
-      question: "Como receberei o acesso após o pagamento?",
+      question: "Como receberei o acesso após a compra?",
       answer:
-        "Assim que a compra for confirmada, você receberá um e-mail automático com os links diretos para download imediato dos dois materiais.",
+        "Assim que a confirmação do pagamento for concluída, você receberá um e-mail com as orientações e os links diretos para download dos PDFs correspondentes ao seu plano.",
     },
     {
-      status: "published",
       question: "Existe garantia de reembolso?",
       answer:
-        "Sim! Oferecemos 7 dias de garantia incondicional. Se por qualquer motivo você achar que o conteúdo não é para você, basta solicitar o reembolso integral.",
+        "Sim. Oferecemos 7 dias de garantia incondicional. Você pode baixar os arquivos, avaliar a organização do conteúdo e, se considerar que não atende às suas expectativas, solicitar o reembolso integral dentro do prazo.",
+    },
+    {
+      question: "Qual a diferença entre os guias visuais e os e-books bônus?",
+      answer:
+        "Os guias visuais organizam conceitos fundamentais em mapas conceituais para consulta rápida. Os e-books bônus ('Do Clique ao Bloco' e 'Meu Primeiro Bitcoin') são leituras complementares em texto contínuo incluídas exclusivamente na Coleção Completa.",
+    },
+    {
+      question: "Preciso de conhecimento prévio para estudar os guias?",
+      answer:
+        "Não. Os materiais foram desenvolvidos com linguagem didática e progressiva, partindo da organização financeira pessoal e do contexto econômico até os fundamentos do Bitcoin e ativos digitais.",
+    },
+    {
+      question: "Posso imprimir os arquivos em PDF?",
+      answer:
+        "Sim. Os arquivos digitais em PDF podem ser salvos nos seus dispositivos e impressos para uso pessoal de estudo.",
+    },
+    {
+      question: "Por quanto tempo terei acesso aos arquivos baixados?",
+      answer:
+        "Após realizar o download para o seu dispositivo, os arquivos em PDF ficam gravados localmente com você para consulta por tempo indeterminado.",
     },
   ];
 
-  const visibleFaqItems = allFaqItems.filter(
-    (item) => item.status === "published" && item.answer !== null
-  );
-
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans antialiased selection:bg-[#00A859]/20 selection:text-[#0B1F3A] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans antialiased selection:bg-[#1D4ED8]/20 selection:text-[#0B1F3A] overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* SEÇÃO 1: HERO PRINCIPAL (FUNDO BRANCO #FFFFFF)                            */}
+      {/* FAIXA DE ALERTA SUPERIOR                                                   */}
       {/* ========================================================================= */}
-      <section className="relative py-10 md:py-16 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-8">
+      <div className="w-full bg-[#0B1F3A] text-white py-2.5 px-4 text-center text-xs md:text-sm font-extrabold uppercase tracking-wider border-b border-[#E2E8F0]/20">
+        <span>GUIAS VISUAIS PARA ENTENDER FINANÇAS, ECONOMIA E BITCOIN. CONHEÇA AS COLEÇÕES.</span>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 1. HERO PRINCIPAL                                                         */}
+      {/* ========================================================================= */}
+      <section className="relative py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-8">
           
-          {/* ETIQUETA EMOJI */}
+          {/* ETIQUETA / IDENTIFICADOR */}
           <div className="text-center">
-            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE] text-xs font-bold uppercase tracking-widest shadow-xs">
+            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF] text-xs font-bold uppercase tracking-widest">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>COLEÇÃO DIGITAL HDZ FINANCE</span>
+              <span>COLEÇÃO VISUAL HDZ FINANCE</span>
             </span>
           </div>
 
-          {/* TÍTULO PRINCIPAL REORGANIZADO EM AZUL E LARANJA */}
-          <h1 className="font-outfit font-extrabold text-[26px] sm:text-[36px] md:text-[44px] lg:text-[48px] text-center tracking-tight leading-[1.18] max-w-[920px] mx-auto">
-            <span className="text-[#0072FC]">Dois e-books para </span>
-            <span className="text-[#D96F00]">transformar informações </span>
-            <span className="text-[#0072FC]">em conhecimento </span>
-            <br className="hidden sm:inline" />
-            <span className="text-[#D96F00]">claro e conectado.</span>
+          {/* H1 PRINCIPAL */}
+          <h1 className="font-outfit font-extrabold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[52px] text-[#0B1F3A] text-center tracking-tight leading-[1.12] max-w-[960px] mx-auto">
+            Entenda seu dinheiro, <span className="text-[#1D4ED8]">os investimentos e o Bitcoin</span> com mais clareza.
           </h1>
 
-          {/* TEXTO DE APOIO */}
-          <p className="text-[15px] sm:text-[17px] md:text-[18px] text-[#0B1F3A] text-center leading-[1.55] max-w-[760px] mx-auto font-normal">
-            Alguns assuntos exigem mais do que explicações rápidas. Esta coleção reúne{" "}
-            <span className="text-[#0072FC] font-bold">
-              Do Clique ao Bloco
-            </span>{" "}
-            e{" "}
-            <span className="text-[#D96F00] font-bold">
-              Meu Primeiro Bitcoin
-            </span>{" "}
-            em uma jornada organizada para facilitar a sua leitura e consulta.
+          {/* SUBTÍTULO */}
+          <p className="text-[17px] sm:text-[18px] md:text-[20px] text-[#475569] text-center leading-[1.6] max-w-[820px] mx-auto font-normal">
+            Guias visuais em PDF que conectam educação financeira, economia, investimentos e fundamentos do Bitcoin. Comece com quatro guias ou escolha a coleção completa com nove guias e dois e-books bônus.
           </p>
 
-          {/* INDICAÇÃO DE PÚBLICO */}
+          {/* LINHA DE IDENTIFICAÇÃO DE PÚBLICO */}
           <div className="max-w-2xl mx-auto text-center pt-1">
-            <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug">
-              👥 Indicado para quem prefere compreender um assunto por inteiro, construir uma base consistente e consultar o conteúdo sempre que precisar.
+            <p className="text-xs sm:text-sm md:text-base font-outfit font-semibold text-[#0B1F3A] tracking-wide leading-relaxed">
+              Para quem quer organizar o conhecimento financeiro, compreender os principais conceitos e consultar o essencial no próprio ritmo.
             </p>
           </div>
 
-          {/* FAIXA DE DESTAQUE */}
-          <div className="max-w-xl mx-auto px-4 py-2.5 rounded-xl bg-[#FFF3E6] border border-[#FE9409]/40 text-center text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#B85C00]">
-            📚 DOIS E-BOOKS DIGITAIS REUNIDOS EM UMA ÚNICA COLEÇÃO
+          {/* BOTÃO PRINCIPAL HERÓICO ANTES DA IMAGEM */}
+          <div className="pt-2 text-center">
+            <button
+              type="button"
+              onClick={() => scrollToSection("oferta")}
+              className="w-full sm:w-auto min-h-[52px] px-6 sm:px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+            >
+              ESCOLHER MINHA COLEÇÃO
+            </button>
           </div>
 
-          {/* IMAGEM PRINCIPAL DOS E-BOOKS DO COMBO */}
+          {/* SELO DE CONTAGEM */}
+          <div className="max-w-md mx-auto px-4 py-2 rounded-full bg-[#FFFBEB] border border-[#F59E0B]/30 text-center text-xs font-bold uppercase tracking-wider text-[#B45309]">
+            INICIAL: 4 GUIAS | COMPLETA: 9 GUIAS + 2 E-BOOKS BÔNUS
+          </div>
+
+          {/* IMAGEM PRINCIPAL PRESERVADA */}
           <div className="pt-2">
-            <div className="relative w-full max-w-[380px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[680px] mx-auto rounded-2xl p-3 sm:p-4 bg-[#FFFFFF] border-2 border-[#FE9409] shadow-lg">
+            <div className="relative w-full max-w-[380px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[680px] mx-auto rounded-[20px] p-3 sm:p-4 bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)]">
               <Image
                 src="/images/products/combo-ebooks-cover.jpg"
-                alt="Combo de E-Books HDZ Finance"
+                alt="Guias visuais HDZ Finance sobre finanças, economia, investimentos e Bitcoin."
                 width={680}
                 height={800}
                 priority
@@ -238,55 +326,55 @@ export default function EbookBundleSalesPage() {
             </div>
           </div>
 
-          {/* 4 PONTOS PRINCIPAIS */}
-          <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-left">
-            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#0072FC]/30 flex items-center justify-center text-[#0072FC] shrink-0 font-bold">
+          {/* 4 BENEFÍCIOS CURTOS */}
+          <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-left">
+            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#EFF6FF] flex items-center justify-center text-[#1D4ED8] shrink-0 font-bold">
                 ✓
               </div>
-              <span className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
-                Dois conteúdos reunidos em um único produto digital.
+              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
+                Conceitos organizados por tema para estudar e consultar.
               </span>
             </div>
-            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#FFF3E6] border border-[#FE9409]/30 flex items-center justify-center text-[#D96F00] shrink-0 font-bold">
+            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-[#FFFBEB] border border-[#FFFBEB] flex items-center justify-center text-[#B45309] shrink-0 font-bold">
                 ✓
               </div>
-              <span className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
-                Leitura organizada em uma sequência clara.
+              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
+                Dinheiro, economia, investimentos e Bitcoin em uma sequência sugerida.
               </span>
             </div>
-            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#0072FC]/30 flex items-center justify-center text-[#0072FC] shrink-0 font-bold">
+            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#EFF6FF] flex items-center justify-center text-[#1D4ED8] shrink-0 font-bold">
                 ✓
               </div>
-              <span className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
-                Material em PDF desenvolvido para estudo e consulta.
+              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
+                Arquivos em PDF para acessar pelo celular, tablet ou computador.
               </span>
             </div>
-            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#FFF3E6] border border-[#FE9409]/30 flex items-center justify-center text-[#D96F00] shrink-0 font-bold">
+            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-[#FFFBEB] border border-[#FFFBEB] flex items-center justify-center text-[#B45309] shrink-0 font-bold">
                 ✓
               </div>
-              <span className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
-                Acesso vitalício para ler no seu próprio ritmo.
+              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
+                Materiais para baixar e revisitar no seu próprio ritmo.
               </span>
             </div>
           </div>
 
-          {/* BOTÃO PRINCIPAL & MICROCOPY */}
-          <div className="pt-4 text-center space-y-3">
+          {/* BOTÃO ABAIXO DA IMAGEM E BENEFÍCIOS */}
+          <div className="pt-4 text-center space-y-2">
             <button
               type="button"
-              onClick={() => scrollToSection("oferta")}
-              className="w-full sm:w-auto min-h-[52px] px-8 sm:px-10 inline-flex items-center justify-center gap-3 rounded-2xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] text-white font-outfit font-extrabold text-sm sm:text-base uppercase tracking-wide shadow-md active:scale-[0.99] transition-all cursor-pointer"
+              onClick={() => scrollToSection("hdz-guias")}
+              className="w-full sm:w-auto min-h-[52px] px-8 sm:px-10 inline-flex items-center justify-center gap-3 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
             >
-              <span style={whiteButtonTextStroke}>CONHECER O COMBO DE E-BOOKS</span>
-              <ArrowRight className="h-5 w-5 text-white shrink-0" style={{ filter: "drop-shadow(-0.6px 0 0 #000000) drop-shadow(0.6px 0 0 #000000) drop-shadow(0 -0.6px 0 #000000) drop-shadow(0 0.6px 0 #000000)" }} />
+              <span>CONHECER OS MATERIAIS</span>
+              <ArrowRight className="h-5 w-5 text-white shrink-0" />
             </button>
 
-            <p className="text-xs text-[#1F2937]/70 font-medium">
-              Dois e-books • Uma única coleção • Download em PDF imediato
+            <p className="text-xs text-[#475569] font-medium">
+              Materiais digitais em PDF. Confira o conteúdo de cada coleção antes de escolher.
             </p>
           </div>
 
@@ -294,34 +382,38 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 1.5: CARROSSEL MARQUEE INFINITO (INFINITE AUTO-SCROLL CAROUSEL)    */}
+      {/* 2. CARROSSEL EXISTENTE COM COPY ATUALIZADA                                 */}
       {/* ========================================================================= */}
-      <section className="py-14 md:py-20 bg-[#FAF7F2] border-b border-[#D5BE97] overflow-hidden">
+      <section className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0] overflow-hidden">
         <div className="max-w-[1360px] mx-auto space-y-8">
           
           {/* CABEÇALHO DO CARROSSEL */}
-          <div className="text-center max-w-3xl mx-auto px-4 space-y-3">
-            <span className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE]">
-              <span>🔍 PRÉVIAS DOS GUIAS VISUAIS</span>
+          <div className="text-center max-w-[760px] mx-auto px-5 space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              PRÉVIAS REAIS DOS GUIAS VISUAIS
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
-              Veja uma prévia da organização das páginas
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Veja como os conceitos são apresentados por dentro.
             </h2>
-            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
-              Passe o mouse ou toque para pausar o carrossel. Clique em qualquer página para ampliar.
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Explore capas e páginas da coleção. Cada guia organiza um tema em explicações visuais para facilitar o estudo e a consulta.
             </p>
+            <div className="space-y-1 text-xs text-[#475569] pt-1 font-medium">
+              <p>As prévias mostram materiais das duas coleções. Confira quais estão incluídos no plano escolhido.</p>
+              <p className="text-[#1D4ED8] font-semibold">Passe o mouse ou toque para pausar o carrossel. Clique em qualquer página para ampliar.</p>
+            </div>
           </div>
 
-          {/* CARROSSEL MARQUEE INFINITO CONTÍNUO (PAUSE ON HOVER + LIGHTBOX) */}
+          {/* CARROSSEL MARQUEE INFINITO (PRESERVADO) */}
           <div className="relative w-full overflow-hidden py-4 ticker-mask">
             <div className="flex w-max animate-marquee gap-6 sm:gap-8 hover:[animation-play-state:paused]">
               {marqueeItems.map((slide, idx) => (
                 <div
                   key={`marquee-slide-${slide.id}-${idx}`}
                   onClick={() => setZoomedImage(slide.image)}
-                  className="group relative w-[320px] sm:w-[400px] md:w-[460px] lg:w-[520px] shrink-0 rounded-2xl bg-[#FFFFFF] border-2 border-[#FE9409]/40 p-2.5 sm:p-3.5 shadow-lg hover:shadow-2xl hover:border-[#FE9409] transition-all duration-300 cursor-pointer"
+                  className="group relative w-[320px] sm:w-[400px] md:w-[460px] lg:w-[520px] shrink-0 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] p-3 shadow-[0_8px_24px_rgba(11,31,58,0.06)] hover:shadow-xl hover:border-[#1D4ED8] transition-all duration-300 cursor-pointer"
                 >
-                  <div className="relative aspect-[3/4.3] w-full rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/40 shadow-xs flex items-center justify-center">
+                  <div className="relative aspect-[3/4.3] w-full rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#E2E8F0] shadow-xs flex items-center justify-center">
                     <Image
                       src={slide.image}
                       alt={slide.title}
@@ -331,9 +423,9 @@ export default function EbookBundleSalesPage() {
                     />
                     
                     {/* EFEITO HOVER COM LUPA LIGHTBOX */}
-                    <div className="absolute inset-0 bg-[#0B1F3A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
-                      <div className="bg-[#0B1F3A] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-xl border border-[#F5B700]/60">
-                        <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5 text-[#F5B700]" />
+                    <div className="absolute inset-0 bg-[#0B1F3A]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                      <div className="bg-[#0B1F3A] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2 shadow-xl border border-white/20">
+                        <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5 text-[#F59E0B]" />
                         <span>Clique para Ampliar</span>
                       </div>
                     </div>
@@ -346,9 +438,7 @@ export default function EbookBundleSalesPage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* MODAL ZOOM LIGHTBOX (BACKDROP BLUR TELAS FULL)                            */}
-      {/* ========================================================================= */}
+      {/* MODAL ZOOM LIGHTBOX PRESERVADO */}
       {zoomedImage && (
         <div
           onClick={() => setZoomedImage(null)}
@@ -358,7 +448,7 @@ export default function EbookBundleSalesPage() {
             <button
               type="button"
               onClick={() => setZoomedImage(null)}
-              className="absolute -top-12 right-0 sm:right-2 text-white hover:text-[#F5B700] p-2 rounded-full transition-colors cursor-pointer"
+              className="absolute -top-12 right-0 sm:right-2 text-white hover:text-[#F59E0B] p-2 rounded-full transition-colors cursor-pointer"
               aria-label="Fechar ampliação"
             >
               <X className="w-8 h-8" />
@@ -375,388 +465,847 @@ export default function EbookBundleSalesPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 2: BENEFÍCIOS CENTRAIS (FUNDO BRANCO #FFFFFF)                       */}
+      {/* 3. EXPERIÊNCIA DE LEITURA EXISTENTE REESCRITA                            */}
       {/* ========================================================================= */}
-      <section className="py-14 md:py-20 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE]">
-              EXPERIÊNCIA DE LEITURA
+      <section className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              CONHECIMENTO ORGANIZADO
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
-              Mais do que dois arquivos, uma jornada organizada
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Conecte os conceitos que aparecem na sua vida financeira.
             </h2>
-            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
-              A coleção foi pensada para transformar o estudo em uma jornada mais clara, permitindo que cada conceito seja compreendido dentro de uma sequência lógica.
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Você encontra termos sobre juros, inflação, investimentos e Bitcoin em muitos lugares. A coleção reúne uma base visual para estudar esses assuntos com uma ordem sugerida e voltar aos pontos que ainda geram dúvida.
             </p>
           </div>
 
-          {/* 4 CARDS DE BENEFÍCIOS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+          {/* 4 CARDS DE EXPERIÊNCIA DE LEITURA */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {/* Card 1 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs flex flex-col justify-between space-y-4">
-              <div className="space-y-2.5">
-                <span className="text-xs font-extrabold text-[#D96F00] uppercase tracking-wider block">01. CONEXÃO</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  Linha de raciocínio contínua
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[12px] font-bold text-[#B45309] uppercase tracking-wider block">01. BASE</span>
+                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                  Organize sua base financeira.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                  Acompanhe o desenvolvimento dos assuntos sem depender de informações soltas ou explicações desconectadas.
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
+                  Compreenda orçamento, reserva, dívidas, metas e a diferença entre renda e patrimônio.
                 </p>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs flex flex-col justify-between space-y-4">
-              <div className="space-y-2.5">
-                <span className="text-xs font-extrabold text-[#0072FC] uppercase tracking-wider block">02. CLAREZA</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  Aprofunde a compreensão
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[12px] font-bold text-[#1D4ED8] uppercase tracking-wider block">02. CONTEXTO</span>
+                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                  Entenda o contexto dos números.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                  Avance além de definições rápidas e entenda como os conceitos apresentados se relacionam na prática.
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
+                  Relacione juros, inflação e poder de compra, distinguindo o crescimento do saldo do resultado em termos reais.
                 </p>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs flex flex-col justify-between space-y-4">
-              <div className="space-y-2.5">
-                <span className="text-xs font-extrabold text-[#D96F00] uppercase tracking-wider block">03. RITMO</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  Estude no seu tempo
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[12px] font-bold text-[#B45309] uppercase tracking-wider block">03. COMPARAÇÃO</span>
+                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                  Compare conceitos antes de decidir.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                  Leia, retorne aos pontos mais importantes e organize o aprendizado de acordo com a sua rotina.
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
+                  Estude formas de retorno, risco, liquidez e diversificação e entenda como esses critérios se relacionam.
                 </p>
               </div>
             </div>
 
             {/* Card 4 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs flex flex-col justify-between space-y-4">
-              <div className="space-y-2.5">
-                <span className="text-xs font-extrabold text-[#0072FC] uppercase tracking-wider block">04. CONSULTA</span>
-                <h3 className="font-outfit font-bold text-lg text-[#0B1F3A] leading-snug">
-                  Material permanente
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[12px] font-bold text-[#1D4ED8] uppercase tracking-wider block">04. BITCOIN</span>
+                <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                  Conheça o Bitcoin além da cotação.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                  Mantenha os dois conteúdos salvos para revisitar os conceitos sempre que surgir qualquer dúvida.
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
+                  Compreenda emissão, transações, verificação e custódia, com uma base para continuar seus estudos.
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* BOTÃO APÓS OS 4 CARDS */}
+          <div className="text-center pt-2">
+            <button
+              type="button"
+              onClick={() => scrollToSection("oferta")}
+              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+            >
+              VER AS DUAS COLEÇÕES
+            </button>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 3: APRESENTAÇÃO DOS DOIS E-BOOKS (FUNDO SUAVE #FAF7F2)               */}
+      {/* 4. NOVA SEÇÃO DE PÚBLICO (#hdz-publico)                                   */}
       {/* ========================================================================= */}
-      <section id="ebooks" className="py-14 md:py-20 bg-[#FAF7F2] border-b border-[#D5BE97]">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-10">
+      <section id="hdz-publico" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
           
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#FFF3E6] text-[#B85C00] border border-[#FE9409]/40">
-              CONTEÚDO DA COLEÇÃO
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              PARA QUEM É A COLEÇÃO
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
-              Os dois e-books incluídos no seu combo
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Para quem quer entender antes de decidir.
             </h2>
-            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
-              Conheça os detalhes dos dois materiais oferecidos nesta oferta promocional.
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Uma coleção para construir uma base de conhecimento e revisitar conceitos conforme suas necessidades.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Card 1 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Quem está organizando as próprias finanças.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Quer compreender orçamento, dívidas, reserva e metas antes de avançar para investimentos.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Quem quer conectar os conceitos financeiros.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Busca entender como juros, inflação, retorno e liquidez aparecem nas decisões do dia a dia.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Quem está começando a estudar Bitcoin.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Prefere conhecer as regras e o funcionamento da rede antes de se concentrar na cotação.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Quem quer compreender os ativos digitais.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Busca estudar criptografia, redes, stablecoins e tokenização com os guias adicionais da Coleção Completa.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5. NOVO ROTEIRO DE ESTUDO (#hdz-roteiro)                                  */}
+      {/* ========================================================================= */}
+      <section id="hdz-roteiro" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+          
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              ESTUDE NO SEU RITMO
+            </span>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Uma sequência sugerida para começar e avançar.
+            </h2>
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Escolha um tema, observe o mapa visual e retome a explicação quando precisar. Você pode seguir esta ordem ou consultar diretamente o assunto que gerou sua dúvida.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+            {/* Etapa 01 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
+              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] text-[#1D4ED8] font-outfit font-bold text-lg flex items-center justify-center">
+                01
+              </div>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Dinheiro e economia.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Comece por Educação Financeira e Economia, Juros e Inflação para relacionar sua organização financeira ao contexto econômico.
+              </p>
+            </div>
+
+            {/* Etapa 02 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
+              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] text-[#1D4ED8] font-outfit font-bold text-lg flex items-center justify-center">
+                02
+              </div>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Investimentos e fundamentos do Bitcoin.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Avance para as formas de retorno, risco e liquidez e para as regras e o funcionamento da rede Bitcoin.
+              </p>
+            </div>
+
+            {/* Etapa 03 */}
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
+              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#B45309] font-outfit font-bold text-lg flex items-center justify-center">
+                03
+              </div>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Estruturas digitais e leitura complementar.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Na Coleção Completa, continue com os cinco guias adicionais e os dois e-books bônus.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 6. NOVO CATÁLOGO DOS 9 GUIAS VISUAIS (#hdz-guias)                         */}
+      {/* ========================================================================= */}
+      <section id="hdz-guias" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+          
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              CONTEÚDO DAS COLEÇÕES
+            </span>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Conheça os guias e escolha o alcance dos seus estudos.
+            </h2>
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              A Coleção Inicial reúne quatro guias para construir sua base. A Coleção Completa inclui esses mesmos materiais e acrescenta cinco guias e dois e-books bônus.
+            </p>
+          </div>
+
+          {/* GRID DOS 9 GUIAS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {catalogGuias.map((guia) => {
+              const isInitial = guia.type === "initial";
+              return (
+                <div
+                  key={guia.number}
+                  className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] flex flex-col justify-between space-y-4 text-left"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div
+                        className={`w-11 h-11 rounded-xl font-outfit font-bold text-lg flex items-center justify-center ${
+                          isInitial
+                            ? "bg-[#EFF6FF] text-[#1D4ED8]"
+                            : "bg-[#FFFBEB] text-[#B45309]"
+                        }`}
+                      >
+                        {guia.number}
+                      </div>
+                      <span
+                        className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+                          isInitial
+                            ? "bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]"
+                            : "bg-[#FFFBEB] text-[#B45309] border border-[#FFFBEB]"
+                        }`}
+                      >
+                        {guia.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                      {guia.title}
+                    </h3>
+
+                    <p className="text-[16px] text-[#475569] leading-[1.65]">
+                      {guia.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#E2E8F0] text-xs font-semibold text-[#475569] flex items-center gap-1.5">
+                    <FileText className="w-4 h-4 text-[#1D4ED8]" />
+                    <span>Guia digital em PDF</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* BOTÃO ABAIXO DO CATÁLOGO */}
+          <div className="text-center pt-2">
+            <button
+              type="button"
+              onClick={() => scrollToSection("oferta")}
+              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+            >
+              ESCOLHER MINHA COLEÇÃO
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 7. SEÇÃO EXISTENTE #ebooks (APRESENTADA COMO BÔNUS DA COMPLETA)           */}
+      {/* ========================================================================= */}
+      <section id="ebooks" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+          
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#FFFBEB] text-[#B45309] border border-[#FFFBEB]">
+              2 E-BOOKS BÔNUS NA COLEÇÃO COMPLETA
+            </span>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Continue a leitura com dois e-books complementares.
+            </h2>
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Além dos nove guias visuais, a Coleção Completa inclui duas leituras para aprofundar sua compreensão do Bitcoin e das transações em blockchain.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {/* E-BOOK 01 */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFFFF] border-2 border-[#0072FC]/30 shadow-md space-y-5 flex flex-col justify-between">
+            <div className="p-6 md:p-8 rounded-[20px] bg-[#FFFFFF] border-2 border-[#1D4ED8]/30 shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-5 flex flex-col justify-between text-left">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-md bg-[#EFF6FF] text-[#0072FC] text-xs font-extrabold border border-[#BFDBFE] uppercase">
-                    E-Book 01
+                  <span className="px-3 py-1 rounded-md bg-[#EFF6FF] text-[#1D4ED8] text-xs font-bold border border-[#EFF6FF] uppercase">
+                    BÔNUS 01 | PDF DIGITAL
                   </span>
-                  <span className="text-xs font-bold text-[#1F2937]/70">PDF Digital</span>
+                  <span className="text-xs font-semibold text-[#475569]">Formato PDF</span>
                 </div>
                 
-                <h3 className="font-outfit font-extrabold text-xl sm:text-2xl text-[#0B1F3A]">
+                <h3 className="font-outfit font-bold text-[20px] text-[#0B1F3A] leading-[1.3]">
                   📘 {ebookBundle.ebookOne.title}
                 </h3>
-                <p className="text-sm text-[#1F2937] leading-relaxed">
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
                   {ebookBundle.ebookOne.description}
                 </p>
 
-                <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#D5BE97]/50 space-y-2 text-xs sm:text-sm text-[#1F2937]">
+                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-2 text-xs sm:text-sm text-[#475569]">
                   <div className="flex items-center justify-between font-medium">
                     <span>Assunto principal:</span>
-                    <span className="font-bold text-[#0B1F3A]">Blockchain & Transações</span>
+                    <span className="font-bold text-[#0B1F3A]">Blockchain e transações</span>
                   </div>
                   <div className="flex items-center justify-between font-medium">
                     <span>Formato de entrega:</span>
-                    <span className="font-bold text-[#0B1F3A]">PDF para download</span>
+                    <span className="font-bold text-[#0B1F3A]">E-book digital em PDF</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#D5BE97]/40 flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
-                <span>✓ Incluso no combo</span>
-                <span>Acesso Imediato</span>
+              <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
+                <span className="text-[#047857]">✓ INCLUÍDO NA COLEÇÃO COMPLETA</span>
+                <span>Download em PDF</span>
               </div>
             </div>
 
             {/* E-BOOK 02 */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFFFF] border-2 border-[#FE9409]/40 shadow-md space-y-5 flex flex-col justify-between">
+            <div className="p-6 md:p-8 rounded-[20px] bg-[#FFFFFF] border-2 border-[#F59E0B]/40 shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-5 flex flex-col justify-between text-left">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-md bg-[#FFF3E6] text-[#D96F00] text-xs font-extrabold border border-[#FE9409]/30 uppercase">
-                    E-Book 02
+                  <span className="px-3 py-1 rounded-md bg-[#FFFBEB] text-[#B45309] text-xs font-bold border border-[#FFFBEB] uppercase">
+                    BÔNUS 02 | PDF DIGITAL
                   </span>
-                  <span className="text-xs font-bold text-[#1F2937]/70">PDF Digital</span>
+                  <span className="text-xs font-semibold text-[#475569]">Formato PDF</span>
                 </div>
                 
-                <h3 className="font-outfit font-extrabold text-xl sm:text-2xl text-[#0B1F3A]">
+                <h3 className="font-outfit font-bold text-[20px] text-[#0B1F3A] leading-[1.3]">
                   📙 {ebookBundle.ebookTwo.title}
                 </h3>
-                <p className="text-sm text-[#1F2937] leading-relaxed">
+                <p className="text-[16px] text-[#475569] leading-[1.65]">
                   {ebookBundle.ebookTwo.description}
                 </p>
 
-                <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#D5BE97]/50 space-y-2 text-xs sm:text-sm text-[#1F2937]">
+                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-2 text-xs sm:text-sm text-[#475569]">
                   <div className="flex items-center justify-between font-medium">
                     <span>Assunto principal:</span>
-                    <span className="font-bold text-[#0B1F3A]">Fundamentos & Prática</span>
+                    <span className="font-bold text-[#0B1F3A]">Introdução ao Bitcoin</span>
                   </div>
                   <div className="flex items-center justify-between font-medium">
                     <span>Formato de entrega:</span>
-                    <span className="font-bold text-[#0B1F3A]">PDF para download</span>
+                    <span className="font-bold text-[#0B1F3A]">E-book digital em PDF</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#D5BE97]/40 flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
-                <span>✓ Incluso no combo</span>
-                <span>Acesso Imediato</span>
+              <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#0B1F3A] font-bold">
+                <span className="text-[#047857]">✓ INCLUÍDO NA COLEÇÃO COMPLETA</span>
+                <span>Download em PDF</span>
               </div>
             </div>
           </div>
 
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 4: SEÇÃO DE OFERTA CENTRALIZADA (#oferta - CARD ÚNICO)             */}
-      {/* ========================================================================= */}
-      <section id="oferta" className="py-14 md:py-18 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[780px] mx-auto px-3 sm:px-6 relative">
-          
-          {/* ETIQUETA SUPERIOR SOBREPOSTA À BORDA DO CARD */}
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-24px)] max-w-max flex justify-center">
-            <span className="inline-flex items-center justify-center space-x-1.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#F5B700] text-[#0B1F3A] font-extrabold text-[10px] xs:text-xs sm:text-sm uppercase tracking-wider shadow-xs border border-[#0B1F3A]/10 text-center leading-tight">
-              <span>📚 2 E-BOOKS DIGITAIS + 🎁 COLEÇÃO COMPLETA</span>
-            </span>
-          </div>
-
-          {/* SINGLE CARD CENTRALIZADO */}
-          <div className="rounded-3xl bg-[#FFFFFF] border border-[#F5B700] p-4 sm:p-8 md:p-10 text-left space-y-5 sm:space-y-6 shadow-xl relative pt-7 sm:pt-10">
-            
-            {/* TÍTULO E DESCRIÇÃO */}
-            <div className="space-y-2">
-              <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0B1F3A] tracking-tight">
-                COMBO DE E-BOOKS DIGITAIS
-              </h2>
-              <p className="text-sm sm:text-base text-[#1F2937] leading-relaxed font-normal">
-                Dois conteúdos para transformar informações dispersas em uma leitura clara e conectada. Receba os dois e-books em arquivo PDF digital com download imediato.
-              </p>
-            </div>
-
-            {/* PREÇO ANTERIOR E PROMOCIONAL */}
-            <div className="space-y-1.5 pt-1">
-              <span className="text-xs sm:text-sm font-medium text-[#0B1F3A] block">
-                Combo completo com 2 e-books
-              </span>
-              
-              {/* PREÇO ANTERIOR RISCADO */}
-              <div className="text-sm sm:text-base font-bold text-[#D72638] line-through decoration-[#D72638] decoration-2">
-                De R$ 99,90
-              </div>
-
-              {/* PREÇO PROMOCIONAL GRANDE */}
-              <div className="flex items-baseline space-x-2">
-                <span className="text-xs sm:text-sm font-extrabold text-[#0B1F3A]">POR</span>
-                <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-outfit text-[#00B56A]">
-                  R$ 49,90
-                </span>
-              </div>
-
-              {/* ETIQUETA PAGAMENTO ÚNICO */}
-              <div>
-                <span className="inline-block px-3 py-1 rounded-md bg-[#ECFDF5] text-[#00B56A] text-xs font-bold border border-[#A7F3D0]">
-                  Pagamento único
-                </span>
-              </div>
-            </div>
-
-            {/* CONTEÚDO INCLUÍDO E BÔNUS (CARD ÚNICO EMBUTIDO) */}
-            <div className="pt-2">
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFBEF] border border-[#F5B700]/50 space-y-5">
-                {/* PARTE 1: E-BOOKS INCLUÍDOS */}
-                <div className="space-y-3">
-                  <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
-                    📚 TUDO O QUE ESTÁ INCLUÍDO NO SEU COMBO:
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937]">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      </div>
-                      <span>E-book 1: Do Clique ao Bloco</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      </div>
-                      <span>E-book 2: Meu Primeiro Bitcoin</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      </div>
-                      <span>Arquivos digitais em formato PDF</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      </div>
-                      <span>Leitura otimizada para cel e tablet</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* DIVISÓRIA INTERNA */}
-                <div className="border-t border-[#F5B700]/30 pt-4 space-y-3">
-                  <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
-                    🎁 BENEFÍCIOS DO SEU ACESSO:
-                  </span>
-                  <div className="space-y-3 text-xs sm:text-sm">
-                    <div className="space-y-1">
-                      <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
-                        <span>⚡</span>
-                        <span>Download Imediato</span>
-                      </p>
-                      <p className="text-[#1F2937] leading-relaxed pl-6">
-                        “Receba o acesso direto no seu e-mail assim que a compra for confirmada.”
-                      </p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
-                        <span>♾️</span>
-                        <span>Acesso Vitalício</span>
-                      </p>
-                      <p className="text-[#1F2937] leading-relaxed pl-6">
-                        “Guarde os e-books nos seus dispositivos para consultar sempre que precisar.”
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* BOTÃO DE COMPRA VERDE */}
-            <div className="pt-3 space-y-4 text-center">
-              <a
-                href={ebookBundle.checkoutUrl || "#"}
-                target={ebookBundle.checkoutUrl ? "_blank" : "_self"}
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-2 sm:space-x-3 px-4 sm:px-8 py-4 sm:py-5 rounded-2xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
-              >
-                <span style={whiteButtonTextStroke} className="font-extrabold text-sm sm:text-base md:text-lg lg:text-xl tracking-wide text-center leading-tight">
-                  ACESSAR COMBO DE E-BOOKS
-                </span>
-                <ArrowRight
-                  className="w-4 h-4 sm:w-6 sm:h-6 ml-1 text-[#FFFFFF] shrink-0"
-                  style={{
-                    filter:
-                      "drop-shadow(-0.6px 0 0 #000000) drop-shadow(0.6px 0 0 #000000) drop-shadow(0 -0.6px 0 #000000) drop-shadow(0 0.6px 0 #000000)",
-                  }}
-                />
-              </a>
-
-              {/* ECONOMIA EM VERMELHO */}
-              <div>
-                <span className="inline-block border-2 border-[#D72638] text-[#D72638] bg-[#FFFFFF] px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-extrabold text-[11px] sm:text-xs md:text-sm uppercase tracking-wide shadow-xs text-center">
-                  VOCÊ ECONOMIZA R$ 50,00
-                </span>
-              </div>
-
-              {/* INFORMAÇÕES DE PAGAMENTO E GARANTIA */}
-              <div className="pt-2 text-xs text-[#1F2937] space-y-1 text-center font-medium">
-                <p className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-[11px] sm:text-xs">
-                  <span>🔒 Pagamento seguro</span>
-                  <span>•</span>
-                  <span>💠 Pix</span>
-                  <span>•</span>
-                  <span>💳 Cartão de crédito</span>
-                </p>
-                <p className="text-[11px] sm:text-xs text-[#1F2937]/80">
-                  7 dias de garantia incondicional. Risco zero para você.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SEÇÃO 5: PASSO A PASSO DO ACESSO (FUNDO SUAVE #FAF7F2)                     */}
-      {/* ========================================================================= */}
-      <section className="py-14 md:py-20 bg-[#FAF7F2] border-b border-[#D5BE97]">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-10">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE]">
-              PASSO A PASSO DO ACESSO
-            </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
-              Como você receberá o seu combo
-            </h2>
-            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
-              Veja como funciona o processo simples de aquisição e leitura
+          {/* NOTA ABAIXO DOS CARDS */}
+          <div className="text-center pt-1">
+            <p className="text-xs sm:text-sm text-[#475569] font-medium max-w-2xl mx-auto">
+              Os dois e-books bônus estão incluídos na Coleção Completa. A Coleção Inicial contém os quatro guias apresentados acima.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 8. REGIÃO DE OFERTA (#oferta — DOIS PLANOS E TABELA COMPARATIVA)          */}
+      {/* ========================================================================= */}
+      <section id="oferta" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-12">
+          
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              DUAS OPÇÕES PARA SEUS ESTUDOS
+            </span>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Escolha a coleção que acompanha seu momento de estudo.
+            </h2>
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Comece com os quatro guias da base ou leve a Coleção Completa para ampliar seus estudos sobre Bitcoin e ativos digitais.
+            </p>
+          </div>
+
+          {/* SEQUÊNCIA VERTICAL DOS DOIS CARDS DE OFERTA */}
+          <div className="max-w-[840px] mx-auto space-y-8">
+            
+            {/* CARD 1 — COLEÇÃO INICIAL */}
+            <div className="rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-[0_8px_24px_rgba(11,31,58,0.06)] relative">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
+                <div>
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#EFF6FF] text-[#1D4ED8] text-xs font-bold uppercase tracking-wider mb-2">
+                    4 GUIAS VISUAIS
+                  </span>
+                  <h3 className="font-outfit font-bold text-2xl sm:text-3xl text-[#0B1F3A]">
+                    COLEÇÃO INICIAL
+                  </h3>
+                </div>
+
+                {/* Bloco de Preço Dinâmico / Indefinido */}
+                {precoColecaoInicial !== null ? (
+                  <div className="text-right">
+                    <span className="text-xs font-semibold text-[#475569] block">Investimento</span>
+                    <span className="text-3xl font-extrabold text-[#047857]">
+                      R$ {precoColecaoInicial.toFixed(2).replace(".", ",")}
+                    </span>
+                  </div>
+                ) : null}
+              </div>
+
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Uma base organizada para compreender suas finanças, o contexto econômico, os investimentos e os fundamentos do Bitcoin.
+              </p>
+
+              {/* LISTA DE MATERIAIS */}
+              <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-4">
+                <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
+                  📚 MATERIAIS INCLUÍDOS NESTE PLANO (4 GUIAS):
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#1F2937] font-medium">
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Educação Financeira</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Economia, Juros e Inflação</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Investimentos</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Fundamentos do Bitcoin</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#E2E8F0] pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#475569]">
+                  <p>✓ Arquivos digitais em PDF</p>
+                  <p>✓ Download dos materiais do seu plano</p>
+                  <p>✓ Consulta pelo celular, tablet ou computador</p>
+                  <p>✓ Garantia de 7 dias</p>
+                </div>
+              </div>
+
+              {/* BOTÃO DE COMPRA */}
+              <div className="space-y-3 pt-2 text-center">
+                {checkoutColecaoInicial ? (
+                  <a
+                    href={checkoutColecaoInicial}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+                  >
+                    <span>QUERO A COLEÇÃO INICIAL</span>
+                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] opacity-90 text-white font-outfit font-bold text-base uppercase tracking-wide cursor-not-allowed shadow-md"
+                  >
+                    <span>QUERO A COLEÇÃO INICIAL</span>
+                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                  </button>
+                )}
+                <p className="text-xs text-[#475569] font-medium">
+                  Confira o conteúdo e as condições no checkout.
+                </p>
+              </div>
+
+              <p className="text-[11px] text-[#475569] text-center pt-1 italic">
+                Imagem ilustrativa da coleção. Este plano inclui os quatro guias listados acima.
+              </p>
+            </div>
+
+            {/* CARD 2 — COLEÇÃO COMPLETA */}
+            <div className="rounded-[20px] bg-[#FFFFFF] border-2 border-[#F59E0B] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-[0_8px_24px_rgba(11,31,58,0.06)] relative">
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
+                <div>
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#FFFBEB] text-[#B45309] border border-[#F59E0B]/40 text-xs font-bold uppercase tracking-wider mb-2">
+                    9 GUIAS + 2 E-BOOKS BÔNUS
+                  </span>
+                  <h3 className="font-outfit font-bold text-2xl sm:text-3xl text-[#0B1F3A]">
+                    COLEÇÃO COMPLETA
+                  </h3>
+                </div>
+
+                {/* Bloco de Preço Dinâmico / Indefinido */}
+                {precoColecaoCompleta !== null ? (
+                  <div className="text-right">
+                    <span className="text-xs font-semibold text-[#475569] block">Investimento</span>
+                    <span className="text-3xl font-extrabold text-[#047857]">
+                      R$ {precoColecaoCompleta.toFixed(2).replace(".", ",")}
+                    </span>
+                  </div>
+                ) : null}
+              </div>
+
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                A base da Coleção Inicial e mais cinco guias para estudar segurança, redes e estruturas de ativos digitais, com duas leituras complementares sobre Bitcoin e transações.
+              </p>
+
+              {/* LISTA DE MATERIAIS COMPLETA */}
+              <div className="p-5 rounded-2xl bg-[#FFFBEB]/60 border border-[#F59E0B]/30 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
+                    📚 CONTEÚDO COMPLETO INCLUÍDO (11 MATERIAIS):
+                  </span>
+                  <span className="text-xs font-bold text-[#B45309] bg-[#FFFBEB] px-2.5 py-0.5 rounded-full border border-[#F59E0B]/30">
+                    11 materiais digitais ao todo
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937] font-medium">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Educação Financeira</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Economia, Juros e Inflação</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Investimentos</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
+                    <span>Guia Visual Fundamentos do Bitcoin</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
+                    <span>Guia Visual Criptografia</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
+                    <span>Guia Visual Dólar Digital</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
+                    <span>Guia Visual Blockchain</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
+                    <span>Guia Visual Tokenização</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
+                    <span>Guia Visual Mentalidade Bitcoiner</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#0B1F3A] font-bold">
+                    <Check className="w-4 h-4 text-[#1D4ED8] shrink-0" />
+                    <span>🎁 Bônus: Do Clique ao Bloco</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#0B1F3A] font-bold sm:col-span-2">
+                    <Check className="w-4 h-4 text-[#1D4ED8] shrink-0" />
+                    <span>🎁 Bônus: Meu Primeiro Bitcoin</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#F59E0B]/30 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#475569]">
+                  <p>✓ Todos os nove guias visuais</p>
+                  <p>✓ Dois e-books bônus incluídos</p>
+                  <p>✓ Arquivos digitais em PDF para download</p>
+                  <p>✓ Consulta pelo celular, tablet ou computador</p>
+                  <p>✓ Garantia de 7 dias</p>
+                </div>
+              </div>
+
+              {/* BOTÃO DE COMPRA COMPLETA */}
+              <div className="space-y-3 pt-2 text-center">
+                {checkoutColecaoCompleta ? (
+                  <a
+                    href={checkoutColecaoCompleta}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+                  >
+                    <span>QUERO A COLEÇÃO COMPLETA</span>
+                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] opacity-90 text-white font-outfit font-bold text-base uppercase tracking-wide cursor-not-allowed shadow-md"
+                  >
+                    <span>QUERO A COLEÇÃO COMPLETA</span>
+                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                  </button>
+                )}
+                <p className="text-xs text-[#475569] font-medium">
+                  Todos os materiais da Inicial e mais cinco guias e dois bônus.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* TABELA COMPARATIVA DOS PLANOS */}
+          <div className="max-w-[960px] mx-auto pt-6 space-y-6">
+            <div className="text-center space-y-2">
+              <h3 className="font-outfit font-bold text-xl sm:text-2xl text-[#0B1F3A]">
+                Veja o que está incluído em cada coleção.
+              </h3>
+              <p className="text-sm text-[#475569]">
+                Os quatro guias da base estão presentes nas duas opções. A Completa amplia o acervo com cinco guias e os dois e-books bônus.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-[16px] border border-[#E2E8F0] shadow-xs bg-[#FFFFFF]">
+              <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[580px]">
+                <thead>
+                  <tr className="bg-[#0B1F3A] text-white font-outfit font-bold">
+                    <th className="p-3.5 sm:p-4 rounded-tl-[16px]">Material</th>
+                    <th className="p-3.5 sm:p-4 text-center">Inicial</th>
+                    <th className="p-3.5 sm:p-4 text-center rounded-tr-[16px]">Completa</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E2E8F0] font-normal text-[#1F2937]">
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Educação Financeira</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FAF7F2]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Economia, Juros e Inflação</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Investimentos</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FAF7F2]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Fundamentos do Bitcoin</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Criptografia</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FAF7F2]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Dólar Digital</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Blockchain</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FAF7F2]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Tokenização</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Mentalidade Bitcoiner</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FAF7F2]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Do Clique ao Bloco — bônus</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#FFFFFF]">
+                    <td className="p-3.5 sm:p-4 font-semibold">Meu Primeiro Bitcoin — bônus</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
+                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
+                  </tr>
+                  <tr className="bg-[#EFF6FF] font-bold text-[#0B1F3A]">
+                    <td className="p-3.5 sm:p-4 border-b-0">Total de materiais</td>
+                    <td className="p-3.5 sm:p-4 text-center border-b-0">4 guias</td>
+                    <td className="p-3.5 sm:p-4 text-center border-b-0 text-[#1D4ED8]">9 guias + 2 e-books bônus</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 9. NOVA SEÇÃO DE GARANTIA (#hdz-garantia)                                 */}
+      {/* ========================================================================= */}
+      <section id="hdz-garantia" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6">
+          <div className="rounded-3xl bg-[#0B1F3A] text-white p-6 sm:p-10 md:p-12 text-center space-y-6 shadow-xl relative overflow-hidden">
+            
+            <div className="inline-block px-4 py-1.5 rounded-full bg-[#FFFBEB] text-[#B45309] text-xs font-bold uppercase tracking-wider">
+              GARANTIA DE 7 DIAS
+            </div>
+
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-white leading-[1.2] max-w-[720px] mx-auto">
+              Conheça os materiais e avalie se eles fazem sentido para você.
+            </h2>
+
+            <p className="text-[16px] text-[#E2E8F0] leading-[1.65] max-w-[760px] mx-auto font-normal">
+              Após a compra, você pode acessar os arquivos e avaliar a organização e a apresentação do conteúdo. Se considerar que a coleção não atende às suas expectativas, solicite o reembolso dentro do prazo de sete dias pelo canal informado no acesso.
+            </p>
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => scrollToSection("oferta")}
+                className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-white/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+              >
+                ESCOLHER MINHA COLEÇÃO
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 10. NOVA APRESENTAÇÃO DA MARCA (#hdz-marca)                              */}
+      {/* ========================================================================= */}
+      <section id="hdz-marca" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[760px] mx-auto px-5 md:px-6 text-center space-y-4">
+          
+          <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+            HDZ FINANCE
+          </span>
+
+          <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+            Uma coleção para transformar informação em compreensão.
+          </h2>
+
+          <p className="text-[16px] text-[#475569] leading-[1.65]">
+            Informação para entender. Educação para decidir. A Coleção Visual HDZ Finance organiza temas de finanças, economia, investimentos e ativos digitais em materiais de estudo e consulta.
+          </p>
+
+          <div className="pt-2">
+            <Link
+              href="/sobre"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1D4ED8] hover:underline"
+            >
+              <span>Conheça a HDZ Finance</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 11. PASSO A PASSO EXISTENTE COM COPY ATUALIZADA                          */}
+      {/* ========================================================================= */}
+      <section className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+          
+          <div className="text-center max-w-[760px] mx-auto space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+              PASSO A PASSO DO ACESSO
+            </span>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
+              Como você recebe e utiliza sua coleção.
+            </h2>
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Da escolha do plano à consulta dos arquivos, veja o caminho do seu acesso.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Etapa 1 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#D96F00]">01</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Escolha o combo</h3>
-              <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                Clique no botão de acesso para ser direcionado à página segura de checkout.
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">01</span>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Escolha sua coleção.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Confira os materiais da Inicial e da Completa e escolha a opção que atende ao seu momento.
               </p>
             </div>
 
             {/* Etapa 2 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#0072FC]">02</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Pagamento Seguro</h3>
-              <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                Preencha seus dados com privacidade e escolha Pix ou Cartão de crédito.
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">02</span>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Conclua o pagamento.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Finalize a compra no checkout correspondente ao plano escolhido e confira as formas de pagamento disponíveis.
               </p>
             </div>
 
             {/* Etapa 3 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#D96F00]">03</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Receba o E-mail</h3>
-              <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                Assim que aprovado, você recebe instantaneamente os links para baixar os e-books.
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">03</span>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Receba as orientações de acesso.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Após a confirmação do pagamento, siga as instruções enviadas ao e-mail informado na compra.
               </p>
             </div>
 
             {/* Etapa 4 */}
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs space-y-3">
-              <span className="font-outfit font-extrabold text-2xl text-[#0072FC]">04</span>
-              <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">Boa Leitura</h3>
-              <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal">
-                Faça o download nos seus dispositivos e leia onde e quando quiser.
+            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
+              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">04</span>
+              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
+                Baixe e consulte os materiais.
+              </h3>
+              <p className="text-[16px] text-[#475569] leading-[1.65]">
+                Acesse os PDFs do seu plano e organize a leitura pelo celular, tablet ou computador.
               </p>
             </div>
           </div>
@@ -765,45 +1314,45 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 6: PERGUNTAS FREQUENTES (FAQ ACCORDION)                              */}
+      {/* 12. PERGUNTAS FREQUENTES (FAQ ACCORDION - 9 ITENS)                       */}
       {/* ========================================================================= */}
-      <section className="py-14 md:py-20 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 space-y-10">
+      <section className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[760px] mx-auto px-5 md:px-6 space-y-10">
           
-          <div className="text-center space-y-3">
-            <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#FFF3E6] text-[#B85C00] border border-[#FE9409]/40">
+          <div className="text-center space-y-4">
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
               TIRE SUAS DÚVIDAS
             </span>
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
               Perguntas Frequentes
             </h2>
-            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
-              Respostas para as principais dúvidas sobre o combo de e-books.
+            <p className="text-[16px] text-[#475569] leading-[1.65]">
+              Respostas para as principais dúvidas sobre as duas coleções.
             </p>
           </div>
 
           <div className="space-y-3">
-            {visibleFaqItems.map((faq, idx) => {
+            {allFaqItems.map((faq, idx) => {
               const isOpen = openFaqIndex === idx;
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] overflow-hidden shadow-xs transition-colors"
+                  className="rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] overflow-hidden shadow-xs transition-colors"
                 >
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 md:p-6 text-left flex items-center justify-between gap-4 font-outfit font-bold text-base md:text-lg text-[#0B1F3A] hover:text-[#0072FC] transition-colors focus:outline-none"
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-outfit font-semibold text-[17px] text-[#0B1F3A] hover:text-[#1D4ED8] transition-colors focus:outline-none"
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
-                      className={`h-5 w-5 text-[#E9991C] shrink-0 transition-transform duration-200 ${
+                      className={`h-5 w-5 text-[#1D4ED8] shrink-0 transition-transform duration-200 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-5 md:px-6 pb-6 text-xs sm:text-sm text-[#1F2937] leading-relaxed font-normal border-t border-[#D5BE97]/40 pt-4 bg-[#FAF7F2]/60">
+                    <div className="px-5 pb-5 text-[15px] text-[#475569] leading-[1.65] border-t border-[#E2E8F0]/60 pt-4 bg-[#FAF7F2]/40">
                       {faq.answer}
                     </div>
                   )}
@@ -815,6 +1364,40 @@ export default function EbookBundleSalesPage() {
         </div>
       </section>
 
+      {/* ========================================================================= */}
+      {/* 13. NOVA CHAMADA FINAL (#hdz-final)                                       */}
+      {/* ========================================================================= */}
+      <section id="hdz-final" className="py-12 md:py-20 bg-[#0B1F3A] text-white">
+        <div className="max-w-[760px] mx-auto px-5 md:px-6 text-center space-y-6">
+          
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider border border-white/10">
+            COMECE SEUS ESTUDOS
+          </span>
+
+          <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-white leading-[1.2]">
+            Escolha sua coleção e organize seu aprendizado financeiro.
+          </h2>
+
+          <p className="text-[16px] text-[#D5DDE6] leading-[1.65] font-normal">
+            Nove guias visuais e dois e-books bônus construídos para trazer clareza para o estudo de finanças, economia e Bitcoin. Escolha a opção ideal para o seu momento.
+          </p>
+
+          <div className="pt-2 space-y-3">
+            <button
+              type="button"
+              onClick={() => scrollToSection("oferta")}
+              className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-white/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+            >
+              ESCOLHER MINHA COLEÇÃO
+            </button>
+
+            <p className="text-xs text-[#D5DDE6]/80 font-medium">
+              Materiais digitais em PDF com download imediato após a confirmação.
+            </p>
+          </div>
+
+        </div>
+      </section>
 
     </div>
   );
