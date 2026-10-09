@@ -284,49 +284,34 @@ export default function EbookBundleSalesPage() {
           </div>
 
           {/* CARROSSEL MARQUEE INFINITO CONTÍNUO (PAUSE ON HOVER + LIGHTBOX) */}
-          <div className="relative w-full overflow-hidden py-2 ticker-mask">
-            <div className="flex w-max animate-marquee gap-5 sm:gap-6 hover:[animation-play-state:paused]">
+          <div className="relative w-full overflow-hidden py-4 ticker-mask">
+            <div className="flex w-max animate-marquee gap-6 sm:gap-8 hover:[animation-play-state:paused]">
               {marqueeItems.map((slide, idx) => (
                 <div
                   key={`marquee-slide-${slide.id}-${idx}`}
                   onClick={() => setZoomedImage(slide.image)}
-                  className="group relative w-[240px] sm:w-[280px] md:w-[320px] shrink-0 rounded-2xl bg-[#FFFFFF] border-2 border-[#FE9409]/30 p-3.5 sm:p-4 shadow-md hover:shadow-xl hover:border-[#FE9409] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                  className="group relative w-[320px] sm:w-[400px] md:w-[460px] lg:w-[520px] shrink-0 rounded-2xl bg-[#FFFFFF] border-2 border-[#FE9409]/40 p-2.5 sm:p-3.5 shadow-lg hover:shadow-2xl hover:border-[#FE9409] transition-all duration-300 cursor-pointer"
                 >
-                  <div className="relative aspect-[3/4.2] w-full rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/40 shadow-xs flex items-center justify-center">
+                  <div className="relative aspect-[3/4.3] w-full rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/40 shadow-xs flex items-center justify-center">
                     <Image
                       src={slide.image}
                       alt={slide.title}
-                      width={360}
-                      height={500}
-                      className="w-full h-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                      width={600}
+                      height={850}
+                      className="w-full h-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.015]"
                     />
                     
                     {/* EFEITO HOVER COM LUPA LIGHTBOX */}
                     <div className="absolute inset-0 bg-[#0B1F3A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
-                      <div className="bg-[#0B1F3A] text-white px-3.5 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-lg border border-[#F5B700]/50">
-                        <ZoomIn className="w-4 h-4 text-[#F5B700]" />
-                        <span>Ampliar Mapa</span>
+                      <div className="bg-[#0B1F3A] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-xl border border-[#F5B700]/60">
+                        <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5 text-[#F5B700]" />
+                        <span>Clique para Ampliar</span>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="pt-3 text-center space-y-1">
-                    <h4 className="font-outfit font-extrabold text-xs sm:text-sm text-[#0B1F3A] truncate">
-                      {slide.title}
-                    </h4>
-                    <p className="text-[11px] sm:text-xs text-[#1F2937]/75 line-clamp-2 leading-tight">
-                      {slide.subtitle}
-                    </p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="text-center pt-2">
-            <span className="text-xs font-bold text-[#0B1F3A]/60 uppercase tracking-wider">
-              ✦ CARROSSEL CONTÍNUO • PASSE O MOUSE PARA PAUSAR ✦
-            </span>
           </div>
 
         </div>
