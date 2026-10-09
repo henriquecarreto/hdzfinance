@@ -13,6 +13,10 @@ import {
   Wallet,
   TrendingUp,
   ShieldCheck,
+  ShoppingCart,
+  MailCheck,
+  Download,
+  Smartphone,
 } from "lucide-react";
 
 // =============================================================================
@@ -1531,67 +1535,132 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 11. PASSO A PASSO EXISTENTE COM COPY ATUALIZADA                          */}
+      {/* 11. PASSO A PASSO DA ENTREGA (#hdz-entrega)                               */}
       {/* ========================================================================= */}
-      <section className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+      <section id="hdz-entrega" className="py-[56px] max-md:py-[36px] bg-[#0B1F3A] border-b border-[#0B1F3A]">
+        <div className="max-w-[1040px] mx-auto px-6 max-md:px-4">
           
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              PASSO A PASSO DO ACESSO
+          {/* CABEÇALHO CENTRALIZADO */}
+          <div className="text-center max-w-[760px] mx-auto mb-[40px]">
+            {/* Selo */}
+            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-wider bg-[#ECFDF5] text-[#00A859] border border-[#A7F3D0] mb-[14px]">
+              ✓ PASSO A PASSO DA ENTREGA
             </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Como você recebe e utiliza sua coleção.
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[32px] md:text-[36px] text-white leading-[1.15] mb-[12px]">
+              COMO VOCÊ RECEBE OS MATERIAIS
             </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Da escolha do plano à consulta dos arquivos, veja o caminho do seu acesso.
+
+            {/* Descrição */}
+            <p className="text-[16px] text-[#E2E8F0] leading-[1.5]">
+              Veja como funciona, passo a passo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Etapa 1 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">01</span>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Escolha sua coleção.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Confira os materiais da Inicial e da Completa e escolha a opção que atende ao seu momento.
-              </p>
-            </div>
+          {/* GRID DOS QUATRO CARDS */}
+          <div className="relative">
+            {/* Linha horizontal dourada conectando os ícones (apenas no desktop lg:block) */}
+            <div className="hidden lg:block absolute top-[47px] left-[10%] right-[10%] h-[1px] bg-[#F6D365]/60 z-0" />
 
-            {/* Etapa 2 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">02</span>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Conclua o pagamento.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Finalize a compra no checkout correspondente ao plano escolhido e confira as formas de pagamento disponíveis.
-              </p>
-            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[24px] items-stretch relative z-10">
+              
+              {/* ETAPA 1 */}
+              <div className="p-[24px] rounded-[14px] bg-white border border-[#F6D365] shadow-[0_4px_12px_rgba(0,0,0,0.12)] min-h-[280px] flex flex-col items-center justify-start text-center h-full">
+                {/* Quadrado Ícone + Número */}
+                <div className="relative inline-flex items-center justify-center w-[46px] h-[46px] rounded-[12px] bg-[#EFF6FF] border border-[#BFDBFE] shrink-0 mb-[18px]">
+                  <ShoppingCart className="w-[24px] h-[24px] text-[#0866E8]" strokeWidth={1.8} />
+                  <span className="absolute -top-1.5 -right-1.5 w-[20px] h-[20px] rounded-full bg-[#0B1F3A] text-white flex items-center justify-center text-[11px] font-bold shadow-xs border border-white/40">
+                    1
+                  </span>
+                </div>
 
-            {/* Etapa 3 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">03</span>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Receba as orientações de acesso.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Após a confirmação do pagamento, siga as instruções enviadas ao e-mail informado na compra.
-              </p>
-            </div>
+                {/* Título */}
+                <h3 className="font-outfit font-extrabold text-[17px] text-[#0B1F3A] leading-[1.3] mb-[10px]">
+                  Conclua sua compra
+                </h3>
 
-            {/* Etapa 4 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <span className="font-outfit font-bold text-2xl text-[#1D4ED8] block">04</span>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Baixe e consulte os materiais.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Acesse os PDFs do seu plano e organize a leitura pelo celular, tablet ou computador.
-              </p>
+                {/* Descrição */}
+                <p className="text-[14px] text-[#334155] leading-[1.6]">
+                  Escolha o plano desejado e finalize o pagamento com segurança.
+                </p>
+              </div>
+
+              {/* ETAPA 2 */}
+              <div className="p-[24px] rounded-[14px] bg-white border border-[#F6D365] shadow-[0_4px_12px_rgba(0,0,0,0.12)] min-h-[280px] flex flex-col items-center justify-start text-center h-full">
+                {/* Quadrado Ícone + Número */}
+                <div className="relative inline-flex items-center justify-center w-[46px] h-[46px] rounded-[12px] bg-[#ECFDF5] border border-[#A7F3D0] shrink-0 mb-[18px]">
+                  <MailCheck className="w-[24px] h-[24px] text-[#00A859]" strokeWidth={1.8} />
+                  <span className="absolute -top-1.5 -right-1.5 w-[20px] h-[20px] rounded-full bg-[#0B1F3A] text-white flex items-center justify-center text-[11px] font-bold shadow-xs border border-white/40">
+                    2
+                  </span>
+                </div>
+
+                {/* Título */}
+                <h3 className="font-outfit font-extrabold text-[17px] text-[#0B1F3A] leading-[1.3] mb-[10px]">
+                  Receba o acesso pela Wiapy
+                </h3>
+
+                {/* Descrição */}
+                <p className="text-[14px] text-[#334155] leading-[1.6]">
+                  Após a confirmação do pagamento, as orientações de acesso serão enviadas para o e-mail informado na compra.
+                </p>
+              </div>
+
+              {/* ETAPA 3 */}
+              <div className="p-[24px] rounded-[14px] bg-white border border-[#F6D365] shadow-[0_4px_12px_rgba(0,0,0,0.12)] min-h-[280px] flex flex-col items-center justify-start text-center h-full">
+                {/* Quadrado Ícone + Número */}
+                <div className="relative inline-flex items-center justify-center w-[46px] h-[46px] rounded-[12px] bg-[#FFFBEB] border border-[#F6D365] shrink-0 mb-[18px]">
+                  <Download className="w-[24px] h-[24px] text-[#E98A00]" strokeWidth={1.8} />
+                  <span className="absolute -top-1.5 -right-1.5 w-[20px] h-[20px] rounded-full bg-[#0B1F3A] text-white flex items-center justify-center text-[11px] font-bold shadow-xs border border-white/40">
+                    3
+                  </span>
+                </div>
+
+                {/* Título */}
+                <h3 className="font-outfit font-extrabold text-[17px] text-[#0B1F3A] leading-[1.3] mb-[10px]">
+                  Acesse e baixe os materiais
+                </h3>
+
+                {/* Descrição */}
+                <p className="text-[14px] text-[#334155] leading-[1.6]">
+                  Os arquivos ficarão disponíveis na plataforma Wiapy, organizados para você acessar, consultar e baixar quando precisar.
+                </p>
+              </div>
+
+              {/* ETAPA 4 */}
+              <div className="p-[24px] rounded-[14px] bg-white border border-[#F6D365] shadow-[0_4px_12px_rgba(0,0,0,0.12)] min-h-[280px] flex flex-col items-center justify-start text-center h-full">
+                {/* Quadrado Ícone + Número */}
+                <div className="relative inline-flex items-center justify-center w-[46px] h-[46px] rounded-[12px] bg-[#F0FDFA] border border-[#99F6E4] shrink-0 mb-[18px]">
+                  <Smartphone className="w-[24px] h-[24px] text-[#00A859]" strokeWidth={1.8} />
+                  <span className="absolute -top-1.5 -right-1.5 w-[20px] h-[20px] rounded-full bg-[#0B1F3A] text-white flex items-center justify-center text-[11px] font-bold shadow-xs border border-white/40">
+                    4
+                  </span>
+                </div>
+
+                {/* Título */}
+                <h3 className="font-outfit font-extrabold text-[17px] text-[#0B1F3A] leading-[1.3] mb-[10px]">
+                  Estude como preferir
+                </h3>
+
+                {/* Descrição */}
+                <p className="text-[14px] text-[#334155] leading-[1.6]">
+                  Consulte os materiais pelo celular, tablet ou computador. Se preferir, você também poderá baixar e imprimir os arquivos em PDF.
+                </p>
+              </div>
+
             </div>
+          </div>
+
+          {/* BOTÃO ABAIXO DOS CARDS */}
+          <div className="mt-[36px] text-center">
+            <button
+              type="button"
+              onClick={() => scrollToSection("oferta")}
+              className="w-full max-w-[360px] min-h-[52px] px-6 py-3 rounded-[9px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-extrabold text-[16px] uppercase tracking-wide transition-all shadow-[0_4px_12px_rgba(0,168,89,0.22)] cursor-pointer inline-flex items-center justify-center text-center leading-tight"
+            >
+              QUERO GARANTIR MEU ACESSO →
+            </button>
           </div>
 
         </div>
