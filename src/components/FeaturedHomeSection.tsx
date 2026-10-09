@@ -79,23 +79,7 @@ export default function FeaturedHomeSection() {
   }
 
   return (
-    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-[#000000]">
-      {/* CAMADA DE FUNDO: MAPA-MÚNDI DOURADO ENQUADRADO COM CONTAIN */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#000000] flex items-center justify-center">
-        <Image
-          src="/backgrounds/world-map-gold.jpg"
-          alt=""
-          fill
-          priority
-          quality={100}
-          unoptimized
-          aria-hidden="true"
-          className="object-contain object-center select-none"
-        />
-        {/* Camada sutil para garantia de legibilidade dos textos sem escurecer excessivamente o mapa */}
-        <div className="absolute inset-0 bg-[#000000]/30 z-1 pointer-events-none" />
-      </div>
-
+    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-transparent">
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-6">
         {/* Header Navigation Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.08]">

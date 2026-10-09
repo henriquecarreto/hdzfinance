@@ -55,7 +55,7 @@ export default function ForcesSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#000000]">
+    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-transparent">
 
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
