@@ -31,7 +31,7 @@ export default function MarketTicker() {
 
   return (
     <div
-      className="w-full bg-[#080A0D] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden relative z-20"
+      className="w-full bg-[#000000] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden relative z-20"
       aria-label="Esteira de preços de mercados ao vivo"
     >
       <div className="w-full flex items-center justify-between overflow-hidden">

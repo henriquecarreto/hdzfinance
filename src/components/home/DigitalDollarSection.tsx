@@ -118,11 +118,11 @@ export default function DigitalDollarSection() {
           {faixas.map((f) => (
             <div
               key={f.id}
-              className="py-6 sm:py-8 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center transition-colors hover:bg-[#0A0C0F] px-2 sm:px-4 rounded-lg"
+              className="py-6 sm:py-8 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center transition-colors hover:bg-[#111111] px-2 sm:px-4 rounded-lg"
             >
               {/* Esquerda: Símbolo Vetorial */}
               <div className="md:col-span-1 flex items-center shrink-0">
-                <div className="w-11 h-11 rounded-lg bg-[#0A0C0F] border border-[#22272E] flex items-center justify-center">
+                <div className="w-11 h-11 rounded-lg bg-[#000000] border border-[#22272E] flex items-center justify-center">
                   {f.icon}
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function DigitalDollarSection() {
 
         {/* 3. PARCERIA DESTAQUE: PICNIC */}
         <div className="pt-4 border-t-2 border-[#F59A18]/60">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6 p-6 sm:p-7 rounded-2xl bg-[#0A0C0F] border border-[#F59A18]/40 hover:border-[#F59A18]/70 transition-colors shadow-2xl relative overflow-hidden group">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6 p-6 sm:p-7 rounded-2xl bg-[#000000] border border-[#F59A18]/40 hover:border-[#F59A18]/70 transition-colors shadow-2xl relative overflow-hidden group">
             {/* Detalhe visual de brilho sutil */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#F59A18]/[0.03] rounded-full blur-3xl pointer-events-none select-none" />
 
@@ -167,7 +167,7 @@ export default function DigitalDollarSection() {
               </div>
 
               <div className="flex items-center space-x-3.5 pt-0.5">
-                <div className="relative w-10 h-10 shrink-0 bg-[#0E1620] border border-white/[0.12] rounded-xl p-1 flex items-center justify-center shadow-inner">
+                <div className="relative w-10 h-10 shrink-0 bg-[#000000] border border-white/[0.12] rounded-xl p-1 flex items-center justify-center shadow-inner">
                   <Image
                     src="/brands/picnic-symbol.svg"
                     alt="Símbolo oficial Picnic"

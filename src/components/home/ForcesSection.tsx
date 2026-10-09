@@ -84,7 +84,7 @@ export default function ForcesSection() {
           {cards.map((card, idx) => (
             <div
               key={idx}
-              className={`p-6 md:p-7 flex flex-col justify-between space-y-5 bg-[#0A0C0F]/85 backdrop-blur-md rounded-xl border ${card.borderColor} transition-all duration-200 cursor-default group shadow-xl`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-5 bg-[#000000] rounded-xl border ${card.borderColor} transition-all duration-200 cursor-default group shadow-xl`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">

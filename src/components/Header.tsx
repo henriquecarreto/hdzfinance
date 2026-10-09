@@ -164,7 +164,7 @@ export default function Header() {
 
         {/* Mobile Drawer (Positioned absolutely over top, z-[70]) */}
         {mobileMenuOpen && (
-          <div className="lg:hidden absolute top-[74px] md:top-[76px] left-0 right-0 z-[70] border-b border-white/[0.08] bg-[#080A0D] px-5 py-6 space-y-3 shadow-2xl animate-in fade-in slide-in-from-top duration-200">
+          <div className="lg:hidden absolute top-[74px] md:top-[76px] left-0 right-0 z-[70] border-b border-white/[0.08] bg-[#000000] px-5 py-6 space-y-3 shadow-2xl animate-in fade-in slide-in-from-top duration-200">
             <nav className="flex flex-col space-y-2">
               {navLinks.map((link) => {
                 const active = isActive(link.href);

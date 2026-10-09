@@ -75,7 +75,7 @@ export default function MethodSection() {
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#0A0C0F] rounded-[16px] border ${step.borderColor} transition-all duration-200`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#000000] rounded-[16px] border ${step.borderColor} transition-all duration-200`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export default function MethodSection() {
         </div>
 
         {/* Proprietary Block: MAPA DE IMPACTO HDZ */}
-        <div className="p-6 md:p-8 rounded-2xl bg-[#0A0C0F] border border-[#22272E] space-y-6">
+        <div className="p-6 md:p-8 rounded-2xl bg-[#000000] border border-[#22272E] space-y-6">
           <div className="flex items-center gap-2.5 text-[#F59A18] font-outfit font-extrabold text-[12px] md:text-[13px] uppercase tracking-widest">
             <Activity className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>MAPA DE IMPACTO HDZ</span>

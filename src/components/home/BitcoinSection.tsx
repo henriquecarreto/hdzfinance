@@ -67,7 +67,7 @@ export default function BitcoinSection() {
           {fundamentals.map((item, idx) => (
             <div
               key={idx}
-              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#0A0C0F]/85 backdrop-blur-md rounded-xl border ${item.borderColor} transition-all duration-200 cursor-default group shadow-xl`}
+              className={`p-6 md:p-7 flex flex-col justify-between space-y-4 bg-[#000000] rounded-xl border ${item.borderColor} transition-all duration-200 cursor-default group shadow-xl`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -90,7 +90,7 @@ export default function BitcoinSection() {
         </div>
 
         {/* Featured Callout with Glassmorphism */}
-        <div className="p-6 md:p-8 rounded-2xl bg-[#0A0C0F]/85 backdrop-blur-md border border-[#F59A18]/40 text-center max-w-[860px] mx-auto shadow-2xl">
+        <div className="p-6 md:p-8 rounded-2xl bg-[#000000] border border-[#F59A18]/40 text-center max-w-[860px] mx-auto shadow-2xl">
           <p className="font-outfit font-bold text-[18px] md:text-[21px] text-[#EEF4FA] tracking-tight">
             “Antes de comparar preços, compare as regras.”
           </p>

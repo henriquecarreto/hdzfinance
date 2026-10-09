@@ -44,7 +44,7 @@ export default function FinalCtaSection() {
 
             {/* COLUNA DIREITA: BLOCO ESCURO COMPACTO DO TREINAMENTO (42% aprox.) */}
             <div className="lg:col-span-5">
-              <div className="p-5 sm:p-6 rounded-xl bg-[#0D1420] border border-[#F59A18]/30 shadow-lg space-y-4 text-left">
+              <div className="p-5 sm:p-6 rounded-xl bg-[#000000] border border-[#F59A18]/30 shadow-lg space-y-4 text-left">
                 
                 {/* Header & Selo do Treinamento */}
                 <div className="space-y-1.5">

@@ -86,7 +86,7 @@ export default function FeaturedHomeSection() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.08]">
           {/* Left Group: EM DESTAQUE label + VER TODAS AS MATÉRIAS button */}
           <div className="flex items-center space-x-3 flex-wrap gap-y-2">
-            <span className="featured-label min-h-[42px] px-4 inline-flex items-center border border-[#168BFF]/60 rounded-[9px] bg-[#071422]/90 text-[#42A5FF] text-[12px] font-extrabold tracking-[0.09em] uppercase cursor-default select-none">
+            <span className="featured-label min-h-[42px] px-4 inline-flex items-center border border-[#168BFF]/60 rounded-[9px] bg-[#000000] text-[#42A5FF] text-[12px] font-extrabold tracking-[0.09em] uppercase cursor-default select-none">
               EM DESTAQUE
             </span>
 
@@ -103,7 +103,7 @@ export default function FeaturedHomeSection() {
           <div>
             <Link
               href="/noticias"
-              className="all-news-button min-h-[42px] px-5 inline-flex items-center justify-center gap-2 border border-[#168BFF]/60 rounded-[9px] bg-gradient-to-r from-[#0B1F33]/98 to-[#07121F]/98 text-[#F5F8FC] text-[12px] font-extrabold tracking-[0.05em] uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_8px_22px_rgba(0,0,0,0.28)] hover:-translate-y-[2px] hover:border-[#46A9FF] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_26px_rgba(22,139,255,0.18)] transition-all duration-200"
+              className="all-news-button min-h-[42px] px-5 inline-flex items-center justify-center gap-2 border border-[#168BFF]/60 rounded-[9px] bg-[#000000] text-[#F5F8FC] text-[12px] font-extrabold tracking-[0.05em] uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_8px_22px_rgba(0,0,0,0.28)] hover:-translate-y-[2px] hover:border-[#46A9FF] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_26px_rgba(22,139,255,0.18)] transition-all duration-200"
             >
               <span>VER TODAS AS NOTÍCIAS</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#168BFF]" />
@@ -134,7 +134,7 @@ export default function FeaturedHomeSection() {
                 className="absolute inset-0 z-10 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(180deg, rgba(3, 6, 9, 0.05) 0%, rgba(3, 6, 9, 0.20) 35%, rgba(3, 6, 9, 0.70) 70%, rgba(3, 6, 9, 0.96) 100%)",
+                    "linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.20) 35%, rgba(0, 0, 0, 0.70) 70%, rgba(0, 0, 0, 0.96) 100%)",
                 }}
               />
 
@@ -183,9 +183,9 @@ export default function FeaturedHomeSection() {
                   <Link
                     key={noticia.id}
                     href={`/noticias/${noticia.slug}`}
-                    className="flex-1 group relative flex flex-col justify-between p-5 rounded-[18px] bg-[#0E131A] border border-white/10 hover:border-[#168BFF]/50 transition-all duration-300 shadow-xl overflow-hidden min-h-[250px]"
+                    className="flex-1 group relative flex flex-col justify-between p-5 rounded-[18px] bg-[#000000] border border-white/10 hover:border-[#168BFF]/50 transition-all duration-300 shadow-xl overflow-hidden min-h-[250px]"
                   >
-                    <div className="relative aspect-[16/9] w-full rounded-[12px] overflow-hidden bg-[#050709] border border-white/10 mb-3 shrink-0">
+                    <div className="relative aspect-[16/9] w-full rounded-[12px] overflow-hidden bg-[#000000] border border-white/10 mb-3 shrink-0">
                       <Image
                         src={noticia.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp"}
                         alt={noticia.title}
@@ -216,10 +216,7 @@ export default function FeaturedHomeSection() {
                 <div
                   key={`empty-news-slot-${slotIdx}`}
                   aria-hidden="true"
-                  className="news-empty-slot flex-1 w-full min-h-[250px] rounded-[18px] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_16px_34px_rgba(0,0,0,0.24)] pointer-events-none select-none transition-all duration-300"
-                  style={{
-                    background: "linear-gradient(145deg, rgba(14, 19, 26, 0.72), rgba(6, 9, 13, 0.92))",
-                  }}
+                  className="news-empty-slot flex-1 w-full min-h-[250px] rounded-[18px] border border-white/[0.08] bg-[#000000] shadow-xl pointer-events-none select-none transition-all duration-300"
                 />
               );
             })}
