@@ -21,7 +21,7 @@ export default function Header() {
           {/* Left Aligned HDZ Symbol Icon */}
           <Link
             href="/"
-            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#FFC400] rounded-md p-0.5 shrink-0 z-10"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#D4AF37] rounded-md p-0.5 shrink-0 z-10"
             aria-label="HDZ Finance - Página Inicial"
           >
             <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 overflow-hidden">
@@ -37,16 +37,27 @@ export default function Header() {
 
           {/* Centered Top Banner Message */}
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center text-center select-none z-0 px-2 max-w-[78vw]">
-            <div
-              className="flex items-center justify-center space-x-1 text-[11px] sm:text-xs md:text-sm font-outfit font-extrabold tracking-wide uppercase leading-tight"
-              style={{
-                color: "#FFD000",
-                WebkitTextFillColor: "#FFD000",
-                WebkitTextStroke: "0.5px #000000",
-                paintOrder: "stroke fill",
-              }}
-            >
-              <span>⚡ TREINAMENTO COMPLETO COM MAIS DE 4 HORAS DE VIDEOAULAS E TUTORIAIS. APROVEITE A OFERTA.</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-1.5 text-[11px] sm:text-xs md:text-sm font-outfit font-extrabold tracking-wide uppercase leading-tight">
+              <span
+                style={{
+                  color: "#FFFFFF",
+                  WebkitTextFillColor: "#FFFFFF",
+                  WebkitTextStroke: "0.5px #000000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                ⚡ TREINAMENTO COMPLETO COM MAIS DE 4 HORAS DE VIDEOAULAS E TUTORIAIS.
+              </span>
+              <span
+                style={{
+                  color: "#FFD000",
+                  WebkitTextFillColor: "#FFD000",
+                  WebkitTextStroke: "0.5px #000000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                APROVEITE A OFERTA.
+              </span>
             </div>
           </div>
 
