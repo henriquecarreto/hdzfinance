@@ -21,7 +21,7 @@ export default function Header() {
           {/* Left Aligned HDZ Symbol Icon */}
           <Link
             href="/"
-            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#D4AF37] rounded-md p-0.5 shrink-0 z-10"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#E9991C] rounded-md p-0.5 shrink-0 z-10"
             aria-label="HDZ Finance - Página Inicial"
           >
             <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 overflow-hidden">
@@ -50,8 +50,8 @@ export default function Header() {
               </span>
               <span
                 style={{
-                  color: "#FFD000",
-                  WebkitTextFillColor: "#FFD000",
+                  color: "#E9991C",
+                  WebkitTextFillColor: "#E9991C",
                   WebkitTextStroke: "0.5px #000000",
                   paintOrder: "stroke fill",
                 }}
