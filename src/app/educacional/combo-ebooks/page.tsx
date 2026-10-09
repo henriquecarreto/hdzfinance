@@ -370,6 +370,21 @@ export default function EbookBundleSalesPage() {
             <p className="text-[16px] text-[#475569] leading-[1.65]">
               Explore páginas reais da coleção e descubra como os mapas conectam educação financeira, investimentos, inflação e juros em explicações visuais claras, organizadas e fáceis de consultar.
             </p>
+
+            {/* IMAGEM MOSTRUÁRIO DOS MAPAS MENTAIS */}
+            <div className="pt-4">
+              <div className="relative w-full max-w-[620px] sm:max-w-[720px] md:max-w-[800px] mx-auto rounded-[20px] p-2.5 sm:p-3.5 bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)]">
+                <Image
+                  src="/images/products/guias-visuais-showcase.jpg"
+                  alt="Mostruário dos Guias Visuais HDZ Finance"
+                  width={900}
+                  height={1150}
+                  priority
+                  className="w-full h-auto object-contain rounded-xl block"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 720px, 800px"
+                />
+              </div>
+            </div>
           </div>
 
           {/* CARROSSEL MARQUEE INFINITO (PRESERVADO) */}
