@@ -362,24 +362,58 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* BENEFÍCIOS DO TREINAMENTO COM EMOJIS */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-[#0B1F3A] font-semibold max-w-xl mx-auto">
-            <div className="flex items-center space-x-2 text-center sm:text-left">
-              <span className="text-base">💰</span>
-              <span>Dinheiro e Bitcoin.</span>
+          {/* LEGENDA ABAIXO DA IMAGEM */}
+          <div className="pt-1">
+            <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug max-w-xl mx-auto">
+              📚 <span style={goldTextStrokeSmall}>5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span style={goldTextStrokeSmall}>2 E-BOOKS GRÁTIS</span> PARA LEITURA
+            </p>
+          </div>
+
+          {/* QUATRO PEQUENOS BLOCOS DE BENEFÍCIOS (2 COLUNAS X 2 LINHAS) */}
+          <div className="pt-2 max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+            {/* BLOCO 1 */}
+            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
+              <div className="w-9 h-9 rounded-lg bg-[#E9991C]/15 border border-[#E9991C]/30 flex items-center justify-center text-lg shrink-0">
+                🪙
+              </div>
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
+                <strong>Entenda dinheiro, Bitcoin</strong> e blockchain.
+              </p>
             </div>
-            <div className="flex items-center space-x-2 text-center sm:text-left">
-              <span className="text-base">📈</span>
-              <span>Ciclos e segurança.</span>
+
+            {/* BLOCO 2 */}
+            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
+              <div className="w-9 h-9 rounded-lg bg-[#2563EB]/15 border border-[#2563EB]/30 flex items-center justify-center text-lg shrink-0">
+                🔐
+              </div>
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
+                Conheça <strong>seed phrase</strong> e chaves privadas.
+              </p>
             </div>
-            <div className="flex items-center space-x-2 text-center sm:text-left">
-              <span className="text-base">🔐</span>
-              <span>Autocustódia na prática.</span>
+
+            {/* BLOCO 3 */}
+            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
+              <div className="w-9 h-9 rounded-lg bg-[#008A5A]/15 border border-[#008A5A]/30 flex items-center justify-center text-lg shrink-0">
+                📈
+              </div>
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
+                Compreenda os <strong>ciclos de mercado</strong>.
+              </p>
+            </div>
+
+            {/* BLOCO 4 */}
+            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
+              <div className="w-9 h-9 rounded-lg bg-[#E9991C]/15 border border-[#E9991C]/30 flex items-center justify-center text-lg shrink-0">
+                👛
+              </div>
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
+                Aprenda cuidados com <strong>carteiras e autocustódia</strong>.
+              </p>
             </div>
           </div>
 
           {/* BOTÃO HERO (FUNDO DOURADO #E9991C, HOVER #D88910, LEGENDA BRANCA COM CONTORNO PRETO) */}
-          <div className="pt-3">
+          <div className="pt-2">
             <button
               onClick={scrollToOffer}
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#E9991C] hover:bg-[#D88910] focus:bg-[#D88910] active:scale-[0.99] transition-all shadow-md group"
@@ -395,6 +429,22 @@ export default function BitcoinCourseSalesPage() {
                 }}
               />
             </button>
+          </div>
+
+          {/* INDICADORES DE PAGAMENTO ABAIXO DO BOTÃO */}
+          <div className="pt-1 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#008A5A]/10 text-[#008A5A] border border-[#008A5A]/30 shadow-2xs">
+              <span>🔒</span>
+              <span>Pagamento seguro</span>
+            </span>
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#008A5A]/10 text-[#008A5A] border border-[#008A5A]/30 shadow-2xs">
+              <span>💠</span>
+              <span>Pix</span>
+            </span>
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/30 shadow-2xs">
+              <span>💳</span>
+              <span>Cartão de crédito</span>
+            </span>
           </div>
 
         </div>
