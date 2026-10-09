@@ -10,6 +10,9 @@ import {
   ZoomIn,
   X,
   FileText,
+  Wallet,
+  TrendingUp,
+  ShieldCheck,
 } from "lucide-react";
 
 // =============================================================================
@@ -575,61 +578,139 @@ export default function EbookBundleSalesPage() {
       {/* ========================================================================= */}
       {/* 4. NOVA SEÇÃO DE PÚBLICO (#hdz-publico)                                   */}
       {/* ========================================================================= */}
-      <section id="hdz-publico" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
+      {/* ========================================================================= */}
+      {/* 4. SEÇÃO DE PÚBLICO (#hdz-publico)                                         */}
+      {/* ========================================================================= */}
+      <section id="hdz-publico" className="py-[48px] max-md:py-[32px] bg-[#FAF7F2] border-b border-[#E2E8F0]">
+        <div className="max-w-[1040px] mx-auto px-5 md:px-6">
           
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              PARA QUEM É A COLEÇÃO
+          {/* CABEÇALHO CENTRALIZADO */}
+          <div className="text-center max-w-[720px] mx-auto mb-8">
+            {/* Selo */}
+            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#FFFBEB] text-[#92400E] border border-[#F59E0B] mb-3">
+              👥 PÚBLICOS ATENDIDOS
             </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Para quem quer entender antes de decidir.
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[30px] md:text-[34px] text-[#0B1F3A] leading-[1.15] mb-3">
+              Para quem esta coleção foi desenvolvida?
             </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Uma coleção para construir uma base de conhecimento e revisitar conceitos conforme suas necessidades.
+
+            {/* Descrição */}
+            <p className="text-[15px] text-[#334155] leading-[1.5]">
+              Materiais visuais e didáticos para quem quer organizar as finanças, compreender investimentos e ampliar seus conhecimentos sobre dinheiro e ativos digitais.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Card 1 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Quem está organizando as próprias finanças.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Quer compreender orçamento, dívidas, reserva e metas antes de avançar para investimentos.
-              </p>
+          {/* GRADE DOS QUATRO CARDS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] items-stretch">
+            
+            {/* Card 1 — Organização financeira */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#F6D365] shadow-[0_2px_5px_rgba(11,31,58,0.10)] flex flex-col justify-between h-full text-left">
+              <div>
+                <div className="flex items-center gap-[12px]">
+                  <div className="w-[42px] h-[42px] bg-[#FFFBEB] border border-[#F6D365] rounded-[10px] flex items-center justify-center shrink-0">
+                    <Wallet className="w-[22px] h-[22px] text-[#0EA5E9]" strokeWidth={1.8} />
+                  </div>
+                  <h3 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                    Para quem quer organizar as finanças
+                  </h3>
+                </div>
+
+                <p className="mt-[14px] text-[14px] text-[#334155] leading-[1.55]">
+                  Compreenda orçamento, dívidas, reserva de emergência e metas para cuidar melhor do seu dinheiro e construir sua base financeira.
+                </p>
+              </div>
+
+              <div>
+                <div className="mt-[18px] mb-[12px] border-t border-[#E2E8F0]" />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium">
+                  <span className="text-[#059669]">✓ Organização e planejamento</span>
+                  <span className="text-[#475569]">Inicial e Completa</span>
+                </div>
+              </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Quem quer conectar os conceitos financeiros.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Busca entender como juros, inflação, retorno e liquidez aparecem nas decisões do dia a dia.
-              </p>
+            {/* Card 2 — Investimentos e economia */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#F6D365] shadow-[0_2px_5px_rgba(11,31,58,0.10)] flex flex-col justify-between h-full text-left">
+              <div>
+                <div className="flex items-center gap-[12px]">
+                  <div className="w-[42px] h-[42px] bg-[#FFFBEB] border border-[#F6D365] rounded-[10px] flex items-center justify-center shrink-0">
+                    <TrendingUp className="w-[22px] h-[22px] text-[#10B981]" strokeWidth={1.8} />
+                  </div>
+                  <h3 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                    Para quem quer entender os investimentos
+                  </h3>
+                </div>
+
+                <p className="mt-[14px] text-[14px] text-[#334155] leading-[1.55]">
+                  Conheça risco, retorno e liquidez e entenda como a inflação e os juros influenciam seus investimentos e seu poder de compra.
+                </p>
+              </div>
+
+              <div>
+                <div className="mt-[18px] mb-[12px] border-t border-[#E2E8F0]" />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium">
+                  <span className="text-[#059669]">✓ Conceitos para comparar</span>
+                  <span className="text-[#475569]">Inicial e Completa</span>
+                </div>
+              </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Quem está começando a estudar Bitcoin.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Prefere conhecer as regras e o funcionamento da rede antes de se concentrar na cotação.
-              </p>
+            {/* Card 3 — Fundamentos do Bitcoin */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#F6D365] shadow-[0_2px_5px_rgba(11,31,58,0.10)] flex flex-col justify-between h-full text-left">
+              <div>
+                <div className="flex items-center gap-[12px]">
+                  <div className="w-[42px] h-[42px] bg-[#FFFBEB] border border-[#F6D365] rounded-[10px] flex items-center justify-center shrink-0">
+                    <span className="font-outfit font-bold text-[26px] text-[#F59E0B] leading-none">
+                      ₿
+                    </span>
+                  </div>
+                  <h3 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                    Para quem está começando no Bitcoin
+                  </h3>
+                </div>
+
+                <p className="mt-[14px] text-[14px] text-[#334155] leading-[1.55]">
+                  Entenda os fundamentos, as transações e a custódia para conhecer o funcionamento do Bitcoin além das mudanças de preço.
+                </p>
+              </div>
+
+              <div>
+                <div className="mt-[18px] mb-[12px] border-t border-[#E2E8F0]" />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium">
+                  <span className="text-[#059669]">✓ Fundamentos explicados</span>
+                  <span className="text-[#475569]">Inicial e Completa</span>
+                </div>
+              </div>
             </div>
 
-            {/* Card 4 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-3 text-left">
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Quem quer compreender os ativos digitais.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Busca estudar criptografia, redes, stablecoins e tokenização com os guias adicionais da Coleção Completa.
-              </p>
+            {/* Card 4 — Ativos digitais */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#F6D365] shadow-[0_2px_5px_rgba(11,31,58,0.10)] flex flex-col justify-between h-full text-left">
+              <div>
+                <div className="flex items-center gap-[12px]">
+                  <div className="w-[42px] h-[42px] bg-[#FFFBEB] border border-[#F6D365] rounded-[10px] flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-[22px] h-[22px] text-[#8B5CF6]" strokeWidth={1.8} />
+                  </div>
+                  <h3 className="font-outfit font-bold text-[17px] text-[#0B1F3A] leading-snug">
+                    Para quem quer explorar os ativos digitais
+                  </h3>
+                </div>
+
+                <p className="mt-[14px] text-[14px] text-[#334155] leading-[1.55]">
+                  Amplie seus estudos com os guias de criptografia, dólar digital, blockchain e tokenização disponíveis na Coleção Completa.
+                </p>
+              </div>
+
+              <div>
+                <div className="mt-[18px] mb-[12px] border-t border-[#E2E8F0]" />
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium">
+                  <span className="text-[#059669]">✓ Conhecimento para aprofundar</span>
+                  <span className="text-[#475569]">Coleção Completa</span>
+                </div>
+              </div>
             </div>
+
           </div>
 
         </div>
