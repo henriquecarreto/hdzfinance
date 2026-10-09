@@ -7,7 +7,7 @@ import FinalCtaSection from "@/components/home/FinalCtaSection";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#050607] text-[#F5F7FA] selection:bg-[#147BFF] selection:text-white">
+    <div className="min-h-screen bg-[#000000] text-[#F5F7FA] selection:bg-[#147BFF] selection:text-white">
       {/* 1. SEÇÃO HERO: NOTÍCIAS E MATÉRIAS */}
       <FeaturedHomeSection />
 

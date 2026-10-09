@@ -81,7 +81,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative w-full h-[74px] md:h-[76px] bg-[#050607] border-b border-white/[0.08]">
+      <header className="relative w-full h-[74px] md:h-[76px] bg-[#000000] border-b border-white/[0.08]">
         <div className="max-w-[1360px] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
           {/* Logo (Points to Homepage /) */}
           <Link

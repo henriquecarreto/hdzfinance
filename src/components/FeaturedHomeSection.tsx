@@ -79,7 +79,7 @@ export default function FeaturedHomeSection() {
   }
 
   return (
-    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-[#050607]">
+    <section className="relative isolate overflow-hidden pt-8 md:pt-12 pb-20 md:pb-24 border-b border-white/[0.08] bg-[#000000]">
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-6">
         {/* Header Navigation Bar */}

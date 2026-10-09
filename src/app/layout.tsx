@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050607",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
 };
@@ -95,7 +95,7 @@ export default async function RootLayout({
       lang="pt-BR"
       className={`${outfit.variable} ${plusJakartaSans.variable} ${lora.variable} dark`}
     >
-      <body className="bg-[#050607] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white relative">
+      <body className="bg-[#000000] text-[#F5F7FA] font-sans min-h-screen flex flex-col antialiased selection:bg-[#147BFF] selection:text-white relative">
         <MarketDataProvider initialSnapshot={initialSnapshot}>
           <CryptoMarketProvider>
             <HeaderWrapper />

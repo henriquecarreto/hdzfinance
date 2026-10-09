@@ -55,12 +55,12 @@ export default function ForcesSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
+    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#000000]">
 
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block with Localized Backdrop Blur */}
-        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#050607]/75 backdrop-blur-md border border-white/10 shadow-2xl">
+        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#000000]/75 backdrop-blur-md border border-white/10 shadow-2xl">
           <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             ALÉM DAS MANCHETES
           </span>

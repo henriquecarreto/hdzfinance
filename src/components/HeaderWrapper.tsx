@@ -17,7 +17,7 @@ export default function HeaderWrapper() {
   }
 
   return (
-    <div className="sticky top-0 z-[60] w-full bg-[#050607]/95 backdrop-blur-md border-b border-white/[0.06] shadow-lg">
+    <div className="sticky top-0 z-[60] w-full bg-[#000000]/95 backdrop-blur-md border-b border-white/[0.06] shadow-lg">
       <Header />
       <MarketTicker />
     </div>
