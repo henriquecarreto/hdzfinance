@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
     // Valid credentials check (Configured via env vars or server-side admin fallbacks)
     const validEmail = (process.env.ADMIN_EMAIL || process.env.NEXT_PUBLIC_ADMIN_EMAIL || "henriquecarreto01@gmail.com").toLowerCase().trim();
-    const validPassword = process.env.ADMIN_PASSWORD || "Qwer1234.26";
+    const validPassword = process.env.ADMIN_PASSWORD || "Qwer1234.26Bc1q5515";
 
     const inputEmail = email.toLowerCase().trim();
 
