@@ -51,7 +51,7 @@ export default function MethodSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-transparent">
+    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-[#000000]">
 
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">

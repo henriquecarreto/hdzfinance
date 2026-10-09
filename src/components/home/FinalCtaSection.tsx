@@ -6,7 +6,7 @@ export default function FinalCtaSection() {
   return (
     <section
       aria-label="Conclusão HDZ Finance"
-      className="relative isolate overflow-hidden py-12 md:py-16 border-b border-white/[0.08] bg-transparent"
+      className="relative isolate overflow-hidden py-12 md:py-16 border-b border-white/[0.08] bg-[#000000]"
     >
 
 
