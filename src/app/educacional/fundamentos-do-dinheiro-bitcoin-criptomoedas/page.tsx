@@ -516,15 +516,15 @@ export default function BitcoinCourseSalesPage() {
 
           {/* CAPA DOS MÓDULOS (BORDA LARANJA ORIGINAL HDZ #FE9409 DE 2PX) */}
           <div className="pt-2">
-            <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[520px] mx-auto rounded-2xl p-3 sm:p-4 bg-[#FFFFFF] border-2 border-[#FE9409] shadow-lg">
+            <div className="relative w-full max-w-[380px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[680px] mx-auto rounded-2xl p-3 sm:p-4 bg-[#FFFFFF] border-2 border-[#FE9409] shadow-lg">
               <Image
                 src="/images/products/training-books-cover.jpg"
                 alt="Treinamento HDZ Finance — Módulos do Treinamento"
-                width={520}
-                height={610}
+                width={680}
+                height={800}
                 priority
                 className="w-full h-auto object-contain rounded-xl"
-                sizes="(max-width: 640px) 340px, (max-width: 1024px) 440px, 520px"
+                sizes="(max-width: 640px) 380px, (max-width: 1024px) 520px, 680px"
               />
             </div>
           </div>
