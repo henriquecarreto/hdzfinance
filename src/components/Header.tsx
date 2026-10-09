@@ -129,29 +129,22 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8 xl:space-x-10 text-[14px]">
+          <nav className="hidden lg:flex items-center space-x-8 xl:space-x-10 text-[16px]">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative py-2 font-medium tracking-wide transition-colors duration-150 text-[14px] ${
-                    link.isCommercial
-                      ? active
-                        ? "text-[#F59A18] font-semibold"
-                        : "text-[#F59A18] hover:text-[#FFAC36]"
-                      : active
-                      ? "text-[#F5F7FA] font-semibold"
-                      : "text-[#9BA5B3] hover:text-[#147BFF]"
+                  className={`relative py-2 font-semibold tracking-wide transition-colors duration-150 text-[16px] ${
+                    active
+                      ? "text-[#FFB020] font-bold"
+                      : "text-[#FFFFFF] hover:text-[#FFB020]"
                   }`}
                 >
                   {link.name}
-                  {active && !link.isCommercial && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#147BFF] rounded-full" />
-                  )}
-                  {active && link.isCommercial && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#F59A18] rounded-full" />
+                  {active && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FFB020] rounded-full" />
                   )}
                 </Link>
               );
@@ -162,25 +155,25 @@ export default function Header() {
           <div className="flex items-center space-x-3">
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-[#9BA5B3] hover:text-[#F5F7FA] hover:bg-[#0D1117] transition-all text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#147BFF]"
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-[#FFFFFF] hover:text-[#FFB020] hover:bg-[#0D1117] transition-colors duration-150 text-[16px] font-semibold focus:outline-none focus:ring-2 focus:ring-[#147BFF]"
               aria-label="Abrir pesquisa"
             >
-              <Search className="h-4 w-4 text-[#147BFF]" />
-              <span className="hidden md:inline text-[13px] text-[#9BA5B3] hover:text-[#F5F7FA]">
+              <Search className="h-4 w-4 text-[#147BFF] shrink-0" />
+              <span className="hidden md:inline text-[16px] font-semibold text-[#FFFFFF] hover:text-[#FFB020] transition-colors duration-150">
                 Buscar
               </span>
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-[#9BA5B3] hover:text-[#F5F7FA] hover:bg-[#0D1117] transition-all focus:outline-none focus:ring-2 focus:ring-[#147BFF]"
+              className="lg:hidden p-2 rounded-lg text-[#FFFFFF] hover:text-[#FFB020] hover:bg-[#0D1117] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#147BFF]"
               aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
-                <X className="h-6 w-6 text-[#F5F7FA]" />
+                <X className="h-6 w-6 text-[#FFFFFF]" />
               ) : (
-                <Menu className="h-6 w-6 text-[#F5F7FA]" />
+                <Menu className="h-6 w-6 text-[#FFFFFF]" />
               )}
             </button>
           </div>
@@ -197,12 +190,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                      link.isCommercial
-                        ? "text-[#F59A18] bg-[#F59A18]/10 hover:bg-[#F59A18]/20"
-                        : active
-                        ? "text-[#F5F7FA] bg-[#0D1117] border-l-2 border-[#147BFF]"
-                        : "text-[#9BA5B3] hover:text-[#F5F7FA] hover:bg-[#0D1117]"
+                    className={`px-4 py-3 rounded-lg text-[16px] transition-colors duration-150 ${
+                      active
+                        ? "text-[#FFB020] font-bold bg-[#0D1117] border-l-2 border-[#FFB020]"
+                        : "text-[#FFFFFF] font-semibold hover:text-[#FFB020] hover:bg-[#0D1117]"
                     }`}
                   >
                     {link.name}
@@ -215,9 +206,9 @@ export default function Header() {
                   setMobileMenuOpen(false);
                   setSearchOpen(true);
                 }}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium text-[#9BA5B3] hover:text-[#F5F7FA] hover:bg-[#0D1117] text-left"
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-[16px] font-semibold text-[#FFFFFF] hover:text-[#FFB020] hover:bg-[#0D1117] text-left transition-colors duration-150"
               >
-                <Search className="h-5 w-5 text-[#147BFF]" />
+                <Search className="h-5 w-5 text-[#147BFF] shrink-0" />
                 <span>Buscar</span>
               </button>
             </nav>
