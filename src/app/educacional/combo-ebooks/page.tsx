@@ -157,6 +157,21 @@ export default function EbookBundleSalesPage() {
             📚 DOIS E-BOOKS DIGITAIS REUNIDOS EM UMA ÚNICA COLEÇÃO
           </div>
 
+          {/* IMAGEM PRINCIPAL DOS E-BOOKS DO COMBO */}
+          <div className="pt-2">
+            <div className="relative w-full max-w-[380px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[680px] mx-auto rounded-2xl p-3 sm:p-4 bg-[#FFFFFF] border-2 border-[#FE9409] shadow-lg">
+              <Image
+                src="/images/products/combo-ebooks-cover.jpg"
+                alt="Combo de E-Books HDZ Finance"
+                width={680}
+                height={800}
+                priority
+                className="w-full h-auto object-contain rounded-xl block"
+                sizes="(max-width: 640px) 380px, (max-width: 1024px) 520px, 680px"
+              />
+            </div>
+          </div>
+
           {/* 4 PONTOS PRINCIPAIS */}
           <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-left">
             <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
