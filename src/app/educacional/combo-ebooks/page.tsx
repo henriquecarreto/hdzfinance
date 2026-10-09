@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Sparkles,
   ChevronDown,
@@ -11,8 +10,6 @@ import {
   ZoomIn,
   X,
   FileText,
-  ShieldCheck,
-  BookOpen,
 } from "lucide-react";
 
 // =============================================================================
@@ -1092,157 +1089,6 @@ export default function EbookBundleSalesPage() {
             </div>
 
           </div>
-
-          {/* TABELA COMPARATIVA DOS PLANOS */}
-          <div className="max-w-[960px] mx-auto pt-6 space-y-6">
-            <div className="text-center space-y-2">
-              <h3 className="font-outfit font-bold text-xl sm:text-2xl text-[#0B1F3A]">
-                Veja o que está incluído em cada coleção.
-              </h3>
-              <p className="text-sm text-[#475569]">
-                Os quatro guias da base estão presentes nas duas opções. A Completa amplia o acervo com cinco guias e os dois e-books bônus.
-              </p>
-            </div>
-
-            <div className="overflow-x-auto rounded-[16px] border border-[#E2E8F0] shadow-xs bg-[#FFFFFF]">
-              <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[580px]">
-                <thead>
-                  <tr className="bg-[#0B1F3A] text-white font-outfit font-bold">
-                    <th className="p-3.5 sm:p-4 rounded-tl-[16px]">Material</th>
-                    <th className="p-3.5 sm:p-4 text-center">Inicial</th>
-                    <th className="p-3.5 sm:p-4 text-center rounded-tr-[16px]">Completa</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#E2E8F0] font-normal text-[#1F2937]">
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Educação Financeira</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FAF7F2]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Economia, Juros e Inflação</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Investimentos</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FAF7F2]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Fundamentos do Bitcoin</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Criptografia</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FAF7F2]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Dólar Digital</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Blockchain</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FAF7F2]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Tokenização</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Mentalidade Bitcoiner</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FAF7F2]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Do Clique ao Bloco — bônus</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#FFFFFF]">
-                    <td className="p-3.5 sm:p-4 font-semibold">Meu Primeiro Bitcoin — bônus</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#475569]">Somente na Completa</td>
-                    <td className="p-3.5 sm:p-4 text-center text-[#047857] font-bold">Incluído</td>
-                  </tr>
-                  <tr className="bg-[#EFF6FF] font-bold text-[#0B1F3A]">
-                    <td className="p-3.5 sm:p-4 border-b-0">Total de materiais</td>
-                    <td className="p-3.5 sm:p-4 text-center border-b-0">4 guias</td>
-                    <td className="p-3.5 sm:p-4 text-center border-b-0 text-[#1D4ED8]">9 guias + 2 e-books bônus</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 9. NOVA SEÇÃO DE GARANTIA (#hdz-garantia)                                 */}
-      {/* ========================================================================= */}
-      <section id="hdz-garantia" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6">
-          <div className="rounded-3xl bg-[#0B1F3A] text-white p-6 sm:p-10 md:p-12 text-center space-y-6 shadow-xl relative overflow-hidden">
-            
-            <div className="inline-block px-4 py-1.5 rounded-full bg-[#FFFBEB] text-[#B45309] text-xs font-bold uppercase tracking-wider">
-              GARANTIA DE 7 DIAS
-            </div>
-
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-white leading-[1.2] max-w-[720px] mx-auto">
-              Conheça os materiais e avalie se eles fazem sentido para você.
-            </h2>
-
-            <p className="text-[16px] text-[#E2E8F0] leading-[1.65] max-w-[760px] mx-auto font-normal">
-              Após a compra, você pode acessar os arquivos e avaliar a organização e a apresentação do conteúdo. Se considerar que a coleção não atende às suas expectativas, solicite o reembolso dentro do prazo de sete dias pelo canal informado no acesso.
-            </p>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => scrollToSection("oferta")}
-                className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-white/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
-              >
-                ESCOLHER MINHA COLEÇÃO
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 10. NOVA APRESENTAÇÃO DA MARCA (#hdz-marca)                              */}
-      {/* ========================================================================= */}
-      <section id="hdz-marca" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
-        <div className="max-w-[760px] mx-auto px-5 md:px-6 text-center space-y-4">
-          
-          <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-            HDZ FINANCE
-          </span>
-
-          <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-            Uma coleção para transformar informação em compreensão.
-          </h2>
-
-          <p className="text-[16px] text-[#475569] leading-[1.65]">
-            Informação para entender. Educação para decidir. A Coleção Visual HDZ Finance organiza temas de finanças, economia, investimentos e ativos digitais em materiais de estudo e consulta.
-          </p>
-
-          <div className="pt-2">
-            <Link
-              href="/sobre"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1D4ED8] hover:underline"
-            >
-              <span>Conheça a HDZ Finance</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
         </div>
       </section>
 
