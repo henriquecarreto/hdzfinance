@@ -16,12 +16,12 @@ export default function Header() {
 
   if (pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas") {
     return (
-      <header className="relative w-full bg-white border-b border-[#E3D7BE]/80 shadow-sm">
-        <div className="max-w-[1360px] mx-auto px-5 md:px-8 min-h-[52px] py-2 flex items-center justify-between relative">
+      <header className="sticky top-0 z-50 w-full bg-[#FFFFFF] border-b border-[#D5BE97] shadow-xs">
+        <div className="max-w-[1360px] mx-auto px-4 md:px-8 min-h-[52px] py-2 flex items-center justify-between relative">
           {/* Left Aligned HDZ Symbol Icon */}
           <Link
             href="/"
-            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#F59A18] rounded-md p-0.5 shrink-0 z-10"
+            className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#B94F00] rounded-md p-0.5 shrink-0 z-10"
             aria-label="HDZ Finance - Página Inicial"
           >
             <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 overflow-hidden">
@@ -36,17 +36,10 @@ export default function Header() {
           </Link>
 
           {/* Centered Authority / Content Callout */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center text-center select-none z-0 px-2">
-            {/* Desktop Version */}
-            <div className="hidden sm:flex items-center gap-1.5 text-xs md:text-sm font-extrabold tracking-wider uppercase">
-              <span className="text-[#D97706] font-bold">⚡ MAIS DE 4 HORAS</span>
-              <span className="text-[#08182E]">DE AULAS EM VÍDEO • DO DINHEIRO À AUTOCUSTÓDIA</span>
-            </div>
-
-            {/* Mobile Compact Version */}
-            <div className="flex sm:hidden items-center gap-1 text-[11px] font-extrabold tracking-wide uppercase">
-              <span className="text-[#D97706] font-bold">⚡ +4 HORAS</span>
-              <span className="text-[#08182E]">DE AULAS • DO DINHEIRO À AUTOCUSTÓDIA</span>
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center text-center select-none z-0 px-2 max-w-[80vw]">
+            <div className="flex items-center justify-center space-x-1.5 text-xs sm:text-sm font-outfit font-extrabold text-[#0B1F3A] uppercase tracking-wide">
+              <span className="text-[#F5B700] text-sm sm:text-base shrink-0">⚡</span>
+              <span>4 HORAS DE VIDEOAULAS E TUTORIAIS</span>
             </div>
           </div>
 

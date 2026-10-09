@@ -299,14 +299,6 @@ export default function BitcoinCourseSalesPage() {
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#243247] font-sans antialiased selection:bg-[#F5B700]/30 selection:text-[#0B1F3A] overflow-x-hidden">
 
-      {/* ==================== FAIXA SUPERIOR COMPACTA ==================== */}
-      <div className="bg-[#FFFFFF] border-b border-[#D5BE97] py-2.5 px-4 text-center sticky top-0 z-30 shadow-xs">
-        <div className="max-w-[1320px] mx-auto flex items-center justify-center space-x-2 text-xs sm:text-sm font-outfit font-extrabold text-[#0B1F3A] uppercase tracking-wide">
-          <span className="text-[#F5B700] text-sm">⚡</span>
-          <span>4 HORAS DE VIDEOAULAS E TUTORIAIS</span>
-        </div>
-      </div>
-
       {/* ==================== 01 — HERO PRINCIPAL (FUNDO 1: BRANCO #FFFFFF) ==================== */}
       <section className="relative py-10 md:py-14 bg-[#FFFFFF] border-b border-[#D5BE97]">
         <div className="max-w-[800px] mx-auto px-4 sm:px-6 text-center space-y-5">
@@ -379,9 +371,9 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 02 — CARROSSEL (FUNDO 2: BEGE #EADCC6) ==================== */}
+      {/* ==================== 02 — CARROSSEL (FUNDO 2: CINZA-AZULADO #EAF0F6) ==================== */}
       <section
-        className="py-12 md:py-16 bg-[#EADCC6] border-b border-[#D5BE97]"
+        className="py-12 md:py-16 bg-[#EAF0F6] border-b border-[#D5BE97]"
         onMouseEnter={() => setIsHoveringCarousel(true)}
         onMouseLeave={() => setIsHoveringCarousel(false)}
       >
@@ -565,8 +557,8 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 04 — AUTOCUSTÓDIA (FUNDO 4: BEGE #EADCC6) ==================== */}
-      <section className="py-12 md:py-16 bg-[#EADCC6] border-b border-[#D5BE97]">
+      {/* ==================== 04 — AUTOCUSTÓDIA (FUNDO 4: CINZA-AZULADO #EAF0F6) ==================== */}
+      <section className="py-12 md:py-16 bg-[#EAF0F6] border-b border-[#D5BE97]">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-8 text-center">
           <div className="space-y-3 max-w-3xl mx-auto">
             <span className="text-xs font-bold text-[#0B1F3A] uppercase tracking-widest px-3.5 py-1 rounded-md bg-[#FFFFFF] border border-[#D5BE97] inline-block shadow-xs">
@@ -697,8 +689,8 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 06 — CONTEÚDO DOS MÓDULOS (FUNDO 6: BEGE #EADCC6) ==================== */}
-      <section id="modulos" className="py-12 md:py-16 bg-[#EADCC6] border-b border-[#D5BE97]">
+      {/* ==================== 06 — CONTEÚDO DOS MÓDULOS (FUNDO 6: CINZA-AZULADO #EAF0F6) ==================== */}
+      <section id="modulos" className="py-12 md:py-16 bg-[#EAF0F6] border-b border-[#D5BE97]">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-10 text-center">
           {/* INTRODUÇÃO */}
           <div className="space-y-3 max-w-3xl mx-auto">
@@ -796,8 +788,8 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 08 — RESULTADOS (FUNDO 8: BEGE #EADCC6) ==================== */}
-      <section className="py-12 md:py-16 bg-[#EADCC6] border-b border-[#D5BE97]">
+      {/* ==================== 08 — RESULTADOS (FUNDO 8: CINZA-AZULADO #EAF0F6) ==================== */}
+      <section className="py-12 md:py-16 bg-[#EAF0F6] border-b border-[#D5BE97]">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-8 text-center">
           <div className="space-y-3 max-w-3xl mx-auto">
             <span className="text-xs font-bold text-[#0B1F3A] uppercase tracking-widest px-3.5 py-1 rounded-md bg-[#FFFFFF] border border-[#D5BE97] inline-block shadow-xs">
@@ -940,8 +932,8 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 10 — PASSO A PASSO DO ACESSO (FUNDO 10: BEGE #EADCC6) ==================== */}
-      <section className="py-14 md:py-18 bg-[#EADCC6] border-b border-[#D5BE97] relative">
+      {/* ==================== 10 — PASSO A PASSO DO ACESSO (FUNDO 10: CINZA-AZULADO #EAF0F6) ==================== */}
+      <section className="py-14 md:py-18 bg-[#EAF0F6] border-b border-[#D5BE97] relative">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-10 text-center">
           
           {/* ETIQUETA E CABEÇALHO */}
