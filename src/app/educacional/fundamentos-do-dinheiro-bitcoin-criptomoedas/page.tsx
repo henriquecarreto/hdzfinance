@@ -1111,15 +1111,15 @@ export default function BitcoinCourseSalesPage() {
 
             {/* IMAGEM COMPLETA DA OFERTA (TELAS + MÓDULOS + 2 E-BOOKS) */}
             <div className="py-1">
-              <div className="relative w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/40 shadow-xs">
+              <div className="relative w-full rounded-2xl overflow-hidden shadow-xs border border-[#F5B700]/20">
                 <Image
-                  src="/images/products/training-full-bundle.png"
+                  src="/images/products/training-full-bundle.png?v=2"
                   alt="Treinamento Completo HDZ Finance + 2 E-Books Bônus"
-                  width={720}
-                  height={900}
+                  width={800}
+                  height={1000}
                   priority
-                  className="w-full h-auto object-contain rounded-xl"
-                  sizes="(max-width: 640px) 100vw, 720px"
+                  className="w-full h-auto object-contain rounded-2xl block"
+                  sizes="(max-width: 768px) 100vw, 800px"
                 />
               </div>
             </div>
