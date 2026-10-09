@@ -111,14 +111,14 @@ const SCHEMES: Record<string, ColorScheme> = {
   blue: {
     bgSoft: "bg-[#EFF6FF]",
     borderSoft: "border-[#BFDBFE]",
-    textHighlight: "text-[#2563EB]",
-    markerBg: "bg-[#2563EB]",
+    textHighlight: "text-[#1769D1]",
+    markerBg: "bg-[#1769D1]",
   },
   green: {
     bgSoft: "bg-[#ECFDF5]",
     borderSoft: "border-[#A7F3D0]",
-    textHighlight: "text-[#00A859]",
-    markerBg: "bg-[#00A859]",
+    textHighlight: "text-[#138A60]",
+    markerBg: "bg-[#138A60]",
   },
   gold: {
     bgSoft: "bg-[#FFF7E5]",
@@ -140,7 +140,7 @@ const SCHEMES: Record<string, ColorScheme> = {
   },
 };
 
-// 6 Modules Dataset with auxiliary colors and emojis
+// 6 Modules Dataset with updated descriptions
 interface ModuleCard {
   id: number;
   emoji: string;
@@ -158,7 +158,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "APRESENTAÇÃO",
     title: "APRESENTAÇÃO",
     description:
-      "Conheça a proposta do treinamento, a organização das aulas e como os assuntos se conectam. Uma introdução para orientar seus primeiros passos e ajudar você a acompanhar o conteúdo.",
+      "Veja como acompanhar o treinamento e como os assuntos se conectam ao longo das aulas.",
     topics: [
       "Organização das aulas.",
       "Visão geral dos assuntos.",
@@ -172,7 +172,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "MÓDULO 01",
     title: "FUNDAMENTOS DO DINHEIRO",
     description:
-      "Entenda a origem e as funções do dinheiro, além dos efeitos da inflação e da expansão monetária sobre o poder de compra. Uma base para compreender o contexto em que o Bitcoin surgiu.",
+      "Comece pela origem do dinheiro, suas funções e os efeitos da inflação. Compreenda o contexto em que o Bitcoin surgiu.",
     topics: [
       "Origem e funções do dinheiro.",
       "Inflação e poder de compra.",
@@ -186,7 +186,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "MÓDULO 02",
     title: "O QUE É BITCOIN",
     description:
-      "Conheça a proposta do Bitcoin e os fundamentos do funcionamento da rede. Entenda os conceitos que permitem olhar para o ativo além da cotação.",
+      "Descubra como a rede funciona e o papel da blockchain, da mineração e da oferta programada.",
     topics: [
       "Blockchain e descentralização.",
       "Criptografia e mineração.",
@@ -200,7 +200,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "MÓDULO 03",
     title: "CICLOS DE MERCADO",
     description:
-      "Entenda como ciclos, volatilidade e comportamento dos participantes se relacionam. Conheça os indicadores e exemplos apresentados nas aulas para compreender melhor o contexto do mercado.",
+      "Compreenda as fases do mercado, a volatilidade e os indicadores apresentados nas aulas, relacionando contexto e comportamento.",
     topics: [
       "Fases dos ciclos.",
       "Indicadores e contexto.",
@@ -214,7 +214,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "MÓDULO 04",
     title: "SEJA VOCÊ SEU PRÓPRIO BANCO",
     description:
-      "Conheça as carteiras e os cuidados envolvidos na autocustódia. Entenda o papel das chaves, das frases de recuperação e dos backups na guarda dos seus bitcoins.",
+      "Aprenda sobre carteiras, chaves privadas, frases de recuperação e backups para compreender as responsabilidades da autocustódia.",
     topics: [
       "Tipos de carteiras.",
       "Chaves e frases de recuperação.",
@@ -228,7 +228,7 @@ const COURSE_MODULES: ModuleCard[] = [
     moduleLabel: "MÓDULO 05",
     title: "GERENCIAMENTO E UTILIZAÇÃO",
     description:
-      "Conecte os conceitos à organização e ao uso dos ativos. Acompanhe as demonstrações de movimentação e utilização apresentadas no treinamento.",
+      "Acompanhe demonstrações de organização da carteira, envio, recebimento e utilização dos ativos.",
     topics: [
       "Exposição e organização da carteira.",
       "Envio, recebimento e saques.",
@@ -238,70 +238,73 @@ const COURSE_MODULES: ModuleCard[] = [
   },
 ];
 
-// Público Dataset with auxiliary colors & emojis
+// Público Dataset with updated copy
 const PUBLIC_CARDS = [
   {
     emoji: "🌱",
     tag: "01 • INICIANTES",
-    title: "Para quem está começando",
+    title: "Quero começar pelo básico",
     description:
-      "Quer entender o Bitcoin desde os fundamentos, com explicações claras e exemplos.",
+      "Você ouve falar de Bitcoin, mas ainda precisa organizar os conceitos e entender como tudo se conecta.",
     colorKey: "green" as const,
   },
   {
     emoji: "🪙",
     tag: "02 • INVESTIDORES",
-    title: "Para quem já possui cripto",
+    title: "Já comprei e quero entender melhor",
     description:
-      "Já comprou ativos e quer compreender melhor segurança, custódia e organização da carteira.",
+      "Você já possui cripto e quer aprofundar seu conhecimento sobre mercado, carteiras e utilização.",
     colorKey: "gold" as const,
   },
   {
     emoji: "🔐",
     tag: "03 • SEGURANÇA",
-    title: "Para quem quer conhecer a autocustódia",
+    title: "Quero aprender sobre autocustódia",
     description:
-      "Quer aprender sobre carteiras, chaves e as responsabilidades de guardar seus próprios bitcoins.",
+      "Você quer compreender chaves, seed phrase e os cuidados necessários para guardar seus próprios bitcoins.",
     colorKey: "purple" as const,
   },
   {
     emoji: "🎯",
     tag: "04 • CRITÉRIO",
-    title: "Para quem busca mais critério",
+    title: "Quero decidir com mais critério",
     description:
-      "Quer compreender o mercado antes de decidir com base em opiniões ou oscilações de preço.",
+      "Você busca uma base para avaliar informações e compreender o contexto antes de seguir opiniões.",
     colorKey: "blue" as const,
   },
 ];
 
-// Aprendizado Cards
+// Aprendizado Cards (Conecte o que você aprende)
 const LEARNING_CARDS = [
   {
     emoji: "🧠",
-    title: "Entender",
-    description: "Relacionar dinheiro, Bitcoin, tecnologia e contexto de mercado.",
+    title: "Entender o funcionamento",
+    description:
+      "Relacione dinheiro, tecnologia e mercado para compreender o Bitcoin além das manchetes.",
     colorKey: "blue" as const,
   },
   {
     emoji: "🔐",
-    title: "Guardar",
-    description: "Compreender carteiras, chaves e os cuidados da autocustódia.",
+    title: "Compreender a guarda",
+    description:
+      "Identifique o papel das carteiras, das chaves e dos cuidados com a recuperação do acesso.",
     colorKey: "gold" as const,
   },
   {
-    emoji: "🚀",
-    title: "Utilizar",
-    description: "Conhecer os procedimentos e ferramentas demonstrados nas aulas.",
+    emoji: "👛",
+    title: "Conhecer a utilização",
+    description:
+      "Acompanhe os procedimentos e as ferramentas demonstrados nas aulas.",
     colorKey: "green" as const,
   },
 ];
 
-// Passo a Passo do Acesso Dataset
+// Passo a Passo do Acesso Dataset with updated titles
 const ACCESS_STEPS = [
   {
     step: "01",
     emoji: "🛒",
-    title: "Conclua sua compra",
+    title: "Conclua sua compra.",
     description:
       "Escolha a forma de pagamento e finalize a compra no checkout oficial do treinamento.",
     colorKey: "blue" as const,
@@ -309,7 +312,7 @@ const ACCESS_STEPS = [
   {
     step: "02",
     emoji: "📩",
-    title: "Receba as orientações",
+    title: "Receba as orientações.",
     description:
       "Após a confirmação do pagamento, as instruções de acesso serão enviadas para o e-mail informado na compra.",
     colorKey: "green" as const,
@@ -317,7 +320,7 @@ const ACCESS_STEPS = [
   {
     step: "03",
     emoji: "▶️",
-    title: "Acesse as aulas",
+    title: "Acesse as aulas.",
     description:
       "Entre na área do aluno e encontre as aulas organizadas para acompanhar cada etapa do treinamento.",
     colorKey: "gold" as const,
@@ -325,7 +328,7 @@ const ACCESS_STEPS = [
   {
     step: "04",
     emoji: "📱",
-    title: "Aprenda no seu ritmo",
+    title: "Avance no seu ritmo.",
     description:
       "Avance pelos módulos e reveja os assuntos que quiser aprofundar, conforme as condições de acesso do treinamento.",
     colorKey: "turquoise" as const,
@@ -469,32 +472,40 @@ export default function BitcoinCourseSalesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans antialiased selection:bg-[#E9991C]/30 selection:text-[#0B1F3A] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans antialiased selection:bg-[#00A859]/20 selection:text-[#0B1F3A] overflow-x-hidden">
 
       {/* ==================== 01 — HERO PRINCIPAL (FUNDO 1: BRANCO #FFFFFF) ==================== */}
       <section className="relative py-10 md:py-14 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[800px] mx-auto px-4 sm:px-6 text-center space-y-5">
+        <div className="max-w-[840px] mx-auto px-4 sm:px-6 text-center space-y-5">
           
           {/* ETIQUETA EMOJI */}
           <div>
             <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#FAF5E8] text-[#0B1F3A] border border-[#D5BE97] text-xs font-bold uppercase tracking-widest shadow-xs">
               <span className="text-sm">🎥</span>
-              <span>TREINAMENTO HDZ FINANCE</span>
+              <span>TREINAMENTO DE BITCOIN E CRIPTOMOEDAS</span>
             </span>
           </div>
 
-          {/* TÍTULO COM DESTAQUE DOURADO #E9991C E CONTORNO PRETO */}
-          <h1 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight leading-[1.2] max-w-[760px] mx-auto">
-            Comprar Bitcoin é só o começo. <br />
-            <span style={goldTextStrokeLarge}>
-              Aprenda a cuidar do que é seu.
-            </span>
+          {/* TÍTULO PRINCIPAL REFORMULADO COM CORES POR TRECHO */}
+          <h1 className="font-outfit font-extrabold text-[28px] sm:text-[36px] md:text-[44px] lg:text-[48px] tracking-tight leading-[1.18] max-w-[840px] mx-auto">
+            <span className="text-[#0B1F3A]">Entenda o Bitcoin </span>
+            <span className="text-[#1769D1]">sem confusão </span>
+            <span className="text-[#138A60]">e sem termos complicados.</span>
           </h1>
 
-          {/* DESCRIÇÃO */}
-          <p className="text-[15px] sm:text-base md:text-[17px] text-[#1F2937] leading-[1.5] max-w-[740px] mx-auto font-normal opacity-100">
-            Entenda como o dinheiro funciona, o que torna o Bitcoin diferente e os cuidados para guardar e movimentar seus ativos. Aulas em vídeo que conectam fundamentos e prática para você tomar decisões com mais clareza e autonomia.
+          {/* TEXTO DE APOIO REFORMULADO */}
+          <p className="text-[16px] sm:text-[17px] md:text-[19px] text-[#1F2937] leading-[1.55] max-w-[760px] mx-auto font-normal">
+            Aprenda sobre dinheiro, blockchain, ciclos de mercado e autocustódia em{" "}
+            <span className="text-[#1769D1] font-bold">5 módulos</span> com{" "}
+            <span className="text-[#138A60] font-bold">mais de 4 horas de videoaulas e tutoriais</span>. Um caminho organizado para entender antes de agir.
           </p>
+
+          {/* LINHA DE IDENTIFICAÇÃO COM O PÚBLICO */}
+          <div className="pt-1">
+            <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug max-w-2xl mx-auto">
+              👥 Para quem está começando e para quem já tem cripto, mas quer entender melhor suas escolhas.
+            </p>
+          </div>
 
           {/* CAPA DOS MÓDULOS (BORDA DOURADA 3PX #E9991C) */}
           <div className="pt-2">
@@ -514,58 +525,58 @@ export default function BitcoinCourseSalesPage() {
           {/* LEGENDA ABAIXO DA IMAGEM */}
           <div className="pt-1">
             <p className="text-xs sm:text-sm md:text-base font-outfit font-extrabold text-[#0B1F3A] tracking-wide leading-snug max-w-xl mx-auto">
-              📚 <span style={goldTextStrokeSmall}>5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span style={goldTextStrokeSmall}>2 E-BOOKS GRÁTIS</span> PARA LEITURA
+              📚 <span className="text-[#1769D1]">5 MÓDULOS</span> COM VIDEOAULAS + 🎁 <span className="text-[#138A60]">2 E-BOOKS GRÁTIS</span> PARA LEITURA
             </p>
           </div>
 
-          {/* QUATRO PEQUENOS BLOCOS DE BENEFÍCIOS (2 COLUNAS X 2 LINHAS) */}
+          {/* QUATRO PEQUENOS BLOCOS DE BENEFÍCIOS REFORMULADOS (2 COLUNAS X 2 LINHAS) */}
           <div className="pt-2 max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
             {/* BLOCO 1 */}
-            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
-              <div className="w-9 h-9 rounded-lg bg-[#E9991C]/15 border border-[#E9991C]/30 flex items-center justify-center text-lg shrink-0">
+            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-[#FFF7E5] border border-[#FDE68A] flex items-center justify-center text-xl shrink-0">
                 🪙
               </div>
-              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
-                <strong>Entenda dinheiro, Bitcoin</strong> e blockchain.
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
+                Entenda o Bitcoin além da cotação.
               </p>
             </div>
 
             {/* BLOCO 2 */}
-            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
-              <div className="w-9 h-9 rounded-lg bg-[#2563EB]/15 border border-[#2563EB]/30 flex items-center justify-center text-lg shrink-0">
+            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-xl shrink-0">
                 🔐
               </div>
-              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
-                Conheça <strong>seed phrase</strong> e chaves privadas.
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
+                Conheça carteiras, chaves e seed phrase.
               </p>
             </div>
 
             {/* BLOCO 3 */}
-            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
-              <div className="w-9 h-9 rounded-lg bg-[#00A859]/15 border border-[#00A859]/30 flex items-center justify-center text-lg shrink-0">
+            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-xl shrink-0">
                 📈
               </div>
-              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
-                Compreenda os <strong>ciclos de mercado</strong>.
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
+                Compreenda os ciclos e a influência das emoções.
               </p>
             </div>
 
             {/* BLOCO 4 */}
-            <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
-              <div className="w-9 h-9 rounded-lg bg-[#E9991C]/15 border border-[#E9991C]/30 flex items-center justify-center text-lg shrink-0">
+            <div className="flex items-center space-x-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center text-xl shrink-0">
                 👛
               </div>
-              <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
-                Aprenda cuidados com <strong>carteiras e autocustódia</strong>.
+              <p className="text-xs sm:text-sm text-[#0B1F3A] font-bold leading-snug">
+                Aprenda os cuidados para guardar e movimentar seus ativos.
               </p>
             </div>
           </div>
 
-          {/* BOTÃO HERO */}
+          {/* BOTÃO HERO VERDE REFORMA TRIBUTÁRIA #00A859 */}
           <div className="pt-2">
             <button
               onClick={scrollToOffer}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#E9991C] hover:bg-[#D88910] focus:bg-[#D88910] active:scale-[0.99] transition-all shadow-md group"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
             >
               <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg tracking-wide">
                 QUERO ACESSAR O TREINAMENTO
@@ -582,15 +593,15 @@ export default function BitcoinCourseSalesPage() {
 
           {/* INDICADORES DE PAGAMENTO ABAIXO DO BOTÃO */}
           <div className="pt-1 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold">
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#00A859]/10 text-[#00A859] border border-[#00A859]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#138A60]/10 text-[#138A60] border border-[#138A60]/30 shadow-2xs">
               <span>🔒</span>
               <span>Pagamento seguro</span>
             </span>
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#00A859]/10 text-[#00A859] border border-[#00A859]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#138A60]/10 text-[#138A60] border border-[#138A60]/30 shadow-2xs">
               <span>💠</span>
               <span>Pix</span>
             </span>
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#1769D1]/10 text-[#1769D1] border border-[#1769D1]/30 shadow-2xs">
               <span>💳</span>
               <span>Cartão de crédito</span>
             </span>
@@ -611,10 +622,10 @@ export default function BitcoinCourseSalesPage() {
               📚 CONHEÇA AS ETAPAS
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#FFFFFF] opacity-100">
-              Do dinheiro à prática com Bitcoin.
+              📚 Dos fundamentos do dinheiro aos cuidados com seus bitcoins.
             </h2>
-            <p className="text-sm md:text-base text-[#FFFFFF] opacity-100">
-              Veja os assuntos que conectam as aulas do treinamento.
+            <p className="text-sm md:text-base text-[#FFFFFF] opacity-100 leading-relaxed">
+              Veja como os assuntos se conectam: primeiro, o dinheiro e o Bitcoin; depois, o mercado, a autocustódia e a utilização dos ativos.
             </p>
           </div>
 
@@ -645,7 +656,7 @@ export default function BitcoinCourseSalesPage() {
                       </div>
                       <div className="space-y-2 flex-1 flex flex-col justify-between">
                         <div>
-                          <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] mb-2">
+                          <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#EFF6FF] text-[#1769D1] border border-[#BFDBFE] mb-2">
                             {stage.badge}
                           </span>
                           <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A] leading-snug">
@@ -667,7 +678,7 @@ export default function BitcoinCourseSalesPage() {
               <button
                 onClick={prevCarousel}
                 aria-label="Anterior"
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#E9991C] hover:border-[#E9991C] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
+                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#00A859] hover:border-[#00A859] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -680,7 +691,7 @@ export default function BitcoinCourseSalesPage() {
                     aria-label={`Ir para a etapa ${idx + 1}`}
                     className={`h-2.5 rounded-full transition-all ${
                       carouselIndex === idx
-                        ? "w-7 bg-[#E9991C]"
+                        ? "w-7 bg-[#00A859]"
                         : "w-2.5 bg-[#FFFFFF]/50 hover:bg-[#FFFFFF]"
                     }`}
                   />
@@ -690,7 +701,7 @@ export default function BitcoinCourseSalesPage() {
               <button
                 onClick={nextCarousel}
                 aria-label="Próximo"
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#E9991C] hover:border-[#E9991C] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
+                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#00A859] hover:border-[#00A859] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -699,7 +710,7 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 03 — FUNDAMENTOS (FUNDO 3: BRANCO #FFFFFF) ==================== */}
+      {/* ==================== 03 — FUNDAMENTOS / QUATRO PILARES (FUNDO 3: BRANCO #FFFFFF) ==================== */}
       <section className="py-12 md:py-16 bg-[#FFFFFF] border-b border-[#D5BE97]">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-8 text-center">
           <div className="space-y-3 max-w-3xl mx-auto">
@@ -707,14 +718,14 @@ export default function BitcoinCourseSalesPage() {
               🎯 UMA BASE PARA COMEÇAR
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#0B1F3A]">
-              Mais clareza para entender. Mais critério para decidir.
+              🎯 Vá além das opiniões. Compreenda o que está por trás do Bitcoin.
             </h2>
             <p className="text-sm md:text-base text-[#1F2937] max-w-2xl mx-auto leading-relaxed opacity-100">
-              Conheça os assuntos que ajudam a compreender o Bitcoin, acompanhar o mercado e reconhecer os cuidados envolvidos no uso dos ativos.
+              Preço é apenas uma parte da história. Aprenda os conceitos que ajudam você a avaliar o contexto e compreender suas escolhas.
             </p>
           </div>
 
-          {/* GRID DE 4 BLOCOS COM CARDS TRATADOS */}
+          {/* GRID DE 4 CARDS REFORMULADOS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
@@ -722,10 +733,10 @@ export default function BitcoinCourseSalesPage() {
                   💰
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
-                  Dinheiro
+                  Dinheiro e poder de compra
                 </h3>
                 <p className="text-sm text-[#1F2937] leading-relaxed opacity-100">
-                  Entenda o sistema monetário, a inflação e os fatores que afetam o poder de compra.
+                  Descubra como o sistema monetário funciona e por que a inflação afeta o valor do seu dinheiro.
                 </p>
               </div>
             </div>
@@ -736,10 +747,10 @@ export default function BitcoinCourseSalesPage() {
                   🪙
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
-                  Bitcoin
+                  Bitcoin além do preço
                 </h3>
                 <p className="text-sm text-[#1F2937] leading-relaxed opacity-100">
-                  Conheça blockchain, mineração, criptografia e os fundamentos de uma rede descentralizada.
+                  Compreenda blockchain, mineração e descentralização para entender a proposta do Bitcoin.
                 </p>
               </div>
             </div>
@@ -747,13 +758,13 @@ export default function BitcoinCourseSalesPage() {
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
                 <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-xl shrink-0">
-                  📊
+                  📈
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
-                  Mercado
+                  Mercado e comportamento
                 </h3>
                 <p className="text-sm text-[#1F2937] leading-relaxed opacity-100">
-                  Compreenda ciclos, volatilidade e a influência das emoções nas decisões.
+                  Aprenda como ciclos, volatilidade, medo e euforia se relacionam com as decisões.
                 </p>
               </div>
             </div>
@@ -764,10 +775,10 @@ export default function BitcoinCourseSalesPage() {
                   🔐
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
-                  Autocustódia
+                  Carteiras e autocustódia
                 </h3>
                 <p className="text-sm text-[#1F2937] leading-relaxed opacity-100">
-                  Conheça carteiras, chaves privadas, frases de recuperação e cuidados com backups.
+                  Conheça chaves privadas, frases de recuperação e os cuidados envolvidos na guarda dos seus bitcoins.
                 </p>
               </div>
             </div>
@@ -776,7 +787,7 @@ export default function BitcoinCourseSalesPage() {
           <div className="pt-2">
             <button
               onClick={scrollToModules}
-              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#E9991C] hover:bg-[#D88910] transition-all shadow-md group"
+              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#00A859] hover:bg-[#008A54] transition-all shadow-md group cursor-pointer"
             >
               <span style={whiteButtonTextStroke} className="font-extrabold text-sm md:text-base">
                 VER O CONTEÚDO DO TREINAMENTO
@@ -801,14 +812,14 @@ export default function BitcoinCourseSalesPage() {
               🛡️ AUTOCUSTÓDIA NA PRÁTICA
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#FFFFFF] opacity-100">
-              Mais controle também exige mais cuidado.
+              🔐 Seus bitcoins merecem mais do que uma senha.
             </h2>
             <p className="text-sm md:text-base text-[#FFFFFF] max-w-2xl mx-auto leading-relaxed opacity-100">
-              Guardar seus próprios bitcoins envolve responsabilidades. Conhecer as carteiras, as chaves e os mecanismos de recuperação ajuda a reconhecer os cuidados necessários antes de movimentar seus ativos.
+              Antes de assumir o controle de uma carteira, compreenda como funcionam as chaves, a recuperação do acesso e os cuidados com o armazenamento.
             </p>
           </div>
 
-          {/* GRID DE 4 CARDS BRANCOS COM TRATAMENTO DE BORDA E ÍCONES */}
+          {/* GRID DE 4 CARDS BRANCOS COM REFORMULAÇÃO DE COPY */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
               <div className="w-11 h-11 rounded-xl bg-[#FFF7E5] border border-[#FDE68A] flex items-center justify-center text-xl shrink-0">
@@ -818,19 +829,19 @@ export default function BitcoinCourseSalesPage() {
                 Frase de recuperação
               </h3>
               <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Entenda para que ela serve e os cuidados de armazenamento. Expor ou perder essa informação pode comprometer o acesso à carteira.
+                Saiba o que é a seed phrase e por que sua proteção é essencial para recuperar o acesso à carteira.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
               <div className="w-11 h-11 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-xl shrink-0">
-                🔒
+                👛
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
                 Chaves e carteiras
               </h3>
               <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Conheça a diferença entre uma carteira sob seu controle e uma conta em que terceiros administram as chaves.
+                Compreenda quem controla as chaves e o que muda entre uma carteira própria e uma conta em uma plataforma.
               </p>
             </div>
 
@@ -839,22 +850,22 @@ export default function BitcoinCourseSalesPage() {
                 🏦
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Exchanges
+                Custódia em exchanges
               </h3>
               <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Entenda o papel das plataformas de negociação e como a custódia funciona em cada situação.
+                Conheça o papel das plataformas e as responsabilidades envolvidas em deixar seus ativos sob a guarda de terceiros.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
               <div className="w-11 h-11 rounded-xl bg-[#F0FDFA] border border-[#99F6E4] flex items-center justify-center text-xl shrink-0">
-                🧭
+                🧠
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Decisões por impulso
+                Decisões com mais critério
               </h3>
               <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Reconheça como o medo e a euforia podem influenciar suas escolhas. Conhecimento não elimina os riscos, mas ajuda a compreender o contexto.
+                Reconheça a influência do medo e da euforia antes de agir apenas com base na cotação.
               </p>
             </div>
           </div>
@@ -869,7 +880,7 @@ export default function BitcoinCourseSalesPage() {
               👥 PÚBLICO DO TREINAMENTO
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#0B1F3A]">
-              Este treinamento faz sentido para você?
+              👥 Você se reconhece em alguma destas situações?
             </h2>
           </div>
 
@@ -915,10 +926,10 @@ export default function BitcoinCourseSalesPage() {
               📚 CONHEÇA O TREINAMENTO
             </span>
             <h2 className="font-outfit font-bold text-2xl sm:text-3xl md:text-4xl text-[#FFFFFF] leading-tight opacity-100">
-              Conheça o conteúdo do treinamento.
+              📚 Um caminho organizado para aprender, módulo por módulo.
             </h2>
             <p className="text-[15px] sm:text-base text-[#FFFFFF] leading-relaxed max-w-2xl mx-auto font-normal opacity-100">
-              Uma apresentação e cinco módulos para conectar os conceitos às demonstrações práticas.
+              Uma apresentação e cinco módulos que conectam explicações, exemplos e demonstrações práticas.
             </p>
           </div>
 
@@ -982,10 +993,10 @@ export default function BitcoinCourseSalesPage() {
               🎬 VEJA POR DENTRO
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#0B1F3A]">
-              Conheça o treinamento por dentro.
+              🎬 Veja as aulas antes de começar.
             </h2>
             <p className="text-sm md:text-base text-[#1F2937] opacity-100">
-              Confira imagens reais das aulas, das explicações visuais e das demonstrações apresentadas no treinamento.
+              Confira imagens reais das explicações e demonstrações que fazem parte do treinamento.
             </p>
           </div>
 
@@ -1014,7 +1025,7 @@ export default function BitcoinCourseSalesPage() {
                 </p>
                 <button
                   onClick={() => setActivePreviewIndex(idx)}
-                  className="text-[11px] font-semibold text-[#E9991C] hover:underline inline-flex items-center justify-center gap-1"
+                  className="text-[11px] font-semibold text-[#1769D1] hover:underline inline-flex items-center justify-center gap-1 cursor-pointer"
                 >
                   <span>🔍 Ampliar imagem</span>
                 </button>
@@ -1024,7 +1035,7 @@ export default function BitcoinCourseSalesPage() {
         </div>
       </section>
 
-      {/* ==================== 08 — RESULTADOS (FUNDO 8: AZUL-MARINHO #0B1F3A) ==================== */}
+      {/* ==================== 08 — APLICAÇÃO DO CONHECIMENTO (FUNDO 8: AZUL-MARINHO #0B1F3A) ==================== */}
       <section className="py-12 md:py-16 bg-[#0B1F3A] border-b border-[#0B1F3A]">
         <div className="max-w-[1320px] mx-auto px-5 md:px-8 space-y-8 text-center">
           <div className="space-y-3 max-w-3xl mx-auto">
@@ -1032,7 +1043,7 @@ export default function BitcoinCourseSalesPage() {
               🎓 CONHECIMENTO PARA A PRÁTICA
             </span>
             <h2 className="font-outfit font-bold text-2xl md:text-3xl lg:text-4xl text-[#FFFFFF] opacity-100">
-              Leve esse conhecimento para suas próximas decisões.
+              🧭 Conecte o que você aprende aos seus próximos passos.
             </h2>
           </div>
 
@@ -1077,51 +1088,51 @@ export default function BitcoinCourseSalesPage() {
             </span>
 
             <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Acesse o treinamento e comece pelos fundamentos.
+              Seu próximo passo começa pelo conhecimento.
             </h2>
 
             <p className="text-sm sm:text-base text-[#1F2937] max-w-2xl mx-auto leading-relaxed opacity-100">
-              Uma apresentação, cinco módulos e mais de quatro horas de aulas em vídeo sobre dinheiro, Bitcoin, mercado e autocustódia.
+              Acesse os 5 módulos, mais de 4 horas de videoaulas e tutoriais e os 2 e-books gratuitos para leitura. Comece pelos fundamentos e avance para os cuidados na prática.
             </p>
 
             {/* LISTA COMPACTA DOS CONTEÚDOS COM PEQUENOS MARCADORES VERDES */}
-            <div className="p-5 rounded-2xl bg-[#ECFDF5]/50 border border-[#A7F3D0] max-w-xl mx-auto text-left space-y-3">
+            <div className="p-5 rounded-2xl bg-[#ECFDF5]/60 border border-[#A7F3D0] max-w-xl mx-auto text-left space-y-3">
               <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
                 Conteúdo incluído no seu acesso:
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs md:text-sm text-[#1F2937]">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Apresentação & Visão Geral</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Módulo 1 — Dinheiro</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Módulo 2 — O que é Bitcoin</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Módulo 3 — Ciclos de Mercado</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Módulo 4 — Autocustódia</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span>Módulo 5 — Gerenciamento</span>
@@ -1145,13 +1156,13 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            {/* BOTÃO CTA DA OFERTA (FUNDO #E9991C, HOVER #D88910, LEGENDA BRANCA COM CONTORNO PRETO) */}
+            {/* BOTÃO CTA DA OFERTA VERDE REFORMA TRIBUTÁRIA #00A859 */}
             <div className="pt-2 space-y-3 max-w-md mx-auto">
               <a
                 href={trainingOffer.checkoutUrl || "#"}
                 target={trainingOffer.checkoutUrl ? "_blank" : "_self"}
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#E9991C] hover:bg-[#D88910] focus:bg-[#D88910] active:scale-[0.99] transition-all shadow-md group"
+                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
               >
                 <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg tracking-wide">
                   QUERO ACESSAR O TREINAMENTO
@@ -1183,14 +1194,14 @@ export default function BitcoinCourseSalesPage() {
               📩 PASSO A PASSO DO ACESSO
             </span>
             <h2 className="font-outfit font-bold text-2xl sm:text-3xl md:text-4xl text-[#FFFFFF] opacity-100">
-              Como você acessa o treinamento.
+              📩 Da compra à primeira aula: veja como funciona.
             </h2>
             <p className="text-sm md:text-base text-[#FFFFFF] opacity-100">
               Da confirmação da compra às primeiras aulas, veja como funciona.
             </p>
           </div>
 
-          {/* GRID DE 4 ETAPAS DE ACESSO COM TRATAMENTO DE CARDS E NÚMEROS DESTACADOS */}
+          {/* GRID DE 4 ETAPAS DE ACESSO */}
           <div className="relative pt-4">
             
             {/* LINHA DISCRETA DE CONEXÃO NO DESKTOP */}
@@ -1228,11 +1239,11 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* BOTÃO DA SEÇÃO DE ACESSO */}
+          {/* BOTÃO DA SEÇÃO DE ACESSO VERDE REFORMA TRIBUTÁRIA #00A859 */}
           <div className="pt-2">
             <button
               onClick={scrollToOffer}
-              className="inline-flex items-center space-x-3 px-8 py-4 rounded-xl bg-[#E9991C] hover:bg-[#D88910] transition-all shadow-md active:scale-[0.99] group"
+              className="inline-flex items-center space-x-3 px-8 py-4 rounded-xl bg-[#00A859] hover:bg-[#008A54] transition-all shadow-md active:scale-[0.99] group cursor-pointer"
             >
               <span style={whiteButtonTextStroke} className="font-extrabold text-base">
                 QUERO ACESSAR O TREINAMENTO
@@ -1270,11 +1281,11 @@ export default function BitcoinCourseSalesPage() {
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-4 md:p-5 text-left text-sm md:text-base font-bold text-[#0B1F3A] hover:text-[#E9991C] transition-colors"
+                  className="w-full flex items-center justify-between p-4 md:p-5 text-left text-sm md:text-base font-bold text-[#0B1F3A] hover:text-[#1769D1] transition-colors cursor-pointer"
                 >
                   <span className="pr-4">{item.q}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#E9991C] shrink-0 transition-transform duration-200 ${
+                    className={`w-5 h-5 text-[#1769D1] shrink-0 transition-transform duration-200 ${
                       openFaqIndex === index ? "rotate-180" : ""
                     }`}
                   />
@@ -1296,7 +1307,7 @@ export default function BitcoinCourseSalesPage() {
           <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col items-center bg-[#FFFFFF] border-2 border-[#E9991C] rounded-2xl overflow-hidden p-4 md:p-6 shadow-2xl">
             <button
               onClick={() => setActivePreviewIndex(null)}
-              className="absolute top-3 right-3 p-2 rounded-full bg-[#FAF7F2] text-[#0B1F3A] hover:bg-[#E9991C] hover:text-[#FFFFFF] transition-colors z-10"
+              className="absolute top-3 right-3 p-2 rounded-full bg-[#FAF7F2] text-[#0B1F3A] hover:bg-[#00A859] hover:text-[#FFFFFF] transition-colors z-10 cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
@@ -1320,4 +1331,5 @@ export default function BitcoinCourseSalesPage() {
     </div>
   );
 }
+
 
