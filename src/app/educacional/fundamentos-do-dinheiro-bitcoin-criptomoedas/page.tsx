@@ -17,7 +17,7 @@ const trainingOffer = {
   offerReady: true,
   originalPrice: 199.90,
   price: 99.90,
-  checkoutUrl: null,
+  checkoutUrl: "https://pay.wiapy.com/Rxv2WGh6SXSi",
   guaranteeDays: 7,
 };
 

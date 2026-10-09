@@ -35,7 +35,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
     summary: null,
     salesPagePath: "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas",
     salesPageReady: true,
-    checkoutUrl: null,
+    checkoutUrl: "https://pay.wiapy.com/Rxv2WGh6SXSi",
   },
   {
     id: "ebook-bundle",
