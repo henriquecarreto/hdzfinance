@@ -27,7 +27,7 @@ const precoColecaoCompleta: number = 29.90;
 const precoAnteriorInicial: number = 29.90;
 const precoAnteriorCompleta: number = 39.90;
 const checkoutColecaoInicial: string = "https://pay.wiapy.com/XY656Bg9PUjE";
-const checkoutColecaoCompleta: string | null = null;
+const checkoutColecaoCompleta: string = "https://pay.wiapy.com/ffvmuAbakGTQ";
 
 // Configuração interna dos materiais da Coleção
 const ebookBundle = {
