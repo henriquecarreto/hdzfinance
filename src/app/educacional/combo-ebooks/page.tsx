@@ -109,26 +109,6 @@ const previewSlides = [
 // Array duplicado para loop infinito 60fps sem solavancos
 const marqueeItems = [...previewSlides, ...previewSlides];
 
-// Miniatura de Livro/Guia em HTML/CSS
-function CssBookThumbnail({ shortTitle, isBonus = false }: { shortTitle: string; isBonus?: boolean }) {
-  return (
-    <div
-      className={`w-[60px] h-[82px] bg-[#FFFBEB] rounded-[4px] shadow-sm flex flex-col justify-between p-1 shrink-0 relative overflow-hidden ${
-        isBonus ? "border border-[#34D399] border-l-[5px] border-l-[#059669]" : "border border-[#F5C84B] border-l-[5px] border-l-[#0B1F3A]"
-      }`}
-    >
-      <div className="flex-1 flex items-center justify-center pt-1 px-0.5">
-        <span className="text-[8px] font-bold text-[#0B1F3A] text-center leading-[1.15] uppercase tracking-tighter line-clamp-3">
-          {shortTitle}
-        </span>
-      </div>
-      <div className="text-[7px] font-bold text-[#0B1F3A]/60 text-center tracking-wider uppercase border-t border-amber-200/60 pt-0.5">
-        PDF
-      </div>
-    </div>
-  );
-}
-
 // Catálogo dos 9 Guias Visuais
 const catalogGuias = [
   {
@@ -725,13 +705,10 @@ export default function EbookBundleSalesPage() {
                         {guia.title}
                       </h4>
 
-                      {/* Descrição + Miniatura */}
-                      <div className="flex items-start gap-3 justify-between">
-                        <p className="text-[14px] text-[#475569] leading-[1.5] flex-1">
-                          {guia.description}
-                        </p>
-                        <CssBookThumbnail shortTitle={guia.shortTitle} />
-                      </div>
+                      {/* Descrição */}
+                      <p className="text-[14px] text-[#475569] leading-[1.5]">
+                        {guia.description}
+                      </p>
                     </div>
 
                     {/* Divisória + Rodapé */}
@@ -779,13 +756,10 @@ export default function EbookBundleSalesPage() {
                       {bonus.title}
                     </h4>
 
-                    {/* Descrição + Miniatura */}
-                    <div className="flex items-start gap-3 justify-between">
-                      <p className="text-[14px] text-[#475569] leading-[1.5] flex-1">
-                        {bonus.description}
-                      </p>
-                      <CssBookThumbnail shortTitle={bonus.shortTitle} isBonus={true} />
-                    </div>
+                    {/* Descrição */}
+                    <p className="text-[14px] text-[#475569] leading-[1.5]">
+                      {bonus.description}
+                    </p>
                   </div>
 
                   {/* Divisória + Rodapé */}
