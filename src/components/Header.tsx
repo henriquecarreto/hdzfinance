@@ -132,19 +132,28 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-8 xl:space-x-10 text-[16px]">
             {navLinks.map((link) => {
               const active = isActive(link.href);
+              const isEducacional = link.isCommercial;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={`relative py-2 font-semibold tracking-wide transition-colors duration-150 text-[16px] ${
-                    active
+                    isEducacional
+                      ? active
+                        ? "text-[#F59A18] font-bold"
+                        : "text-[#F59A18] hover:text-[#FFAC36]"
+                      : active
                       ? "text-[#FFB020] font-bold"
                       : "text-[#FFFFFF] hover:text-[#FFB020]"
                   }`}
                 >
                   {link.name}
                   {active && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#FFB020] rounded-full" />
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full ${
+                        isEducacional ? "bg-[#F59A18]" : "bg-[#FFB020]"
+                      }`}
+                    />
                   )}
                 </Link>
               );
@@ -185,13 +194,18 @@ export default function Header() {
             <nav className="flex flex-col space-y-2">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
+                const isEducacional = link.isCommercial;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-4 py-3 rounded-lg text-[16px] transition-colors duration-150 ${
-                      active
+                      isEducacional
+                        ? active
+                          ? "text-[#F59A18] font-bold bg-[#F59A18]/10 border-l-2 border-[#F59A18]"
+                          : "text-[#F59A18] font-semibold hover:text-[#FFAC36] hover:bg-[#F59A18]/10"
+                        : active
                         ? "text-[#FFB020] font-bold bg-[#0D1117] border-l-2 border-[#FFB020]"
                         : "text-[#FFFFFF] font-semibold hover:text-[#FFB020] hover:bg-[#0D1117]"
                     }`}
