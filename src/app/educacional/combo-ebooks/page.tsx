@@ -114,6 +114,31 @@ const previewSlides = [
 // Array duplicado para loop infinito 60fps sem solavancos
 const marqueeItems = [...previewSlides, ...previewSlides];
 
+// Carrossel Marquee Infinito — Rotina de Estudos (3 Imagens)
+const rotinaSlides = [
+  {
+    id: 1,
+    title: "Estudo de Finanças e Investimentos",
+    alt: "Pessoa estudando os guias visuais de educação financeira e investimentos e fazendo anotações.",
+    image: "/images/rotina/rotina-estudos-1.jpg",
+  },
+  {
+    id: 2,
+    title: "Consulta ao Guia de Educação Financeira",
+    alt: "Pessoa consultando o guia visual de Educação Financeira em uma mesa de estudos.",
+    image: "/images/rotina/rotina-estudos-2.jpg",
+  },
+  {
+    id: 3,
+    title: "Mapas de Renda Fixa e Dividendos",
+    alt: "Pessoa estudando mapas visuais sobre investimentos, renda fixa, poupança e dividendos.",
+    image: "/images/rotina/rotina-estudos-3.jpg",
+  },
+];
+
+// Array duplicado para loop infinito contínuo da rotina de estudos
+const rotinaMarqueeItems = [...rotinaSlides, ...rotinaSlides, ...rotinaSlides, ...rotinaSlides];
+
 // Catálogo dos 9 Guias Visuais
 const catalogGuias = [
   {
@@ -578,8 +603,63 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. NOVA SEÇÃO DE PÚBLICO (#hdz-publico)                                   */}
+      {/* 3.5 SEÇÃO ROTINA DE ESTUDOS (#hdz-rotina-visual)                          */}
       {/* ========================================================================= */}
+      <section id="hdz-rotina-visual" className="pt-[44px] pb-[32px] max-md:pt-[32px] max-md:pb-[24px] bg-[#FAF7F2] border-b border-[#E2E8F0] overflow-hidden">
+        <div>
+          
+          {/* CABEÇALHO DA SEÇÃO */}
+          <div className="text-center max-w-[760px] mx-auto px-4 sm:px-5 mb-[28px] space-y-3">
+            {/* Selo */}
+            <div>
+              <span className="inline-block px-[10px] py-[4px] rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#FFFBEB] text-[#92400E] border border-[#F5B700]">
+                ✨ ROTINA DE ESTUDOS
+              </span>
+            </div>
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[30px] md:text-[34px] text-[#0B1F3A] leading-[1.15]">
+              Veja como os materiais podem fazer parte da sua rotina de estudos
+            </h2>
+
+            {/* Descrição */}
+            <p className="text-[15px] text-[#334155] leading-[1.5]">
+              Uma forma visual de estudar, consultar e compreender educação financeira, investimentos, inflação e juros.
+            </p>
+          </div>
+
+          {/* FAIXA DO CARROSSEL DA ROTINA */}
+          <div className="relative w-full overflow-hidden py-2 ticker-mask">
+            <div className="flex w-max animate-marquee gap-4 hover:[animation-play-state:paused]">
+              {rotinaMarqueeItems.map((slide, idx) => (
+                <div
+                  key={`rotina-slide-${slide.id}-${idx}`}
+                  onClick={() => setZoomedImage(slide.image)}
+                  className="group relative w-[clamp(260px,31vw,380px)] shrink-0 rounded-[12px] bg-[#FAF7F2] border border-[#F5D46A] shadow-[0_3px_8px_rgba(11,31,58,0.08)] hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden aspect-[4/3]"
+                >
+                  <Image
+                    src={slide.image}
+                    alt={slide.alt}
+                    width={500}
+                    height={375}
+                    className="w-full h-full object-contain rounded-[12px] transition-transform duration-300 group-hover:scale-[1.015]"
+                  />
+
+                  {/* EFEITO HOVER LIGHTBOX */}
+                  <div className="absolute inset-0 bg-[#0B1F3A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                    <div className="bg-[#0B1F3A] text-white px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-md border border-white/20">
+                      <ZoomIn className="w-4 h-4 text-[#F59E0B]" />
+                      <span>Clique para Ampliar</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* ========================================================================= */}
       {/* 4. SEÇÃO DE PÚBLICO (#hdz-publico)                                         */}
       {/* ========================================================================= */}
