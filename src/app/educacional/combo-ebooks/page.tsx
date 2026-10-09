@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import {
   Sparkles,
-  CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ArrowRight,
-  Lock,
   Check,
-  BookOpen,
+  ZoomIn,
+  X,
 } from "lucide-react";
 import { YoutubeIcon, InstagramIcon } from "@/components/SocialIcons";
 
@@ -44,6 +45,40 @@ const ebookBundle = {
   offerReady: true,
 };
 
+// Preview Carousel Slides Data
+const previewSlides = [
+  {
+    id: 1,
+    title: "Guia Visual — Bitcoin Fundamentos",
+    subtitle: "10 Mapas Mentais • Entender as regras e funções da rede antes de discutir preço.",
+    image: "/images/products/carousel/slide-1.jpg",
+  },
+  {
+    id: 2,
+    title: "Guia Visual — Educação Financeira",
+    subtitle: "10 Mapas Mentais • Organizar, proteger e planejar o próprio dinheiro.",
+    image: "/images/products/carousel/slide-2.jpg",
+  },
+  {
+    id: 3,
+    title: "Guia Visual — Tokenização & Ativos Digitais",
+    subtitle: "10 Mapas Mentais • Representação digital, regras de emissão e análises de liquidez.",
+    image: "/images/products/carousel/slide-3.jpg",
+  },
+  {
+    id: 4,
+    title: "Mundo Real (RWA) & Estruturação",
+    subtitle: "Ativos e responsáveis, informação de dados e execução jurídica dos direitos.",
+    image: "/images/products/carousel/slide-4.jpg",
+  },
+  {
+    id: 5,
+    title: "Direitos Econômicos & Regras de Uso",
+    subtitle: "Análise de direitos econômicos, de decisão e tratamento jurídico aplicável.",
+    image: "/images/products/carousel/slide-5.jpg",
+  },
+];
+
 // Style helper for white text with fine black stroke (same as training page CTA button)
 const whiteButtonTextStroke = {
   color: "#FFFFFF",
@@ -54,6 +89,36 @@ const whiteButtonTextStroke = {
 
 export default function EbookBundleSalesPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 35) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    touchStartX.current = null;
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % previewSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + previewSlides.length) % previewSlides.length);
+  };
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -228,9 +293,141 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 2: BENEFÍCIOS CENTRAIS (FUNDO SUAVE #FAF7F2)                       */}
+      {/* SEÇÃO 1.5: CARROSSEL DE PRÉVIAS (LOGO ABAIXO DA 1ª SEÇÃO)                 */}
       {/* ========================================================================= */}
       <section className="py-14 md:py-20 bg-[#FAF7F2] border-b border-[#D5BE97]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-8">
+          
+          {/* CABEÇALHO DO CARROSSEL */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE]">
+              <span>🔍 PRÉVIAS DOS GUIAS VISUAIS</span>
+            </span>
+            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight">
+              Veja uma prévia da organização das páginas
+            </h2>
+            <p className="text-sm md:text-base text-[#1F2937] font-normal leading-relaxed">
+              Deslize ou use as setas para navegar pelos mapas mentais e resumos ilustrados incluídos no material.
+            </p>
+          </div>
+
+          {/* ÁREA INTERATIVA DO CARROSSEL */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* CONTAINER TOUCH/SWIPE */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative rounded-3xl bg-[#FFFFFF] border-2 border-[#FE9409]/40 p-4 sm:p-6 md:p-8 shadow-xl space-y-4"
+            >
+              {/* IMAGEM DO SLIDE ATUAL */}
+              <div
+                onClick={() => setZoomedImage(previewSlides[currentSlide].image)}
+                className="relative aspect-[3/4.2] sm:aspect-[3/3.8] md:aspect-[3/3.5] max-h-[580px] w-full mx-auto rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/50 shadow-sm cursor-pointer group flex items-center justify-center"
+              >
+                <Image
+                  src={previewSlides[currentSlide].image}
+                  alt={previewSlides[currentSlide].title}
+                  width={600}
+                  height={850}
+                  priority
+                  className="w-full h-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
+                />
+                
+                {/* LUPA PARA ZOOM EM HOVER */}
+                <div className="absolute bottom-4 right-4 bg-[#0B1F3A]/80 hover:bg-[#0B1F3A] text-white p-2.5 rounded-full shadow-md backdrop-blur-xs flex items-center gap-1.5 text-xs font-bold transition-all">
+                  <ZoomIn className="w-4 h-4 text-[#F5B700]" />
+                  <span className="hidden sm:inline">Ampliar</span>
+                </div>
+              </div>
+
+              {/* TÍTULO E SUBTÍTULO DO SLIDE */}
+              <div className="text-center space-y-1 pt-1">
+                <h3 className="font-outfit font-extrabold text-lg sm:text-xl text-[#0B1F3A]">
+                  {previewSlides[currentSlide].title}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#1F2937]/80 max-w-xl mx-auto">
+                  {previewSlides[currentSlide].subtitle}
+                </p>
+              </div>
+
+              {/* NAVEGAÇÃO POR SETAS */}
+              <button
+                type="button"
+                onClick={prevSlide}
+                aria-label="Slide anterior"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFFFFF] border border-[#D5BE97] shadow-lg text-[#0B1F3A] hover:bg-[#FAF7F2] active:scale-95 transition-all flex items-center justify-center z-10 cursor-pointer"
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Próximo slide"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0072FC] text-[#FFFFFF] shadow-lg hover:bg-[#005ECC] active:scale-95 transition-all flex items-center justify-center z-10 cursor-pointer"
+              >
+                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+              </button>
+            </div>
+
+            {/* DOTS / INDICADORES DE NAVEGAÇÃO E CONTADOR */}
+            <div className="flex flex-col items-center justify-center gap-3 pt-5">
+              <div className="flex items-center space-x-2">
+                {previewSlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentSlide(idx)}
+                    aria-label={`Ir para a prévia ${idx + 1}`}
+                    className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                      currentSlide === idx
+                        ? "w-8 bg-[#D96F00]"
+                        : "w-2.5 bg-[#D5BE97] hover:bg-[#0072FC]/60"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <span className="text-xs font-extrabold text-[#0B1F3A]/70 uppercase tracking-widest">
+                PÁGINA DEMONSTRATIVA {currentSlide + 1} DE {previewSlides.length}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* MODAL ZOOM LIGHTBOX                                                       */}
+      {/* ========================================================================= */}
+      {zoomedImage && (
+        <div
+          onClick={() => setZoomedImage(null)}
+          className="fixed inset-0 z-50 bg-[#0B1F3A]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 cursor-zoom-out"
+        >
+          <div className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setZoomedImage(null)}
+              className="absolute -top-12 right-0 sm:right-2 text-white hover:text-[#F5B700] p-2 rounded-full transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <Image
+              src={zoomedImage}
+              alt="Prévia ampliada"
+              width={800}
+              height={1100}
+              className="w-auto h-auto max-h-[85vh] max-w-full object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SEÇÃO 2: BENEFÍCIOS CENTRAIS (FUNDO BRANCO #FFFFFF)                       */}
+      {/* ========================================================================= */}
+      <section className="py-14 md:py-20 bg-[#FFFFFF] border-b border-[#D5BE97]">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-10">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#EFF6FF] text-[#005ECC] border border-[#BFDBFE]">
@@ -302,9 +499,9 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* SEÇÃO 3: APRESENTAÇÃO DOS DOIS E-BOOKS (FUNDO BRANCO #FFFFFF)             */}
+      {/* SEÇÃO 3: APRESENTAÇÃO DOS DOIS E-BOOKS (FUNDO SUAVE #FAF7F2)               */}
       {/* ========================================================================= */}
-      <section id="ebooks" className="py-14 md:py-20 bg-[#FFFFFF] border-b border-[#D5BE97]">
+      <section id="ebooks" className="py-14 md:py-20 bg-[#FAF7F2] border-b border-[#D5BE97]">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-10">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
