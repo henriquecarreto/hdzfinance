@@ -42,7 +42,7 @@ export default function Header() {
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center text-center select-none z-0 px-2 max-w-[75vw]">
             <div className="flex flex-wrap items-center justify-center gap-x-1 text-[11px] md:text-[12px] font-outfit font-bold tracking-wide text-white leading-tight">
               {isComboPage ? (
-                <span className="text-white font-bold">
+                <span className="text-[#E9991C] font-extrabold">
                   📚 90 MAPAS MENTAIS SOBRE EDUCAÇÃO FINANCEIRA, INVESTIMENTOS E ECONOMIA.
                 </span>
               ) : (
