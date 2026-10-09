@@ -321,7 +321,7 @@ export default function EbookBundleSalesPage() {
       {/* 1. PRIMEIRA SEÇÃO (HERO COMPACTO EM FUNDO CREME #FAF7F2)                  */}
       {/* ========================================================================= */}
       <section className="bg-[#FAF7F2] border-b border-[#E2E8F0] pt-5 md:pt-6 pb-5">
-        <div className="max-w-[680px] mx-auto px-4 md:px-5 text-center">
+        <div className="max-w-[840px] mx-auto px-4 md:px-5 text-center">
           
           {/* SELO CÁPSULA */}
           <div className="mb-[10px]">
@@ -331,20 +331,23 @@ export default function EbookBundleSalesPage() {
           </div>
 
           {/* TÍTULO PRINCIPAL H1 */}
-          <h1 className="font-outfit font-extrabold text-[26px] sm:text-[34px] md:text-[42px] text-[#0A0A0A] tracking-tight leading-[1.08] mb-[12px]">
-            Entenda seu dinheiro<br />
-            e aprenda sobre <span className="text-[#0866E8]">investimentos</span>,<br />
-            <span className="text-[#059669]">inflação e juros</span>.
+          <h1 className="font-outfit font-extrabold text-[clamp(32px,4vw,48px)] tracking-tight leading-[1.08] text-center max-w-[840px] mx-auto mb-[16px]">
+            <span className="text-[#0A0A0A]">Chega de </span>
+            <span className="text-[#D72638]">perder dinheiro</span>
+            <br className="hidden md:block" />{" "}
+            <span className="text-[#0866E8]">com juros que você não entende.</span>
+            <br className="hidden md:block" />{" "}
+            <span className="text-[#059669]">Assuma o controle das suas finanças.</span>
           </h1>
 
           {/* DESCRIÇÃO SUBTÍTULO */}
-          <p className="text-[15px] md:text-[17px] text-[#111111] leading-[1.45] mb-[10px] font-normal">
-            Descubra uma coleção com 90 mapas mentais visuais para compreender <strong className="font-bold text-[#111111]">educação financeira</strong>, <strong className="font-bold text-[#111111]">investimentos</strong>, <strong className="font-bold text-[#111111]">inflação</strong> e <strong className="font-bold text-[#111111]">juros</strong> de forma clara e organizada.
+          <p className="text-[18px] md:text-[22px] font-medium text-[#111111] leading-[1.5] text-center max-w-[780px] mx-auto mb-[12px]">
+            Entenda <span className="font-bold text-[#0866E8]">o que você paga aos bancos</span>, como <span className="font-bold text-[#111111]">a inflação diminui seu poder de compra</span> e como <span className="font-bold text-[#0866E8]">os investimentos funcionam</span>. Aprenda com <span className="font-extrabold text-[#D72638]">90 mapas mentais visuais</span> para <span className="font-bold text-[#059669]">estudar e consultar</span>.
           </p>
 
           {/* LINHA CURTA DE PÚBLICO */}
-          <p className="text-[13px] font-semibold text-[#111111] leading-[1.4] mb-[14px]">
-            👥 Para iniciantes, estudantes e quem quer cuidar melhor do próprio dinheiro.
+          <p className="text-[14px] font-semibold text-[#111111] leading-[1.4] text-center max-w-[780px] mx-auto mb-[14px]">
+            👥 Para quem quer cuidar melhor do próprio dinheiro e deixar de decidir no escuro.
           </p>
 
           {/* MOLDURA DA IMAGEM PRINCIPAL */}
