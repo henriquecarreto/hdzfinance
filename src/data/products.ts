@@ -28,7 +28,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
   },
   {
     id: "money-bitcoin-course",
-    category: "Curso",
+    category: "Treinamento",
     title: "Fundamentos do Dinheiro, Bitcoin e Criptomoedas",
     price: null,
     image: "/images/products/money-bitcoin-course-cover.jpg",
@@ -39,7 +39,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
   },
   {
     id: "ebook-bundle",
-    category: "Combo de E-books",
+    category: "Guias Visuais Fáceis",
     title: "90 mapas mentais sobre Educação Financeira, Investimentos, Economia e Bitcoin",
     price: null,
     image: "/images/products/ebook-bundle-cover.jpg",

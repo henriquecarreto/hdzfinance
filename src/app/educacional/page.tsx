@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Produtos Educacionais | HDZ Finance",
-  description: "Cursos, guias visuais e recomendações de leitura desenvolvidos pela equipe HDZ Finance.",
+  description: "Treinamentos, guias visuais e recomendações de leitura desenvolvidos pela equipe HDZ Finance.",
 };
 
 export default function EducacionalPage() {
@@ -53,7 +53,7 @@ export default function EducacionalPage() {
 
             {/* Texto explicativo */}
             <p className="text-[16px] md:text-[18px] text-[#F1F5F9] font-medium leading-[1.55] max-w-3xl">
-              Entenda como os <strong className="font-bold text-[#FFB020]">juros</strong> pesam no seu bolso, como a <strong className="font-bold text-[#FFB020]">inflação</strong> reduz seu poder de compra e como os <strong className="font-bold text-[#FFB020]">investimentos</strong> funcionam. Explore nossos guias visuais em PDF, o curso sobre dinheiro, Bitcoin e criptomoedas e as recomendações de leitura da HDZ Finance.
+              Entenda como os <strong className="font-bold text-[#FFB020]">juros</strong> pesam no seu bolso, como a <strong className="font-bold text-[#FFB020]">inflação</strong> reduz seu poder de compra e como os <strong className="font-bold text-[#FFB020]">investimentos</strong> funcionam. Explore nossos guias visuais em PDF, o treinamento sobre dinheiro, Bitcoin e criptomoedas e as recomendações de leitura da HDZ Finance.
             </p>
 
             {/* Pequenos destaques (2 linhas) */}

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function CursosPage() {
-  const cursos = EDUCATIONAL_PRODUCTS.filter((p) => p.category === "Curso");
+  const cursos = EDUCATIONAL_PRODUCTS.filter((p) => p.category === "Treinamento" || p.category === "Curso");
 
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] py-8 md:py-14">

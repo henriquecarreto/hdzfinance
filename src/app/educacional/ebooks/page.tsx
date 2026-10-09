@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function EbooksPage() {
-  const ebooks = EDUCATIONAL_PRODUCTS.filter((p) => p.category === "Combo de E-books" || p.category === "Planilhas e Ferramentas");
+  const ebooks = EDUCATIONAL_PRODUCTS.filter((p) => p.category === "Guias Visuais Fáceis" || p.category === "Combo de E-books" || p.category === "Planilhas e Ferramentas");
 
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] py-8 md:py-14">
