@@ -1087,17 +1087,17 @@ export default function BitcoinCourseSalesPage() {
 
       {/* ==================== 09 — OFERTA (FUNDO 9: BRANCO #FFFFFF) ==================== */}
       <section id="oferta" className="py-14 md:py-18 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[780px] mx-auto px-4 sm:px-6 relative">
+        <div className="max-w-[780px] mx-auto px-3 sm:px-6 relative">
           
           {/* ETIQUETA SUPERIOR SOBREPOSTA À BORDA DO CARD */}
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 w-max">
-            <span className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#F5B700] text-[#0B1F3A] font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xs border border-[#0B1F3A]/10">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-24px)] max-w-max flex justify-center">
+            <span className="inline-flex items-center justify-center space-x-1.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#F5B700] text-[#0B1F3A] font-extrabold text-[10px] xs:text-xs sm:text-sm uppercase tracking-wider shadow-xs border border-[#0B1F3A]/10 text-center leading-tight">
               <span>🎥 5 MÓDULOS + 🎁 2 E-BOOKS DE BÔNUS</span>
             </span>
           </div>
 
           {/* SINGLE CARD CENTRALIZADO */}
-          <div className="rounded-3xl bg-[#FFFFFF] border border-[#F5B700] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-xl relative pt-8 sm:pt-10">
+          <div className="rounded-3xl bg-[#FFFFFF] border border-[#F5B700] p-4 sm:p-8 md:p-10 text-left space-y-5 sm:space-y-6 shadow-xl relative pt-7 sm:pt-10">
             
             {/* TÍTULO E DESCRIÇÃO */}
             <div className="space-y-2">
@@ -1236,13 +1236,13 @@ export default function BitcoinCourseSalesPage() {
                 href={trainingOffer.checkoutUrl || "#"}
                 target={trainingOffer.checkoutUrl ? "_blank" : "_self"}
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 sm:py-5 rounded-2xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
+                className="w-full inline-flex items-center justify-center space-x-2 sm:space-x-3 px-4 sm:px-8 py-4 sm:py-5 rounded-2xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
               >
-                <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg lg:text-xl tracking-wide">
+                <span style={whiteButtonTextStroke} className="font-extrabold text-sm sm:text-base md:text-lg lg:text-xl tracking-wide text-center leading-tight">
                   QUERO ACESSAR O TREINAMENTO
                 </span>
                 <ArrowRight
-                  className="w-5 h-5 sm:w-6 sm:h-6 ml-1 text-[#FFFFFF] shrink-0"
+                  className="w-4 h-4 sm:w-6 sm:h-6 ml-1 text-[#FFFFFF] shrink-0"
                   style={{
                     filter:
                       "drop-shadow(-0.6px 0 0 #000000) drop-shadow(0.6px 0 0 #000000) drop-shadow(0 -0.6px 0 #000000) drop-shadow(0 0.6px 0 #000000)",
@@ -1252,14 +1252,14 @@ export default function BitcoinCourseSalesPage() {
 
               {/* ECONOMIA EM VERMELHO */}
               <div>
-                <span className="inline-block border-2 border-[#D72638] text-[#D72638] bg-[#FFFFFF] px-6 py-2 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wide shadow-xs">
+                <span className="inline-block border-2 border-[#D72638] text-[#D72638] bg-[#FFFFFF] px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-extrabold text-[11px] sm:text-xs md:text-sm uppercase tracking-wide shadow-xs text-center">
                   VOCÊ ECONOMIZA R$ 100,00
                 </span>
               </div>
 
               {/* INFORMAÇÕES DE PAGAMENTO E GARANTIA */}
               <div className="pt-2 text-xs text-[#1F2937] space-y-1 text-center font-medium">
-                <p className="flex items-center justify-center gap-2 flex-wrap">
+                <p className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-[11px] sm:text-xs">
                   <span>🔒 Pagamento seguro</span>
                   <span>•</span>
                   <span>💠 Pix</span>
