@@ -1342,7 +1342,7 @@ export default function EbookBundleSalesPage() {
 
                 {/* Texto do Depoimento */}
                 <p className="text-[15px] text-[#334155] leading-[1.6]">
-                  “Os mapas ajudam a organizar conceitos que antes pareciam soltos. A apresentação visual facilita relacionar orçamento, inflação e juros durante os estudos.”
+                  “Um amigo meu comentou sobre dividendos uma vez e eu não entendi direito. Quando li essa parte do material, finalmente fez sentido. Antes eu achava que ganhar com ações era só comprar e vender.”
                 </p>
               </div>
 
@@ -1390,7 +1390,7 @@ export default function EbookBundleSalesPage() {
 
                 {/* Texto do Depoimento */}
                 <p className="text-[15px] text-[#334155] leading-[1.6]">
-                  “Gostei da organização dos assuntos. Os materiais permitem revisar os conceitos e voltar aos pontos que ainda geram dúvida.”
+                  “Eu sempre confundia juros com inflação. Gostei dos desenhos porque consegui entender melhor a diferença. Quando esqueço alguma coisa, volto no mapa e releio aquela parte.”
                 </p>
               </div>
 
@@ -1438,7 +1438,7 @@ export default function EbookBundleSalesPage() {
 
                 {/* Texto do Depoimento */}
                 <p className="text-[15px] text-[#334155] leading-[1.6]">
-                  “Ter educação financeira e investimentos reunidos facilita encontrar os assuntos que quero estudar e consultar no meu ritmo.”
+                  “Como trabalho por conta, o dinheiro entra em dias diferentes. Gostei da parte de orçamento, porque eu nunca separava direito os gastos do mês. Foi bom começar pelo básico.”
                 </p>
               </div>
 
