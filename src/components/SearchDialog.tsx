@@ -108,7 +108,7 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
                 Digite um termo para pesquisar em todo o portal HDZ Finance.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                {["Selic", "Bitcoin", "Renda Fixa", "Orçamento", "Bolsa de Valores"].map(
+                {["Bitcoin", "Economia", "Moeda", "Investimentos"].map(
                   (term) => (
                     <button
                       key={term}
@@ -126,7 +126,7 @@ export default function SearchDialog({ isOpen, onClose }: SearchDialogProps) {
           {query.trim() && totalResults === 0 && (
             <div className="text-center py-8">
               <p className="text-sm text-[#A7AFBA]">
-                Nenhum resultado encontrado para &quot;<span className="text-[#F5F7FA]">{query}</span>&quot;.
+                Nenhum conteúdo publicado encontrado para esta busca.
               </p>
             </div>
           )}

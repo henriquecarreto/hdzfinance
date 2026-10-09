@@ -58,11 +58,17 @@ export default function LearnPage() {
         </div>
 
         {/* Learning Paths Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPaths.map((path) => (
-            <LearningCard key={path.id} path={path} />
-          ))}
-        </div>
+        {filteredPaths.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPaths.map((path) => (
+              <LearningCard key={path.id} path={path} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 p-8 rounded-xl bg-[#0B0D10] border border-[#252A32] text-[#A7AFBA] text-sm font-medium">
+            Nenhum conteúdo publicado encontrado para esta busca.
+          </div>
+        )}
       </div>
     </div>
   );

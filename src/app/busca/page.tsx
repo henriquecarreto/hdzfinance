@@ -93,7 +93,7 @@ function SearchContent() {
       {/* No results */}
       {query.trim() && totalResults === 0 && (
         <div className="text-center py-12 p-8 rounded-xl bg-[#0B0D10] border border-[#252A32] text-[#A7AFBA] text-sm">
-          Nenhum conteúdo encontrado para o termo pesquisado. Tente palavras mais genéricas como &quot;Selic&quot;, &quot;Ações&quot; ou &quot;Bitcoin&quot;.
+          Nenhum conteúdo publicado encontrado para esta busca.
         </div>
       )}
 
