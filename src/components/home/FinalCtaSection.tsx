@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export default function FinalCtaSection() {
@@ -9,19 +8,7 @@ export default function FinalCtaSection() {
       aria-label="Conclusão HDZ Finance"
       className="relative isolate overflow-hidden py-12 md:py-16 border-b border-white/[0.08] bg-[#050607]"
     >
-      {/* Background Image Layer: Preservada conforme especificação */}
-      <div className="absolute top-0 left-0 right-0 h-full z-0 overflow-hidden pointer-events-none select-none">
-        <Image
-          src="/backgrounds/final-cta-bg.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-[75%_top] md:object-center opacity-80 brightness-105 saturate-[1.05]"
-          priority
-        />
-        {/* Soft Dark Vignette & Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/60 via-[#050607]/80 to-[#050607]" />
-      </div>
+
 
       <div className="relative z-10 max-w-[1140px] mx-auto px-4 sm:px-6 md:px-8">
         {/* Container Principal Escuro/Translúcido - Proporção Horizontal */}

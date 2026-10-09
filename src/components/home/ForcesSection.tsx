@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import HdzPictogram, { PictogramType } from "@/components/ui/HdzPictogram";
 
 export default function ForcesSection() {
@@ -57,19 +56,7 @@ export default function ForcesSection() {
 
   return (
     <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-[#050607]">
-      {/* Background Image Layer: ALÉM DAS MANCHETES */}
-      <div className="absolute top-0 left-0 right-0 h-[clamp(480px,110vw,680px)] md:h-full z-0 overflow-hidden pointer-events-none select-none">
-        <Image
-          src="/backgrounds/forces-bg.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-[70%_top] md:object-center opacity-85 brightness-110 saturate-[1.1]"
-          priority
-        />
-        {/* Soft Vignette & Fade Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050607]/30 via-[#050607]/65 via-65% to-[#050607] md:from-[#050607]/40 md:via-transparent md:to-[#050607]/60" />
-      </div>
+
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
         {/* Header Block with Localized Backdrop Blur */}
