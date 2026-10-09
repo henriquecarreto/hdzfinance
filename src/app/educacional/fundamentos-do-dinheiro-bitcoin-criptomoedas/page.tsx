@@ -99,19 +99,63 @@ const CAROUSEL_STAGES: CarouselStage[] = [
   },
 ];
 
-// 6 Modules Dataset
+// Color Scheme Definitions
+interface ColorScheme {
+  bgSoft: string;
+  borderSoft: string;
+  textHighlight: string;
+  markerBg: string;
+}
+
+const SCHEMES: Record<string, ColorScheme> = {
+  blue: {
+    bgSoft: "bg-[#EFF6FF]",
+    borderSoft: "border-[#BFDBFE]",
+    textHighlight: "text-[#2563EB]",
+    markerBg: "bg-[#2563EB]",
+  },
+  green: {
+    bgSoft: "bg-[#ECFDF5]",
+    borderSoft: "border-[#A7F3D0]",
+    textHighlight: "text-[#00A859]",
+    markerBg: "bg-[#00A859]",
+  },
+  gold: {
+    bgSoft: "bg-[#FFF7E5]",
+    borderSoft: "border-[#FDE68A]",
+    textHighlight: "text-[#E9991C]",
+    markerBg: "bg-[#E9991C]",
+  },
+  purple: {
+    bgSoft: "bg-[#F5F3FF]",
+    borderSoft: "border-[#DDD6FE]",
+    textHighlight: "text-[#7C3AED]",
+    markerBg: "bg-[#7C3AED]",
+  },
+  turquoise: {
+    bgSoft: "bg-[#F0FDFA]",
+    borderSoft: "border-[#99F6E4]",
+    textHighlight: "text-[#0D9488]",
+    markerBg: "bg-[#0D9488]",
+  },
+};
+
+// 6 Modules Dataset with auxiliary colors and emojis
 interface ModuleCard {
   id: number;
+  emoji: string;
   moduleLabel: string;
   title: string;
   description: string;
   topics: string[];
+  colorKey: "blue" | "green" | "gold" | "purple" | "turquoise";
 }
 
 const COURSE_MODULES: ModuleCard[] = [
   {
     id: 0,
-    moduleLabel: "VISÃO GERAL",
+    emoji: "🎬",
+    moduleLabel: "APRESENTAÇÃO",
     title: "APRESENTAÇÃO",
     description:
       "Conheça a proposta do treinamento, a organização das aulas e como os assuntos se conectam. Uma introdução para orientar seus primeiros passos e ajudar você a acompanhar o conteúdo.",
@@ -120,9 +164,11 @@ const COURSE_MODULES: ModuleCard[] = [
       "Visão geral dos assuntos.",
       "Como acompanhar o treinamento.",
     ],
+    colorKey: "blue",
   },
   {
     id: 1,
+    emoji: "💰",
     moduleLabel: "MÓDULO 01",
     title: "FUNDAMENTOS DO DINHEIRO",
     description:
@@ -132,9 +178,11 @@ const COURSE_MODULES: ModuleCard[] = [
       "Inflação e poder de compra.",
       "Bancos centrais e expansão monetária.",
     ],
+    colorKey: "green",
   },
   {
     id: 2,
+    emoji: "🪙",
     moduleLabel: "MÓDULO 02",
     title: "O QUE É BITCOIN",
     description:
@@ -144,9 +192,11 @@ const COURSE_MODULES: ModuleCard[] = [
       "Criptografia e mineração.",
       "Oferta programada.",
     ],
+    colorKey: "gold",
   },
   {
     id: 3,
+    emoji: "📈",
     moduleLabel: "MÓDULO 03",
     title: "CICLOS DE MERCADO",
     description:
@@ -156,9 +206,11 @@ const COURSE_MODULES: ModuleCard[] = [
       "Indicadores e contexto.",
       "Emoções nas decisões.",
     ],
+    colorKey: "blue",
   },
   {
     id: 4,
+    emoji: "🔐",
     moduleLabel: "MÓDULO 04",
     title: "SEJA VOCÊ SEU PRÓPRIO BANCO",
     description:
@@ -168,9 +220,11 @@ const COURSE_MODULES: ModuleCard[] = [
       "Chaves e frases de recuperação.",
       "Backups e cuidados de armazenamento.",
     ],
+    colorKey: "purple",
   },
   {
     id: 5,
+    emoji: "🧭",
     moduleLabel: "MÓDULO 05",
     title: "GERENCIAMENTO E UTILIZAÇÃO",
     description:
@@ -180,6 +234,101 @@ const COURSE_MODULES: ModuleCard[] = [
       "Envio, recebimento e saques.",
       "Demonstrações práticas de ferramentas.",
     ],
+    colorKey: "turquoise",
+  },
+];
+
+// Público Dataset with auxiliary colors & emojis
+const PUBLIC_CARDS = [
+  {
+    emoji: "🌱",
+    tag: "01 • INICIANTES",
+    title: "Para quem está começando",
+    description:
+      "Quer entender o Bitcoin desde os fundamentos, com explicações claras e exemplos.",
+    colorKey: "green" as const,
+  },
+  {
+    emoji: "🪙",
+    tag: "02 • INVESTIDORES",
+    title: "Para quem já possui cripto",
+    description:
+      "Já comprou ativos e quer compreender melhor segurança, custódia e organização da carteira.",
+    colorKey: "gold" as const,
+  },
+  {
+    emoji: "🔐",
+    tag: "03 • SEGURANÇA",
+    title: "Para quem quer conhecer a autocustódia",
+    description:
+      "Quer aprender sobre carteiras, chaves e as responsabilidades de guardar seus próprios bitcoins.",
+    colorKey: "purple" as const,
+  },
+  {
+    emoji: "🎯",
+    tag: "04 • CRITÉRIO",
+    title: "Para quem busca mais critério",
+    description:
+      "Quer compreender o mercado antes de decidir com base em opiniões ou oscilações de preço.",
+    colorKey: "blue" as const,
+  },
+];
+
+// Aprendizado Cards
+const LEARNING_CARDS = [
+  {
+    emoji: "🧠",
+    title: "Entender",
+    description: "Relacionar dinheiro, Bitcoin, tecnologia e contexto de mercado.",
+    colorKey: "blue" as const,
+  },
+  {
+    emoji: "🔐",
+    title: "Guardar",
+    description: "Compreender carteiras, chaves e os cuidados da autocustódia.",
+    colorKey: "gold" as const,
+  },
+  {
+    emoji: "🚀",
+    title: "Utilizar",
+    description: "Conhecer os procedimentos e ferramentas demonstrados nas aulas.",
+    colorKey: "green" as const,
+  },
+];
+
+// Passo a Passo do Acesso Dataset
+const ACCESS_STEPS = [
+  {
+    step: "01",
+    emoji: "🛒",
+    title: "Conclua sua compra",
+    description:
+      "Escolha a forma de pagamento e finalize a compra no checkout oficial do treinamento.",
+    colorKey: "blue" as const,
+  },
+  {
+    step: "02",
+    emoji: "📩",
+    title: "Receba as orientações",
+    description:
+      "Após a confirmação do pagamento, as instruções de acesso serão enviadas para o e-mail informado na compra.",
+    colorKey: "green" as const,
+  },
+  {
+    step: "03",
+    emoji: "▶️",
+    title: "Acesse as aulas",
+    description:
+      "Entre na área do aluno e encontre as aulas organizadas para acompanhar cada etapa do treinamento.",
+    colorKey: "gold" as const,
+  },
+  {
+    step: "04",
+    emoji: "📱",
+    title: "Aprenda no seu ritmo",
+    description:
+      "Avance pelos módulos e reveja os assuntos que quiser aprofundar, conforme as condições de acesso do treinamento.",
+    colorKey: "turquoise" as const,
   },
 ];
 
@@ -393,7 +542,7 @@ export default function BitcoinCourseSalesPage() {
 
             {/* BLOCO 3 */}
             <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] shadow-2xs">
-              <div className="w-9 h-9 rounded-lg bg-[#008A5A]/15 border border-[#008A5A]/30 flex items-center justify-center text-lg shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-[#00A859]/15 border border-[#00A859]/30 flex items-center justify-center text-lg shrink-0">
                 📈
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A] font-medium leading-snug">
@@ -412,7 +561,7 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* BOTÃO HERO (FUNDO DOURADO #E9991C, HOVER #D88910, LEGENDA BRANCA COM CONTORNO PRETO) */}
+          {/* BOTÃO HERO */}
           <div className="pt-2">
             <button
               onClick={scrollToOffer}
@@ -433,11 +582,11 @@ export default function BitcoinCourseSalesPage() {
 
           {/* INDICADORES DE PAGAMENTO ABAIXO DO BOTÃO */}
           <div className="pt-1 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold">
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#008A5A]/10 text-[#008A5A] border border-[#008A5A]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#00A859]/10 text-[#00A859] border border-[#00A859]/30 shadow-2xs">
               <span>🔒</span>
               <span>Pagamento seguro</span>
             </span>
-            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#008A5A]/10 text-[#008A5A] border border-[#008A5A]/30 shadow-2xs">
+            <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#00A859]/10 text-[#00A859] border border-[#00A859]/30 shadow-2xs">
               <span>💠</span>
               <span>Pix</span>
             </span>
@@ -484,7 +633,7 @@ export default function BitcoinCourseSalesPage() {
                     style={{ width: `${100 / cardsPerPage}%` }}
                     className="shrink-0 px-3 flex flex-col"
                   >
-                    <div className="h-full flex flex-col justify-between p-5 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs hover:border-[#E9991C] hover:shadow-md transition-all text-left group">
+                    <div className="h-full flex flex-col justify-between p-5 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all text-left group">
                       <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden mb-4 bg-[#FAF7F2] border-2 border-[#E9991C]">
                         <Image
                           src={stage.image}
@@ -496,7 +645,7 @@ export default function BitcoinCourseSalesPage() {
                       </div>
                       <div className="space-y-2 flex-1 flex flex-col justify-between">
                         <div>
-                          <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20 mb-2">
+                          <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] mb-2">
                             {stage.badge}
                           </span>
                           <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A] leading-snug">
@@ -565,11 +714,11 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* GRID DE 4 BLOCOS COM EMOJIS */}
+          {/* GRID DE 4 BLOCOS COM CARDS TRATADOS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all flex flex-col justify-between space-y-4 shadow-xs">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+                <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center text-xl shrink-0">
                   💰
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
@@ -581,9 +730,9 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all flex flex-col justify-between space-y-4 shadow-xs">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+                <div className="w-11 h-11 rounded-xl bg-[#FFF7E5] border border-[#FDE68A] flex items-center justify-center text-xl shrink-0">
                   🪙
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
@@ -595,9 +744,9 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all flex flex-col justify-between space-y-4 shadow-xs">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+                <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-xl shrink-0">
                   📊
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
@@ -609,9 +758,9 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all flex flex-col justify-between space-y-4 shadow-xs">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+                <div className="w-11 h-11 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-xl shrink-0">
                   🔐
                 </div>
                 <h3 className="font-outfit font-bold text-lg text-[#0B1F3A]">
@@ -627,7 +776,7 @@ export default function BitcoinCourseSalesPage() {
           <div className="pt-2">
             <button
               onClick={scrollToModules}
-              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#E9991C] hover:bg-[#D88910] transition-all shadow-xs group"
+              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#E9991C] hover:bg-[#D88910] transition-all shadow-md group"
             >
               <span style={whiteButtonTextStroke} className="font-extrabold text-sm md:text-base">
                 VER O CONTEÚDO DO TREINAMENTO
@@ -659,10 +808,10 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* GRID DE 4 CARDS BRANCOS COM EMOJIS */}
+          {/* GRID DE 4 CARDS BRANCOS COM TRATAMENTO DE BORDA E ÍCONES */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
+              <div className="w-11 h-11 rounded-xl bg-[#FFF7E5] border border-[#FDE68A] flex items-center justify-center text-xl shrink-0">
                 🔑
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -673,8 +822,8 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
+              <div className="w-11 h-11 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-xl shrink-0">
                 🔒
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -685,8 +834,8 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
+              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-xl shrink-0">
                 🏦
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -697,8 +846,8 @@ export default function BitcoinCourseSalesPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-lg">
+            <div className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3">
+              <div className="w-11 h-11 rounded-xl bg-[#F0FDFA] border border-[#99F6E4] flex items-center justify-center text-xl shrink-0">
                 🧭
               </div>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -725,53 +874,34 @@ export default function BitcoinCourseSalesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider block" style={goldTextStrokeSmall}>
-                01 • INICIANTES
-              </span>
-              <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Para quem está começando
-              </h3>
-              <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Quer entender o Bitcoin desde os fundamentos, com explicações claras e exemplos.
-              </p>
-            </div>
+            {PUBLIC_CARDS.map((card, idx) => {
+              const scheme = SCHEMES[card.colorKey];
+              return (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
+                >
+                  <div className="space-y-3">
+                    {/* ÁREA ARREDONDADA DE 44PX ATRÁS DO EMOJI COM COR SUAVE */}
+                    <div className="flex items-center justify-between">
+                      <div className={`w-11 h-11 rounded-xl ${scheme.bgSoft} border ${scheme.borderSoft} flex items-center justify-center text-xl shrink-0`}>
+                        {card.emoji}
+                      </div>
+                      <span className={`px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase tracking-wider ${scheme.bgSoft} ${scheme.textHighlight} border ${scheme.borderSoft}`}>
+                        {card.tag}
+                      </span>
+                    </div>
 
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold text-[#008A5A] uppercase tracking-wider block">
-                02 • INVESTIDORES
-              </span>
-              <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Para quem já possui cripto
-              </h3>
-              <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Já comprou ativos e quer compreender melhor segurança, custódia e organização da carteira.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider block" style={goldTextStrokeSmall}>
-                03 • SEGURANÇA
-              </span>
-              <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Para quem quer conhecer a autocustódia
-              </h3>
-              <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Quer aprender sobre carteiras, chaves e as responsabilidades de guardar seus próprios bitcoins.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold text-[#0B1F3A] uppercase tracking-wider block">
-                04 • CRITÉRIO
-              </span>
-              <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
-                Para quem busca mais critério
-              </h3>
-              <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                Quer compreender o mercado antes de decidir com base em opiniões ou oscilações de preço.
-              </p>
-            </div>
+                    <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A] pt-1">
+                      {card.title}
+                    </h3>
+                    <p className="text-xs md:text-sm text-[#1F2937] leading-relaxed opacity-100">
+                      {card.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -792,51 +922,54 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* GRID DOS 6 CARDS BRANCOS */}
+          {/* GRID DOS 6 CARDS BRANCOS COM IDENTIFICAÇÕES E MARCADORES COLORIDOS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left items-stretch">
-            {COURSE_MODULES.map((mod) => (
-              <div
-                key={mod.id}
-                className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs hover:border-[#E9991C] transition-all flex flex-col justify-between space-y-4"
-              >
-                <div className="space-y-3">
-                  {/* IDENTIFICAÇÃO DO MÓDULO COM DOURADO #E9991C E CONTORNO PRETO */}
-                  <div>
-                    <span
-                      className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#FAF5E8] border border-[#D5BE97]"
-                      style={goldTextStrokeSmall}
-                    >
-                      {mod.moduleLabel}
-                    </span>
+            {COURSE_MODULES.map((mod) => {
+              const scheme = SCHEMES[mod.colorKey];
+              return (
+                <div
+                  key={mod.id}
+                  className="p-5 sm:p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
+                >
+                  <div className="space-y-3">
+                    {/* EMOJI DENTRO DA ÁREA COLORIDA ARREDONDADA + ETIQUETA DO MÓDULO */}
+                    <div className="flex items-center justify-between">
+                      <div className={`w-11 h-11 rounded-xl ${scheme.bgSoft} border ${scheme.borderSoft} flex items-center justify-center text-xl shrink-0`}>
+                        {mod.emoji}
+                      </div>
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider ${scheme.bgSoft} ${scheme.textHighlight} border ${scheme.borderSoft}`}>
+                        {mod.moduleLabel}
+                      </span>
+                    </div>
+
+                    {/* TÍTULO */}
+                    <h3 className="font-outfit font-bold text-[18px] sm:text-[20px] text-[#0B1F3A] leading-snug pt-1">
+                      {mod.title}
+                    </h3>
+
+                    {/* PARÁGRAFO EXPLICATIVO */}
+                    <p className="text-[15px] sm:text-[16px] text-[#1F2937] leading-[1.55] font-normal opacity-100">
+                      {mod.description}
+                    </p>
                   </div>
 
-                  {/* TÍTULO */}
-                  <h3 className="font-outfit font-bold text-[19px] sm:text-[20px] text-[#0B1F3A] leading-snug">
-                    {mod.title}
-                  </h3>
-
-                  {/* PARÁGRAFO EXPLICATIVO */}
-                  <p className="text-[14.5px] text-[#1F2937] leading-[1.55] font-normal opacity-100">
-                    {mod.description}
-                  </p>
+                  {/* TÓPICOS COM MARCADORES COLORIDOS */}
+                  <div className="pt-3 border-t border-[#D5BE97]">
+                    <ul className="space-y-2 text-[14.5px] sm:text-[15px] text-[#1F2937]">
+                      {mod.topics.map((topic, i) => (
+                        <li key={i} className="flex items-start space-x-2.5 leading-snug">
+                          <span
+                            className={`w-2.5 h-2.5 rounded-full ${scheme.markerBg} shrink-0 mt-1.5`}
+                            aria-hidden="true"
+                          />
+                          <span>{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-
-                {/* TÓPICOS COM MARCADORES EM DOURADO #E9991C */}
-                <div className="pt-3 border-t border-[#D5BE97]">
-                  <ul className="space-y-2 text-[14px] text-[#1F2937]">
-                    {mod.topics.map((topic, i) => (
-                      <li key={i} className="flex items-start space-x-2.5 leading-snug">
-                        <span
-                          className="w-2 h-2 rounded-full bg-[#E9991C] border border-[#000000] shrink-0 mt-1.5"
-                          aria-hidden="true"
-                        />
-                        <span>{topic}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -856,25 +989,35 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* GRID DE 3 PRÉVIAS (BORDA DOURADA 2PX #E9991C) */}
+          {/* GRID DE 3 PRÉVIAS COM MOLDURA DOURADA #E9991C, SOMBRA E LEGENDA CLARA */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
             {INSIDE_LESSONS.map((item, idx) => (
-              <div
-                key={item.id}
-                onClick={() => setActivePreviewIndex(idx)}
-                className="cursor-pointer group relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border-2 border-[#E9991C] hover:border-[#D88910] transition-all shadow-md"
-              >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-[#0B1F3A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-[#FFFFFF] font-bold text-xs">
-                  <Maximize2 className="w-5 h-5 text-[#E9991C]" />
-                  <span>AMPLIAR IMAGEM</span>
+              <div key={item.id} className="flex flex-col space-y-2 text-center">
+                <div
+                  onClick={() => setActivePreviewIndex(idx)}
+                  className="cursor-pointer group relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border-2 border-[#E9991C] hover:border-[#D88910] transition-all shadow-md"
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-[#0B1F3A]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-[#FFFFFF] font-bold text-xs">
+                    <Maximize2 className="w-5 h-5 text-[#E9991C]" />
+                    <span>🔍 Ampliar imagem</span>
+                  </div>
                 </div>
+                <p className="text-xs sm:text-sm font-bold text-[#0B1F3A] pt-1">
+                  {item.title}
+                </p>
+                <button
+                  onClick={() => setActivePreviewIndex(idx)}
+                  className="text-[11px] font-semibold text-[#E9991C] hover:underline inline-flex items-center justify-center gap-1"
+                >
+                  <span>🔍 Ampliar imagem</span>
+                </button>
               </div>
             ))}
           </div>
@@ -893,43 +1036,27 @@ export default function BitcoinCourseSalesPage() {
             </h2>
           </div>
 
-          {/* 3 CARDS BRANCOS */}
+          {/* 3 CARDS BRANCOS COM EMOJIS DESTACADOS E CORES AUXILIARES */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/20 flex items-center justify-center text-[#2563EB] font-bold">
-                01
-              </div>
-              <h3 className="font-outfit font-bold text-lg md:text-xl text-[#0B1F3A]">
-                Entender
-              </h3>
-              <p className="text-sm md:text-base text-[#1F2937] leading-relaxed opacity-100">
-                Relacionar dinheiro, Bitcoin, tecnologia e contexto de mercado.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center font-extrabold text-base" style={goldTextStrokeSmall}>
-                02
-              </div>
-              <h3 className="font-outfit font-bold text-lg md:text-xl text-[#0B1F3A]">
-                Guardar
-              </h3>
-              <p className="text-sm md:text-base text-[#1F2937] leading-relaxed opacity-100">
-                Compreender carteiras, chaves e os cuidados da autocustódia.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#008A5A]/10 border border-[#008A5A]/20 flex items-center justify-center text-[#008A5A] font-bold">
-                03
-              </div>
-              <h3 className="font-outfit font-bold text-lg md:text-xl text-[#0B1F3A]">
-                Utilizar
-              </h3>
-              <p className="text-sm md:text-base text-[#1F2937] leading-relaxed opacity-100">
-                Conhecer os procedimentos e ferramentas demonstrados nas aulas.
-              </p>
-            </div>
+            {LEARNING_CARDS.map((card, idx) => {
+              const scheme = SCHEMES[card.colorKey];
+              return (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-3"
+                >
+                  <div className={`w-12 h-12 rounded-xl ${scheme.bgSoft} border ${scheme.borderSoft} flex items-center justify-center text-2xl shrink-0`}>
+                    {card.emoji}
+                  </div>
+                  <h3 className="font-outfit font-bold text-lg md:text-xl text-[#0B1F3A]">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-[#1F2937] leading-relaxed opacity-100">
+                    {card.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           <p className="text-sm md:text-base text-[#FFFFFF] max-w-2xl mx-auto italic font-medium pt-2 opacity-100">
@@ -942,10 +1069,11 @@ export default function BitcoinCourseSalesPage() {
       <section id="oferta" className="py-14 md:py-18 bg-[#FFFFFF] border-b border-[#D5BE97]">
         <div className="max-w-[960px] mx-auto px-5 md:px-8">
           
-          {/* CARD BRANCO DA OFERTA (BORDA DOURADA 2PX #E9991C) */}
-          <div className="rounded-3xl bg-[#FFFFFF] border-2 border-[#E9991C] p-6 md:p-10 text-center space-y-6 shadow-md">
-            <span className="inline-block px-4 py-1 rounded-full bg-[#FAF5E8] text-[#0B1F3A] border border-[#D5BE97] text-xs font-bold uppercase tracking-widest">
-              🎟️ ACESSO AO TREINAMENTO
+          {/* CARD BRANCO DA OFERTA (BORDA DOURADA 2PX #E9991C, SOMBRA SUAVE) */}
+          <div className="rounded-3xl bg-[#FFFFFF] border-2 border-[#E9991C] p-6 md:p-10 text-center space-y-6 shadow-lg">
+            <span className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#FAF5E8] text-[#0B1F3A] border border-[#D5BE97] text-xs font-bold uppercase tracking-widest">
+              <span>🎥</span>
+              <span>ACESSO AO TREINAMENTO</span>
             </span>
 
             <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
@@ -956,51 +1084,63 @@ export default function BitcoinCourseSalesPage() {
               Uma apresentação, cinco módulos e mais de quatro horas de aulas em vídeo sobre dinheiro, Bitcoin, mercado e autocustódia.
             </p>
 
-            {/* LISTA COMPACTA DOS CONTEÚDOS */}
-            <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#D5BE97] max-w-lg mx-auto text-left space-y-2.5">
+            {/* LISTA COMPACTA DOS CONTEÚDOS COM PEQUENOS MARCADORES VERDES */}
+            <div className="p-5 rounded-2xl bg-[#ECFDF5]/50 border border-[#A7F3D0] max-w-xl mx-auto text-left space-y-3">
               <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
                 Conteúdo incluído no seu acesso:
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm text-[#1F2937]">
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs md:text-sm text-[#1F2937]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Apresentação & Visão Geral</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Módulo 1 — Dinheiro</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Módulo 2 — O que é Bitcoin</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Módulo 3 — Ciclos de Mercado</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Módulo 4 — Autocustódia</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#008A5A] shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
                   <span>Módulo 5 — Gerenciamento</span>
                 </div>
               </div>
             </div>
 
             {/* VALOR DO TREINAMENTO */}
-            <div className="space-y-1 pt-2">
+            <div className="space-y-1.5 pt-2">
               <div className="text-xs text-[#1F2937] font-extrabold uppercase tracking-widest opacity-100">
                 VALOR DO TREINAMENTO
               </div>
               <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-outfit text-[#0B1F3A]">
                 12x R$ 19,78
               </div>
-              <div className="text-sm font-semibold text-[#1F2937] opacity-100">
+              <div className="text-base font-bold text-[#1F2937] opacity-100">
                 ou R$ 197,00 à vista
               </div>
-              <div className="text-xs text-[#1F2937] opacity-100">
+              <div className="text-xs text-[#1F2937] opacity-100 font-medium">
                 Total do parcelamento: R$ 237,36
               </div>
             </div>
@@ -1024,8 +1164,8 @@ export default function BitcoinCourseSalesPage() {
                   }}
                 />
               </a>
-              <p className="text-xs text-[#1F2937] opacity-100">
-                Pagamento realizado pelo checkout oficial.
+              <p className="text-xs text-[#1F2937] opacity-100 font-medium">
+                Pagamento realizado pelo checkout oficial. 7 dias de garantia incondicional.
               </p>
             </div>
 
@@ -1050,94 +1190,41 @@ export default function BitcoinCourseSalesPage() {
             </p>
           </div>
 
-          {/* GRID DE 4 ETAPAS DE ACESSO */}
+          {/* GRID DE 4 ETAPAS DE ACESSO COM TRATAMENTO DE CARDS E NÚMEROS DESTACADOS */}
           <div className="relative pt-4">
             
             {/* LINHA DISCRETA DE CONEXÃO NO DESKTOP */}
-            <div className="hidden lg:block absolute top-[68px] left-[10%] right-[10%] h-[2px] bg-[#FFFFFF]/20 z-0" aria-hidden="true" />
+            <div className="hidden lg:block absolute top-[68px] left-[10%] right-[10%] h-[2px] bg-[#E9991C]/40 z-0" aria-hidden="true" />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left relative z-10">
-              
-              {/* ETAPA 1 */}
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-4 shadow-xs flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
-                      🛍️
+              {ACCESS_STEPS.map((step, idx) => {
+                const scheme = SCHEMES[step.colorKey];
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-[#FFFFFF] border-[1.5px] border-[#E9991C] shadow-md hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        {/* EMOJI MAIOR EM ÁREA COLORIDA ARREDONDADA */}
+                        <div className={`w-12 h-12 rounded-xl ${scheme.bgSoft} border ${scheme.borderSoft} flex items-center justify-center text-2xl shrink-0`}>
+                          {step.emoji}
+                        </div>
+                        {/* NÚMERO EM CÍRCULO/PILULA DOURADA */}
+                        <span className="text-xl font-extrabold font-outfit text-[#E9991C] bg-[#FFF7E5] border border-[#FDE68A] px-2.5 py-0.5 rounded-full" style={goldTextStrokeSmall}>
+                          {step.step}
+                        </span>
+                      </div>
+                      <h3 className="font-outfit font-bold text-base sm:text-lg text-[#0B1F3A] tracking-tight">
+                        ETAPA {idx + 1} — {step.title.toUpperCase()}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed opacity-100">
+                        {step.description}
+                      </p>
                     </div>
-                    <span className="text-2xl font-extrabold font-outfit" style={goldTextStrokeLarge}>
-                      01
-                    </span>
                   </div>
-                  <h3 className="font-outfit font-bold text-base sm:text-lg text-[#0B1F3A] tracking-tight">
-                    ETAPA 1 — CONCLUA SUA COMPRA
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                    Escolha a forma de pagamento e finalize a compra no checkout oficial do treinamento.
-                  </p>
-                </div>
-              </div>
-
-              {/* ETAPA 2 */}
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-4 shadow-xs flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
-                      📧
-                    </div>
-                    <span className="text-2xl font-extrabold font-outfit" style={goldTextStrokeLarge}>
-                      02
-                    </span>
-                  </div>
-                  <h3 className="font-outfit font-bold text-base sm:text-lg text-[#0B1F3A] tracking-tight">
-                    ETAPA 2 — RECEBA AS ORIENTAÇÕES
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                    Após a confirmação do pagamento, as instruções de acesso serão enviadas para o e-mail informado na compra.
-                  </p>
-                </div>
-              </div>
-
-              {/* ETAPA 3 */}
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-4 shadow-xs flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
-                      ▶️
-                    </div>
-                    <span className="text-2xl font-extrabold font-outfit" style={goldTextStrokeLarge}>
-                      03
-                    </span>
-                  </div>
-                  <h3 className="font-outfit font-bold text-base sm:text-lg text-[#0B1F3A] tracking-tight">
-                    ETAPA 3 — ACESSE AS AULAS
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                    Entre na área do aluno e encontre as aulas organizadas para acompanhar cada etapa do treinamento.
-                  </p>
-                </div>
-              </div>
-
-              {/* ETAPA 4 */}
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#E9991C] transition-all space-y-4 shadow-xs flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
-                      📖
-                    </div>
-                    <span className="text-2xl font-extrabold font-outfit" style={goldTextStrokeLarge}>
-                      04
-                    </span>
-                  </div>
-                  <h3 className="font-outfit font-bold text-base sm:text-lg text-[#0B1F3A] tracking-tight">
-                    ETAPA 4 — APRENDA NO SEU RITMO
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed opacity-100">
-                    Avance pelos módulos e reveja os assuntos que quiser aprofundar, conforme as condições de acesso do treinamento.
-                  </p>
-                </div>
-              </div>
-
+                );
+              })}
             </div>
           </div>
 
@@ -1233,3 +1320,4 @@ export default function BitcoinCourseSalesPage() {
     </div>
   );
 }
+
