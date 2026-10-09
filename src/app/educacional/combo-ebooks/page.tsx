@@ -372,16 +372,16 @@ export default function EbookBundleSalesPage() {
             </p>
 
             {/* IMAGEM MOSTRUÁRIO DOS MAPAS MENTAIS */}
-            <div className="pt-4">
-              <div className="relative w-full max-w-[620px] sm:max-w-[720px] md:max-w-[800px] mx-auto rounded-[20px] p-2.5 sm:p-3.5 bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)]">
+            <div className="pt-3 pb-1">
+              <div className="relative w-full max-w-[320px] sm:max-w-[380px] md:max-w-[440px] mx-auto rounded-[16px] p-2 bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_6px_16px_rgba(11,31,58,0.06)]">
                 <Image
                   src="/images/products/guias-visuais-showcase.jpg"
                   alt="Mostruário dos Guias Visuais HDZ Finance"
-                  width={900}
-                  height={1150}
+                  width={500}
+                  height={640}
                   priority
-                  className="w-full h-auto object-contain rounded-xl block"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 720px, 800px"
+                  className="w-full h-auto object-contain rounded-lg block"
+                  sizes="(max-width: 640px) 320px, 440px"
                 />
               </div>
             </div>
