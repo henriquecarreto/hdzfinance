@@ -14,8 +14,14 @@ export default function HomePage() {
         style={{ backgroundImage: "url('/backgrounds/world-map-gold.jpg')" }}
         aria-hidden="true"
       />
-      {/* Overlay sutil para legibilidade impecável do conteúdo */}
-      <div className="fixed inset-0 z-0 pointer-events-none bg-black/30" aria-hidden="true" />
+      {/* CAMADA ÚNICA DE ESCURECIMENTO: GRADIENTE HORIZONTAL SUAVE */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none select-none" 
+        style={{
+          background: "linear-gradient(to right, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.85) 20%, rgba(0, 0, 0, 0.90) 35%, rgba(0, 0, 0, 0.90) 65%, rgba(0, 0, 0, 0.85) 80%, rgba(0, 0, 0, 0.80) 100%)"
+        }}
+        aria-hidden="true" 
+      />
 
       {/* CONTEÚDO DAS SEÇÕES DA HOME */}
       <div className="relative z-10 bg-transparent">
