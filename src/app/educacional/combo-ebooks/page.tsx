@@ -255,124 +255,97 @@ export default function EbookBundleSalesPage() {
     <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans antialiased selection:bg-[#1D4ED8]/20 selection:text-[#0B1F3A] overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* FAIXA DE ALERTA SUPERIOR                                                   */}
+      {/* 1. PRIMEIRA SEÇÃO (HERO COMPACTO EM FUNDO CREME #FAF7F2)                  */}
       {/* ========================================================================= */}
-      <div className="w-full bg-[#0B1F3A] text-white py-2.5 px-4 text-center text-xs md:text-sm font-extrabold uppercase tracking-wider border-b border-[#E2E8F0]/20">
-        <span>GUIAS VISUAIS PARA ENTENDER FINANÇAS, ECONOMIA E BITCOIN. CONHEÇA AS COLEÇÕES.</span>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 1. HERO PRINCIPAL                                                         */}
-      {/* ========================================================================= */}
-      <section className="relative py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-8">
+      <section className="bg-[#FAF7F2] border-b border-[#E2E8F0] pt-5 md:pt-6 pb-5">
+        <div className="max-w-[680px] mx-auto px-4 md:px-5 text-center">
           
-          {/* ETIQUETA / IDENTIFICADOR */}
-          <div className="text-center">
-            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF] text-xs font-bold uppercase tracking-widest">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>COLEÇÃO VISUAL HDZ FINANCE</span>
+          {/* SELO CÁPSULA */}
+          <div className="mb-[10px]">
+            <span className="inline-block px-[10px] py-[4px] rounded-full bg-[#FFFBEB] border border-[#F59E0B] text-[#92400E] text-[11px] font-bold tracking-wide uppercase">
+              📖 COLEÇÃO VISUAL DE EDUCAÇÃO FINANCEIRA
             </span>
           </div>
 
-          {/* H1 PRINCIPAL */}
-          <h1 className="font-outfit font-extrabold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[52px] text-[#0B1F3A] text-center tracking-tight leading-[1.12] max-w-[960px] mx-auto">
-            Entenda seu dinheiro, <span className="text-[#1D4ED8]">os investimentos e o Bitcoin</span> com mais clareza.
+          {/* TÍTULO PRINCIPAL H1 */}
+          <h1 className="font-outfit font-extrabold text-[26px] sm:text-[34px] md:text-[42px] text-[#0A0A0A] tracking-tight leading-[1.08] mb-[12px]">
+            Entenda seu dinheiro<br />
+            e aprenda sobre <span className="text-[#0866E8]">investimentos</span>,<br />
+            <span className="text-[#059669]">inflação e juros</span>.
           </h1>
 
-          {/* SUBTÍTULO */}
-          <p className="text-[17px] sm:text-[18px] md:text-[20px] text-[#475569] text-center leading-[1.6] max-w-[820px] mx-auto font-normal">
-            Guias visuais em PDF que conectam educação financeira, economia, investimentos e fundamentos do Bitcoin. Comece com quatro guias ou escolha a coleção completa com nove guias e dois e-books bônus.
+          {/* DESCRIÇÃO SUBTÍTULO */}
+          <p className="text-[15px] md:text-[17px] text-[#111111] leading-[1.45] mb-[10px] font-normal">
+            Descubra uma coleção com 90 mapas mentais visuais para compreender <strong className="font-bold text-[#111111]">educação financeira</strong>, <strong className="font-bold text-[#111111]">investimentos</strong>, <strong className="font-bold text-[#111111]">inflação</strong> e <strong className="font-bold text-[#111111]">juros</strong> de forma clara e organizada.
           </p>
 
-          {/* LINHA DE IDENTIFICAÇÃO DE PÚBLICO */}
-          <div className="max-w-2xl mx-auto text-center pt-1">
-            <p className="text-xs sm:text-sm md:text-base font-outfit font-semibold text-[#0B1F3A] tracking-wide leading-relaxed">
-              Para quem quer organizar o conhecimento financeiro, compreender os principais conceitos e consultar o essencial no próprio ritmo.
-            </p>
-          </div>
+          {/* LINHA CURTA DE PÚBLICO */}
+          <p className="text-[13px] font-semibold text-[#111111] leading-[1.4] mb-[14px]">
+            👥 Para iniciantes, estudantes e quem quer cuidar melhor do próprio dinheiro.
+          </p>
 
-          {/* BOTÃO PRINCIPAL HERÓICO ANTES DA IMAGEM */}
-          <div className="pt-2 text-center">
-            <button
-              type="button"
-              onClick={() => scrollToSection("oferta")}
-              className="w-full sm:w-auto min-h-[52px] px-6 sm:px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+          {/* MOLDURA DA IMAGEM PRINCIPAL */}
+          <div className="mb-[10px]">
+            <div
+              className="w-full max-w-[560px] mx-auto rounded-[14px] p-2 bg-[#FAF7F2] border border-[#F5CD63]"
+              style={{ boxShadow: "0 6px 14px rgba(11, 31, 58, 0.10)" }}
             >
-              ESCOLHER MINHA COLEÇÃO
-            </button>
-          </div>
-
-          {/* SELO DE CONTAGEM */}
-          <div className="max-w-md mx-auto px-4 py-2 rounded-full bg-[#FFFBEB] border border-[#F59E0B]/30 text-center text-xs font-bold uppercase tracking-wider text-[#B45309]">
-            INICIAL: 4 GUIAS | COMPLETA: 9 GUIAS + 2 E-BOOKS BÔNUS
-          </div>
-
-          {/* IMAGEM PRINCIPAL PRESERVADA */}
-          <div className="pt-2">
-            <div className="relative w-full max-w-[380px] sm:max-w-[520px] md:max-w-[620px] lg:max-w-[680px] mx-auto rounded-[20px] p-3 sm:p-4 bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)]">
               <Image
                 src="/images/products/combo-ebooks-cover.jpg"
-                alt="Guias visuais HDZ Finance sobre finanças, economia, investimentos e Bitcoin."
-                width={680}
-                height={800}
+                alt="Coleção Visual HDZ Finance sobre Educação Financeira, Investimentos, Inflação e Juros"
+                width={560}
+                height={660}
                 priority
-                className="w-full h-auto object-contain rounded-xl block"
-                sizes="(max-width: 640px) 380px, (max-width: 1024px) 520px, 680px"
+                className="w-full h-auto object-contain rounded-[10px] block"
+                sizes="(max-width: 640px) 100vw, 560px"
               />
             </div>
           </div>
 
-          {/* 4 BENEFÍCIOS CURTOS */}
-          <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-left">
-            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#EFF6FF] flex items-center justify-center text-[#1D4ED8] shrink-0 font-bold">
-                ✓
-              </div>
-              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
-                Conceitos organizados por tema para estudar e consultar.
-              </span>
+          {/* LINHA DE QUANTIDADE */}
+          <p className="text-[11px] font-bold text-[#111111] uppercase tracking-wider mb-[12px]">
+            📚 90 MAPAS MENTAIS PARA ESTUDAR E CONSULTAR QUANDO PRECISAR
+          </p>
+
+          {/* 4 BENEFÍCIOS CURTOS EM 2 COLUNAS COMPACTAS */}
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 max-w-[540px] mx-auto text-left mb-[16px]">
+            <div className="text-[13px] font-semibold text-[#111111] leading-[1.35]">
+              📊 Investimentos explicados com clareza.
             </div>
-            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#FFFBEB] border border-[#FFFBEB] flex items-center justify-center text-[#B45309] shrink-0 font-bold">
-                ✓
-              </div>
-              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
-                Dinheiro, economia, investimentos e Bitcoin em uma sequência sugerida.
-              </span>
+            <div className="text-[13px] font-semibold text-[#111111] leading-[1.35]">
+              💰 Educação financeira para o dia a dia.
             </div>
-            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#EFF6FF] flex items-center justify-center text-[#1D4ED8] shrink-0 font-bold">
-                ✓
-              </div>
-              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
-                Arquivos em PDF para acessar pelo celular, tablet ou computador.
-              </span>
+            <div className="text-[13px] font-semibold text-[#111111] leading-[1.35]">
+              📈 Entenda a inflação e os juros.
             </div>
-            <div className="flex items-center space-x-3 p-4 rounded-[16px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-[#FFFBEB] border border-[#FFFBEB] flex items-center justify-center text-[#B45309] shrink-0 font-bold">
-                ✓
-              </div>
-              <span className="text-sm text-[#1F2937] font-semibold leading-snug">
-                Materiais para baixar e revisitar no seu próprio ritmo.
-              </span>
+            <div className="text-[13px] font-semibold text-[#111111] leading-[1.35]">
+              🧠 Consulte os conceitos de forma visual.
             </div>
           </div>
 
-          {/* BOTÃO ABAIXO DA IMAGEM E BENEFÍCIOS */}
-          <div className="pt-4 text-center space-y-2">
+          {/* BOTÃO PRINCIPAL VERDE E SELOS DE PAGAMENTO */}
+          <div className="space-y-[8px]">
             <button
               type="button"
               onClick={() => scrollToSection("hdz-guias")}
-              className="w-full sm:w-auto min-h-[52px] px-8 sm:px-10 inline-flex items-center justify-center gap-3 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:outline-none focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+              className="w-full max-w-[360px] mx-auto min-h-[48px] px-6 inline-flex items-center justify-center rounded-[8px] bg-[#00B86B] hover:bg-[#009E5C] focus:outline-none text-white font-outfit font-bold text-[14px] uppercase tracking-wide cursor-pointer transition-all"
+              style={{ boxShadow: "0 4px 10px rgba(0, 184, 107, 0.18)" }}
             >
-              <span>CONHECER OS MATERIAIS</span>
-              <ArrowRight className="h-5 w-5 text-white shrink-0" />
+              <span>CONHECER OS 90 MAPAS MENTAIS →</span>
             </button>
 
-            <p className="text-xs text-[#475569] font-medium">
-              Materiais digitais em PDF. Confira o conteúdo de cada coleção antes de escolher.
-            </p>
+            {/* 3 SELOS DE PAGAMENTO */}
+            <div className="flex flex-wrap items-center justify-center gap-1.5 pt-0.5">
+              <span className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#ECFDF5] border border-[#86EFAC] text-[#047857] text-[11px] font-bold">
+                🔒 Pagamento Seguro
+              </span>
+              <span className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#ECFDF5] border border-[#86EFAC] text-[#047857] text-[11px] font-bold">
+                💠 Pix
+              </span>
+              <span className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#1D4ED8] text-[11px] font-bold">
+                💳 Cartão de Crédito
+              </span>
+            </div>
           </div>
 
         </div>
