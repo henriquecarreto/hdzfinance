@@ -8,6 +8,7 @@ export default function HeaderWrapper() {
   const pathname = usePathname();
   const isSalesPage =
     pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas" ||
+    pathname === "/educacional/guia-visual-financas" ||
     pathname === "/educacional/combo-ebooks";
 
   if (isSalesPage) {

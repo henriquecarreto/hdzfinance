@@ -89,6 +89,11 @@ const nextConfig: NextConfig = {
         destination: "/educacional",
         permanent: true,
       },
+      {
+        source: "/educacional/combo-ebooks",
+        destination: "/educacional/guia-visual-financas",
+        permanent: true,
+      },
     ];
   },
 };

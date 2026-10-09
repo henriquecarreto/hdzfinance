@@ -44,7 +44,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
     price: null,
     image: "/images/products/ebook-bundle-cover.jpg",
     summary: null,
-    salesPagePath: "/educacional/combo-ebooks",
+    salesPagePath: "/educacional/guia-visual-financas",
     salesPageReady: true,
     checkoutUrl: null,
   },

@@ -15,7 +15,9 @@ export default function Header() {
   if (pathname?.startsWith("/admin")) return null;
 
   const isTrainingPage = pathname === "/educacional/fundamentos-do-dinheiro-bitcoin-criptomoedas";
-  const isComboPage = pathname === "/educacional/combo-ebooks";
+  const isComboPage =
+    pathname === "/educacional/guia-visual-financas" ||
+    pathname === "/educacional/combo-ebooks";
 
   if (isTrainingPage || isComboPage) {
     return (
