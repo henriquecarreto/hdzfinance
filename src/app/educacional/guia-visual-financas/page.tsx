@@ -26,7 +26,7 @@ const precoColecaoInicial: number = 19.90;
 const precoColecaoCompleta: number = 29.90;
 const precoAnteriorInicial: number = 29.90;
 const precoAnteriorCompleta: number = 39.90;
-const checkoutColecaoInicial: string | null = null;
+const checkoutColecaoInicial: string = "https://pay.wiapy.com/XY656Bg9PUjE";
 const checkoutColecaoCompleta: string | null = null;
 
 // Configuração interna dos materiais da Coleção

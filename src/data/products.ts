@@ -46,7 +46,7 @@ export const EDUCATIONAL_PRODUCTS: EducationalProduct[] = [
     summary: null,
     salesPagePath: "/educacional/guia-visual-financas",
     salesPageReady: true,
-    checkoutUrl: null,
+    checkoutUrl: "https://pay.wiapy.com/XY656Bg9PUjE",
   },
 ];
 
