@@ -16,10 +16,12 @@ import {
 } from "lucide-react";
 
 // =============================================================================
-// CONFIGURAÇÕES COMERCIAIS DAS COLEÇÕES (Valores nulos até definição comercial)
+// CONFIGURAÇÕES COMERCIAIS DAS COLEÇÕES
 // =============================================================================
-const precoColecaoInicial: number | null = null;
-const precoColecaoCompleta: number | null = null;
+const precoColecaoInicial: number = 19.90;
+const precoColecaoCompleta: number = 29.90;
+const precoAnteriorInicial: number = 29.90;
+const precoAnteriorCompleta: number = 39.90;
 const checkoutColecaoInicial: string | null = null;
 const checkoutColecaoCompleta: string | null = null;
 
@@ -882,242 +884,334 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 8. REGIÃO DE OFERTA (#oferta — DOIS PLANOS E TABELA COMPARATIVA)          */}
+      {/* 8. SEÇÃO DE OFERTA (#oferta — DOIS PLANOS LADO A LADO)                   */}
       {/* ========================================================================= */}
-      <section id="oferta" className="py-12 md:py-20 bg-[#FAF7F2] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-12">
+      <section id="oferta" className="py-[56px] max-md:py-[36px] bg-[#FAF5E8] border-b border-[#E2E8F0]">
+        <div className="max-w-[980px] mx-auto px-4 sm:px-6">
           
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              DUAS OPÇÕES PARA SEUS ESTUDOS
+          {/* CABEÇALHO CENTRALIZADO */}
+          <div className="text-center max-w-[700px] mx-auto mb-[36px] space-y-3">
+            {/* Selo */}
+            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white text-[#0B1F3A] border border-[#F5B700]">
+              ✨ OPÇÕES DISPONÍVEIS • ACERVO DIGITAL
             </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Escolha a coleção que acompanha seu momento de estudo.
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[26px] sm:text-[32px] md:text-[36px] text-[#0B1F3A] leading-[1.15]">
+              Escolha o plano ideal para você
             </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Comece com os quatro guias da base ou leve a Coleção Completa para ampliar seus estudos sobre Bitcoin e ativos digitais.
+
+            {/* Descrição */}
+            <p className="text-[15px] text-[#475569] leading-[1.5]">
+              Comece com quatro guias ou escolha a coleção completa, com nove guias visuais e dois e-books bônus.
             </p>
           </div>
 
-          {/* SEQUÊNCIA VERTICAL DOS DOIS CARDS DE OFERTA */}
-          <div className="max-w-[840px] mx-auto space-y-8">
+          {/* GRADE DOS PLANOS: DOIS CARDS LADO A LADO */}
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)] gap-[24px] max-md:gap-[28px] items-start">
             
-            {/* CARD 1 — COLEÇÃO INICIAL */}
-            <div className="rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-[0_8px_24px_rgba(11,31,58,0.06)] relative">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
+            {/* --------------------------------------------------------------------- */}
+            {/* CARD 1 — COLEÇÃO INICIAL (Esquerda, menor, borda cinza)              */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="p-[22px] rounded-[10px] bg-white border border-[#DADDE1] shadow-[0_2px_5px_rgba(11,31,58,0.08)] flex flex-col justify-between text-left space-y-5">
+              
+              <div className="space-y-4">
+                {/* Nome → Descrição */}
                 <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#EFF6FF] text-[#1D4ED8] text-xs font-bold uppercase tracking-wider mb-2">
-                    4 GUIAS VISUAIS
-                  </span>
-                  <h3 className="font-outfit font-bold text-2xl sm:text-3xl text-[#0B1F3A]">
+                  <h3 className="font-outfit font-extrabold text-[22px] text-[#0B1F3A] leading-tight">
                     COLEÇÃO INICIAL
                   </h3>
+                  <p className="mt-1 text-[14px] text-[#475569] leading-[1.5]">
+                    Uma base visual para compreender suas finanças, os investimentos e o contexto econômico.
+                  </p>
                 </div>
 
-                {/* Bloco de Preço Dinâmico / Indefinido */}
-                {precoColecaoInicial !== null ? (
-                  <div className="text-right">
-                    <span className="text-xs font-semibold text-[#475569] block">Investimento</span>
-                    <span className="text-3xl font-extrabold text-[#047857]">
+                {/* Imagem de Capa */}
+                <div className="mt-4">
+                  <Image
+                    src="/images/products/colecao-inicial-cover.jpg"
+                    alt="Coleção Inicial - 4 Guias Visuais"
+                    width={500}
+                    height={400}
+                    className="w-full h-auto rounded-[6px] object-cover shadow-sm"
+                  />
+                </div>
+
+                {/* Bloco de Preço */}
+                <div className="pt-2 space-y-1">
+                  <del className="text-[#D72638] text-[16px] font-semibold line-through block">
+                    De R$ {precoAnteriorInicial.toFixed(2).replace(".", ",")}
+                  </del>
+                  <div className="flex items-baseline">
+                    <span className="text-[14px] font-normal text-[#0B1F3A] mr-1">por</span>
+                    <span className="font-outfit font-extrabold text-[38px] sm:text-[44px] md:text-[52px] text-[#00A859] leading-none">
                       R$ {precoColecaoInicial.toFixed(2).replace(".", ",")}
                     </span>
                   </div>
-                ) : null}
-              </div>
+                  <p className="text-[12px] text-[#475569]">
+                    Materiais digitais em PDF
+                  </p>
+                </div>
 
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Uma base organizada para compreender suas finanças, o contexto econômico, os investimentos e os fundamentos do Bitcoin.
-              </p>
+                {/* Divisória */}
+                <div className="border-t border-[#E2E8F0]" />
 
-              {/* LISTA DE MATERIAIS */}
-              <div className="p-5 rounded-2xl bg-[#FAF7F2] border border-[#E2E8F0] space-y-4">
-                <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
-                  📚 MATERIAIS INCLUÍDOS NESTE PLANO (4 GUIAS):
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#1F2937] font-medium">
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Educação Financeira</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Economia, Juros e Inflação</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Investimentos</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Fundamentos do Bitcoin</span>
+                {/* Materiais Incluídos */}
+                <div className="space-y-3">
+                  <span className="font-outfit font-bold text-[13px] text-[#0B1F3A] block uppercase tracking-wide">
+                    📚 4 GUIAS VISUAIS INCLUÍDOS
+                  </span>
+                  
+                  <div className="space-y-[10px] text-[14px] text-[#0B1F3A] font-medium">
+                    <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0]/60">
+                      <Check className="w-4 h-4 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Educação Financeira</span>
+                    </div>
+                    <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0]/60">
+                      <Check className="w-4 h-4 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Economia, Juros e Inflação</span>
+                    </div>
+                    <div className="flex items-center gap-2 pb-2 border-b border-[#E2E8F0]/60">
+                      <Check className="w-4 h-4 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Investimentos</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Fundamentos do Bitcoin</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="border-t border-[#E2E8F0] pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#475569]">
-                  <p>✓ Arquivos digitais em PDF</p>
-                  <p>✓ Download dos materiais do seu plano</p>
-                  <p>✓ Consulta pelo celular, tablet ou computador</p>
-                  <p>✓ Garantia de 7 dias</p>
+                {/* Divisória */}
+                <div className="border-t border-[#E2E8F0]" />
+
+                {/* Benefícios de Formato */}
+                <div className="space-y-2 text-[13px] text-[#475569]">
+                  <p className="flex items-center gap-2">
+                    <span>📥</span>
+                    <span>Arquivos para download</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>📱</span>
+                    <span>Consulta no celular, tablet ou computador</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>🛡️</span>
+                    <span>Garantia de 7 dias</span>
+                  </p>
                 </div>
               </div>
 
-              {/* BOTÃO DE COMPRA */}
-              <div className="space-y-3 pt-2 text-center">
+              {/* Botão + Pagamento */}
+              <div className="pt-2 space-y-2 text-center">
                 {checkoutColecaoInicial ? (
                   <a
                     href={checkoutColecaoInicial}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+                    className="w-full min-h-[48px] px-6 py-3 rounded-[7px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-bold text-sm uppercase tracking-wide transition-all shadow-sm cursor-pointer flex items-center justify-center text-center"
                   >
-                    <span>QUERO A COLEÇÃO INICIAL</span>
-                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                    QUERO A COLEÇÃO INICIAL
                   </a>
                 ) : (
                   <button
                     type="button"
-                    disabled
-                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] opacity-90 text-white font-outfit font-bold text-base uppercase tracking-wide cursor-not-allowed shadow-md"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        alert("Checkout em configuração para a Coleção Inicial.");
+                      }
+                    }}
+                    className="w-full min-h-[48px] px-6 py-3 rounded-[7px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-bold text-sm uppercase tracking-wide transition-all shadow-sm cursor-pointer flex items-center justify-center text-center"
                   >
-                    <span>QUERO A COLEÇÃO INICIAL</span>
-                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                    QUERO A COLEÇÃO INICIAL
                   </button>
                 )}
-                <p className="text-xs text-[#475569] font-medium">
-                  Confira o conteúdo e as condições no checkout.
+
+                <p className="text-[11px] text-[#475569] flex flex-wrap justify-center gap-1">
+                  <span>🔒 Pagamento seguro</span>
+                  <span>•</span>
+                  <span>💠 Pix</span>
+                  <span>•</span>
+                  <span>💳 Cartão</span>
                 </p>
               </div>
 
-              <p className="text-[11px] text-[#475569] text-center pt-1 italic">
-                Imagem ilustrativa da coleção. Este plano inclui os quatro guias listados acima.
-              </p>
             </div>
 
-            {/* CARD 2 — COLEÇÃO COMPLETA */}
-            <div className="rounded-[20px] bg-[#FFFFFF] border-2 border-[#F59E0B] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-[0_8px_24px_rgba(11,31,58,0.06)] relative">
+            {/* --------------------------------------------------------------------- */}
+            {/* CARD 2 — COLEÇÃO COMPLETA (Direita, maior, destacada em dourado)      */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="p-[24px] rounded-[10px] bg-white border-2 border-[#F5B700] shadow-[0_4px_12px_rgba(245,183,0,0.18)] flex flex-col justify-between text-left space-y-5 relative">
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
+              {/* Faixa Dourada Sobreposta */}
+              <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#F5B700] text-[#0B1F3A] font-outfit font-bold text-[11px] uppercase tracking-wider whitespace-nowrap shadow-sm">
+                ⭐ 9 GUIAS VISUAIS + 2 E-BOOKS BÔNUS
+              </div>
+
+              <div className="space-y-4 pt-1">
+                {/* Nome → Descrição */}
                 <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#FFFBEB] text-[#B45309] border border-[#F59E0B]/40 text-xs font-bold uppercase tracking-wider mb-2">
-                    9 GUIAS + 2 E-BOOKS BÔNUS
-                  </span>
-                  <h3 className="font-outfit font-bold text-2xl sm:text-3xl text-[#0B1F3A]">
+                  <h3 className="font-outfit font-extrabold text-[24px] text-[#0B1F3A] leading-tight">
                     COLEÇÃO COMPLETA
                   </h3>
+                  <p className="mt-1 text-[14px] text-[#475569] leading-[1.5]">
+                    Todos os materiais da Inicial, mais cinco guias e dois e-books bônus. Amplie seus estudos por R$ 10,00 a mais.
+                  </p>
                 </div>
 
-                {/* Bloco de Preço Dinâmico / Indefinido */}
-                {precoColecaoCompleta !== null ? (
-                  <div className="text-right">
-                    <span className="text-xs font-semibold text-[#475569] block">Investimento</span>
-                    <span className="text-3xl font-extrabold text-[#047857]">
+                {/* Imagem de Capa */}
+                <div className="mt-4">
+                  <Image
+                    src="/images/products/colecao-completa-cover.jpg"
+                    alt="Coleção Completa - 11 Materiais Digitais"
+                    width={600}
+                    height={480}
+                    className="w-full h-auto rounded-[6px] object-cover shadow-sm"
+                  />
+                </div>
+
+                {/* Bloco de Preço */}
+                <div className="pt-2 space-y-1">
+                  <del className="text-[#D72638] text-[16px] font-semibold line-through block">
+                    De R$ {precoAnteriorCompleta.toFixed(2).replace(".", ",")}
+                  </del>
+                  <div className="flex items-baseline">
+                    <span className="text-[14px] font-normal text-[#0B1F3A] mr-1">por</span>
+                    <span className="font-outfit font-extrabold text-[42px] sm:text-[50px] md:text-[60px] text-[#00A859] leading-none">
                       R$ {precoColecaoCompleta.toFixed(2).replace(".", ",")}
                     </span>
                   </div>
-                ) : null}
+                  <p className="text-[12px] text-[#475569]">
+                    11 materiais digitais em PDF
+                  </p>
+                </div>
+
+                {/* Quadro Interno dos Materiais */}
+                <div className="p-[14px] rounded-[6px] bg-[#FFFDF3] border border-[#F5B700] space-y-3">
+                  <span className="font-outfit font-bold text-[12px] text-[#92400E] block uppercase tracking-wide">
+                    📚 9 GUIAS VISUAIS + 🎁 2 E-BOOKS BÔNUS
+                  </span>
+
+                  {/* Lista em 2 colunas no computador e 1 no celular */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-[9px] text-[13px] text-[#0B1F3A] font-medium">
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Educação Financeira</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Economia, Juros e Inflação</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Investimentos</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Fundamentos do Bitcoin</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Criptografia</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Dólar Digital</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Blockchain</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Tokenização</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 sm:col-span-2">
+                      <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                      <span>Guia Visual Mentalidade Bitcoiner</span>
+                    </div>
+                  </div>
+
+                  {/* Divisória Interna Bônus */}
+                  <div className="border-t border-[#F5B700]/40 pt-2 space-y-2">
+                    <span className="font-outfit font-bold text-[12px] text-[#047857] block uppercase tracking-wide">
+                      🎁 BÔNUS INCLUÍDOS
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 text-[13px] text-[#0B1F3A] font-semibold">
+                      <div className="flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                        <span>Do Clique ao Bloco</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
+                        <span>Meu Primeiro Bitcoin</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Benefícios abaixo do quadro */}
+                <div className="space-y-2 text-[13px] text-[#475569]">
+                  <p className="flex items-center gap-2">
+                    <span>📥</span>
+                    <span>Todos os arquivos para download</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>📱</span>
+                    <span>Consulta no celular, tablet ou computador</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span>🛡️</span>
+                    <span>Garantia de 7 dias</span>
+                  </p>
+                </div>
               </div>
 
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                A base da Coleção Inicial e mais cinco guias para estudar segurança, redes e estruturas de ativos digitais, com duas leituras complementares sobre Bitcoin e transações.
-              </p>
-
-              {/* LISTA DE MATERIAIS COMPLETA */}
-              <div className="p-5 rounded-2xl bg-[#FFFBEB]/60 border border-[#F59E0B]/30 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
-                    📚 CONTEÚDO COMPLETO INCLUÍDO (11 MATERIAIS):
-                  </span>
-                  <span className="text-xs font-bold text-[#B45309] bg-[#FFFBEB] px-2.5 py-0.5 rounded-full border border-[#F59E0B]/30">
-                    11 materiais digitais ao todo
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937] font-medium">
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Educação Financeira</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Economia, Juros e Inflação</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Investimentos</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#047857] shrink-0" />
-                    <span>Guia Visual Fundamentos do Bitcoin</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
-                    <span>Guia Visual Criptografia</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
-                    <span>Guia Visual Dólar Digital</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
-                    <span>Guia Visual Blockchain</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
-                    <span>Guia Visual Tokenização</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#B45309] shrink-0" />
-                    <span>Guia Visual Mentalidade Bitcoiner</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#0B1F3A] font-bold">
-                    <Check className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                    <span>🎁 Bônus: Do Clique ao Bloco</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#0B1F3A] font-bold sm:col-span-2">
-                    <Check className="w-4 h-4 text-[#1D4ED8] shrink-0" />
-                    <span>🎁 Bônus: Meu Primeiro Bitcoin</span>
-                  </div>
-                </div>
-
-                <div className="border-t border-[#F59E0B]/30 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#475569]">
-                  <p>✓ Todos os nove guias visuais</p>
-                  <p>✓ Dois e-books bônus incluídos</p>
-                  <p>✓ Arquivos digitais em PDF para download</p>
-                  <p>✓ Consulta pelo celular, tablet ou computador</p>
-                  <p>✓ Garantia de 7 dias</p>
-                </div>
-              </div>
-
-              {/* BOTÃO DE COMPRA COMPLETA */}
-              <div className="space-y-3 pt-2 text-center">
+              {/* Botão + Etiqueta de Economia + Pagamento */}
+              <div className="pt-2 space-y-2.5 text-center">
                 {checkoutColecaoCompleta ? (
                   <a
                     href={checkoutColecaoCompleta}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] hover:bg-[#065F46] focus:ring-4 focus:ring-[#1D4ED8]/30 text-white font-outfit font-bold text-base uppercase tracking-wide shadow-md transition-all cursor-pointer"
+                    className="w-full min-h-[52px] px-6 py-3 rounded-[7px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-extrabold text-sm uppercase tracking-wide transition-all shadow-[0_3px_8px_rgba(0,168,89,0.20)] cursor-pointer flex items-center justify-center text-center"
                   >
-                    <span>QUERO A COLEÇÃO COMPLETA</span>
-                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                    QUERO A COLEÇÃO COMPLETA →
                   </a>
                 ) : (
                   <button
                     type="button"
-                    disabled
-                    className="w-full inline-flex items-center justify-center gap-3 min-h-[52px] px-8 py-3.5 rounded-[12px] bg-[#047857] opacity-90 text-white font-outfit font-bold text-base uppercase tracking-wide cursor-not-allowed shadow-md"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        alert("Checkout em configuração para a Coleção Completa.");
+                      }
+                    }}
+                    className="w-full min-h-[52px] px-6 py-3 rounded-[7px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-extrabold text-sm uppercase tracking-wide transition-all shadow-[0_3px_8px_rgba(0,168,89,0.20)] cursor-pointer flex items-center justify-center text-center"
                   >
-                    <span>QUERO A COLEÇÃO COMPLETA</span>
-                    <ArrowRight className="w-5 h-5 text-white shrink-0" />
+                    QUERO A COLEÇÃO COMPLETA →
                   </button>
                 )}
-                <p className="text-xs text-[#475569] font-medium">
-                  Todos os materiais da Inicial e mais cinco guias e dois bônus.
+
+                {/* Etiqueta Economia */}
+                <div>
+                  <span className="inline-block px-[10px] py-[4px] rounded-full text-[12px] font-bold text-[#D72638] bg-white border border-[#D72638]">
+                    VOCÊ ECONOMIZA R$ 10,00
+                  </span>
+                </div>
+
+                <p className="text-[11px] text-[#475569] flex flex-wrap justify-center gap-1">
+                  <span>🔒 Pagamento seguro</span>
+                  <span>•</span>
+                  <span>💠 Pix</span>
+                  <span>•</span>
+                  <span>💳 Cartão</span>
                 </p>
               </div>
 
             </div>
 
           </div>
+
         </div>
       </section>
 
