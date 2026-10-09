@@ -1150,80 +1150,83 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            {/* DIVISÓRIA E CONTEÚDO INCLUÍDO */}
-            <div className="pt-2 border-t border-[#F5B700]/30 space-y-4">
-              <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFBEF] border border-[#F5B700]/40 space-y-3">
-                <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
-                  📚 TUDO O QUE ESTÁ INCLUÍDO NO SEU ACESSO:
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937]">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+            {/* CONTEÚDO INCLUÍDO E BÔNUS (CARD ÚNICO EMBUTIDO) */}
+            <div className="pt-2">
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFBEF] border border-[#F5B700]/50 space-y-5">
+                {/* PARTE 1: MÓDULOS */}
+                <div className="space-y-3">
+                  <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
+                    📚 TUDO O QUE ESTÁ INCLUÍDO NO SEU ACESSO:
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937]">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Apresentação e visão geral</span>
                     </div>
-                    <span>Apresentação e visão geral</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Módulo 1 — Fundamentos do dinheiro</span>
                     </div>
-                    <span>Módulo 1 — Fundamentos do dinheiro</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Módulo 2 — O que é Bitcoin</span>
                     </div>
-                    <span>Módulo 2 — O que é Bitcoin</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Módulo 3 — Ciclos de mercado</span>
                     </div>
-                    <span>Módulo 3 — Ciclos de mercado</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Módulo 4 — Seja você seu próprio banco</span>
                     </div>
-                    <span>Módulo 4 — Seja você seu próprio banco</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                      <span>Módulo 5 — Gerenciamento e utilização</span>
                     </div>
-                    <span>Módulo 5 — Gerenciamento e utilização</span>
                   </div>
                 </div>
-              </div>
 
-              {/* DESTAQUE DOS DOIS BÔNUS */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFBEF] border border-[#F5B700]/50 space-y-3">
-                <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
-                  🎁 VOCÊ TAMBÉM RECEBE 2 E-BOOKS DE BÔNUS:
-                </span>
-                <div className="space-y-3 text-xs sm:text-sm">
-                  <div className="space-y-1">
-                    <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
-                      <span>📘</span>
-                      <span>Do Clique ao Bloco</span>
-                    </p>
-                    <p className="text-[#1F2937] leading-relaxed pl-6">
-                      “Entenda o caminho de uma transação na blockchain depois de clicar em enviar.”
-                    </p>
+                {/* DIVISÓRIA INTERNA */}
+                <div className="border-t border-[#F5B700]/30 pt-4 space-y-3">
+                  <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
+                    🎁 VOCÊ TAMBÉM RECEBE 2 E-BOOKS DE BÔNUS:
+                  </span>
+                  <div className="space-y-3 text-xs sm:text-sm">
+                    <div className="space-y-1">
+                      <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
+                        <span>📘</span>
+                        <span>Do Clique ao Bloco</span>
+                      </p>
+                      <p className="text-[#1F2937] leading-relaxed pl-6">
+                        “Entenda o caminho de uma transação na blockchain depois de clicar em enviar.”
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
+                        <span>📙</span>
+                        <span>Meu Primeiro Bitcoin</span>
+                      </p>
+                      <p className="text-[#1F2937] leading-relaxed pl-6">
+                        “Um guia para compreender o essencial e dar seus primeiros passos no universo Bitcoin.”
+                      </p>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
-                      <span>📙</span>
-                      <span>Meu Primeiro Bitcoin</span>
-                    </p>
-                    <p className="text-[#1F2937] leading-relaxed pl-6">
-                      “Um guia para compreender o essencial e dar seus primeiros passos no universo Bitcoin.”
-                    </p>
-                  </div>
+                  <p className="text-[11px] sm:text-xs text-[#0B1F3A]/80 italic pt-1 border-t border-[#F5B700]/20">
+                    Bônus incluídos na compra do treinamento.
+                  </p>
                 </div>
-                <p className="text-[11px] sm:text-xs text-[#0B1F3A]/80 italic pt-1 border-t border-[#F5B700]/20">
-                  Bônus incluídos na compra do treinamento.
-                </p>
               </div>
             </div>
 
