@@ -22,6 +22,29 @@ const trainingOffer = {
   guaranteeDays: 7,
 };
 
+// Helper style for yellow text with fine black stroke
+const yellowTextStrokeLarge = {
+  color: "#FFC400",
+  WebkitTextFillColor: "#FFC400",
+  WebkitTextStroke: "0.7px #000000",
+  paintOrder: "stroke fill",
+};
+
+const yellowTextStrokeSmall = {
+  color: "#FFC400",
+  WebkitTextFillColor: "#FFC400",
+  WebkitTextStroke: "0.4px #000000",
+  paintOrder: "stroke fill",
+};
+
+// Helper style for white CTA button text with fine black stroke
+const whiteButtonTextStroke = {
+  color: "#FFFFFF",
+  WebkitTextFillColor: "#FFFFFF",
+  WebkitTextStroke: "0.7px #000000",
+  paintOrder: "stroke fill",
+};
+
 // 6 Carousel Stages
 interface CarouselStage {
   id: number;
@@ -297,7 +320,7 @@ export default function BitcoinCourseSalesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#243247] font-sans antialiased selection:bg-[#F5B700]/30 selection:text-[#0B1F3A] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#243247] font-sans antialiased selection:bg-[#FFC400]/30 selection:text-[#0B1F3A] overflow-x-hidden">
 
       {/* ==================== 01 — HERO PRINCIPAL (FUNDO 1: BRANCO #FFFFFF) ==================== */}
       <section className="relative py-10 md:py-14 bg-[#FFFFFF] border-b border-[#D5BE97]">
@@ -311,10 +334,10 @@ export default function BitcoinCourseSalesPage() {
             </span>
           </div>
 
-          {/* TÍTULO */}
+          {/* TÍTULO COM DESTAQUE AMARELO DOURADO #FFC400 E CONTORNO PRETO */}
           <h1 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A] tracking-tight leading-[1.2] max-w-[760px] mx-auto">
             Comprar Bitcoin é só o começo. <br />
-            <span className="text-[#B94F00]">
+            <span style={yellowTextStrokeLarge}>
               Aprenda a cuidar do que é seu.
             </span>
           </h1>
@@ -355,16 +378,22 @@ export default function BitcoinCourseSalesPage() {
             </div>
           </div>
 
-          {/* BOTÃO HERO */}
+          {/* BOTÃO HERO (FUNDO #FFC400, HOVER #F5B700, LEGENDA BRANCA COM CONTORNO PRETO) */}
           <div className="pt-3">
             <button
               onClick={scrollToOffer}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#B94F00] hover:bg-[#9F4300] font-extrabold text-base md:text-lg text-[#FFFFFF] transition-all shadow-md active:scale-[0.99]"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#FFC400] hover:bg-[#F5B700] focus:bg-[#F5B700] active:scale-[0.99] transition-all shadow-md group"
             >
-              <span className="text-[#FFFFFF] tracking-wide">
+              <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg tracking-wide">
                 QUERO ACESSAR O TREINAMENTO
               </span>
-              <ArrowRight className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0" />
+              <ArrowRight
+                className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0"
+                style={{
+                  filter:
+                    "drop-shadow(-0.7px 0 0 #000000) drop-shadow(0.7px 0 0 #000000) drop-shadow(0 -0.7px 0 #000000) drop-shadow(0 0.7px 0 #000000)",
+                }}
+              />
             </button>
           </div>
 
@@ -439,7 +468,7 @@ export default function BitcoinCourseSalesPage() {
               <button
                 onClick={prevCarousel}
                 aria-label="Anterior"
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#B94F00] hover:border-[#B94F00] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
+                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#FFC400] hover:border-[#FFC400] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -452,7 +481,7 @@ export default function BitcoinCourseSalesPage() {
                     aria-label={`Ir para a etapa ${idx + 1}`}
                     className={`h-2.5 rounded-full transition-all ${
                       carouselIndex === idx
-                        ? "w-7 bg-[#B94F00]"
+                        ? "w-7 bg-[#FFC400]"
                         : "w-2.5 bg-[#D5BE97] hover:bg-[#44566C]"
                     }`}
                   />
@@ -462,7 +491,7 @@ export default function BitcoinCourseSalesPage() {
               <button
                 onClick={nextCarousel}
                 aria-label="Próximo"
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#B94F00] hover:border-[#B94F00] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
+                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#D5BE97] hover:bg-[#FFC400] hover:border-[#FFC400] text-[#0B1F3A] hover:text-[#FFFFFF] transition-all shadow-xs"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -548,10 +577,18 @@ export default function BitcoinCourseSalesPage() {
           <div className="pt-2">
             <button
               onClick={scrollToModules}
-              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#B94F00] hover:bg-[#9F4300] text-[#FFFFFF] font-extrabold text-sm md:text-base transition-all shadow-xs"
+              className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#FFC400] hover:bg-[#F5B700] transition-all shadow-xs group"
             >
-              <span>VER O CONTEÚDO DO TREINAMENTO</span>
-              <ArrowRight className="w-4 h-4 ml-1 text-[#FFFFFF]" />
+              <span style={whiteButtonTextStroke} className="font-extrabold text-sm md:text-base">
+                VER O CONTEÚDO DO TREINAMENTO
+              </span>
+              <ArrowRight
+                className="w-4 h-4 ml-1 text-[#FFFFFF]"
+                style={{
+                  filter:
+                    "drop-shadow(-0.7px 0 0 #000000) drop-shadow(0.7px 0 0 #000000) drop-shadow(0 -0.7px 0 #000000) drop-shadow(0 0.7px 0 #000000)",
+                }}
+              />
             </button>
           </div>
         </div>
@@ -639,7 +676,7 @@ export default function BitcoinCourseSalesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#F5B700] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold text-[#2563EB] uppercase tracking-wider block">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider block" style={yellowTextStrokeSmall}>
                 01 • INICIANTES
               </span>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -663,7 +700,7 @@ export default function BitcoinCourseSalesPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#F5B700] transition-all space-y-2.5 shadow-xs">
-              <span className="text-[11px] font-extrabold text-[#B94F00] uppercase tracking-wider block">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider block" style={yellowTextStrokeSmall}>
                 03 • SEGURANÇA
               </span>
               <h3 className="font-outfit font-bold text-base md:text-lg text-[#0B1F3A]">
@@ -713,9 +750,12 @@ export default function BitcoinCourseSalesPage() {
                 className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] shadow-xs hover:border-[#F5B700] transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
-                  {/* IDENTIFICAÇÃO DO MÓDULO */}
+                  {/* IDENTIFICAÇÃO DO MÓDULO COM AMARELO DOURADO #FFC400 E CONTORNO PRETO */}
                   <div>
-                    <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20">
+                    <span
+                      className="inline-block px-2.5 py-0.5 rounded text-[11px] font-extrabold uppercase tracking-wider bg-[#FAF5E8] border border-[#D5BE97]"
+                      style={yellowTextStrokeSmall}
+                    >
                       {mod.moduleLabel}
                     </span>
                   </div>
@@ -731,12 +771,15 @@ export default function BitcoinCourseSalesPage() {
                   </p>
                 </div>
 
-                {/* TÓPICOS COM MARCADORES COLORIDOS */}
+                {/* TÓPICOS COM MARCADORES EM AMARELO DOURADO #FFC400 */}
                 <div className="pt-3 border-t border-[#D5BE97]">
                   <ul className="space-y-2 text-[14px] text-[#44566C]">
                     {mod.topics.map((topic, i) => (
                       <li key={i} className="flex items-start space-x-2.5 leading-snug">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#B94F00] shrink-0 mt-1.5" aria-hidden="true" />
+                        <span
+                          className="w-2 h-2 rounded-full bg-[#FFC400] border border-[#000000] shrink-0 mt-1.5"
+                          aria-hidden="true"
+                        />
                         <span>{topic}</span>
                       </li>
                     ))}
@@ -769,7 +812,7 @@ export default function BitcoinCourseSalesPage() {
               <div
                 key={item.id}
                 onClick={() => setActivePreviewIndex(idx)}
-                className="cursor-pointer group relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border-2 border-[#F5B700] hover:border-[#B94F00] transition-all shadow-md"
+                className="cursor-pointer group relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border-2 border-[#F5B700] hover:border-[#FFC400] transition-all shadow-md"
               >
                 <Image
                   src={item.image}
@@ -815,7 +858,7 @@ export default function BitcoinCourseSalesPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#D5BE97] hover:border-[#F5B700] transition-all space-y-3 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#B94F00]/10 border border-[#B94F00]/20 flex items-center justify-center text-[#B94F00] font-bold">
+              <div className="w-10 h-10 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center font-extrabold text-base" style={yellowTextStrokeSmall}>
                 02
               </div>
               <h3 className="font-outfit font-bold text-lg md:text-xl text-[#0B1F3A]">
@@ -912,16 +955,24 @@ export default function BitcoinCourseSalesPage() {
               </div>
             </div>
 
-            {/* BOTÃO CTA DA OFERTA */}
+            {/* BOTÃO CTA DA OFERTA (FUNDO #FFC400, HOVER #F5B700, LEGENDA BRANCA COM CONTORNO PRETO) */}
             <div className="pt-2 space-y-3 max-w-md mx-auto">
               <a
                 href={trainingOffer.checkoutUrl || "#"}
                 target={trainingOffer.checkoutUrl ? "_blank" : "_self"}
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#B94F00] hover:bg-[#9F4300] text-[#FFFFFF] font-extrabold text-base md:text-lg transition-all shadow-md active:scale-[0.99]"
+                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#FFC400] hover:bg-[#F5B700] focus:bg-[#F5B700] active:scale-[0.99] transition-all shadow-md group"
               >
-                <span className="text-[#FFFFFF]">QUERO ACESSAR O TREINAMENTO</span>
-                <ArrowRight className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0" />
+                <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg tracking-wide">
+                  QUERO ACESSAR O TREINAMENTO
+                </span>
+                <ArrowRight
+                  className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0"
+                  style={{
+                    filter:
+                      "drop-shadow(-0.7px 0 0 #000000) drop-shadow(0.7px 0 0 #000000) drop-shadow(0 -0.7px 0 #000000) drop-shadow(0 0.7px 0 #000000)",
+                  }}
+                />
               </a>
               <p className="text-xs text-[#44566C]">
                 Pagamento realizado pelo checkout oficial.
@@ -964,7 +1015,7 @@ export default function BitcoinCourseSalesPage() {
                     <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
                       🛍️
                     </div>
-                    <span className="text-2xl font-extrabold font-outfit text-[#F5B700]">
+                    <span className="text-2xl font-extrabold font-outfit" style={yellowTextStrokeLarge}>
                       01
                     </span>
                   </div>
@@ -984,7 +1035,7 @@ export default function BitcoinCourseSalesPage() {
                     <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
                       📧
                     </div>
-                    <span className="text-2xl font-extrabold font-outfit text-[#F5B700]">
+                    <span className="text-2xl font-extrabold font-outfit" style={yellowTextStrokeLarge}>
                       02
                     </span>
                   </div>
@@ -1004,7 +1055,7 @@ export default function BitcoinCourseSalesPage() {
                     <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
                       ▶️
                     </div>
-                    <span className="text-2xl font-extrabold font-outfit text-[#F5B700]">
+                    <span className="text-2xl font-extrabold font-outfit" style={yellowTextStrokeLarge}>
                       03
                     </span>
                   </div>
@@ -1024,7 +1075,7 @@ export default function BitcoinCourseSalesPage() {
                     <div className="w-12 h-12 rounded-xl bg-[#FAF5E8] border border-[#D5BE97] flex items-center justify-center text-xl">
                       📖
                     </div>
-                    <span className="text-2xl font-extrabold font-outfit text-[#F5B700]">
+                    <span className="text-2xl font-extrabold font-outfit" style={yellowTextStrokeLarge}>
                       04
                     </span>
                   </div>
@@ -1044,10 +1095,18 @@ export default function BitcoinCourseSalesPage() {
           <div className="pt-2">
             <button
               onClick={scrollToOffer}
-              className="inline-flex items-center space-x-3 px-8 py-4 rounded-xl bg-[#B94F00] hover:bg-[#9F4300] text-[#FFFFFF] font-extrabold text-base transition-all shadow-md active:scale-[0.99]"
+              className="inline-flex items-center space-x-3 px-8 py-4 rounded-xl bg-[#FFC400] hover:bg-[#F5B700] transition-all shadow-md active:scale-[0.99] group"
             >
-              <span className="text-[#FFFFFF]">QUERO ACESSAR O TREINAMENTO</span>
-              <ArrowRight className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0" />
+              <span style={whiteButtonTextStroke} className="font-extrabold text-base">
+                QUERO ACESSAR O TREINAMENTO
+              </span>
+              <ArrowRight
+                className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0"
+                style={{
+                  filter:
+                    "drop-shadow(-0.7px 0 0 #000000) drop-shadow(0.7px 0 0 #000000) drop-shadow(0 -0.7px 0 #000000) drop-shadow(0 0.7px 0 #000000)",
+                }}
+              />
             </button>
           </div>
 
@@ -1074,11 +1133,11 @@ export default function BitcoinCourseSalesPage() {
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-4 md:p-5 text-left text-sm md:text-base font-bold text-[#0B1F3A] hover:text-[#B94F00] transition-colors"
+                  className="w-full flex items-center justify-between p-4 md:p-5 text-left text-sm md:text-base font-bold text-[#0B1F3A] hover:text-[#FFC400] transition-colors"
                 >
                   <span className="pr-4">{item.q}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#B94F00] shrink-0 transition-transform duration-200 ${
+                    className={`w-5 h-5 text-[#FFC400] shrink-0 transition-transform duration-200 ${
                       openFaqIndex === index ? "rotate-180" : ""
                     }`}
                   />
@@ -1100,7 +1159,7 @@ export default function BitcoinCourseSalesPage() {
           <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col items-center bg-[#FFFFFF] border-2 border-[#F5B700] rounded-2xl overflow-hidden p-4 md:p-6 shadow-2xl">
             <button
               onClick={() => setActivePreviewIndex(null)}
-              className="absolute top-3 right-3 p-2 rounded-full bg-[#FAF7F2] text-[#0B1F3A] hover:bg-[#B94F00] hover:text-[#FFFFFF] transition-colors z-10"
+              className="absolute top-3 right-3 p-2 rounded-full bg-[#FAF7F2] text-[#0B1F3A] hover:bg-[#FFC400] hover:text-[#FFFFFF] transition-colors z-10"
             >
               <X className="w-6 h-6" />
             </button>
