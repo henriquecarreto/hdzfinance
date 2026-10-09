@@ -10,7 +10,6 @@ import {
   ZoomIn,
   X,
 } from "lucide-react";
-import { YoutubeIcon, InstagramIcon } from "@/components/SocialIcons";
 
 // Configurable Ebook Bundle Sales State
 const ebookBundle = {
@@ -816,63 +815,6 @@ export default function EbookBundleSalesPage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* RODAPÉ INSTITUCIONAL HDZ FINANCE                                         */}
-      {/* ========================================================================= */}
-      <footer className="py-12 md:py-16 bg-[#0B1F3A] text-xs text-[#D5DDE6] border-t border-[#D5BE97]">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
-            <div className="space-y-2 max-w-lg">
-              <span className="font-outfit font-extrabold text-xl tracking-tight text-white block">
-                HDZ <span className="text-[#E9991C]">FINANCE</span>
-              </span>
-              <p className="leading-relaxed text-[#D5DDE6]/90">
-                Coleção digital formada por dois e-books desenvolvidos para oferecer uma experiência de leitura clara, organizada e construída para estudo e consulta.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <span className="font-bold text-white uppercase tracking-wider block">Atendimento & Suporte</span>
-              <a
-                href="mailto:contato@hdzfinance.com.br"
-                className="text-[#E9991C] hover:underline font-semibold block text-sm"
-              >
-                contato@hdzfinance.com.br
-              </a>
-
-              <div className="flex items-center space-x-3 pt-2">
-                <a
-                  href="https://instagram.com/hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl bg-white/10 border border-white/10 hover:border-[#E9991C] text-white transition-colors"
-                  aria-label="Instagram da HDZ Finance"
-                >
-                  <InstagramIcon className="h-4 w-4 text-[#E9991C]" />
-                </a>
-                <a
-                  href="https://youtube.com/@hdzfinance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl bg-white/10 border border-white/10 hover:border-[#EF4444] text-white transition-colors"
-                  aria-label="YouTube da HDZ Finance"
-                >
-                  <YoutubeIcon className="h-4 w-4 text-[#EF4444]" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <p className="leading-relaxed text-[#D5DDE6]/80">
-              <strong>Aviso Legal:</strong> Este produto possui finalidade exclusivamente educacional. Nenhum conteúdo deve ser interpretado como promessa de resultado ou garantia de benefício financeiro.
-            </p>
-            <p className="text-center md:text-left text-[#D5DDE6]/60">
-              © 2026 HDZ Finance. Todos os direitos reservados.
-            </p>
-          </div>
-        </div>
-      </footer>
 
     </div>
   );
