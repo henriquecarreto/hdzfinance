@@ -606,67 +606,6 @@ export default function EbookBundleSalesPage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 5. NOVO ROTEIRO DE ESTUDO (#hdz-roteiro)                                  */}
-      {/* ========================================================================= */}
-      <section id="hdz-roteiro" className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
-        <div className="max-w-[1120px] mx-auto px-5 md:px-6 space-y-10">
-          
-          <div className="text-center max-w-[760px] mx-auto space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              ESTUDE NO SEU RITMO
-            </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Uma sequência sugerida para começar e avançar.
-            </h2>
-            <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Escolha um tema, observe o mapa visual e retome a explicação quando precisar. Você pode seguir esta ordem ou consultar diretamente o assunto que gerou sua dúvida.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-            {/* Etapa 01 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
-              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] text-[#1D4ED8] font-outfit font-bold text-lg flex items-center justify-center">
-                01
-              </div>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Dinheiro e economia.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Comece por Educação Financeira e Economia, Juros e Inflação para relacionar sua organização financeira ao contexto econômico.
-              </p>
-            </div>
-
-            {/* Etapa 02 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
-              <div className="w-11 h-11 rounded-xl bg-[#EFF6FF] text-[#1D4ED8] font-outfit font-bold text-lg flex items-center justify-center">
-                02
-              </div>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Investimentos e fundamentos do Bitcoin.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Avance para as formas de retorno, risco e liquidez e para as regras e o funcionamento da rede Bitcoin.
-              </p>
-            </div>
-
-            {/* Etapa 03 */}
-            <div className="p-6 rounded-[20px] bg-[#FFFFFF] border border-[#E2E8F0] shadow-[0_8px_24px_rgba(11,31,58,0.06)] space-y-4 text-left">
-              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#B45309] font-outfit font-bold text-lg flex items-center justify-center">
-                03
-              </div>
-              <h3 className="font-outfit font-semibold text-[20px] text-[#0B1F3A] leading-[1.3]">
-                Estruturas digitais e leitura complementar.
-              </h3>
-              <p className="text-[16px] text-[#475569] leading-[1.65]">
-                Na Coleção Completa, continue com os cinco guias adicionais e os dois e-books bônus.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       {/* ========================================================================= */}
       {/* 6. NOVO CATÁLOGO DOS 9 GUIAS VISUAIS (#hdz-guias)                         */}
