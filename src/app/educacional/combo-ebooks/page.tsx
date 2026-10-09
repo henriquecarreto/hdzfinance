@@ -358,20 +358,18 @@ export default function EbookBundleSalesPage() {
         <div className="max-w-[1360px] mx-auto space-y-8">
           
           {/* CABEÇALHO DO CARROSSEL */}
-          <div className="text-center max-w-[760px] mx-auto px-5 space-y-4">
-            <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
-              PRÉVIAS REAIS DOS GUIAS VISUAIS
-            </span>
-            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2]">
-              Veja como os conceitos são apresentados por dentro.
+          <div className="text-center max-w-[760px] mx-auto px-5 mb-6">
+            <div className="mb-2">
+              <span className="inline-block px-3.5 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#EFF6FF] text-[#1D4ED8] border border-[#EFF6FF]">
+                VEJA OS MAPAS POR DENTRO
+              </span>
+            </div>
+            <h2 className="font-outfit font-bold text-[28px] sm:text-[32px] md:text-[38px] text-[#0B1F3A] leading-[1.2] mb-3">
+              Veja como fica mais simples entender suas finanças.
             </h2>
             <p className="text-[16px] text-[#475569] leading-[1.65]">
-              Explore capas e páginas da coleção. Cada guia organiza um tema em explicações visuais para facilitar o estudo e a consulta.
+              Explore páginas reais da coleção e descubra como os mapas conectam educação financeira, investimentos, inflação e juros em explicações visuais claras, organizadas e fáceis de consultar.
             </p>
-            <div className="space-y-1 text-xs text-[#475569] pt-1 font-medium">
-              <p>As prévias mostram materiais das duas coleções. Confira quais estão incluídos no plano escolhido.</p>
-              <p className="text-[#1D4ED8] font-semibold">Passe o mouse ou toque para pausar o carrossel. Clique em qualquer página para ampliar.</p>
-            </div>
           </div>
 
           {/* CARROSSEL MARQUEE INFINITO (PRESERVADO) */}
