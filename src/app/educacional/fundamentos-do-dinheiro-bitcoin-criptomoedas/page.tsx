@@ -1108,8 +1108,20 @@ export default function BitcoinCourseSalesPage() {
                 Entenda o Bitcoin dos fundamentos aos cuidados na prática. Acesse 5 módulos com mais de 4 horas de videoaulas e tutoriais e receba 2 e-books de bônus para complementar sua leitura.
               </p>
             </div>
-
-
+            {/* IMAGEM COMPLETA DA OFERTA (TELAS + MÓDULOS + 2 E-BOOKS) */}
+            <div className="py-1">
+              <div className="relative w-full rounded-2xl overflow-hidden shadow-xs border border-[#F5B700]/20">
+                <Image
+                  src="/images/products/oferta-treinamento-bitcoin.jpg"
+                  alt="Treinamento Completo HDZ Finance + 2 E-Books Bônus"
+                  width={800}
+                  height={1000}
+                  priority
+                  className="w-full h-auto object-contain rounded-2xl block"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              </div>
+            </div>
 
             {/* PREÇO ANTERIOR E PROMOCIONAL */}
             <div className="space-y-1.5 pt-1">
