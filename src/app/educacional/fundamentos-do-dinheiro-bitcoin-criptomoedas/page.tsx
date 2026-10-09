@@ -15,9 +15,8 @@ import {
 // State offer config
 const trainingOffer = {
   offerReady: true,
-  price: 197.0,
-  installments: "12x R$ 19,78",
-  installmentTotal: "R$ 237,36",
+  originalPrice: 199.90,
+  price: 99.90,
   checkoutUrl: null,
   guaranteeDays: 7,
 };
@@ -1088,106 +1087,187 @@ export default function BitcoinCourseSalesPage() {
 
       {/* ==================== 09 — OFERTA (FUNDO 9: BRANCO #FFFFFF) ==================== */}
       <section id="oferta" className="py-14 md:py-18 bg-[#FFFFFF] border-b border-[#D5BE97]">
-        <div className="max-w-[960px] mx-auto px-5 md:px-8">
+        <div className="max-w-[780px] mx-auto px-4 sm:px-6 relative">
           
-          {/* CARD BRANCO DA OFERTA (BORDA DOURADA 2PX #E9991C, SOMBRA SUAVE) */}
-          <div className="rounded-3xl bg-[#FFFFFF] border-2 border-[#E9991C] p-6 md:p-10 text-center space-y-6 shadow-lg">
-            <span className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#FAF5E8] text-[#0B1F3A] border border-[#D5BE97] text-xs font-bold uppercase tracking-widest">
-              <span>🎥</span>
-              <span>ACESSO AO TREINAMENTO</span>
+          {/* ETIQUETA SUPERIOR SOBREPOSTA À BORDA DO CARD */}
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 w-max">
+            <span className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#F5B700] text-[#0B1F3A] font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-xs border border-[#0B1F3A]/10">
+              <span>🎥 5 MÓDULOS + 🎁 2 E-BOOKS DE BÔNUS</span>
             </span>
+          </div>
 
-            <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0B1F3A]">
-              Seu próximo passo começa pelo conhecimento.
-            </h2>
+          {/* SINGLE CARD CENTRALIZADO */}
+          <div className="rounded-3xl bg-[#FFFFFF] border border-[#F5B700] p-6 sm:p-8 md:p-10 text-left space-y-6 shadow-xl relative pt-8 sm:pt-10">
+            
+            {/* TÍTULO E DESCRIÇÃO */}
+            <div className="space-y-2">
+              <h2 className="font-outfit font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0B1F3A] tracking-tight">
+                TREINAMENTO COMPLETO
+              </h2>
+              <p className="text-sm sm:text-base text-[#1F2937] leading-relaxed font-normal">
+                Entenda o Bitcoin dos fundamentos aos cuidados na prática. Acesse 5 módulos com mais de 4 horas de videoaulas e tutoriais e receba 2 e-books de bônus para complementar sua leitura.
+              </p>
+            </div>
 
-            <p className="text-sm sm:text-base text-[#1F2937] max-w-2xl mx-auto leading-relaxed opacity-100">
-              Acesse os 5 módulos, mais de 4 horas de videoaulas e tutoriais e os 2 e-books gratuitos para leitura. Comece pelos fundamentos e avance para os cuidados na prática.
-            </p>
+            {/* IMAGEM COMPLETA DA OFERTA (TELAS + MÓDULOS + 2 E-BOOKS) */}
+            <div className="py-1">
+              <div className="relative w-full rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#D5BE97]/40 shadow-xs">
+                <Image
+                  src="/images/products/training-full-bundle.png"
+                  alt="Treinamento Completo HDZ Finance + 2 E-Books Bônus"
+                  width={720}
+                  height={900}
+                  priority
+                  className="w-full h-auto object-contain rounded-xl"
+                  sizes="(max-width: 640px) 100vw, 720px"
+                />
+              </div>
+            </div>
 
-            {/* LISTA COMPACTA DOS CONTEÚDOS COM PEQUENOS MARCADORES VERDES */}
-            <div className="p-5 rounded-2xl bg-[#ECFDF5]/60 border border-[#A7F3D0] max-w-xl mx-auto text-left space-y-3">
-              <span className="font-bold text-[#0B1F3A] block text-xs uppercase tracking-wider">
-                Conteúdo incluído no seu acesso:
+            {/* PREÇO ANTERIOR E PROMOCIONAL */}
+            <div className="space-y-1.5 pt-1">
+              <span className="text-xs sm:text-sm font-medium text-[#0B1F3A] block">
+                Treinamento completo + 2 e-books de bônus
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs md:text-sm text-[#1F2937]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Apresentação & Visão Geral</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Módulo 1 — Dinheiro</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Módulo 2 — O que é Bitcoin</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Módulo 3 — Ciclos de Mercado</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Módulo 4 — Autocustódia</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-[#138A60] flex items-center justify-center text-[#FFFFFF] shrink-0">
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  </div>
-                  <span>Módulo 5 — Gerenciamento</span>
-                </div>
+              
+              {/* PREÇO ANTERIOR RISCADO */}
+              <div className="text-sm sm:text-base font-bold text-[#D72638] line-through decoration-[#D72638] decoration-2">
+                De R$ 199,90
+              </div>
+
+              {/* PREÇO PROMOCIONAL GRANDE */}
+              <div className="flex items-baseline space-x-2">
+                <span className="text-xs sm:text-sm font-extrabold text-[#0B1F3A]">POR</span>
+                <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-outfit text-[#00B56A]">
+                  R$ 99,90
+                </span>
+              </div>
+
+              {/* ETIQUETA PAGAMENTO ÚNICO */}
+              <div>
+                <span className="inline-block px-3 py-1 rounded-md bg-[#ECFDF5] text-[#00B56A] text-xs font-bold border border-[#A7F3D0]">
+                  Pagamento único
+                </span>
               </div>
             </div>
 
-            {/* VALOR DO TREINAMENTO */}
-            <div className="space-y-1.5 pt-2">
-              <div className="text-xs text-[#1F2937] font-extrabold uppercase tracking-widest opacity-100">
-                VALOR DO TREINAMENTO
+            {/* DIVISÓRIA E CONTEÚDO INCLUÍDO */}
+            <div className="pt-2 border-t border-[#F5B700]/30 space-y-4">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFBEF] border border-[#F5B700]/40 space-y-3">
+                <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
+                  📚 TUDO O QUE ESTÁ INCLUÍDO NO SEU ACESSO:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#1F2937]">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Apresentação e visão geral</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Módulo 1 — Fundamentos do dinheiro</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Módulo 2 — O que é Bitcoin</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Módulo 3 — Ciclos de mercado</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Módulo 4 — Seja você seu próprio banco</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-5 h-5 rounded-full bg-[#00A859] flex items-center justify-center text-[#FFFFFF] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </div>
+                    <span>Módulo 5 — Gerenciamento e utilização</span>
+                  </div>
+                </div>
               </div>
-              <div className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-outfit text-[#0B1F3A]">
-                12x R$ 19,78
-              </div>
-              <div className="text-base font-bold text-[#1F2937] opacity-100">
-                ou R$ 197,00 à vista
-              </div>
-              <div className="text-xs text-[#1F2937] opacity-100 font-medium">
-                Total do parcelamento: R$ 237,36
+
+              {/* DESTAQUE DOS DOIS BÔNUS */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFBEF] border border-[#F5B700]/50 space-y-3">
+                <span className="font-extrabold text-[#0B1F3A] block text-xs sm:text-sm uppercase tracking-wider">
+                  🎁 VOCÊ TAMBÉM RECEBE 2 E-BOOKS DE BÔNUS:
+                </span>
+                <div className="space-y-3 text-xs sm:text-sm">
+                  <div className="space-y-1">
+                    <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
+                      <span>📘</span>
+                      <span>Do Clique ao Bloco</span>
+                    </p>
+                    <p className="text-[#1F2937] leading-relaxed pl-6">
+                      “Entenda o caminho de uma transação na blockchain depois de clicar em enviar.”
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="font-extrabold text-[#0B1F3A] flex items-center gap-1.5">
+                      <span>📙</span>
+                      <span>Meu Primeiro Bitcoin</span>
+                    </p>
+                    <p className="text-[#1F2937] leading-relaxed pl-6">
+                      “Um guia para compreender o essencial e dar seus primeiros passos no universo Bitcoin.”
+                    </p>
+                  </div>
+                </div>
+                <p className="text-[11px] sm:text-xs text-[#0B1F3A]/80 italic pt-1 border-t border-[#F5B700]/20">
+                  Bônus incluídos na compra do treinamento.
+                </p>
               </div>
             </div>
 
-            {/* BOTÃO CTA DA OFERTA VERDE REFORMA TRIBUTÁRIA #00A859 */}
-            <div className="pt-2 space-y-3 max-w-md mx-auto">
+            {/* BOTÃO DE COMPRA VERDE */}
+            <div className="pt-3 space-y-4 text-center">
               <a
                 href={trainingOffer.checkoutUrl || "#"}
                 target={trainingOffer.checkoutUrl ? "_blank" : "_self"}
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
+                className="w-full inline-flex items-center justify-center space-x-3 px-8 py-4 sm:py-5 rounded-2xl bg-[#00A859] hover:bg-[#008A54] focus:bg-[#008A54] active:scale-[0.99] transition-all shadow-md group cursor-pointer"
               >
-                <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg tracking-wide">
+                <span style={whiteButtonTextStroke} className="font-extrabold text-base md:text-lg lg:text-xl tracking-wide">
                   QUERO ACESSAR O TREINAMENTO
                 </span>
                 <ArrowRight
-                  className="w-5 h-5 ml-1 text-[#FFFFFF] shrink-0"
+                  className="w-5 h-5 sm:w-6 sm:h-6 ml-1 text-[#FFFFFF] shrink-0"
                   style={{
                     filter:
                       "drop-shadow(-0.6px 0 0 #000000) drop-shadow(0.6px 0 0 #000000) drop-shadow(0 -0.6px 0 #000000) drop-shadow(0 0.6px 0 #000000)",
                   }}
                 />
               </a>
-              <p className="text-xs text-[#1F2937] opacity-100 font-medium">
-                Pagamento realizado pelo checkout oficial. 7 dias de garantia incondicional.
-              </p>
+
+              {/* ECONOMIA EM VERMELHO */}
+              <div>
+                <span className="inline-block border-2 border-[#D72638] text-[#D72638] bg-[#FFFFFF] px-6 py-2 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wide shadow-xs">
+                  VOCÊ ECONOMIZA R$ 100,00
+                </span>
+              </div>
+
+              {/* INFORMAÇÕES DE PAGAMENTO E GARANTIA */}
+              <div className="pt-2 text-xs text-[#1F2937] space-y-1 text-center font-medium">
+                <p className="flex items-center justify-center gap-2 flex-wrap">
+                  <span>🔒 Pagamento seguro</span>
+                  <span>•</span>
+                  <span>💠 Pix</span>
+                  <span>•</span>
+                  <span>💳 Cartão de crédito</span>
+                </p>
+                <p className="text-[11px] sm:text-xs text-[#1F2937]/80">
+                  7 dias de garantia incondicional. Risco zero para você.
+                </p>
+              </div>
             </div>
 
           </div>
