@@ -1296,6 +1296,241 @@ export default function EbookBundleSalesPage() {
       </section>
 
       {/* ========================================================================= */}
+      {/* 9. SEÇÃO DE DEPOIMENTOS (#hdz-depoimentos)                                */}
+      {/* ========================================================================= */}
+      <section id="hdz-depoimentos" className="py-[56px] max-md:py-[36px] bg-[#FFF5F5] border-b border-[#FFE9EB]">
+        <div className="max-w-[1040px] mx-auto px-4 sm:px-6">
+          
+          {/* CABEÇALHO CENTRALIZADO */}
+          <div className="text-center max-w-[720px] mx-auto mb-[32px] space-y-3">
+            {/* Selo */}
+            <div>
+              <span className="inline-block px-[10px] py-[4px] rounded-full text-[11px] font-bold uppercase tracking-wider bg-white text-[#0B1F3A] border border-[#F5B700]">
+                AVALIAÇÕES E EXPERIÊNCIAS
+              </span>
+            </div>
+
+            {/* Título */}
+            <h2 className="font-outfit font-extrabold text-[25px] sm:text-[30px] md:text-[34px] text-[#0B1F3A] leading-[1.15]">
+              Veja a experiência de quem já utilizou o material
+            </h2>
+
+            {/* Descrição */}
+            <p className="text-[14px] text-[#475569] leading-[1.5]">
+              Exemplos fictícios de apresentação de depoimentos sobre os materiais da coleção.
+            </p>
+          </div>
+
+          {/* GRADE DOS TRÊS CARDS DE DEPOIMENTOS */}
+          <div className="grid grid-cols-1 min-[900px]:grid-cols-3 gap-[24px] items-stretch">
+            
+            {/* CARD 1 — MARCELO ALMEIDA */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#FFD9DF] shadow-[0_3px_5px_rgba(70,30,35,0.10)] min-h-[280px] flex flex-col justify-between h-full text-left">
+              <div>
+                {/* Linha das Estrelas + Selo Fictício */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[#F5B700] text-[17px] tracking-widest leading-none">
+                    ★★★★★
+                  </span>
+                  <span className="px-2 py-0.5 rounded-[4px] bg-[#ECFDF5] text-[#047857] text-[10px] font-bold uppercase tracking-wider">
+                    EXEMPLO FICTÍCIO
+                  </span>
+                </div>
+
+                {/* Divisória Rosa Clara */}
+                <div className="my-[14px] border-t border-[#FFE9EB]" />
+
+                {/* Texto do Depoimento */}
+                <p className="text-[15px] text-[#334155] leading-[1.6]">
+                  “Os mapas ajudam a organizar conceitos que antes pareciam soltos. A apresentação visual facilita relacionar orçamento, inflação e juros durante os estudos.”
+                </p>
+              </div>
+
+              <div>
+                {/* Divisória Neutra */}
+                <div className="mt-[20px] mb-[14px] border-t border-[#E2E8F0]" />
+
+                {/* Rodapé Perfil */}
+                <div className="flex items-center gap-3">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#E0F2FE] shrink-0 flex items-center justify-center overflow-hidden">
+                    <svg viewBox="0 0 40 40" className="w-full h-full" aria-label="Avatar ilustrativo de perfil fictício">
+                      <circle cx="20" cy="20" r="20" fill="#E0F2FE" />
+                      <circle cx="20" cy="17" r="7" fill="#F3D2C1" />
+                      <path d="M13 15C13 11.5 16 10 20 10C24 10 27 11.5 27 15C27 15.5 26.5 16 26 16C25.5 13 23 12 20 12C17 12 14.5 13 14 16C13.5 16 13 15.5 13 15Z" fill="#1E293B" />
+                      <path d="M9 36C9 29.5 14 26 20 26C26 26 31 29.5 31 36H9Z" fill="#0EA5E9" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] text-[#0B1F3A] leading-tight">
+                      Marcelo Almeida
+                    </h4>
+                    <span className="text-[12px] text-[#64748B]">
+                      Servidor público
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD 2 — JULIANA COSTA */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#FFD9DF] shadow-[0_3px_5px_rgba(70,30,35,0.10)] min-h-[280px] flex flex-col justify-between h-full text-left">
+              <div>
+                {/* Linha das Estrelas + Selo Fictício */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[#F5B700] text-[17px] tracking-widest leading-none">
+                    ★★★★★
+                  </span>
+                  <span className="px-2 py-0.5 rounded-[4px] bg-[#ECFDF5] text-[#047857] text-[10px] font-bold uppercase tracking-wider">
+                    EXEMPLO FICTÍCIO
+                  </span>
+                </div>
+
+                {/* Divisória Rosa Clara */}
+                <div className="my-[14px] border-t border-[#FFE9EB]" />
+
+                {/* Texto do Depoimento */}
+                <p className="text-[15px] text-[#334155] leading-[1.6]">
+                  “Gostei da organização dos assuntos. Os materiais permitem revisar os conceitos e voltar aos pontos que ainda geram dúvida.”
+                </p>
+              </div>
+
+              <div>
+                {/* Divisória Neutra */}
+                <div className="mt-[20px] mb-[14px] border-t border-[#E2E8F0]" />
+
+                {/* Rodapé Perfil */}
+                <div className="flex items-center gap-3">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#FCE7F3] shrink-0 flex items-center justify-center overflow-hidden">
+                    <svg viewBox="0 0 40 40" className="w-full h-full" aria-label="Avatar ilustrativo de perfil fictício">
+                      <circle cx="20" cy="20" r="20" fill="#FCE7F3" />
+                      <circle cx="20" cy="17" r="7" fill="#F5D6C6" />
+                      <path d="M12 18C12 11 15 9 20 9C25 9 28 11 28 18C28 20 27 21 26 21C25 18 24 12 20 12C16 12 15 18 14 21C13 21 12 20 12 18Z" fill="#78350F" />
+                      <path d="M8 36C8 29 13 26 20 26C27 26 32 29 32 36H8Z" fill="#EC4899" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] text-[#0B1F3A] leading-tight">
+                      Juliana Costa
+                    </h4>
+                    <span className="text-[12px] text-[#64748B]">
+                      Estudante
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD 3 — RAFAEL SANTOS */}
+            <div className="p-[24px] rounded-[12px] bg-white border border-[#FFD9DF] shadow-[0_3px_5px_rgba(70,30,35,0.10)] min-h-[280px] flex flex-col justify-between h-full text-left">
+              <div>
+                {/* Linha das Estrelas + Selo Fictício */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[#F5B700] text-[17px] tracking-widest leading-none">
+                    ★★★★★
+                  </span>
+                  <span className="px-2 py-0.5 rounded-[4px] bg-[#ECFDF5] text-[#047857] text-[10px] font-bold uppercase tracking-wider">
+                    EXEMPLO FICTÍCIO
+                  </span>
+                </div>
+
+                {/* Divisória Rosa Clara */}
+                <div className="my-[14px] border-t border-[#FFE9EB]" />
+
+                {/* Texto do Depoimento */}
+                <p className="text-[15px] text-[#334155] leading-[1.6]">
+                  “Ter educação financeira e investimentos reunidos facilita encontrar os assuntos que quero estudar e consultar no meu ritmo.”
+                </p>
+              </div>
+
+              <div>
+                {/* Divisória Neutra */}
+                <div className="mt-[20px] mb-[14px] border-t border-[#E2E8F0]" />
+
+                {/* Rodapé Perfil */}
+                <div className="flex items-center gap-3">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#DCFCE7] shrink-0 flex items-center justify-center overflow-hidden">
+                    <svg viewBox="0 0 40 40" className="w-full h-full" aria-label="Avatar ilustrativo de perfil fictício">
+                      <circle cx="20" cy="20" r="20" fill="#DCFCE7" />
+                      <circle cx="20" cy="17" r="7" fill="#E8C39E" />
+                      <path d="M14 15C14 12 16.5 10 20 10C23.5 10 26 12 26 15C26 15.5 25.5 16 25 16C24.5 13.5 22.5 12 20 12C17.5 12 15.5 13.5 15 16C14.5 16 14 15.5 14 15Z" fill="#334155" />
+                      <path d="M16 22C17.5 23.5 22.5 23.5 24 22C24 23.5 22.5 24.5 20 24.5C17.5 24.5 16 23.5 16 22Z" fill="#334155" />
+                      <path d="M9 36C9 29.5 14 26 20 26C26 26 31 29.5 31 36H9Z" fill="#10B981" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] text-[#0B1F3A] leading-tight">
+                      Rafael Santos
+                    </h4>
+                    <span className="text-[12px] text-[#64748B]">
+                      Autônomo
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 10. SEÇÃO DE GARANTIA (#hdz-garantia)                                     */}
+      {/* ========================================================================= */}
+      <section id="hdz-garantia" className="py-[40px] bg-white border-b border-[#E2E8F0]">
+        <div className="max-w-[980px] mx-auto px-4 sm:px-6">
+          
+          {/* PAINEL CENTRAL DE GARANTIA */}
+          <div
+            className="p-[32px] max-md:p-[24px] rounded-[12px] border border-[#314DB3] shadow-[0_8px_20px_rgba(8,20,38,0.20)] flex flex-col md:flex-row items-center justify-between gap-[28px] text-center md:text-left"
+            style={{
+              background: "linear-gradient(110deg, #0C2937 0%, #142D57 52%, #081426 100%)",
+            }}
+          >
+            
+            {/* SELO CIRCULAR À ESQUERDA */}
+            <div className="w-[96px] h-[96px] shrink-0 rounded-full bg-[#081426] border-[3px] border-[#00A859] flex flex-col items-center justify-center p-2 shadow-md mx-auto md:mx-0">
+              <ShieldCheck className="w-5 h-5 text-[#00A859] mb-0.5" strokeWidth={2} />
+              <span className="text-[9px] font-bold text-white tracking-widest uppercase leading-none">
+                GARANTIA DE
+              </span>
+              <span className="font-outfit font-extrabold text-[15px] text-[#00A859] leading-none mt-0.5">
+                7 DIAS
+              </span>
+            </div>
+
+            {/* COPY CENTRAL */}
+            <div className="flex-1 space-y-2">
+              <div>
+                <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold text-[#34D399] border border-[#34D399] bg-transparent uppercase tracking-wider">
+                  COMPRA COM GARANTIA
+                </span>
+              </div>
+              <h3 className="font-outfit font-extrabold text-[22px] sm:text-[26px] text-white leading-[1.2]">
+                7 dias para testar e conhecer o material
+              </h3>
+              <p className="text-[14px] text-[#E2E8F0] leading-[1.55] max-w-[500px]">
+                Acesse os materiais e avalie se a coleção atende às suas expectativas. Se decidir solicitar o reembolso, utilize o canal informado no acesso dentro do prazo de sete dias.
+              </p>
+            </div>
+
+            {/* BOTÃO À DIREITA */}
+            <div className="w-full max-w-[320px] md:w-[220px] shrink-0">
+              <button
+                type="button"
+                onClick={() => scrollToSection("oferta")}
+                className="w-full min-h-[52px] px-4 py-2.5 rounded-[7px] bg-[#00A859] hover:bg-[#008C4A] text-white font-outfit font-extrabold text-[14px] uppercase tracking-wide transition-all shadow-md cursor-pointer flex items-center justify-center text-center leading-tight"
+              >
+                QUERO ACESSAR COM GARANTIA →
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
       {/* 11. PASSO A PASSO EXISTENTE COM COPY ATUALIZADA                          */}
       {/* ========================================================================= */}
       <section className="py-12 md:py-20 bg-[#FFFFFF] border-b border-[#E2E8F0]">
