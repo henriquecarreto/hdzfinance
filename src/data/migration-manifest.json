@@ -31,5 +31,181 @@
     "localImage": "/images/materias/o-que-foi-o-padrao-ouro/cover.webp",
     "contentImported": true,
     "imageImported": true
+  },
+  {
+    "legacyId": "04df1df7-1a4c-4f5a-84c9-a8bb54c5274f",
+    "sourceUrl": "https://hdzfinance.site/noticias/a-marca-dos-20-milhoes-como-o-bitcoin-saiu-de-um-experimento-e-entrou-para-a-historia-do-dinheiro",
+    "title": "A Marca dos 20 Milhões: Como o Bitcoin Saiu de um Experimento e Entrou para a História do Dinheiro",
+    "slug": "a-marca-dos-20-milhoes-como-o-bitcoin-saiu-de-um-experimento-e-entrou-para-a-historia-do-dinheiro",
+    "publishedAt": "2026-03-13T00:35:49.012+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/733e29ac-13d7-420b-9748-022c4ee1589c.png",
+    "localImage": "/images/materias/a-marca-dos-20-milhoes-como-o-bitcoin-saiu-de-um-experimento-e-entrou-para-a-historia-do-dinheiro/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "9860f354-6df0-4adb-aecf-72c560e93a39",
+    "sourceUrl": "https://hdzfinance.site/noticias/strategy-e-michael-saylor-como-a-empresa-esta-criando-uma-nova-estrutura-financeira-baseada-em-bitcoin",
+    "title": "Strategy e Michael Saylor: Como a Empresa Está Criando uma Nova Estrutura Financeira Baseada em Bitcoin",
+    "slug": "strategy-e-michael-saylor-como-a-empresa-esta-criando-uma-nova-estrutura-financeira-baseada-em-bitcoin",
+    "publishedAt": "2026-03-11T00:21:58.132+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/17aca3d2-c8b3-4404-adae-7285ca75ffba.png",
+    "localImage": "/images/materias/strategy-e-michael-saylor-como-a-empresa-esta-criando-uma-nova-estrutura-financeira-baseada-em-bitcoin/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "721a04c0-2a3e-4223-babd-442f49657033",
+    "sourceUrl": "https://hdzfinance.site/noticias/petroleo-em-alta-guerra-no-oriente-medio-e-bitcoin-o-choque-global-que-pode-mudar-o-proximo-movimento-do-mercado",
+    "title": "Petróleo em Alta, Guerra no Oriente Médio e Bitcoin: o Choque Global que Pode Mudar o Próximo Movimento do Mercado",
+    "slug": "petroleo-em-alta-guerra-no-oriente-medio-e-bitcoin-o-choque-global-que-pode-mudar-o-proximo-movimento-do-mercado",
+    "publishedAt": "2026-03-09T19:07:48.002+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/41a6c4a9-d6c1-4e36-902f-7bc8e008aa9d.png",
+    "localImage": "/images/materias/petroleo-em-alta-guerra-no-oriente-medio-e-bitcoin-o-choque-global-que-pode-mudar-o-proximo-movimento-do-mercado/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "8ba6df02-0e30-4850-906d-822912f782ed",
+    "sourceUrl": "https://hdzfinance.site/noticias/inteligencia-artificial-economia-e-bitcoin-estamos-diante-de-uma-crise-ou-do-maior-boom-da-historia",
+    "title": "Inteligência Artificial, Economia e Bitcoin: Estamos Diante de Uma Crise ou do Maior Boom da História?",
+    "slug": "inteligencia-artificial-economia-e-bitcoin-estamos-diante-de-uma-crise-ou-do-maior-boom-da-historia",
+    "publishedAt": "2026-02-25T00:38:15.864+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/f26ce8a9-153e-443b-a827-ff86f79ed7ff.png",
+    "localImage": "/images/materias/inteligencia-artificial-economia-e-bitcoin-estamos-diante-de-uma-crise-ou-do-maior-boom-da-historia/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "cf8e998e-c25d-4b55-b625-34912759d40e",
+    "sourceUrl": "https://hdzfinance.site/noticias/a-protecao-do-patrimonio-pode-se-tornar-mais-restrita-entenda-o-que-esta-em-jogo",
+    "title": "A Proteção do Patrimônio Pode se Tornar Mais Restrita: Entenda O Que Está em Jogo",
+    "slug": "a-protecao-do-patrimonio-pode-se-tornar-mais-restrita-entenda-o-que-esta-em-jogo",
+    "publishedAt": "2026-02-21T16:37:00.125+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/5663a285-5a36-40e9-b695-74bcac19c655.png",
+    "localImage": "/images/materias/a-protecao-do-patrimonio-pode-se-tornar-mais-restrita-entenda-o-que-esta-em-jogo/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "5efa9098-7791-43f4-8af2-96d47cfa68dd",
+    "sourceUrl": "https://hdzfinance.site/noticias/a-consolidacao-do-bitcoin-como-ativo-global-e-o-paradoxo-da-volatilidade-no-sistema-financeiro-moderno",
+    "title": "A Consolidação do Bitcoin Como Ativo Global e o Paradoxo da Volatilidade no Sistema Financeiro Moderno",
+    "slug": "a-consolidacao-do-bitcoin-como-ativo-global-e-o-paradoxo-da-volatilidade-no-sistema-financeiro-moderno",
+    "publishedAt": "2026-02-20T17:18:29.164+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/a462822b-508c-4406-8544-579036c8a2fb.png",
+    "localImage": "/images/materias/a-consolidacao-do-bitcoin-como-ativo-global-e-o-paradoxo-da-volatilidade-no-sistema-financeiro-moderno/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "71a97249-1dc4-464c-bec8-0704b0c5dfbc",
+    "sourceUrl": "https://hdzfinance.site/noticias/inflacao-sob-a-otica-austriaca-expansao-monetaria-ciclos-economicos-e-anos-eleitorais-no-brasil",
+    "title": "Inflação Sob a Ótica Austríaca: Expansão Monetária, Ciclos Econômicos e Anos Eleitorais no Brasil",
+    "slug": "inflacao-sob-a-otica-austriaca-expansao-monetaria-ciclos-economicos-e-anos-eleitorais-no-brasil",
+    "publishedAt": "2026-02-19T22:45:18.502+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/9aaa88f6-7e74-4760-a48b-8dda5b7b0675.png",
+    "localImage": "/images/materias/inflacao-sob-a-otica-austriaca-expansao-monetaria-ciclos-economicos-e-anos-eleitorais-no-brasil/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "41b929e0-db4b-4a3c-8953-0ed1f6c32764",
+    "sourceUrl": "https://hdzfinance.site/noticias/bitcoin-em-ponto-de-decisao-suporte-macro-liquidez-institucional-e-sinais-on-chain-em-foco",
+    "title": "Bitcoin em Ponto de Decisão: Suporte Macro, Liquidez Institucional e Sinais On-Chain em Foco",
+    "slug": "bitcoin-em-ponto-de-decisao-suporte-macro-liquidez-institucional-e-sinais-on-chain-em-foco",
+    "publishedAt": "2026-02-17T13:36:03.471+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/cab8f500-7407-474e-ad74-c7236dd97572.png",
+    "localImage": "/images/materias/bitcoin-em-ponto-de-decisao-suporte-macro-liquidez-institucional-e-sinais-on-chain-em-foco/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "9fa485d8-1bde-40f1-82e8-33166cb6d898",
+    "sourceUrl": "https://hdzfinance.site/noticias/bitcoin-ouro-e-prata-em-queda-o-que-esta-por-tras-da-correcao-dos-mercados",
+    "title": "Bitcoin, Ouro e Prata em Queda: O que Está Por Trás da Correção dos Mercados",
+    "slug": "bitcoin-ouro-e-prata-em-queda-o-que-esta-por-tras-da-correcao-dos-mercados",
+    "publishedAt": "2026-02-01T23:07:22.136+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/8dfbaf6a-ac9d-4c0c-bca2-51486229c364.png",
+    "localImage": "/images/materias/bitcoin-ouro-e-prata-em-queda-o-que-esta-por-tras-da-correcao-dos-mercados/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "e2bc1dac-f436-46e2-a3e7-b6bd79169845",
+    "sourceUrl": "https://hdzfinance.site/noticias/dolar-digital-controle-financeiro-e-o-uso-pratico-no-dia-a-dia",
+    "title": "Dólar digital, Controle Financeiro e o uso Prático no Dia a Dia",
+    "slug": "dolar-digital-controle-financeiro-e-o-uso-pratico-no-dia-a-dia",
+    "publishedAt": "2026-01-26T23:50:13.596+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/37ec2f94-80bf-4eb8-9914-39f2bc3ac774.png",
+    "localImage": "/images/materias/dolar-digital-controle-financeiro-e-o-uso-pratico-no-dia-a-dia/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "e0586365-6011-4234-90e3-c96d792e4137",
+    "sourceUrl": "https://hdzfinance.site/noticias/a-quebradeira-dos-bancos-e-o-retorno-da-desconfianca-no-sistema-financeiro",
+    "title": "A Quebradeira dos Bancos e o Retorno da Desconfiança no Sistema Financeiro",
+    "slug": "a-quebradeira-dos-bancos-e-o-retorno-da-desconfianca-no-sistema-financeiro",
+    "publishedAt": "2026-01-21T22:25:50.869+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/fbe992df-3789-4822-91d6-bfe1dccf71eb.png",
+    "localImage": "/images/materias/a-quebradeira-dos-bancos-e-o-retorno-da-desconfianca-no-sistema-financeiro/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "84aeebac-265c-47a4-897f-1e7fd55525ae",
+    "sourceUrl": "https://hdzfinance.site/noticias/os-lugares-do-mundo-onde-o-bitcoin-ja-e-usado-no-dia-a-dia",
+    "title": "Os Lugares do Mundo Onde o Bitcoin Já é Usado no Dia a Dia",
+    "slug": "os-lugares-do-mundo-onde-o-bitcoin-ja-e-usado-no-dia-a-dia",
+    "publishedAt": "2026-01-14T22:58:45.143+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/ef972868-fde2-4701-8d29-689895b6f4d2.png",
+    "localImage": "/images/materias/os-lugares-do-mundo-onde-o-bitcoin-ja-e-usado-no-dia-a-dia/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "2cdba0e2-b8c0-4474-82e3-bd7775c7e132",
+    "sourceUrl": "https://hdzfinance.site/noticias/tether-o-que-esta-por-tras-do-crescimento-do-dolar-digital",
+    "title": "Tether: O Que Está Por Trás Do Crescimento Do Dólar Digital",
+    "slug": "tether-o-que-esta-por-tras-do-crescimento-do-dolar-digital",
+    "publishedAt": "2026-01-14T02:52:58.483+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/3814f019-fdcc-45fa-9b0b-4c73268ecbdc.png",
+    "localImage": "/images/materias/tether-o-que-esta-por-tras-do-crescimento-do-dolar-digital/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "eaf0e34f-6cd7-4c75-8715-398bcc8aa6de",
+    "sourceUrl": "https://hdzfinance.site/noticias/em-que-fase-do-ciclo-estamos-agora",
+    "title": "Em Que Fase do Ciclo Estamos Agora",
+    "slug": "em-que-fase-do-ciclo-estamos-agora",
+    "publishedAt": "2026-01-12T17:17:09.214+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/ed5740d1-221e-4443-9475-04249fff39e6.png",
+    "localImage": "/images/materias/em-que-fase-do-ciclo-estamos-agora/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "d4af54ea-8e0f-4160-8ebd-c0e5aecc45ef",
+    "sourceUrl": "https://hdzfinance.site/noticias/gerenciamento-de-carteira-e-exposicao",
+    "title": "Gerenciamento de Carteira e Exposição",
+    "slug": "gerenciamento-de-carteira-e-exposicao",
+    "publishedAt": "2026-01-11T02:20:16.347+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/26f2f6b2-96b4-4d20-8741-6e7122b58dd1.png",
+    "localImage": "/images/materias/gerenciamento-de-carteira-e-exposicao/cover.png",
+    "contentImported": true,
+    "imageImported": true
+  },
+  {
+    "legacyId": "c52be795-e908-4a95-af3a-5d6cad43c1d9",
+    "sourceUrl": "https://hdzfinance.site/noticias/o-que-e-criptografia",
+    "title": "O Que é Criptografia?",
+    "slug": "o-que-e-criptografia",
+    "publishedAt": "2026-01-09T15:55:30.205+00:00",
+    "sourceImage": "https://iqnulqgypljzmfrppbio.supabase.co/storage/v1/object/public/news-images/news/1c649cf7-26f4-4cf3-8067-85a28e6367db.png",
+    "localImage": "/images/materias/o-que-e-criptografia/cover.png",
+    "contentImported": true,
+    "imageImported": true
   }
 ]
