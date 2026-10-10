@@ -228,7 +228,7 @@ const catalogGuias = [
   },
 ];
 
-// Catálogo dos 2 Bônus
+// Catálogo dos 3 Bônus
 const catalogBonus = [
   {
     number: "01",
@@ -245,6 +245,14 @@ const catalogBonus = [
     description:
       "Uma leitura introdutória para compreender o essencial e contextualizar os primeiros passos no universo Bitcoin.",
     badge: "🎁 BÔNUS DA COLEÇÃO COMPLETA",
+  },
+  {
+    number: "03",
+    title: "Planilha de Controle Financeiro",
+    shortTitle: "Planilha de Controle Financeiro",
+    description:
+      "Ferramenta prática pronta para uso para organizar seu orçamento mensal, acompanhar receitas, despesas e planejar suas metas de investimento.",
+    badge: "🎁 BÔNUS EXCLUSIVO",
   },
 ];
 
@@ -270,12 +278,12 @@ export default function EbookBundleSalesPage() {
     {
       question: "O que está incluído em cada coleção?",
       answer:
-        "A Coleção Inicial reúne quatro guias visuais (Educação Financeira; Economia, Juros e Inflação; Investimentos; Fundamentos do Bitcoin). A Coleção Completa inclui esses mesmos quatro guias, mais cinco guias adicionais (Criptografia, Dólar Digital, Blockchain, Tokenização e Mentalidade Bitcoiner) e dois e-books bônus (Do Clique ao Bloco e Meu Primeiro Bitcoin), somando 11 materiais.",
+        "A Coleção Inicial reúne quatro guias visuais (Educação Financeira; Economia, Juros e Inflação; Investimentos; Fundamentos do Bitcoin). A Coleção Completa inclui esses mesmos quatro guias, mais cinco guias adicionais (Criptografia, Dólar Digital, Blockchain, Tokenização e Mentalidade Bitcoiner) e três bônus exclusivos (Do Clique ao Bloco, Meu Primeiro Bitcoin e a Planilha de Controle Financeiro), somando 12 materiais.",
     },
     {
       question: "Em qual formato os materiais são entregues?",
       answer:
-        "Todos os guias visuais e e-books bônus são entregues em formato PDF digital de alta resolução, otimizados para leitura e consulta em celulares, tablets, leitores digitais e computadores.",
+        "Todos os guias visuais e e-books bônus são entregues em formato PDF digital de alta resolução, e a Planilha de Controle Financeiro em formato digital pronto para uso, otimizados para leitura, consulta e utilização em celulares, tablets e computadores.",
     },
     {
       question: "Os guias e e-books são vendidos separadamente?",
@@ -285,7 +293,7 @@ export default function EbookBundleSalesPage() {
     {
       question: "Como receberei o acesso após a compra?",
       answer:
-        "Assim que a confirmação do pagamento for concluída, você receberá um e-mail com as orientações e os links diretos para download dos PDFs correspondentes ao seu plano.",
+        "Assim que a confirmação do pagamento for concluída, você receberá um e-mail com as orientações e os links diretos para download dos PDFs e da planilha correspondentes ao seu plano.",
     },
     {
       question: "Existe garantia de reembolso?",
@@ -293,9 +301,9 @@ export default function EbookBundleSalesPage() {
         "Sim. Oferecemos 7 dias de garantia incondicional. Você pode baixar os arquivos, avaliar a organização do conteúdo e, se considerar que não atende às suas expectativas, solicitar o reembolso integral dentro do prazo.",
     },
     {
-      question: "Qual a diferença entre os guias visuais e os e-books bônus?",
+      question: "Qual a diferença entre os guias visuais e os bônus?",
       answer:
-        "Os guias visuais organizam conceitos fundamentais em mapas conceituais para consulta rápida. Os e-books bônus ('Do Clique ao Bloco' e 'Meu Primeiro Bitcoin') são leituras complementares em texto contínuo incluídas exclusivamente na Coleção Completa.",
+        "Os guias visuais organizam conceitos fundamentais em mapas conceituais para consulta rápida. Os bônus incluem e-books de leitura complementar em texto contínuo ('Do Clique ao Bloco' e 'Meu Primeiro Bitcoin') e a Planilha de Controle Financeiro para gestão prática do seu orçamento no dia a dia, incluídos exclusivamente na Coleção Completa.",
     },
     {
       question: "Preciso de conhecimento prévio para estudar os guias?",
@@ -821,17 +829,17 @@ export default function EbookBundleSalesPage() {
 
             {/* Título */}
             <h2 className="font-outfit font-extrabold text-[26px] sm:text-[32px] md:text-[36px] text-[#0B1F3A] leading-[1.15] mb-3">
-              Conheça os 11 materiais da coleção completa
+              Conheça os 12 materiais da coleção completa
             </h2>
 
             {/* Descrição */}
             <p className="text-[16px] text-[#334155] leading-[1.5] mb-3.5">
-              Guias visuais para compreender educação financeira, economia, investimentos e Bitcoin, com duas leituras complementares para continuar seus estudos.
+              Guias visuais para compreender educação financeira, economia, investimentos e Bitcoin, com três bônus exclusivos para impulsionar seus estudos.
             </p>
 
             {/* Etiqueta */}
             <span className="inline-block px-[10px] py-[6px] rounded-full text-[12px] font-semibold bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE]">
-              9 GUIAS VISUAIS + 2 E-BOOKS BÔNUS • MATERIAIS DIGITAIS EM PDF
+              9 GUIAS VISUAIS + 3 BÔNUS EXCLUSIVOS • MATERIAIS DIGITAIS EM PDF & PLANILHA
             </span>
           </div>
 
@@ -894,20 +902,20 @@ export default function EbookBundleSalesPage() {
             </div>
           </div>
 
-          {/* GRUPO 2: 2 BÔNUS DENTRO DA MESMA SEÇÃO */}
+          {/* GRUPO 2: 3 BÔNUS DENTRO DA MESMA SEÇÃO */}
           <div id="ebooks" className="mt-[32px]">
             {/* Linha de identificação bônus */}
             <div className="border-b-2 border-[#A7F3D0] pb-2 mb-[20px] max-sm:mb-[16px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
               <h3 className="font-outfit font-bold text-[18px] text-[#059669]">
-                🎁 2 bônus para complementar seus estudos
+                🎁 3 bônus para complementar seus estudos
               </h3>
               <span className="text-sm font-medium text-[#047857]">
                 Incluídos na Coleção Completa
               </span>
             </div>
 
-            {/* Grade dos 2 bônus */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[20px] max-sm:gap-[16px] items-stretch">
+            {/* Grade dos 3 bônus */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px] max-sm:gap-[16px] items-stretch">
               {catalogBonus.map((bonus) => (
                 <div
                   key={bonus.number}
@@ -936,7 +944,7 @@ export default function EbookBundleSalesPage() {
                   <div>
                     <div className="my-3 border-t border-[#E2E8F0]" />
                     <p className="text-[11px] font-medium text-[#059669]">
-                      📄 E-book digital em PDF
+                      {bonus.title.includes("Planilha") ? "📊 Planilha digital em Excel/Sheets" : "📄 E-book digital em PDF"}
                     </p>
                   </div>
                 </div>
@@ -951,10 +959,10 @@ export default function EbookBundleSalesPage() {
                 ✨ COLEÇÃO COMPLETA
               </span>
               <h3 className="font-outfit font-bold text-[18px] md:text-[20px] text-[#0B1F3A]">
-                Acesse os 11 materiais da coleção completa
+                Acesse os 12 materiais da coleção completa
               </h3>
               <p className="text-[14px] text-[#475569]">
-                Nove guias visuais e dois e-books bônus para estudar e consultar no seu ritmo.
+                Nove guias visuais, dois e-books bônus e a Planilha de Controle Financeiro para estudar e consultar no seu ritmo.
               </p>
             </div>
 
@@ -990,7 +998,7 @@ export default function EbookBundleSalesPage() {
 
             {/* Descrição */}
             <p className="text-[15px] text-[#475569] leading-[1.5]">
-              Comece com quatro guias ou escolha a coleção completa, com nove guias visuais e dois e-books bônus.
+              Comece com quatro guias ou escolha a coleção completa, com nove guias visuais e três bônus exclusivos.
             </p>
           </div>
 
@@ -1132,7 +1140,7 @@ export default function EbookBundleSalesPage() {
               
               {/* Faixa Dourada Sobreposta */}
               <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#F5B700] text-[#0B1F3A] font-outfit font-bold text-[11px] uppercase tracking-wider whitespace-nowrap shadow-sm">
-                ⭐ 9 GUIAS VISUAIS + 2 E-BOOKS BÔNUS
+                ⭐ 9 GUIAS VISUAIS + 3 BÔNUS EXCLUSIVOS
               </div>
 
               <div className="space-y-4 pt-1">
@@ -1142,7 +1150,7 @@ export default function EbookBundleSalesPage() {
                     COLEÇÃO COMPLETA
                   </h3>
                   <p className="mt-1 text-[14px] text-[#475569] leading-[1.5]">
-                    Todos os materiais da Inicial, mais cinco guias e dois e-books bônus. Amplie seus estudos por R$ 10,00 a mais.
+                    Todos os materiais da Inicial, mais cinco guias e três bônus exclusivos. Amplie seus estudos por R$ 10,00 a mais.
                   </p>
                 </div>
 
@@ -1150,7 +1158,7 @@ export default function EbookBundleSalesPage() {
                 <div className="mt-4">
                   <Image
                     src="/images/products/colecao-completa-cover.jpg"
-                    alt="Coleção Completa - 11 Materiais Digitais"
+                    alt="Coleção Completa - 12 Materiais Digitais"
                     width={600}
                     height={480}
                     className="w-full h-auto rounded-[6px] object-cover shadow-sm"
@@ -1169,14 +1177,14 @@ export default function EbookBundleSalesPage() {
                     </span>
                   </div>
                   <p className="text-[12px] text-[#475569]">
-                    11 materiais digitais em PDF
+                    12 materiais digitais (PDFs + Planilha)
                   </p>
                 </div>
 
                 {/* Quadro Interno dos Materiais */}
                 <div className="p-[14px] rounded-[6px] bg-[#FFFDF3] border border-[#F5B700] space-y-3">
                   <span className="font-outfit font-bold text-[12px] text-[#92400E] block uppercase tracking-wide">
-                    📚 9 GUIAS VISUAIS + 🎁 2 E-BOOKS BÔNUS
+                    📚 9 GUIAS VISUAIS + 🎁 3 BÔNUS EXCLUSIVOS
                   </span>
 
                   {/* Lista em 2 colunas no computador e 1 no celular */}
@@ -1220,18 +1228,36 @@ export default function EbookBundleSalesPage() {
                   </div>
 
                   {/* Divisória Interna Bônus */}
-                  <div className="border-t border-[#F5B700]/40 pt-2 space-y-2">
-                    <span className="font-outfit font-bold text-[12px] text-[#047857] block uppercase tracking-wide">
-                      🎁 BÔNUS INCLUÍDOS
+                  <div className="border-t-2 border-[#F5B700]/60 pt-3 space-y-2.5">
+                    <span className="font-outfit font-extrabold text-[12px] text-[#047857] block uppercase tracking-wide">
+                      🎁 3 BÔNUS INCLUÍDOS NA COMPRA:
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 text-[13px] text-[#0B1F3A] font-semibold">
                       <div className="flex items-center gap-1.5">
                         <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
-                        <span>Do Clique ao Bloco</span>
+                        <span>Do Clique ao Bloco (E-book)</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="w-3.5 h-3.5 text-[#00A859] shrink-0" />
-                        <span>Meu Primeiro Bitcoin</span>
+                        <span>Meu Primeiro Bitcoin (E-book)</span>
+                      </div>
+                    </div>
+
+                    {/* Destaque BEM GRANDE para o BÔNUS PLANILHA DE CONTROLE FINANCEIRO */}
+                    <div className="mt-2.5 p-3.5 rounded-[10px] bg-[#ECFDF5] border-2 border-[#00A859] shadow-sm">
+                      <div className="flex items-start gap-2.5">
+                        <span className="text-2xl leading-none">📊</span>
+                        <div className="space-y-1">
+                          <span className="inline-block px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#047857] text-white uppercase tracking-wider">
+                            BÔNUS EXCLUSIVO
+                          </span>
+                          <h5 className="font-outfit font-black text-[16px] sm:text-[18px] text-[#047857] leading-tight tracking-tight">
+                            BÔNUS PLANILHA DE CONTROLE FINANCEIRO
+                          </h5>
+                          <p className="text-[12px] text-[#065F46] font-medium leading-snug">
+                            Planilha prática pronta para você organizar seu orçamento mensal, despesas e metas de investimento.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
