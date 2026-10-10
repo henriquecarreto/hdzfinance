@@ -11,9 +11,18 @@ export default function ArticleBody({ article }: ArticleBodyProps) {
 
   return (
     <article className="max-w-3xl mx-auto py-8 space-y-8">
+      {/* Lead Summary Highlight Box */}
+      {article.subtitle && (
+        <div className="p-5 md:p-6 rounded-xl bg-[#0D1117] border-l-4 border-[#00B86B] border-t border-r border-b border-white/[0.08] shadow-md my-6">
+          <p className="text-base md:text-lg italic text-[#D5DDE6] leading-relaxed font-sans font-normal">
+            {article.subtitle}
+          </p>
+        </div>
+      )}
+
       {/* Editorial Content */}
       <div
-        className="font-lora text-[#F5F7FA] text-base md:text-lg leading-relaxed space-y-6 [&>h2]:font-outfit [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:text-[#F5F7FA] [&>h2]:pt-4 [&>h2]:pb-2 [&>h3]:font-outfit [&>h3]:font-semibold [&>h3]:text-xl [&>h3]:text-[#F5F7FA] [&>p]:leading-loose [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ul]:my-4 [&>blockquote]:border-l-4 [&>blockquote]:border-[#147BFF] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#C7CDD4]"
+        className="font-sans text-[#D5DDE6] text-base md:text-lg leading-relaxed space-y-6 [&>p]:leading-relaxed [&>p]:mb-6 [&>p]:text-[#D5DDE6] [&>h2]:font-outfit [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:text-[#F5F7FA] [&>h2]:mt-8 [&>h2]:mb-4 [&>h3]:font-outfit [&>h3]:font-semibold [&>h3]:text-xl [&>h3]:text-[#F5F7FA] [&>h3]:mt-6 [&>h3]:mb-3 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ul]:my-4 [&>blockquote]:border-l-4 [&>blockquote]:border-[#00B86B] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-[#C7CDD4]"
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
 
