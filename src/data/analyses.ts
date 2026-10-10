@@ -95,7 +95,7 @@ export const ANALYSES: AnalysisArticle[] = [
     title: "O Que Foi o Padrão Ouro?",
     subtitle: "O padrão-ouro foi o sistema monetário que vinculou moedas ao ouro e moldou a economia global por mais de um século. Seu fim transformou a política monetária, abriu caminho para moedas fiduciárias e redefiniu a relação entre governos, dinheiro e sociedade.",
     category: "economia",
-    categoryName: "Gold Standart",
+    categoryName: "Economia",
     author: AUTHORS.editoria,
     publishDate: "2026-01-09T17:41:56.26+00:00",
     updateDate: "2026-01-11T21:30:26.422699+00:00",

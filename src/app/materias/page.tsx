@@ -12,8 +12,6 @@ export default function MateriasPage() {
   const categories = [
     { slug: "todas", name: "Todas as Categorias" },
     { slug: "economia", name: "Economia" },
-    { slug: "esmeralda-ouro-e-prata", name: "Esmeralda, Ouro e Prata" },
-    { slug: "gold-standart", name: "Gold Standart" },
     { slug: "criptomoedas", name: "Criptomoedas" },
     { slug: "investimentos", name: "Investimentos" },
     { slug: "mercados", name: "Mercados" },
