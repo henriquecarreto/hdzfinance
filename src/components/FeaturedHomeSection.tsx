@@ -116,7 +116,7 @@ export default function FeaturedHomeSection() {
           <div className="lg:col-span-8 flex flex-col min-w-0 h-full">
             <Link
               href={`/materias/${mainMateria.slug}`}
-              className="featured-main-card relative flex flex-col justify-end w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] rounded-[18px] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#168BFF] shadow-2xl border border-white/10"
+              className="featured-main-card relative flex flex-col justify-end w-full h-full min-h-[340px] sm:min-h-[440px] lg:min-h-[520px] rounded-[18px] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#168BFF] shadow-2xl border border-white/10"
             >
               {/* Background Cover Image filling 100% of card bounds */}
               <Image
@@ -138,7 +138,7 @@ export default function FeaturedHomeSection() {
               />
 
               {/* Bottom Anchored Editorial Content */}
-              <div className="relative z-20 p-6 md:p-10 space-y-4">
+              <div className="relative z-20 p-5 sm:p-7 md:p-10 space-y-3 sm:space-y-4">
                 <div className="flex items-center space-x-3 text-xs text-[#AEB8C4] flex-wrap gap-y-1">
                   <span className="px-3 py-1 rounded-md font-bold uppercase tracking-wider bg-[#168BFF] text-white text-[11px]">
                     {mainMateria.categoryName || mainMateria.category}
@@ -150,7 +150,7 @@ export default function FeaturedHomeSection() {
                 </div>
 
                 <h2
-                  className="font-outfit font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-[42px] text-white leading-[1.1] tracking-tight group-hover:text-[#3A91FF] transition-colors"
+                  className="font-outfit font-extrabold text-xl sm:text-3xl md:text-4xl lg:text-[42px] text-white leading-[1.15] sm:leading-[1.1] tracking-tight group-hover:text-[#3A91FF] transition-colors"
                   style={{
                     textShadow: "0 3px 14px rgba(0, 0, 0, 0.88), 0 1px 3px rgba(0, 0, 0, 0.75)",
                   }}
@@ -160,7 +160,7 @@ export default function FeaturedHomeSection() {
 
                 {(mainMateria.subtitle || mainMateria.excerpt) && (
                   <p
-                    className="text-sm md:text-base lg:text-[16px] text-[#DCE3EB] leading-[1.6] line-clamp-3 max-w-3xl font-normal"
+                    className="text-xs sm:text-base lg:text-[16px] text-[#DCE3EB] leading-[1.5] sm:leading-[1.6] line-clamp-2 sm:line-clamp-3 max-w-3xl font-normal"
                     style={{
                       textShadow: "0 2px 10px rgba(0, 0, 0, 0.92)",
                     }}
@@ -173,7 +173,7 @@ export default function FeaturedHomeSection() {
           </div>
 
           {/* Right Side Column (4 cols): 2 News Cards or Discrete Empty Placeholders */}
-          <div className="lg:col-span-4 flex flex-col gap-6 min-w-0 h-full justify-between">
+          <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-6 min-w-0 h-full justify-between">
             {[0, 1].map((slotIdx) => {
               const noticia = publishedNoticias[slotIdx];
 
@@ -182,7 +182,7 @@ export default function FeaturedHomeSection() {
                   <Link
                     key={noticia.id}
                     href={`/noticias/${noticia.slug}`}
-                    className="flex-1 group relative flex flex-col justify-between p-5 rounded-[18px] bg-[#000000] border border-white/10 hover:border-[#168BFF]/50 transition-all duration-300 shadow-xl overflow-hidden min-h-[250px]"
+                    className="flex-1 group relative flex flex-col justify-between p-4 sm:p-5 rounded-[18px] bg-[#000000] border border-white/10 hover:border-[#168BFF]/50 transition-all duration-300 shadow-xl overflow-hidden min-h-[220px] sm:min-h-[250px]"
                   >
                     <div className="relative aspect-[16/9] w-full rounded-[12px] overflow-hidden bg-[#000000] border border-white/10 mb-3 shrink-0">
                       <Image
@@ -215,7 +215,7 @@ export default function FeaturedHomeSection() {
                 <div
                   key={`empty-news-slot-${slotIdx}`}
                   aria-hidden="true"
-                  className="news-empty-slot flex-1 w-full min-h-[250px] rounded-[18px] border border-white/[0.08] bg-[#000000] shadow-xl pointer-events-none select-none transition-all duration-300"
+                  className="news-empty-slot hidden lg:block flex-1 w-full min-h-[250px] rounded-[18px] border border-white/[0.08] bg-[#000000] shadow-xl pointer-events-none select-none transition-all duration-300"
                 />
               );
             })}

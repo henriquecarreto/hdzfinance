@@ -51,21 +51,19 @@ export default function MethodSection() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden py-20 md:py-24 border-b border-[#22272E] bg-transparent">
-
-
-      <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
+    <section className="relative isolate overflow-hidden py-14 sm:py-20 md:py-24 border-b border-[#22272E] bg-transparent">
+      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 md:px-8 space-y-8 md:space-y-12">
         {/* Header Block */}
-        <div className="max-w-[860px] space-y-3.5">
+        <div className="max-w-[860px] space-y-3">
           <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             COMO A HDZ EXPLICA
           </span>
 
-          <h2 className="font-outfit font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] text-[#F7F9FC] tracking-tight leading-[1.16]">
+          <h2 className="font-outfit font-extrabold text-[26px] sm:text-[36px] lg:text-[44px] text-[#F7F9FC] tracking-tight leading-[1.18]">
             Notícia informa. Contexto mostra por que ela importa.
           </h2>
 
-          <p className="text-[15.5px] md:text-[17px] text-[#E5EAF0] leading-[1.65] font-normal">
+          <p className="text-[14.5px] sm:text-[16px] md:text-[17px] text-[#E5EAF0] leading-[1.6] font-normal">
             Todo conteúdo da HDZ deve responder a quatro perguntas: o que mudou, o que iniciou o movimento, por onde o efeito se espalha e quais sinais merecem acompanhamento.
           </p>
         </div>

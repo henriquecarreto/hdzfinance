@@ -38,21 +38,19 @@ export default function BitcoinSection() {
   ];
 
   return (
-    <section id="bitcoin-section" className="relative isolate overflow-hidden py-20 md:py-24 border-b border-white/[0.08] bg-transparent">
-
-
-      <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 space-y-10 md:space-y-12">
-        {/* Header Block with Localized Backdrop Blur */}
-        <div className="max-w-[860px] space-y-3.5 p-6 md:p-8 rounded-2xl bg-[#000000]/75 backdrop-blur-md border border-white/10 shadow-2xl">
+    <section id="bitcoin-section" className="relative isolate overflow-hidden py-14 sm:py-20 md:py-24 border-b border-white/[0.08] bg-transparent">
+      <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 md:px-8 space-y-8 md:space-y-12">
+        {/* Header Block */}
+        <div className="max-w-[860px] space-y-3.5 p-5 sm:p-7 md:p-8 rounded-2xl bg-[#000000] border border-white/10 shadow-2xl">
           <span className="text-[11px] md:text-[12px] font-extrabold uppercase tracking-[0.15em] text-[#F59A18] block">
             DESCENTRALIZAÇÃO NA PRÁTICA
           </span>
 
-          <h2 className="font-outfit font-extrabold text-[32px] sm:text-[38px] lg:text-[44px] text-[#EEF4FA] tracking-tight leading-[1.16]">
+          <h2 className="font-outfit font-extrabold text-[26px] sm:text-[36px] lg:text-[44px] text-[#EEF4FA] tracking-tight leading-[1.18]">
             Bitcoin não é um dólar digital. É outra arquitetura de confiança.
           </h2>
 
-          <div className="section-copy space-y-3 text-[15.5px] md:text-[17px] text-[#EEF3F8] leading-[1.65] font-normal">
+          <div className="section-copy space-y-2.5 text-[14.5px] sm:text-[16px] md:text-[17px] text-[#EEF3F8] leading-[1.6] font-normal">
             <p>
               Enquanto moedas digitais vinculadas ao sistema financeiro dependem de emissores e instituições identificáveis, o Bitcoin utiliza regras públicas, validação distribuída e uma oferta definida pelo protocolo.
             </p>

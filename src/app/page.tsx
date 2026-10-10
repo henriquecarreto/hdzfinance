@@ -8,7 +8,7 @@ import FinalCtaSection from "@/components/home/FinalCtaSection";
 export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#F5F7FA] selection:bg-[#147BFF] selection:text-white">
-      {/* CAMADA FIXA DE FUNDO: MAPA-MÚNDI DOURADO EM COVER PREENCHENDO A TELA INTEIRA (SEM BARRAS PRETAS) */}
+      {/* CAMADA FIXA DE FUNDO: MAPA-MÚNDI DOURADO EM COVER PREENCHENDO A TELA INTEIRA */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none bg-[#000000] bg-no-repeat bg-center bg-cover select-none"
         style={{ backgroundImage: "url('/backgrounds/world-map-gold.jpg')" }}
@@ -18,7 +18,7 @@ export default function HomePage() {
       <div 
         className="fixed inset-0 z-0 pointer-events-none select-none" 
         style={{
-          background: "linear-gradient(to right, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.85) 20%, rgba(0, 0, 0, 0.90) 35%, rgba(0, 0, 0, 0.90) 65%, rgba(0, 0, 0, 0.85) 80%, rgba(0, 0, 0, 0.80) 100%)"
+          background: "linear-gradient(to right, rgba(0, 0, 0, 0.84) 0%, rgba(0, 0, 0, 0.88) 20%, rgba(0, 0, 0, 0.92) 35%, rgba(0, 0, 0, 0.92) 65%, rgba(0, 0, 0, 0.88) 80%, rgba(0, 0, 0, 0.84) 100%)"
         }}
         aria-hidden="true" 
       />

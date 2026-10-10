@@ -6,13 +6,11 @@ export default function FinalCtaSection() {
   return (
     <section
       aria-label="Conclusão HDZ Finance"
-      className="relative isolate overflow-hidden py-12 md:py-16 border-b border-white/[0.08] bg-transparent"
+      className="relative isolate overflow-hidden py-12 sm:py-16 border-b border-white/[0.08] bg-transparent"
     >
-
-
       <div className="relative z-10 max-w-[1140px] mx-auto px-4 sm:px-6 md:px-8">
-        {/* Container Principal Escuro/Translúcido - Proporção Horizontal */}
-        <div className="p-6 sm:p-8 md:p-9 rounded-2xl bg-[#000000]/85 backdrop-blur-md border border-white/10 shadow-2xl">
+        {/* Container Principal Escuro - Proporção Horizontal */}
+        <div className="p-5 sm:p-8 md:p-9 rounded-2xl bg-[#000000] border border-white/10 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* COLUNA ESQUERDA: COPY EDITORIAL (58% aprox.) */}
