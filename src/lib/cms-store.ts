@@ -1,4 +1,5 @@
 import { ANALYSES } from "@/data/analyses";
+import { ARTICLES } from "@/data/articles";
 
 export type ContentType = "materia" | "noticia" | "evento";
 export type ContentStatus = "draft" | "scheduled" | "published" | "archived";
@@ -120,6 +121,31 @@ const INITIAL_MATERIAS: CMSContentItem[] = ANALYSES.map((art) => ({
   updatedAt: art.updateDate || art.publishDate,
 }));
 
+// Initial Data Population from ARTICLES
+const INITIAL_NOTICIAS: CMSContentItem[] = ARTICLES.map((art) => ({
+  id: art.id,
+  type: "noticia",
+  status: "published",
+  title: art.title,
+  subtitle: art.subtitle,
+  excerpt: art.subtitle,
+  slug: art.slug,
+  bodyHtml: art.content,
+  category: art.category,
+  categoryName: art.categoryName,
+  tags: art.tags || [],
+  authorName: art.author.name,
+  coverImagePath: art.coverImage,
+  coverImageAlt: art.coverAlt,
+  featured: art.isFeatured || false,
+  featuredOrder: 1,
+  seoTitle: art.title,
+  seoDescription: art.subtitle,
+  publishedAt: art.publishDate,
+  createdAt: art.publishDate,
+  updatedAt: art.updateDate || art.publishDate,
+}));
+
 // In-Memory Global State with Client-side LocalStorage Persistence
 class CMSStoreManager {
   private items: CMSContentItem[] = [];
@@ -150,7 +176,7 @@ class CMSStoreManager {
   private initialized = false;
 
   constructor() {
-    this.items = [...INITIAL_MATERIAS];
+    this.items = [...INITIAL_MATERIAS, ...INITIAL_NOTICIAS];
   }
 
   private initFromLocalStorage() {
@@ -158,7 +184,15 @@ class CMSStoreManager {
     try {
       const storedItems = localStorage.getItem("hdz_cms_items");
       if (storedItems) {
-        this.items = JSON.parse(storedItems);
+        const parsed: CMSContentItem[] = JSON.parse(storedItems);
+        // Merge any INITIAL items not present in localStorage
+        const merged = [...parsed];
+        for (const initItem of [...INITIAL_MATERIAS, ...INITIAL_NOTICIAS]) {
+          if (!merged.some((m) => m.slug === initItem.slug || m.id === initItem.id)) {
+            merged.push(initItem);
+          }
+        }
+        this.items = merged;
       }
       const storedEvents = localStorage.getItem("hdz_cms_events");
       if (storedEvents) {

@@ -1,17 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewsListItem from "@/components/NewsListItem";
 import MostReadList from "@/components/MostReadList";
-import { ARTICLES } from "@/data/articles";
+import { ARTICLES, AUTHORS } from "@/data/articles";
 import { CATEGORY_LIST } from "@/data/categories";
+import { cmsStore } from "@/lib/cms-store";
 import { Filter, Newspaper } from "lucide-react";
+import { Article } from "@/types";
 
 export default function NoticiasPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("todas");
   const [visibleCount, setVisibleCount] = useState<number>(6);
+  const [allArticles, setAllArticles] = useState<Article[]>(ARTICLES);
 
-  const filteredArticles = ARTICLES.filter((art) => {
+  useEffect(() => {
+    const cmsNoticias = cmsStore
+      .getItems("noticia")
+      .filter((item) => item.status === "published");
+
+    const mappedCms: Article[] = cmsNoticias.map((item) => ({
+      id: item.id,
+      type: "noticia",
+      slug: item.slug,
+      title: item.title,
+      subtitle: item.subtitle || item.excerpt || "",
+      category: item.category,
+      categoryName: item.categoryName || item.category,
+      author: AUTHORS.editoria,
+      publishDate: item.publishedAt,
+      updateDate: item.updatedAt || item.publishedAt,
+      readTimeMinutes: 3,
+      coverImage:
+        item.coverImagePath ||
+        "/images/materias/ciclos-de-mercado/cover.webp",
+      coverAlt: item.coverImageAlt || item.title,
+      content: item.bodyHtml,
+      tags: item.tags || [],
+      isFeatured: item.featured,
+    }));
+
+    const combined = [...ARTICLES];
+    for (const cmsItem of mappedCms) {
+      if (!combined.some((a) => a.slug === cmsItem.slug || a.id === cmsItem.id)) {
+        combined.unshift(cmsItem);
+      }
+    }
+
+    setAllArticles(combined);
+  }, []);
+
+  const filteredArticles = allArticles.filter((art) => {
     if (selectedCategory === "todas") return true;
     return art.category === selectedCategory;
   });
@@ -104,7 +143,7 @@ export default function NoticiasPage() {
           </div>
 
           <div className="lg:col-span-4">
-            <MostReadList articles={ARTICLES} />
+            <MostReadList articles={allArticles} />
           </div>
         </div>
       </div>

@@ -4,8 +4,11 @@ import ArticleHeader from "@/components/ArticleHeader";
 import ArticleBody from "@/components/ArticleBody";
 import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
-import { notFound, redirect } from "next/navigation";
+import ArticleClientFallback from "@/components/ArticleClientFallback";
+import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+
+export const dynamicParams = true;
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -29,7 +32,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       };
     }
     return {
-      title: "Artigo Não Encontrado | HDZ Finance",
+      title: "Notícia | HDZ Finance",
     };
   }
 
@@ -71,7 +74,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = ARTICLES.find((a) => a.slug === slug);
 
   if (!article) {
-    notFound();
+    return <ArticleClientFallback slug={slug} />;
   }
 
   // JSON-LD NewsArticle Schema
