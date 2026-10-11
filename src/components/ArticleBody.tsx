@@ -11,14 +11,6 @@ export default function ArticleBody({ article }: ArticleBodyProps) {
 
   return (
     <article className="max-w-3xl mx-auto py-8 space-y-8">
-      {/* Lead Summary Highlight Box */}
-      {article.subtitle && (
-        <div className="p-5 md:p-6 rounded-xl bg-[#0D1117] border-l-4 border-[#00B86B] border-t border-r border-b border-white/[0.08] shadow-md my-6">
-          <p className="text-base md:text-lg italic text-[#D5DDE6] leading-relaxed font-sans font-normal">
-            {article.subtitle}
-          </p>
-        </div>
-      )}
 
       {/* Editorial Content */}
       <div
