@@ -4,6 +4,7 @@ import ArticleHeader from "@/components/ArticleHeader";
 import ArticleBody from "@/components/ArticleBody";
 import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
+import ArticleView from "@/components/ArticleView";
 import ArticleClientFallback from "@/components/ArticleClientFallback";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
@@ -109,23 +110,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ReadingProgressBar />
-
-      <div className="min-h-screen bg-black text-[#F5F7FA] py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          {/* Article Header */}
-          <ArticleHeader article={article} />
-
-          {/* Article Body */}
-          <ArticleBody article={article} />
-
-          {/* Related Articles */}
-          <RelatedArticles
-            currentArticleId={article.id}
-            articles={ARTICLES}
-          />
-        </div>
-      </div>
+      <ArticleView initialArticle={article} />
     </>
   );
 }

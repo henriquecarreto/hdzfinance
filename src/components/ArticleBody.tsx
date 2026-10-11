@@ -18,8 +18,8 @@ export default function ArticleBody({ article }: ArticleBodyProps) {
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
 
-      {/* Sources Section */}
-      {article.sources && article.sources.length > 0 && (
+      {/* Sources Section - only for materias/analyses, never for noticias */}
+      {article.type !== "noticia" && article.sources && article.sources.length > 0 && (
         <div className="p-4 rounded-xl bg-[#0B0D10] border border-[#252A32] space-y-2 text-xs text-[#A7AFBA]">
           <span className="font-semibold text-[#F5F7FA] block">
             Fontes e Documentos Consultados:

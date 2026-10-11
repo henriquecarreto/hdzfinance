@@ -230,6 +230,7 @@ class CMSStoreManager {
       localStorage.setItem("hdz_cms_media", JSON.stringify(this.mediaAssets));
       localStorage.setItem("hdz_cms_settings", JSON.stringify(this.settings));
       localStorage.setItem("hdz_cms_logs", JSON.stringify(this.auditLogs));
+      window.dispatchEvent(new Event("hdz_cms_updated"));
     } catch (e) {
       console.warn("Could not save CMS store to localStorage:", e);
     }
