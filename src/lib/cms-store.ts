@@ -185,14 +185,20 @@ class CMSStoreManager {
       const storedItems = localStorage.getItem("hdz_cms_items");
       if (storedItems) {
         const parsed: CMSContentItem[] = JSON.parse(storedItems);
-        // Merge any INITIAL items not present in localStorage
+        // Merge and sync any INITIAL items with localStorage
         const merged = [...parsed];
         for (const initItem of [...INITIAL_MATERIAS, ...INITIAL_NOTICIAS]) {
-          if (!merged.some((m) => m.slug === initItem.slug || m.id === initItem.id)) {
+          const existingIdx = merged.findIndex((m) => m.slug === initItem.slug || m.id === initItem.id);
+          if (existingIdx >= 0) {
+            if (initItem.type === "noticia" && initItem.coverImagePath) {
+              merged[existingIdx].coverImagePath = initItem.coverImagePath;
+            }
+          } else {
             merged.push(initItem);
           }
         }
         this.items = merged;
+        localStorage.setItem("hdz_cms_items", JSON.stringify(this.items));
       }
       const storedEvents = localStorage.getItem("hdz_cms_events");
       if (storedEvents) {

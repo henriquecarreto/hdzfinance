@@ -39,7 +39,7 @@ export const ARTICLES: Article[] = [
     updateDate: "2026-10-11T09:00:00.000Z",
     readTimeMinutes: 3,
     coverImage:
-      "/images/materias/inflacao-sob-a-otica-austriaca-expansao-monetaria-ciclos-economicos-e-anos-eleitorais-no-brasil/cover.png",
+      "/images/noticias/conta-de-luz-sobe-798-e-leva-inflacao-de-setembro-a-082/cover.png",
     coverAlt: "Conta de luz sobe 7,98% e leva inflação de setembro a 0,82%",
     isFeatured: true,
     isMostRead: true,
