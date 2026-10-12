@@ -31,11 +31,11 @@ export default function MarketTicker() {
 
   return (
     <div
-      className="w-full bg-[#000000] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden relative z-20"
+      className="w-full bg-[#000000] border-y border-white/[0.08] h-[34px] flex items-center select-none overflow-hidden relative z-20 touch-pan-y"
       aria-label="Esteira de preços de mercados ao vivo"
     >
       <div className="w-full flex items-center justify-between overflow-hidden">
-        <div className="animate-marquee flex items-center transform-gpu">
+        <div className="animate-marquee flex items-center shrink-0 pointer-events-none md:pointer-events-auto">
           {duplicatedItems.map((item, index) => {
             const isVix = item.symbol === "VIX";
             const isPositive = (item.changePercent ?? 0) > 0;
