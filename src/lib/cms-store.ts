@@ -231,8 +231,14 @@ class CMSStoreManager {
       localStorage.setItem("hdz_cms_settings", JSON.stringify(this.settings));
       localStorage.setItem("hdz_cms_logs", JSON.stringify(this.auditLogs));
       window.dispatchEvent(new Event("hdz_cms_updated"));
-    } catch (e) {
-      console.warn("Could not save CMS store to localStorage:", e);
+    } catch (e: any) {
+      console.error("Could not save CMS store to localStorage:", e);
+      if (e?.name === "QuotaExceededError" || e?.code === 22 || e?.number === -2147024882) {
+        throw new Error(
+          "Limite de armazenamento do navegador atingido (QuotaExceededError). A imagem enviada ou o volume de conteúdos excedeu a cota do localStorage. Use uma imagem mais leve ou limpe rascunhos antigos."
+        );
+      }
+      throw new Error(`Falha ao gravar no armazenamento local do navegador: ${e?.message || e}`);
     }
   }
 

@@ -26,6 +26,37 @@ export const AUTHORS: Record<string, Author> = {
 
 export const ARTICLES: Article[] = [
   {
+    id: "noticia-petroleo-sobe-e-aie-pede-liberacao-de-estoques-de-diesel",
+    type: "noticia",
+    slug: "petroleo-sobe-e-aie-pede-liberacao-de-estoques-de-diesel",
+    title: "Petróleo sobe e AIE pede liberação de estoques de diesel",
+    subtitle:
+      "Brent avançava 2% em cotação intradiária. Agência orientou países a acelerar compromissos anteriores e avaliar liberações adicionais de diesel.",
+    category: "economia",
+    categoryName: "Economia",
+    author: AUTHORS.editoria,
+    publishDate: "2026-10-12T15:11:00.000Z",
+    updateDate: "2026-10-12T15:11:00.000Z",
+    readTimeMinutes: 3,
+    coverImage:
+      "/images/noticias/petroleo-sobe-e-aie-pede-liberacao-de-estoques-de-diesel/cover.png",
+    coverAlt: "Petróleo sobe e AIE pede liberação de estoques de diesel",
+    isFeatured: true,
+    isMostRead: true,
+    tags: ["petroleo", "brent", "aie", "diesel", "energia", "economia"],
+    content: `
+      <p>O petróleo Brent avançava 2%, a US$ 106,76 por barril, às 12h07 de Brasília desta segunda-feira, 12 de outubro, segundo a Reuters. A alta ocorreu em meio às tensões no Oriente Médio e às preocupações com o abastecimento. O valor corresponde ao pregão em andamento no horário informado.</p>
+
+      <p>A pressão sobre o mercado também levou a Agência Internacional de Energia (AIE) a pedir atenção imediata à oferta de diesel. Em comunicado publicado no domingo, 11 de outubro, seu diretor-executivo, Fatih Birol, mencionou os novos ataques contra instalações civis e energéticas na Arábia Saudita.</p>
+
+      <p>Birol orientou os países membros que ainda não entregaram integralmente os volumes prometidos na ação coletiva de março a avaliar uma aceleração das liberações, dando prioridade ao diesel. A agência informou que alguns integrantes já disponibilizaram quantidades superiores às inicialmente previstas.</p>
+
+      <p>A AIE também recomendou que todos os membros, inclusive os que cumpriram seus compromissos, avaliem a necessidade de liberar volumes adicionais de diesel. Caso decidam fazê-lo, os governos devem indicar a quantidade, o prazo e o caráter complementar dessas medidas. Trata-se de uma orientação para decisões nacionais.</p>
+
+      <p>A ação coordenada anunciada em 11 de março continua em andamento, segundo a agência. Ela foi organizada para responder às interrupções no fluxo de energia pelo Estreito de Ormuz. A reunião do conselho da AIE, marcada para 15 de outubro, deverá avaliar os esforços para apoiar o abastecimento e a estabilidade dos mercados.</p>
+    `,
+  },
+  {
     id: "noticia-conta-de-luz-sobe-798-e-leva-inflacao-de-setembro-a-082",
     type: "noticia",
     slug: "conta-de-luz-sobe-798-e-leva-inflacao-de-setembro-a-082",

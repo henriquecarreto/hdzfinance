@@ -23,8 +23,14 @@ export default function AdminMateriasPage() {
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Strictly Filter by type === 'materia'
-    setItems(cmsStore.getItems("materia"));
+    const refresh = () => setItems(cmsStore.getItems("materia"));
+    refresh();
+    window.addEventListener("hdz_cms_updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("hdz_cms_updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
   }, []);
 
   const filteredItems = items.filter((item) => {

@@ -15,39 +15,50 @@ export default function NoticiasPage() {
   const [allArticles, setAllArticles] = useState<Article[]>(ARTICLES);
 
   useEffect(() => {
-    const cmsNoticias = cmsStore
-      .getItems("noticia")
-      .filter((item) => item.status === "published");
+    const loadNoticias = () => {
+      const cmsNoticias = cmsStore
+        .getItems("noticia")
+        .filter((item) => item.status === "published");
 
-    const mappedCms: Article[] = cmsNoticias.map((item) => ({
-      id: item.id,
-      type: "noticia",
-      slug: item.slug,
-      title: item.title,
-      subtitle: item.subtitle || item.excerpt || "",
-      category: item.category,
-      categoryName: item.categoryName || item.category,
-      author: AUTHORS.editoria,
-      publishDate: item.publishedAt,
-      updateDate: item.updatedAt || item.publishedAt,
-      readTimeMinutes: 3,
-      coverImage:
-        item.coverImagePath ||
-        "/images/materias/ciclos-de-mercado/cover.webp",
-      coverAlt: item.coverImageAlt || item.title,
-      content: item.bodyHtml,
-      tags: item.tags || [],
-      isFeatured: item.featured,
-    }));
+      const mappedCms: Article[] = cmsNoticias.map((item) => ({
+        id: item.id,
+        type: "noticia",
+        slug: item.slug,
+        title: item.title,
+        subtitle: item.subtitle || item.excerpt || "",
+        category: item.category,
+        categoryName: item.categoryName || item.category,
+        author: AUTHORS.editoria,
+        publishDate: item.publishedAt,
+        updateDate: item.updatedAt || item.publishedAt,
+        readTimeMinutes: 3,
+        coverImage:
+          item.coverImagePath ||
+          "/images/materias/ciclos-de-mercado/cover.webp",
+        coverAlt: item.coverImageAlt || item.title,
+        content: item.bodyHtml,
+        tags: item.tags || [],
+        isFeatured: item.featured,
+      }));
 
-    const combined = [...ARTICLES];
-    for (const cmsItem of mappedCms) {
-      if (!combined.some((a) => a.slug === cmsItem.slug || a.id === cmsItem.id)) {
-        combined.unshift(cmsItem);
+      const combined = [...ARTICLES];
+      for (const cmsItem of mappedCms) {
+        if (!combined.some((a) => a.slug === cmsItem.slug || a.id === cmsItem.id)) {
+          combined.unshift(cmsItem);
+        }
       }
-    }
 
-    setAllArticles(combined);
+      setAllArticles(combined);
+    };
+
+    loadNoticias();
+    window.addEventListener("hdz_cms_updated", loadNoticias);
+    window.addEventListener("storage", loadNoticias);
+
+    return () => {
+      window.removeEventListener("hdz_cms_updated", loadNoticias);
+      window.removeEventListener("storage", loadNoticias);
+    };
   }, []);
 
   const filteredArticles = allArticles.filter((art) => {

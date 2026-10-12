@@ -1,13 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ANALYSES } from "@/data/analyses";
 import AnalysisCard from "@/components/AnalysisCard";
+import { cmsStore } from "@/lib/cms-store";
+import { AnalysisArticle } from "@/types";
 import { BookOpen, Filter, ArrowUpDown } from "lucide-react";
 
 export default function MateriasPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("todas");
-  const [sortOrder, setSortOrder] = useState<"recetes" | "antigas">("recetes");
+  const [sortOrder, setSortOrder] = useState<"recentes" | "antigas">("recentes");
+  const [allAnalyses, setAllAnalyses] = useState<AnalysisArticle[]>(ANALYSES);
+
+  useEffect(() => {
+    const loadMaterias = () => {
+      const cmsMaterias = cmsStore
+        .getItems("materia")
+        .filter((item) => item.status === "published");
+
+      const mappedCms: AnalysisArticle[] = cmsMaterias.map((item) => ({
+        id: item.id,
+        legacyId: item.legacyId,
+        type: "materia",
+        slug: item.slug,
+        title: item.title,
+        subtitle: item.subtitle || item.excerpt || "",
+        category: item.category,
+        categoryName: item.categoryName || item.category,
+        author: {
+          id: "autor-hdz",
+          name: item.authorName || "Produção HDZ Finance",
+          role: "Equipe Editorial HDZ",
+          avatar: "/images/authors/hdz.jpg",
+          bio: "Análise econômica e cobertura especializada HDZ Finance.",
+        },
+        publishDate: item.publishedAt,
+        updateDate: item.updatedAt || item.publishedAt,
+        readTimeMinutes: 5,
+        coverImage: item.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp",
+        coverAlt: item.coverImageAlt || item.title,
+        content: item.bodyHtml,
+        tags: item.tags || [],
+        isFeatured: item.featured,
+        keyTakeaways: [],
+      }));
+
+      const combined = [...ANALYSES];
+      for (const cmsItem of mappedCms) {
+        if (!combined.some((a) => a.slug === cmsItem.slug || a.id === cmsItem.id)) {
+          combined.unshift(cmsItem);
+        }
+      }
+
+      setAllAnalyses(combined);
+    };
+
+    loadMaterias();
+    window.addEventListener("hdz_cms_updated", loadMaterias);
+    window.addEventListener("storage", loadMaterias);
+
+    return () => {
+      window.removeEventListener("hdz_cms_updated", loadMaterias);
+      window.removeEventListener("storage", loadMaterias);
+    };
+  }, []);
 
   const categories = [
     { slug: "todas", name: "Todas as Categorias" },
@@ -17,15 +73,17 @@ export default function MateriasPage() {
     { slug: "mercados", name: "Mercados" },
   ];
 
-  const filteredAnalyses = ANALYSES.filter((a) => {
-    if (selectedCategory === "todas") return true;
-    const catNameSlug = a.categoryName.toLowerCase().replace(/,/g, "").replace(/\s+/g, "-");
-    return a.category === selectedCategory || catNameSlug === selectedCategory;
-  }).sort((a, b) => {
-    const timeA = new Date(a.publishDate).getTime();
-    const timeB = new Date(b.publishDate).getTime();
-    return sortOrder === "recetes" ? timeB - timeA : timeA - timeB;
-  });
+  const filteredAnalyses = allAnalyses
+    .filter((a) => {
+      if (selectedCategory === "todas") return true;
+      const catNameSlug = (a.categoryName || "").toLowerCase().replace(/,/g, "").replace(/\s+/g, "-");
+      return a.category === selectedCategory || catNameSlug === selectedCategory;
+    })
+    .sort((a, b) => {
+      const timeA = new Date(a.publishDate).getTime();
+      const timeB = new Date(b.publishDate).getTime();
+      return sortOrder === "recentes" ? timeB - timeA : timeA - timeB;
+    });
 
   return (
     <div className="min-h-screen bg-[#050607] text-[#F5F7FA] py-8 md:py-12">
@@ -70,10 +128,10 @@ export default function MateriasPage() {
             <span className="text-xs text-[#9BA5B3]">Ordenar:</span>
             <select
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as "recetes" | "antigas")}
+              onChange={(e) => setSortOrder(e.target.value as "recentes" | "antigas")}
               className="bg-[#050607] border border-white/[0.08] text-[#F5F7FA] text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-[#147BFF]"
             >
-              <option value="recetes">Mais recentes</option>
+              <option value="recentes">Mais recentes</option>
               <option value="antigas">Mais antigas</option>
             </select>
           </div>

@@ -119,6 +119,71 @@ export default function CoverImageUploader({
     img.src = objectUrl;
   };
 
+  const compressImageFile = async (
+    file: File,
+    maxWidth = 1280,
+    maxHeight = 720,
+    quality = 0.8
+  ): Promise<{ dataUrl: string; sizeKb: number; width: number; height: number }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new window.Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Scale down preserving aspect ratio
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            reject(new Error("Falha ao inicializar Canvas para otimização da imagem."));
+            return;
+          }
+
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Attempt WebP first, fallback to JPEG
+          let dataUrl = canvas.toDataURL("image/webp", quality);
+          if (!dataUrl.startsWith("data:image/webp")) {
+            dataUrl = canvas.toDataURL("image/jpeg", quality);
+          }
+
+          // If still > 250KB, reduce quality
+          let estimatedBytes = Math.round((dataUrl.length * 3) / 4);
+          if (estimatedBytes > 250 * 1024) {
+            dataUrl = canvas.toDataURL("image/jpeg", 0.68);
+            estimatedBytes = Math.round((dataUrl.length * 3) / 4);
+          }
+
+          resolve({
+            dataUrl,
+            sizeKb: Math.max(1, Math.round(estimatedBytes / 1024)),
+            width,
+            height,
+          });
+        };
+        img.onerror = () => reject(new Error("Arquivo de imagem corrompido ou formato não suportado."));
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error("Erro ao ler o arquivo selecionado."));
+      reader.readAsDataURL(file);
+    });
+  };
+
   const uploadToStorage = async (file: File) => {
     try {
       setUploadStatus("uploading");
@@ -148,12 +213,13 @@ export default function CoverImageUploader({
         const { data: publicUrlData } = supabase.storage.from("content-media").getPublicUrl(data.path);
         publicUrl = publicUrlData.publicUrl;
       } else {
-        // Fallback for local dev mode: generate a Data URL
-        publicUrl = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = () => reject(new Error("Erro ao ler imagem local."));
-          reader.readAsDataURL(file);
+        // Fallback for local dev mode: automatically compress to lightweight WebP/JPEG data URL (~40-90 KB)
+        const compressed = await compressImageFile(file);
+        publicUrl = compressed.dataUrl;
+        setFileDetails({
+          name: file.name,
+          size: `${compressed.sizeKb} KB (otimizada)`,
+          dimensions: `${compressed.width} × ${compressed.height} px`,
         });
       }
 
@@ -170,7 +236,8 @@ export default function CoverImageUploader({
     } catch (err: unknown) {
       console.error("Erro no upload da imagem:", err);
       setUploadStatus("error");
-      setErrorMessage("Não foi possível enviar a imagem. Verifique o arquivo e tente novamente.");
+      const msg = err instanceof Error ? err.message : "Não foi possível enviar a imagem. Verifique o arquivo e tente novamente.";
+      setErrorMessage(msg);
     }
   };
 
@@ -373,7 +440,13 @@ export default function CoverImageUploader({
             <div className="relative w-full p-4 rounded-xl border border-white/10 bg-[#0E131A] flex flex-col sm:flex-row items-center gap-4">
               {/* Thumbnail */}
               <div className="relative aspect-[16/9] w-full sm:w-48 rounded-lg overflow-hidden bg-[#050709] border border-white/10 shrink-0">
-                <Image src={currentPath} alt={currentAlt || "Prévia da capa"} fill className="object-cover" />
+                <Image
+                  src={currentPath}
+                  alt={currentAlt || "Prévia da capa"}
+                  fill
+                  className="object-cover"
+                  unoptimized={currentPath.startsWith("data:")}
+                />
               </div>
 
               {/* Info & Badges */}

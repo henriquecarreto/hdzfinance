@@ -103,6 +103,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
           fill
           className="object-cover"
           priority
+          unoptimized={Boolean(article.coverImage?.startsWith("data:"))}
         />
       </div>
     </header>

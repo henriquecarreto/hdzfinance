@@ -20,6 +20,7 @@ export default function AnalysisCard({ analysis }: AnalysisCardProps) {
             alt={analysis.coverAlt}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
+            unoptimized={Boolean(analysis.coverImage?.startsWith("data:"))}
           />
           <div className="absolute top-3 left-3 z-10">
             <span className="px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-[#147BFF] text-white">

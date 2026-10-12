@@ -23,8 +23,14 @@ export default function AdminNoticiasPage() {
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Strictly Filter by type === 'noticia'
-    setItems(cmsStore.getItems("noticia"));
+    const refresh = () => setItems(cmsStore.getItems("noticia"));
+    refresh();
+    window.addEventListener("hdz_cms_updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("hdz_cms_updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
   }, []);
 
   const filteredItems = items.filter((item) => {

@@ -20,12 +20,20 @@ import {
   Smartphone,
   Tablet,
   Monitor,
+  AlertCircle,
+  ExternalLink,
+  X,
 } from "lucide-react";
 
 interface ContentEditorFormProps {
   type: ContentType;
   initialId?: string;
 }
+
+const getLocalDatetimeString = (date = new Date()) => {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
 
 export default function ContentEditorForm({ type, initialId }: ContentEditorFormProps) {
   const router = useRouter();
@@ -43,9 +51,18 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
   const [featured, setFeatured] = useState(false);
   const [featuredOrder, setFeaturedOrder] = useState(1);
   const [status, setStatus] = useState<ContentStatus>("draft");
-  const [publishDate, setPublishDate] = useState(new Date().toISOString().slice(0, 16));
+  const [publishDate, setPublishDate] = useState(() => getLocalDatetimeString());
   const [seoTitle, setSeoTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successModal, setSuccessModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    viewUrl: string;
+    listUrl: string;
+  } | null>(null);
 
   const [autosaveStatus, setAutosaveStatus] = useState<"idle" | "saving" | "saved">("idle");
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -74,7 +91,7 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
         setSeoTitle(existing.seoTitle || existing.title || "");
         setSeoDescription(existing.seoDescription || existing.subtitle || "");
         if (existing.publishedAt) {
-          setPublishDate(new Date(existing.publishedAt).toISOString().slice(0, 16));
+          setPublishDate(getLocalDatetimeString(new Date(existing.publishedAt)));
         }
       }
     }
@@ -109,52 +126,80 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
   };
 
   const handleSave = (targetStatus: ContentStatus = status) => {
+    setErrorMessage(null);
+
     if (!title.trim()) {
-      alert("Por favor, preencha o título antes de salvar.");
+      const err = "Por favor, preencha o Título Principal antes de salvar.";
+      setErrorMessage(err);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     if (targetStatus === "published") {
       if (!coverImagePath) {
-        alert("Por favor, faça o upload de uma imagem de capa antes de publicar.");
+        const err = "Por favor, faça o upload de uma Imagem de Capa antes de publicar.";
+        setErrorMessage(err);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
       if (!coverImageAlt.trim()) {
-        alert("Por favor, preencha a descrição da imagem para acessibilidade antes de publicar.");
+        const err = "Por favor, preencha a Descrição da Imagem para Acessibilidade (Alt Text) antes de publicar.";
+        setErrorMessage(err);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
     }
 
     setAutosaveStatus("saving");
 
-    const saved = cmsStore.saveItem({
-      id: itemIdRef.current,
-      type,
-      status: targetStatus,
-      title,
-      subtitle,
-      excerpt: excerpt || subtitle,
-      slug: slug || generateSlug(title),
-      bodyHtml,
-      category,
-      categoryName,
-      authorName: authorName || "Produção HDZ Finance",
-      coverImagePath,
-      coverImageAlt: coverImageAlt || title,
-      featured,
-      featuredOrder,
-      seoTitle: seoTitle || title,
-      seoDescription: seoDescription || subtitle,
-      publishedAt: new Date(publishDate).toISOString(),
-    });
+    try {
+      const saved = cmsStore.saveItem({
+        id: itemIdRef.current,
+        type,
+        status: targetStatus,
+        title,
+        subtitle,
+        excerpt: excerpt || subtitle,
+        slug: slug || generateSlug(title),
+        bodyHtml,
+        category,
+        categoryName,
+        authorName: authorName || "Produção HDZ Finance",
+        coverImagePath,
+        coverImageAlt: coverImageAlt || title,
+        featured,
+        featuredOrder,
+        seoTitle: seoTitle || title,
+        seoDescription: seoDescription || subtitle,
+        publishedAt: new Date(publishDate).toISOString(),
+      });
 
-    itemIdRef.current = saved.id;
-    setStatus(targetStatus);
-    setAutosaveStatus("saved");
+      itemIdRef.current = saved.id;
+      setSlug(saved.slug);
+      setStatus(targetStatus);
+      setAutosaveStatus("saved");
+      setErrorMessage(null);
 
-    setTimeout(() => {
+      const typeLabel = type === "materia" ? "Matéria" : type === "noticia" ? "Notícia" : "Evento";
+      setSuccessModal({
+        isOpen: true,
+        title: targetStatus === "published" ? `${typeLabel} Publicada com Sucesso!` : "Rascunho Salvo!",
+        message: targetStatus === "published"
+          ? `O conteúdo "${saved.title}" já está disponível publicamente no site HDZ Finance.`
+          : `O rascunho de "${saved.title}" foi gravado com sucesso.`,
+        viewUrl: `/${type}s/${saved.slug}`,
+        listUrl: `/admin/${type}s`,
+      });
+
+      setTimeout(() => {
+        setAutosaveStatus("idle");
+      }, 3000);
+    } catch (err: any) {
       setAutosaveStatus("idle");
-    }, 3000);
+      const msg = err?.message || "Ocorreu um erro ao salvar o conteúdo no sistema.";
+      setErrorMessage(msg);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -224,6 +269,34 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
           </button>
         </div>
       </div>
+
+      {/* Prominent Error Banner */}
+      {errorMessage && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#FF5263]/20 via-[#FF5263]/10 to-transparent border border-[#FF5263]/40 flex items-start justify-between gap-4 shadow-lg animate-in fade-in duration-200">
+          <div className="flex items-start space-x-3.5">
+            <div className="p-2 rounded-xl bg-[#FF5263]/20 text-[#FF5263] border border-[#FF5263]/30 shrink-0 mt-0.5">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <div className="space-y-1 text-xs">
+              <h4 className="font-outfit font-bold text-sm text-[#FF7584]">
+                Atenção: Não foi possível salvar o conteúdo
+              </h4>
+              <p className="text-[#F5F7FA] leading-relaxed">
+                {errorMessage}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setErrorMessage(null)}
+            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#AEB8C4] hover:text-[#F5F7FA] transition-colors shrink-0"
+            title="Fechar aviso de erro"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Main Grid: Form Left (8 cols) + Metadata Sidebar (4 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -433,6 +506,7 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
                   alt={coverImageAlt || "Prévia da Capa"}
                   fill
                   className="object-cover"
+                  unoptimized={coverImagePath.startsWith("data:")}
                 />
               ) : (
                 <div className="text-center p-4 text-[#AEB8C4]/60 space-y-1">
@@ -451,6 +525,59 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
           </div>
         </div>
       </div>
+
+      {/* Success Notification Modal */}
+      {successModal?.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-full max-w-lg p-6 sm:p-8 rounded-2xl bg-[#0B0F14] border border-[#18C98B]/30 shadow-2xl space-y-6">
+            <div className="flex items-center space-x-3.5">
+              <div className="p-3 rounded-2xl bg-[#18C98B]/15 text-[#18C98B] border border-[#18C98B]/30 shrink-0">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
+              <div>
+                <h3 className="font-outfit font-extrabold text-xl text-[#F5F7FA]">
+                  {successModal.title}
+                </h3>
+                <p className="text-xs text-[#AEB8C4] mt-0.5">
+                  Operação concluída com sucesso no CMS.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-sm text-[#DCE3EB] leading-relaxed bg-[#0E131A] p-4 rounded-xl border border-white/5">
+              {successModal.message}
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setSuccessModal(null)}
+                className="px-4 py-2.5 rounded-xl bg-[#0E131A] hover:bg-white/10 border border-white/10 text-xs font-semibold text-[#AEB8C4] hover:text-[#F5F7FA] transition-all"
+              >
+                Continuar Editando
+              </button>
+
+              <button
+                type="button"
+                onClick={() => router.push(successModal.listUrl)}
+                className="px-4 py-2.5 rounded-xl bg-[#0E131A] hover:bg-white/10 border border-white/10 text-xs font-bold text-[#F5F7FA] transition-all"
+              >
+                Voltar à Lista
+              </button>
+
+              <a
+                href={successModal.viewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-[#168BFF] hover:bg-[#3A91FF] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center space-x-1.5 shadow-lg"
+              >
+                <span>Ver no Site</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Preview Modal */}
       {showPreviewModal && (
@@ -528,7 +655,13 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
                 </div>
 
                 <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#0E131A]">
-                  <Image src={coverImagePath} alt="Capa" fill className="object-cover" />
+                  <Image
+                    src={coverImagePath}
+                    alt="Capa"
+                    fill
+                    className="object-cover"
+                    unoptimized={coverImagePath.startsWith("data:")}
+                  />
                 </div>
 
                 <div

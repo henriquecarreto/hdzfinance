@@ -1,12 +1,14 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Search, FileText, BookOpen, ShoppingBag } from "lucide-react";
 import { ARTICLES } from "@/data/articles";
 import { ANALYSES } from "@/data/analyses";
 import { LEARNING_PATHS } from "@/data/learning";
 import { PRODUCTS } from "@/data/products";
+import { cmsStore } from "@/lib/cms-store";
+import { Article, AnalysisArticle } from "@/types";
 import NewsCard from "@/components/NewsCard";
 import AnalysisCard from "@/components/AnalysisCard";
 import LearningCard from "@/components/LearningCard";
@@ -16,18 +18,98 @@ function SearchContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
+  const [allArticles, setAllArticles] = useState<Article[]>(ARTICLES);
+  const [allAnalyses, setAllAnalyses] = useState<AnalysisArticle[]>(ANALYSES);
+
+  useEffect(() => {
+    const loadCmsData = () => {
+      // 1. Notícias
+      const cmsNoticias = cmsStore.getItems("noticia").filter((i) => i.status === "published");
+      const mappedNoticias: Article[] = cmsNoticias.map((item) => ({
+        id: item.id,
+        type: "noticia",
+        slug: item.slug,
+        title: item.title,
+        subtitle: item.subtitle || item.excerpt || "",
+        category: item.category,
+        categoryName: item.categoryName || item.category,
+        author: {
+          id: "autor-hdz",
+          name: item.authorName || "Produção HDZ Finance",
+          role: "Equipe Editorial",
+          avatar: "/images/authors/hdz.jpg",
+          bio: "",
+        },
+        publishDate: item.publishedAt,
+        updateDate: item.updatedAt || item.publishedAt,
+        coverImage: item.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp",
+        coverAlt: item.coverImageAlt || item.title,
+        content: item.bodyHtml,
+        tags: item.tags || [],
+      }));
+      const combNoticias = [...ARTICLES];
+      for (const item of mappedNoticias) {
+        if (!combNoticias.some((a) => a.slug === item.slug || a.id === item.id)) {
+          combNoticias.unshift(item);
+        }
+      }
+      setAllArticles(combNoticias);
+
+      // 2. Matérias
+      const cmsMaterias = cmsStore.getItems("materia").filter((i) => i.status === "published");
+      const mappedMaterias: AnalysisArticle[] = cmsMaterias.map((item) => ({
+        id: item.id,
+        type: "materia",
+        slug: item.slug,
+        title: item.title,
+        subtitle: item.subtitle || item.excerpt || "",
+        category: item.category,
+        categoryName: item.categoryName || item.category,
+        author: {
+          id: "autor-hdz",
+          name: item.authorName || "Produção HDZ Finance",
+          role: "Equipe Editorial",
+          avatar: "/images/authors/hdz.jpg",
+          bio: "",
+        },
+        publishDate: item.publishedAt,
+        updateDate: item.updatedAt || item.publishedAt,
+        coverImage: item.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp",
+        coverAlt: item.coverImageAlt || item.title,
+        content: item.bodyHtml,
+        tags: item.tags || [],
+        keyTakeaways: [],
+      }));
+      const combMaterias = [...ANALYSES];
+      for (const item of mappedMaterias) {
+        if (!combMaterias.some((a) => a.slug === item.slug || a.id === item.id)) {
+          combMaterias.unshift(item);
+        }
+      }
+      setAllAnalyses(combMaterias);
+    };
+
+    loadCmsData();
+    window.addEventListener("hdz_cms_updated", loadCmsData);
+    window.addEventListener("storage", loadCmsData);
+
+    return () => {
+      window.removeEventListener("hdz_cms_updated", loadCmsData);
+      window.removeEventListener("storage", loadCmsData);
+    };
+  }, []);
 
   const filteredArticles = query.trim()
-    ? ARTICLES.filter(
+    ? allArticles.filter(
         (a) =>
           a.title.toLowerCase().includes(query.toLowerCase()) ||
           a.subtitle.toLowerCase().includes(query.toLowerCase()) ||
-          a.categoryName.toLowerCase().includes(query.toLowerCase())
+          (a.categoryName || "").toLowerCase().includes(query.toLowerCase())
       )
     : [];
 
   const filteredAnalyses = query.trim()
-    ? ANALYSES.filter(
+    ? allAnalyses.filter(
         (a) =>
           a.title.toLowerCase().includes(query.toLowerCase()) ||
           a.subtitle.toLowerCase().includes(query.toLowerCase())

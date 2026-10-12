@@ -3,8 +3,10 @@ import ArticleHeader from "@/components/ArticleHeader";
 import ArticleBody from "@/components/ArticleBody";
 import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
-import { notFound } from "next/navigation";
+import MateriaClientFallback from "@/components/MateriaClientFallback";
 import type { Metadata } from "next";
+
+export const dynamicParams = true;
 
 interface MateriaPageProps {
   params: Promise<{ slug: string }>;
@@ -22,7 +24,8 @@ export async function generateMetadata({ params }: MateriaPageProps): Promise<Me
 
   if (!article) {
     return {
-      title: "Matéria Não Encontrada | HDZ Finance",
+      title: "Matéria | HDZ Finance",
+      description: "Artigo aprofundado e análise de mercado HDZ Finance.",
     };
   }
 
@@ -63,7 +66,7 @@ export default async function MateriaPage({ params }: MateriaPageProps) {
   const article = ANALYSES.find((a) => a.slug === slug);
 
   if (!article) {
-    notFound();
+    return <MateriaClientFallback slug={slug} />;
   }
 
   // JSON-LD Article / BlogPosting Schema

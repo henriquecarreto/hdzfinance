@@ -12,57 +12,68 @@ export default function FeaturedHomeSection() {
   const [publishedNoticias, setPublishedNoticias] = useState<CMSContentItem[]>([]);
 
   useEffect(() => {
-    // 1. Fetch main featured Matéria (strictly type === "materia" & status === "published")
-    const materias = cmsStore.getItems("materia").filter((item) => item.status === "published");
-    
-    let selectedMateria: CMSContentItem | null = null;
+    const loadFeatured = () => {
+      // 1. Fetch main featured Matéria (strictly type === "materia" & status === "published")
+      const materias = cmsStore.getItems("materia").filter((item) => item.status === "published");
+      
+      let selectedMateria: CMSContentItem | null = null;
 
-    if (materias.length > 0) {
-      const featuredMaterias = materias.filter((m) => m.featured);
-      if (featuredMaterias.length > 0) {
-        featuredMaterias.sort((a, b) => (a.featuredOrder || 1) - (b.featuredOrder || 1));
-        selectedMateria = featuredMaterias[0];
-      } else {
-        materias.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-        selectedMateria = materias[0];
+      if (materias.length > 0) {
+        const featuredMaterias = materias.filter((m) => m.featured);
+        if (featuredMaterias.length > 0) {
+          featuredMaterias.sort((a, b) => (a.featuredOrder || 1) - (b.featuredOrder || 1));
+          selectedMateria = featuredMaterias[0];
+        } else {
+          materias.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+          selectedMateria = materias[0];
+        }
       }
-    }
 
-    // Fallback to ANALYSES[0] if cmsStore has no published materias yet
-    if (!selectedMateria && ANALYSES.length > 0) {
-      const firstAnalysis = ANALYSES[0];
-      selectedMateria = {
-        id: firstAnalysis.id,
-        type: "materia",
-        status: "published",
-        title: firstAnalysis.title,
-        subtitle: firstAnalysis.subtitle,
-        excerpt: firstAnalysis.subtitle,
-        slug: firstAnalysis.slug,
-        bodyHtml: "",
-        category: firstAnalysis.category,
-        categoryName: firstAnalysis.categoryName,
-        tags: [],
-        authorName: "Produção HDZ Finance",
-        coverImagePath: firstAnalysis.coverImage,
-        featured: true,
-        featuredOrder: 1,
-        publishedAt: firstAnalysis.publishDate,
-        createdAt: firstAnalysis.publishDate,
-        updatedAt: firstAnalysis.publishDate,
-      };
-    }
+      // Fallback to ANALYSES[0] if cmsStore has no published materias yet
+      if (!selectedMateria && ANALYSES.length > 0) {
+        const firstAnalysis = ANALYSES[0];
+        selectedMateria = {
+          id: firstAnalysis.id,
+          type: "materia",
+          status: "published",
+          title: firstAnalysis.title,
+          subtitle: firstAnalysis.subtitle,
+          excerpt: firstAnalysis.subtitle,
+          slug: firstAnalysis.slug,
+          bodyHtml: "",
+          category: firstAnalysis.category,
+          categoryName: firstAnalysis.categoryName,
+          tags: [],
+          authorName: "Produção HDZ Finance",
+          coverImagePath: firstAnalysis.coverImage,
+          featured: true,
+          featuredOrder: 1,
+          publishedAt: firstAnalysis.publishDate,
+          createdAt: firstAnalysis.publishDate,
+          updatedAt: firstAnalysis.publishDate,
+        };
+      }
 
-    setMainMateria(selectedMateria);
+      setMainMateria(selectedMateria);
 
-    // 2. Fetch published Notícias ONLY (strictly type === "noticia" & status === "published")
-    const noticias = cmsStore
-      .getItems("noticia")
-      .filter((item) => item.status === "published")
-      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-      .slice(0, 2);
+      // 2. Fetch published Notícias ONLY (strictly type === "noticia" & status === "published")
+      const noticias = cmsStore
+        .getItems("noticia")
+        .filter((item) => item.status === "published")
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+        .slice(0, 2);
 
-    setPublishedNoticias(noticias);
+      setPublishedNoticias(noticias);
+    };
+
+    loadFeatured();
+    window.addEventListener("hdz_cms_updated", loadFeatured);
+    window.addEventListener("storage", loadFeatured);
+
+    return () => {
+      window.removeEventListener("hdz_cms_updated", loadFeatured);
+      window.removeEventListener("storage", loadFeatured);
+    };
   }, []);
 
   const formatDate = (dateStr?: string) => {
@@ -126,6 +137,7 @@ export default function FeaturedHomeSection() {
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 priority
+                unoptimized={Boolean(mainMateria.coverImagePath?.startsWith("data:"))}
               />
 
               {/* Full height gradient overlay for crisp text readability */}
@@ -191,6 +203,7 @@ export default function FeaturedHomeSection() {
                         fill
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        unoptimized={Boolean(noticia.coverImagePath?.startsWith("data:"))}
                       />
                     </div>
 

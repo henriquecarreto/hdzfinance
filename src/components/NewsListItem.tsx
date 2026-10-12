@@ -28,6 +28,7 @@ export default function NewsListItem({ article }: NewsListItemProps) {
             alt={article.coverAlt}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
+            unoptimized={Boolean(article.coverImage?.startsWith("data:"))}
           />
         </div>
 
