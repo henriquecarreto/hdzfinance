@@ -41,12 +41,14 @@ export default function NoticiasPage() {
         isFeatured: item.featured,
       }));
 
-      const combined = [...ARTICLES];
-      for (const cmsItem of mappedCms) {
-        if (!combined.some((a) => a.slug === cmsItem.slug || a.id === cmsItem.id)) {
-          combined.unshift(cmsItem);
+      // Prioritize CMS items from user and append ARTICLES fallbacks
+      const combined = [...mappedCms];
+      for (const art of ARTICLES) {
+        if (!combined.some((a) => a.slug === art.slug || a.id === art.id)) {
+          combined.push(art);
         }
       }
+      combined.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
       setAllArticles(combined);
     };

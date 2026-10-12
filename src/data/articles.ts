@@ -57,6 +57,58 @@ export const ARTICLES: Article[] = [
     `,
   },
   {
+    id: "noticia-robert-hall-e-michael-woodford-vencem-nobel-de-economia-de-2026",
+    type: "noticia",
+    slug: "robert-hall-e-michael-woodford-vencem-nobel-de-economia-de-2026",
+    title: "Robert Hall e Michael Woodford vencem Nobel de Economia de 2026",
+    subtitle:
+      "Premiação reconhece estudos que ajudam governos e bancos centrais a enfrentar crises, considerando as decisões e expectativas de famílias e empresas.",
+    category: "economia",
+    categoryName: "Economia",
+    author: AUTHORS.editoria,
+    publishDate: "2026-10-12T14:40:00.000Z",
+    updateDate: "2026-10-12T14:40:00.000Z",
+    readTimeMinutes: 3,
+    coverImage:
+      "/images/noticias/robert-hall-e-michael-woodford-vencem-nobel-de-economia-de-2026/cover.png",
+    coverAlt: "Robert Hall e Michael Woodford vencem Nobel de Economia de 2026",
+    isFeatured: true,
+    isMostRead: true,
+    tags: ["nobel", "economia", "banco-central", "macroeconomia"],
+    content: `
+      <p>Os economistas Robert E. Hall, da Universidade Stanford, e Michael Woodford, da Universidade Columbia, venceram o Nobel de Economia de 2026, anunciado nesta segunda-feira, 12 de outubro. A Academia Real Sueca de Ciências reconheceu suas contribuições para compreender como as decisões individuais influenciam a estabilidade da economia.</p>
+
+      <p>O trabalho dos dois ajudou a reformular modelos usados por governos e bancos centrais. Em vez de observar apenas relações gerais entre inflação, produção e consumo, esses modelos incorporam o comportamento de famílias e empresas. A proposta é melhorar a compreensão das consequências de decisões de política econômica e de choques inesperados sobre a atividade produtiva e o bem-estar das pessoas.</p>
+
+      <p>A pesquisa de Woodford estabeleceu novas bases para a condução da política monetária moderna, demonstrando a importância das expectativas e da comunicação das autoridades financeiras. Já os estudos de Hall detalharam os mecanismos de transmissão de crises e as fricções no mercado de trabalho, auxiliando no desenho de respostas mais eficazes a recessões globais.</p>
+    `,
+  },
+  {
+    id: "noticia-microsoft-anuncia-maia-300-e-amplia-aposta-em-chips-proprios-para-ia",
+    type: "noticia",
+    slug: "microsoft-anuncia-maia-300-e-amplia-aposta-em-chips-proprios-para-ia",
+    title: "Microsoft anuncia Maia 300 e amplia aposta em chips próprios para IA",
+    subtitle:
+      "Nova geração de aceleradores de inteligência artificial visa reduzir dependência de fornecedores externos e otimizar custos operacionais em data centers do Azure.",
+    category: "economia",
+    categoryName: "Economia",
+    author: AUTHORS.editoria,
+    publishDate: "2026-10-12T13:30:00.000Z",
+    updateDate: "2026-10-12T13:30:00.000Z",
+    readTimeMinutes: 3,
+    coverImage:
+      "/images/noticias/microsoft-anuncia-maia-300-e-amplia-aposta-em-chips-proprios-para-ia/cover.png",
+    coverAlt: "Microsoft anuncia Maia 300 e amplia aposta em chips próprios para IA",
+    isFeatured: true,
+    isMostRead: true,
+    tags: ["microsoft", "inteligencia-artificial", "semicondutores", "chips", "azure", "economia"],
+    content: `
+      <p>A Microsoft anunciou nesta segunda-feira a nova geração de seus aceleradores de inteligência artificial personalizados, denominada Maia 300. Projetado internamente para infraestrutura de computação em nuvem de hiperescala, o processador busca reduzir os custos operacionais de processamento de modelos de linguagem e inteligência artificial na plataforma Azure.</p>
+
+      <p>Com litografia avançada e arquitetura otimizada para eficiência energética, o novo hardware visa atender às cargas de trabalho de data centers e fortalecer a infraestrutura tecnológica frente à crescente demanda por computação avançada no mercado global.</p>
+    `,
+  },
+  {
     id: "noticia-conta-de-luz-sobe-798-e-leva-inflacao-de-setembro-a-082",
     type: "noticia",
     slug: "conta-de-luz-sobe-798-e-leva-inflacao-de-setembro-a-082",

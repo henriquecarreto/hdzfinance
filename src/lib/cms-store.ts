@@ -190,7 +190,8 @@ class CMSStoreManager {
         for (const initItem of [...INITIAL_MATERIAS, ...INITIAL_NOTICIAS]) {
           const existingIdx = merged.findIndex((m) => m.slug === initItem.slug || m.id === initItem.id);
           if (existingIdx >= 0) {
-            if (initItem.type === "noticia" && initItem.coverImagePath) {
+            // NEVER overwrite the user's custom images or edits in CMS/localStorage!
+            if (!merged[existingIdx].coverImagePath && initItem.coverImagePath) {
               merged[existingIdx].coverImagePath = initItem.coverImagePath;
             }
           } else {
