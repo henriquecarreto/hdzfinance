@@ -97,14 +97,22 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
 
       {/* Featured Cover Image */}
       <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#11151A] border border-[#252A32]">
-        <Image
-          src={article.coverImage}
-          alt={article.coverAlt}
-          fill
-          className="object-cover"
-          priority
-          unoptimized={Boolean(article.coverImage?.startsWith("data:"))}
-        />
+        {article.coverImage?.startsWith("data:") ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={article.coverImage}
+            alt={article.coverAlt}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={article.coverImage}
+            alt={article.coverAlt}
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
       </div>
     </header>
   );

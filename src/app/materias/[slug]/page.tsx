@@ -7,6 +7,8 @@ import MateriaClientFallback from "@/components/MateriaClientFallback";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const dynamicParams = true;
 
 interface MateriaPageProps {
@@ -31,6 +33,10 @@ export async function generateMetadata({ params }: MateriaPageProps): Promise<Me
   }
 
   const canonicalUrl = `https://hdzfinance.com.br/materias/${slug}`;
+  const safeOgImage =
+    article.coverImage && !article.coverImage.startsWith("data:")
+      ? article.coverImage
+      : "https://hdzfinance.com.br/assets/hdz-symbol.png";
 
   return {
     title: `${article.title} | HDZ Finance`,
@@ -48,8 +54,8 @@ export async function generateMetadata({ params }: MateriaPageProps): Promise<Me
       authors: [article.author.name],
       images: [
         {
-          url: article.coverImage,
-          alt: article.coverAlt,
+          url: safeOgImage,
+          alt: article.coverAlt || article.title,
         },
       ],
     },
@@ -57,7 +63,7 @@ export async function generateMetadata({ params }: MateriaPageProps): Promise<Me
       card: "summary_large_image",
       title: article.title,
       description: article.subtitle,
-      images: [article.coverImage],
+      images: [safeOgImage],
     },
   };
 }

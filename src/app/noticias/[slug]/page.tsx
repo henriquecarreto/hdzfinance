@@ -10,6 +10,8 @@ import { getArticleBySlug, getMateriaBySlug } from "@/lib/content-service";
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const dynamicParams = true;
 
 interface ArticlePageProps {
@@ -39,6 +41,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     };
   }
 
+  const safeOgImage =
+    article.coverImage && !article.coverImage.startsWith("data:")
+      ? article.coverImage
+      : "https://hdzfinance.com.br/assets/hdz-symbol.png";
+
   return {
     title: `${article.title} | HDZ Finance`,
     description: article.subtitle,
@@ -48,11 +55,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       type: "article",
       publishedTime: article.publishDate,
       modifiedTime: article.updateDate,
-      authors: [article.author.name],
+      authors: [article.author?.name || "Produção HDZ Finance"],
       images: [
         {
-          url: article.coverImage,
-          alt: article.coverAlt,
+          url: safeOgImage,
+          alt: article.coverAlt || article.title,
         },
       ],
     },
@@ -60,7 +67,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       card: "summary_large_image",
       title: article.title,
       description: article.subtitle,
-      images: [article.coverImage],
+      images: [safeOgImage],
     },
   };
 }
@@ -81,19 +88,24 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   // JSON-LD NewsArticle Schema
+  const safeSchemaImage =
+    article.coverImage && !article.coverImage.startsWith("data:")
+      ? article.coverImage
+      : "https://hdzfinance.com.br/assets/hdz-symbol.png";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: article.title,
     description: article.subtitle,
-    image: [article.coverImage],
+    image: [safeSchemaImage],
     datePublished: article.publishDate,
     dateModified: article.updateDate,
     author: [
       {
         "@type": "Person",
-        name: article.author.name,
-        jobTitle: article.author.role,
+        name: article.author?.name || "Produção HDZ Finance",
+        jobTitle: article.author?.role || "Redação",
       },
     ],
     publisher: {
