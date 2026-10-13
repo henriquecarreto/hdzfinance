@@ -1,14 +1,16 @@
 "use client";
 
-import { use } from "react";
+import { useParams } from "next/navigation";
 import ArticleClientFallback from "@/components/ArticleClientFallback";
 
-interface ArticlePageProps {
-  params: Promise<{ slug: string }>;
-}
+export default function ArticlePage() {
+  const params = useParams();
+  const slug =
+    typeof params?.slug === "string"
+      ? params.slug
+      : Array.isArray(params?.slug)
+      ? params.slug[0]
+      : "";
 
-export default function ArticlePage({ params }: ArticlePageProps) {
-  const resolvedParams = use(params);
-  return <ArticleClientFallback slug={resolvedParams.slug} />;
+  return <ArticleClientFallback slug={slug} />;
 }
-

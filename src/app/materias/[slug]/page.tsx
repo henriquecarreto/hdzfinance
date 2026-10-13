@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { useParams } from "next/navigation";
 import { ANALYSES } from "@/data/analyses";
 import ArticleHeader from "@/components/ArticleHeader";
 import ArticleBody from "@/components/ArticleBody";
@@ -8,13 +8,15 @@ import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import MateriaClientFallback from "@/components/MateriaClientFallback";
 
-interface MateriaPageProps {
-  params: Promise<{ slug: string }>;
-}
+export default function MateriaPage() {
+  const params = useParams();
+  const slug =
+    typeof params?.slug === "string"
+      ? params.slug
+      : Array.isArray(params?.slug)
+      ? params.slug[0]
+      : "";
 
-export default function MateriaPage({ params }: MateriaPageProps) {
-  const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
   const article = ANALYSES.find((a) => a.slug === slug);
 
   if (!article) {
@@ -37,4 +39,3 @@ export default function MateriaPage({ params }: MateriaPageProps) {
     </>
   );
 }
-
