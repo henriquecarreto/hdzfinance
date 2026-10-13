@@ -15,12 +15,6 @@ interface MateriaPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return ANALYSES.map((art) => ({
-    slug: art.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: MateriaPageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = ANALYSES.find((a) => a.slug === slug);
