@@ -2,7 +2,7 @@ import { createBrowserClient } from "@supabase/ssr";
 
 function normalizeUrl(rawUrl?: string): string {
   const fallback = "https://bedkaofiodljlwxwglyq.supabase.co";
-  if (!rawUrl || rawUrl.includes("dummy") || rawUrl.includes("hdzfinance.supabase.co")) {
+  if (!rawUrl || rawUrl.includes("dummy") || rawUrl.includes("hdzfinance.supabase.co") || rawUrl.includes("iqnulqgypljzmfrppbio")) {
     return fallback;
   }
   let clean = rawUrl.trim();
