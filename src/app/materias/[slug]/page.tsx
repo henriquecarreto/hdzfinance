@@ -4,6 +4,7 @@ import ArticleBody from "@/components/ArticleBody";
 import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import MateriaClientFallback from "@/components/MateriaClientFallback";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 export const dynamicParams = true;
@@ -66,7 +67,7 @@ export default async function MateriaPage({ params }: MateriaPageProps) {
   const article = ANALYSES.find((a) => a.slug === slug);
 
   if (!article) {
-    return <MateriaClientFallback slug={slug} />;
+    notFound();
   }
 
   // JSON-LD Article / BlogPosting Schema

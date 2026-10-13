@@ -7,7 +7,7 @@ import ReadingProgressBar from "@/components/ReadingProgressBar";
 import ArticleView from "@/components/ArticleView";
 import ArticleClientFallback from "@/components/ArticleClientFallback";
 import { getArticleBySlug, getMateriaBySlug } from "@/lib/content-service";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 export const dynamicParams = true;
@@ -77,7 +77,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleBySlug(slug);
 
   if (!article) {
-    return <ArticleClientFallback slug={slug} />;
+    notFound();
   }
 
   // JSON-LD NewsArticle Schema
