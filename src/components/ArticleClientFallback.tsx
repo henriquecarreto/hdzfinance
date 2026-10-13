@@ -69,6 +69,14 @@ export default function ArticleClientFallback({ slug }: ArticleClientFallbackPro
         console.warn("Could not fetch article from API:", err);
       }
 
+      // 3. Fallback to static articles data
+      const staticArt = ARTICLES.find((a) => a.slug === slug);
+      if (staticArt && isMounted) {
+        setArticle(staticArt);
+        setLoading(false);
+        return;
+      }
+
       if (isMounted) {
         setLoading(false);
       }

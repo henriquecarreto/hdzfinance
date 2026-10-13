@@ -1,26 +1,14 @@
-import ArticleClientFallback from "@/components/ArticleClientFallback";
-import type { Metadata } from "next";
+"use client";
 
-export const dynamic = "force-dynamic";
+import { use } from "react";
+import ArticleClientFallback from "@/components/ArticleClientFallback";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  try {
-    const { slug } = await params;
-    return {
-      title: "Notícia | HDZ Finance",
-    };
-  } catch {
-    return {
-      title: "HDZ Finance",
-    };
-  }
+export default function ArticlePage({ params }: ArticlePageProps) {
+  const resolvedParams = use(params);
+  return <ArticleClientFallback slug={resolvedParams.slug} />;
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = await params;
-  return <ArticleClientFallback slug={slug} />;
-}
