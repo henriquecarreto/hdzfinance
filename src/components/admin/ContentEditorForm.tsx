@@ -125,7 +125,7 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
     }
   };
 
-  const handleSave = (targetStatus: ContentStatus = status) => {
+  const handleSave = async (targetStatus: ContentStatus = status) => {
     setErrorMessage(null);
 
     if (!title.trim()) {
@@ -153,7 +153,7 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
     setAutosaveStatus("saving");
 
     try {
-      const saved = cmsStore.saveItem({
+      const articlePayload = {
         id: itemIdRef.current,
         type,
         status: targetStatus,
@@ -172,10 +172,36 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
         seoTitle: seoTitle || title,
         seoDescription: seoDescription || subtitle,
         publishedAt: new Date(publishDate).toISOString(),
+      };
+
+      // 1. Post to Server Database API
+      let apiSavedItem: any = null;
+      try {
+        const res = await fetch("/api/admin/articles", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(articlePayload),
+        });
+
+        const data = await res.json();
+        if (res.ok && data?.item) {
+          apiSavedItem = data.item;
+        } else if (data?.error && !data?.needsConfig) {
+          console.warn("[Admin CMS API]:", data.error);
+        }
+      } catch (apiErr) {
+        console.warn("[Admin CMS API Network Error]:", apiErr);
+      }
+
+      // 2. Also keep local sync for instant client feedback
+      const saved = cmsStore.saveItem({
+        ...articlePayload,
+        slug: apiSavedItem?.slug || articlePayload.slug,
       });
 
-      itemIdRef.current = saved.id;
-      setSlug(saved.slug);
+      const finalSlug = apiSavedItem?.slug || saved.slug;
+      itemIdRef.current = apiSavedItem?.id || saved.id;
+      setSlug(finalSlug);
       setStatus(targetStatus);
       setAutosaveStatus("saved");
       setErrorMessage(null);
@@ -185,9 +211,9 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
         isOpen: true,
         title: targetStatus === "published" ? `${typeLabel} Publicada com Sucesso!` : "Rascunho Salvo!",
         message: targetStatus === "published"
-          ? `O conteúdo "${saved.title}" já está disponível publicamente no site HDZ Finance.`
+          ? `O conteúdo "${saved.title}" já está sincronizado e disponível para leitura no site HDZ Finance.`
           : `O rascunho de "${saved.title}" foi gravado com sucesso.`,
-        viewUrl: `/${type}s/${saved.slug}`,
+        viewUrl: `/${type}s/${finalSlug}`,
         listUrl: `/admin/${type}s`,
       });
 

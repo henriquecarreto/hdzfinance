@@ -15,7 +15,9 @@ export default function NoticiasPage() {
   const [allArticles, setAllArticles] = useState<Article[]>(ARTICLES);
 
   useEffect(() => {
-    const loadNoticias = () => {
+    let isMounted = true;
+
+    const loadNoticias = async () => {
       const cmsNoticias = cmsStore
         .getItems("noticia")
         .filter((item) => item.status === "published");
@@ -41,16 +43,36 @@ export default function NoticiasPage() {
         isFeatured: item.featured,
       }));
 
-      // Prioritize CMS items from user and append ARTICLES fallbacks
-      const combined = [...mappedCms];
+      // Start with optimistic CMS and static ARTICLES
+      let combined = [...mappedCms];
       for (const art of ARTICLES) {
         if (!combined.some((a) => a.slug === art.slug || a.id === art.id)) {
           combined.push(art);
         }
       }
+
+      // Also fetch from API endpoint (database)
+      try {
+        const res = await fetch("/api/articles", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.articles && Array.isArray(data.articles)) {
+            for (const serverArt of data.articles) {
+              if (!combined.some((a) => a.slug === serverArt.slug || a.id === serverArt.id)) {
+                combined.unshift(serverArt);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("[NoticiasPage] Could not fetch server articles:", err);
+      }
+
       combined.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
-      setAllArticles(combined);
+      if (isMounted) {
+        setAllArticles(combined);
+      }
     };
 
     loadNoticias();
@@ -58,6 +80,7 @@ export default function NoticiasPage() {
     window.addEventListener("storage", loadNoticias);
 
     return () => {
+      isMounted = false;
       window.removeEventListener("hdz_cms_updated", loadNoticias);
       window.removeEventListener("storage", loadNoticias);
     };

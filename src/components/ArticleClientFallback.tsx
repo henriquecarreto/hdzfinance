@@ -20,32 +20,65 @@ export default function ArticleClientFallback({ slug }: ArticleClientFallbackPro
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Check cmsStore (localStorage)
-    const cmsItem = cmsStore.getItemBySlug(slug);
+    let isMounted = true;
 
-    if (cmsItem && cmsItem.status === "published") {
-      const mapped: Article = {
-        id: cmsItem.id,
-        type: "noticia",
-        slug: cmsItem.slug,
-        title: cmsItem.title,
-        subtitle: cmsItem.subtitle || cmsItem.excerpt || "",
-        category: cmsItem.category,
-        categoryName: cmsItem.categoryName || cmsItem.category,
-        author: AUTHORS.editoria,
-        publishDate: cmsItem.publishedAt,
-        updateDate: cmsItem.updatedAt || cmsItem.publishedAt,
-        readTimeMinutes: 3,
-        coverImage: cmsItem.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp",
-        coverAlt: cmsItem.coverImageAlt || cmsItem.title,
-        content: cmsItem.bodyHtml,
-        tags: cmsItem.tags || [],
-        isFeatured: cmsItem.featured,
-      };
-      setArticle(mapped);
+    async function loadArticle() {
+      // 1. Check cmsStore (localStorage for immediate optimistic display)
+      const cmsItem = cmsStore.getItemBySlug(slug);
+
+      if (cmsItem && cmsItem.status === "published") {
+        const mapped: Article = {
+          id: cmsItem.id,
+          type: "noticia",
+          slug: cmsItem.slug,
+          title: cmsItem.title,
+          subtitle: cmsItem.subtitle || cmsItem.excerpt || "",
+          category: cmsItem.category,
+          categoryName: cmsItem.categoryName || cmsItem.category,
+          author: AUTHORS.editoria,
+          publishDate: cmsItem.publishedAt,
+          updateDate: cmsItem.updatedAt || cmsItem.publishedAt,
+          readTimeMinutes: 3,
+          coverImage: cmsItem.coverImagePath || "/images/materias/ciclos-de-mercado/cover.webp",
+          coverAlt: cmsItem.coverImageAlt || cmsItem.title,
+          content: cmsItem.bodyHtml,
+          tags: cmsItem.tags || [],
+          isFeatured: cmsItem.featured,
+        };
+        if (isMounted) {
+          setArticle(mapped);
+          setLoading(false);
+        }
+        return;
+      }
+
+      // 2. Fetch from Database API endpoint
+      try {
+        const res = await fetch(`/api/articles/${encodeURIComponent(slug)}`, {
+          cache: "no-store",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.article && isMounted) {
+            setArticle(data.article);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch article from API:", err);
+      }
+
+      if (isMounted) {
+        setLoading(false);
+      }
     }
 
-    setLoading(false);
+    loadArticle();
+
+    return () => {
+      isMounted = false;
+    };
   }, [slug]);
 
   if (loading) {

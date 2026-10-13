@@ -6,6 +6,7 @@ import RelatedArticles from "@/components/RelatedArticles";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import ArticleView from "@/components/ArticleView";
 import ArticleClientFallback from "@/components/ArticleClientFallback";
+import { getArticleBySlug, getMateriaBySlug } from "@/lib/content-service";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -23,13 +24,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = ARTICLES.find((a) => a.slug === slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
-    const materia = ANALYSES.find((a) => a.slug === slug || a.legacyId === slug);
+    const materia = await getMateriaBySlug(slug);
     if (materia) {
       return {
         title: `${materia.title} | HDZ Finance`,
+        description: materia.subtitle,
       };
     }
     return {
@@ -67,12 +69,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
   // If this slug belongs to a Matéria or legacyId, redirect to /materias/[slug]
-  const materia = ANALYSES.find((a) => a.slug === slug || a.legacyId === slug);
+  const materia = await getMateriaBySlug(slug);
   if (materia) {
     redirect(`/materias/${materia.slug}`);
   }
 
-  const article = ARTICLES.find((a) => a.slug === slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     return <ArticleClientFallback slug={slug} />;
