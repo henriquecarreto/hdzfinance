@@ -37,8 +37,10 @@ function mapDbItemToArticle(item: any): Article {
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
+  const cleanSlug = slug.replace(/^-+|-+$/g, "");
+
   // 1. Check hardcoded static ARTICLES
-  const staticArticle = ARTICLES.find((a) => a.slug === slug);
+  const staticArticle = ARTICLES.find((a) => a.slug === slug || a.slug === cleanSlug);
   if (staticArticle) {
     return staticArticle;
   }
@@ -56,7 +58,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
       const { data, error } = await supabase
         .from("content_items")
         .select("*")
-        .eq("slug", slug)
+        .or(`slug.eq.${slug},slug.eq.${cleanSlug}`)
         .eq("status", "published")
         .maybeSingle();
 

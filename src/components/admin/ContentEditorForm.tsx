@@ -111,10 +111,11 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9 -]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-")
-      .trim();
+      .replace(/^-+|-+$/g, "");
   };
 
   const handleCategorySelect = (catSlug: string) => {
@@ -180,14 +181,18 @@ export default function ContentEditorForm({ type, initialId }: ContentEditorForm
         const res = await fetch("/api/admin/articles", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(articlePayload),
         });
 
         const data = await res.json();
         if (res.ok && data?.item) {
           apiSavedItem = data.item;
-        } else if (data?.error && !data?.needsConfig) {
-          console.warn("[Admin CMS API]:", data.error);
+        } else if (!res.ok) {
+          console.warn("[Admin CMS API Error]:", data?.error);
+          setErrorMessage(data?.error || "Erro ao gravar notícia no banco de dados.");
+          setAutosaveStatus("idle");
+          return;
         }
       } catch (apiErr) {
         console.warn("[Admin CMS API Network Error]:", apiErr);

@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
 const SESSION_COOKIE_NAME = "hdz_admin_session";
-const SESSION_DURATION_SECONDS = 60 * 60 * 12; // 12 hours
+const SESSION_DURATION_SECONDS = 60 * 60 * 24 * 30; // 30 days
 
 const SECRET_KEY = process.env.ADMIN_SESSION_SECRET || "hdz_finance_production_secure_secret_key_2026_v1";
 
