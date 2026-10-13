@@ -201,17 +201,36 @@ export default function CoverImageUploader({
       let publicUrl = "";
 
       if (supabase && process.env.NEXT_PUBLIC_SUPABASE_URL && !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("dummy")) {
-        const { data, error } = await supabase.storage.from("content-media").upload(pathInBucket, file, {
-          cacheControl: "3600",
-          upsert: true,
-        });
+        try {
+          const { data, error } = await supabase.storage.from("content-media").upload(pathInBucket, file, {
+            cacheControl: "3600",
+            upsert: true,
+          });
 
-        if (error) {
-          throw error;
+          if (!error && data?.path) {
+            const { data: publicUrlData } = supabase.storage.from("content-media").getPublicUrl(data.path);
+            publicUrl = publicUrlData.publicUrl;
+          } else {
+            // If storage bucket isn't configured or returns JWS/permission error, fallback gracefully
+            console.warn("[CoverImageUploader] Supabase storage upload failed, falling back to optimized inline:", error);
+            const compressed = await compressImageFile(file);
+            publicUrl = compressed.dataUrl;
+            setFileDetails({
+              name: file.name,
+              size: `${compressed.sizeKb} KB (otimizada)`,
+              dimensions: `${compressed.width} × ${compressed.height} px`,
+            });
+          }
+        } catch (storageErr) {
+          console.warn("[CoverImageUploader] Supabase storage exception, falling back to optimized inline:", storageErr);
+          const compressed = await compressImageFile(file);
+          publicUrl = compressed.dataUrl;
+          setFileDetails({
+            name: file.name,
+            size: `${compressed.sizeKb} KB (otimizada)`,
+            dimensions: `${compressed.width} × ${compressed.height} px`,
+          });
         }
-
-        const { data: publicUrlData } = supabase.storage.from("content-media").getPublicUrl(data.path);
-        publicUrl = publicUrlData.publicUrl;
       } else {
         // Fallback for local dev mode: automatically compress to lightweight WebP/JPEG data URL (~40-90 KB)
         const compressed = await compressImageFile(file);
