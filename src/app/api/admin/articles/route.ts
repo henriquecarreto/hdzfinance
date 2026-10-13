@@ -60,17 +60,15 @@ export async function POST(request: Request) {
 
     // 2. Connect to Supabase
     const supabase = createAdminClient();
-    const isSupabaseConfigured =
-      process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("dummy") &&
-      process.env.SUPABASE_SERVICE_ROLE_KEY &&
-      !process.env.SUPABASE_SERVICE_ROLE_KEY.includes("dummy");
+    const rawKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+    const cleanKey = rawKey.trim().replace(/^["']|["']$/g, "");
+    const isSupabaseConfigured = Boolean(cleanKey) && !cleanKey.includes("dummy");
 
     if (!isSupabaseConfigured) {
       return NextResponse.json(
         {
           error:
-            "Banco de dados Supabase não configurado. As variáveis NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY precisam ser definidas no ambiente.",
+            "Banco de dados Supabase não configurado. A variável SUPABASE_SERVICE_ROLE_KEY precisa ser definida no ambiente da Vercel.",
           needsConfig: true,
         },
         { status: 503 }
@@ -117,8 +115,12 @@ export async function POST(request: Request) {
 
     if (result.error) {
       console.error("[Admin Articles API Error]:", result.error);
+      const urlUsed = (process.env.NEXT_PUBLIC_SUPABASE_URL || "https://bedkaofiodljlwxwglyq.supabase.co").trim();
+      const keyPrefix = cleanKey ? cleanKey.substring(0, 10) : "vazia";
       return NextResponse.json(
-        { error: `Erro no banco de dados: ${result.error.message}` },
+        {
+          error: `Erro no banco de dados: ${result.error.message} (Servidor: ${urlUsed} | Chave: ${keyPrefix}...)`,
+        },
         { status: 500 }
       );
     }
