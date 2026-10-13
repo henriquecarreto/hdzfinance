@@ -73,7 +73,7 @@ export default async function MateriaPage({ params }: MateriaPageProps) {
   const article = ANALYSES.find((a) => a.slug === slug);
 
   if (!article) {
-    notFound();
+    return <MateriaClientFallback slug={slug} />;
   }
 
   // JSON-LD Article / BlogPosting Schema

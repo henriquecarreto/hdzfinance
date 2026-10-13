@@ -84,7 +84,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleBySlug(slug);
 
   if (!article) {
-    notFound();
+    return <ArticleClientFallback slug={slug} />;
   }
 
   // JSON-LD NewsArticle Schema
