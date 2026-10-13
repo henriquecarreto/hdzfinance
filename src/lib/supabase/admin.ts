@@ -1,6 +1,6 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
-function normalizeUrl(rawUrl?: string): string {
+export function normalizeUrl(rawUrl?: string): string {
   const fallback = "https://bedkaofiodljlwxwglyq.supabase.co";
   if (!rawUrl || rawUrl.includes("dummy") || rawUrl.includes("hdzfinance.supabase.co") || rawUrl.includes("iqnulqgypljzmfrppbio")) {
     return fallback;

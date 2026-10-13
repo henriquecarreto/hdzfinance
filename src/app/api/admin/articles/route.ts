@@ -1,6 +1,18 @@
 import { NextResponse } from "next/server";
 import { getAdminSessionFromCookie } from "@/lib/security";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient, normalizeUrl } from "@/lib/supabase/admin";
+
+function getJwtRole(token: string): string {
+  try {
+    const parts = token.split(".");
+    if (parts.length >= 2) {
+      const payloadBase64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+      const decoded = JSON.parse(Buffer.from(payloadBase64, "base64").toString("utf8"));
+      return decoded.role || decoded.iss || "desconhecido";
+    }
+  } catch {}
+  return "desconhecido";
+}
 
 export async function POST(request: Request) {
   try {
@@ -115,11 +127,18 @@ export async function POST(request: Request) {
 
     if (result.error) {
       console.error("[Admin Articles API Error]:", result.error);
-      const urlUsed = (process.env.NEXT_PUBLIC_SUPABASE_URL || "https://bedkaofiodljlwxwglyq.supabase.co").trim();
+      const urlUsed = normalizeUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
+      const keyRole = getJwtRole(cleanKey);
       const keyPrefix = cleanKey ? cleanKey.substring(0, 10) : "vazia";
+
+      let hint = "";
+      if (keyRole === "anon") {
+        hint = " [A variável SUPABASE_SERVICE_ROLE_KEY na Vercel está com a chave 'anon'! Copie a chave 'service_role secret' no Supabase.]";
+      }
+
       return NextResponse.json(
         {
-          error: `Erro no banco de dados: ${result.error.message} (Servidor: ${urlUsed} | Chave: ${keyPrefix}...)`,
+          error: `Erro no banco de dados: ${result.error.message}${hint} (Servidor: ${urlUsed} | Role: ${keyRole} | Prefixo: ${keyPrefix}...)`,
         },
         { status: 500 }
       );
