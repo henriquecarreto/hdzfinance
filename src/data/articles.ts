@@ -141,33 +141,6 @@ export const ARTICLES: Article[] = [
       <p>A persistência de choques climáticos e custos de infraestrutura reforça a necessidade de vigilância macroeconômica, mantendo o ambiente de juros reais elevados por um período mais prolongado e exigindo disciplina fiscal rigorosa para conter a desancoragem das projeções de longo prazo.</p>
     `,
   },
-  {
-    id: "noticia-varejo-cresce-63-no-trimestre-mas-setembro-tem-queda-nas-vendas",
-    type: "noticia",
-    slug: "varejo-cresce-63-no-trimestre-mas-setembro-tem-queda-nas-vendas",
-    title: "Varejo cresce 6,3% no trimestre, mas setembro tem queda nas vendas",
-    subtitle:
-      "Indicador do setor aponta fôlego positivo no acumulado do terceiro trimestre puxado por consumo essencial, enquanto alta dos juros volta a conter segmentos dependentes de crédito.",
-    category: "economia",
-    categoryName: "Economia",
-    author: AUTHORS.editoria,
-    publishDate: "2026-10-13T08:00:00.000Z",
-    updateDate: "2026-10-13T08:00:00.000Z",
-    readTimeMinutes: 3,
-    coverImage: "/images/materias/ciclos-de-mercado/cover.webp",
-    coverAlt: "Varejo cresce 6,3% no trimestre, mas setembro tem queda nas vendas",
-    isFeatured: true,
-    isMostRead: true,
-    tags: ["varejo", "comercio", "economia", "consumo", "juros"],
-    content: `
-      <p>O comércio varejista brasileiro encerrou o terceiro trimestre com um avanço expressivo de 6,3% em comparação com o mesmo período do ano anterior. O desempenho positivo foi sustentado principalmente pelo mercado de trabalho aquecido, ganhos reais na massa de rendimento das famílias e maior demanda por bens de primeira necessidade e giro diário.</p>
-
-      <p>Apesar do balanço consolidado favorável no trimestre, os números de setembro acenderam um sinal de alerta entre analistas econômicos ao registrarem uma retração na margem de 0,3% em relação a agosto. O movimento sugere uma acomodação do ritmo de atividade comercial e perda gradual de tração na reta final do ano.</p>
-
-      <p>Segundo analistas do setor, a perda de dinamismo recente decorre da postura mais restritiva da política monetária. Enquanto os segmentos voltados a consumo básico de supermercados, farmácias e combustíveis continuam demonstrando resiliência, categorias mais sensíveis ao custo do crédito — como veículos, eletrodomésticos, móveis e materiais de construção — voltaram a sofrer com taxas de juros elevadas e maior seletividade nas concessões financeiras.</p>
-
-      <p>Para o fechamento do ano, a expectativa do mercado financeiro e de entidades do comércio permanece concentrada nas campanhas promocionais de fim de ano, como a Black Friday e as festas natalinas, que deverão testar a capacidade de endividamento dos consumidores em um contexto macroeconômico de taxa Selic pressionada.</p>
-    `,
-  },
 ];
+
 
