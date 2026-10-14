@@ -107,9 +107,12 @@ export async function POST(request: Request) {
       updated_at: now,
     };
 
+    const isUuid = (val?: string): boolean =>
+      Boolean(val && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val));
+
     let result;
-    if (id && !id.startsWith("item-") && !id.startsWith("temp-")) {
-      // Update existing item
+    if (isUuid(id)) {
+      // Update existing item by UUID
       result = await supabase
         .from("content_items")
         .update(payload)
@@ -117,12 +120,27 @@ export async function POST(request: Request) {
         .select()
         .single();
     } else {
-      // Insert new item or upsert on slug
-      result = await supabase
+      // Check if an item with this slug already exists in database
+      const { data: existingBySlug } = await supabase
         .from("content_items")
-        .upsert(payload, { onConflict: "slug" })
-        .select()
-        .single();
+        .select("id")
+        .eq("slug", finalSlug)
+        .maybeSingle();
+
+      if (existingBySlug?.id) {
+        result = await supabase
+          .from("content_items")
+          .update(payload)
+          .eq("id", existingBySlug.id)
+          .select()
+          .single();
+      } else {
+        result = await supabase
+          .from("content_items")
+          .insert(payload)
+          .select()
+          .single();
+      }
     }
 
     if (result.error) {

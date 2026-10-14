@@ -58,7 +58,10 @@ export default function NoticiasPage() {
           const data = await res.json();
           if (data?.articles && Array.isArray(data.articles)) {
             for (const serverArt of data.articles) {
-              if (!combined.some((a) => a.slug === serverArt.slug || a.id === serverArt.id)) {
+              const existingIdx = combined.findIndex((a) => a.slug === serverArt.slug || a.id === serverArt.id);
+              if (existingIdx >= 0) {
+                combined[existingIdx] = serverArt;
+              } else {
                 combined.unshift(serverArt);
               }
             }

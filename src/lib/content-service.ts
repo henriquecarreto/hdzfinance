@@ -39,13 +39,7 @@ function mapDbItemToArticle(item: any): Article {
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const cleanSlug = slug.replace(/^-+|-+$/g, "");
 
-  // 1. Check hardcoded static ARTICLES
-  const staticArticle = ARTICLES.find((a) => a.slug === slug || a.slug === cleanSlug);
-  if (staticArticle) {
-    return staticArticle;
-  }
-
-  // 2. Query Supabase if configured
+  // 1. Query Supabase first (to reflect CMS updates / custom images)
   try {
     const isSupabaseConfigured =
       process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -70,17 +64,17 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     console.warn(`[ContentService] Error fetching article by slug (${slug}):`, err);
   }
 
+  // 2. Fallback to hardcoded static ARTICLES
+  const staticArticle = ARTICLES.find((a) => a.slug === slug || a.slug === cleanSlug);
+  if (staticArticle) {
+    return staticArticle;
+  }
+
   return null;
 }
 
 export async function getMateriaBySlug(slug: string): Promise<AnalysisArticle | null> {
-  // 1. Check hardcoded static ANALYSES
-  const staticMateria = ANALYSES.find((a) => a.slug === slug || a.legacyId === slug);
-  if (staticMateria) {
-    return staticMateria;
-  }
-
-  // 2. Query Supabase if configured
+  // 1. Query Supabase first
   try {
     const isSupabaseConfigured =
       process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -110,12 +104,19 @@ export async function getMateriaBySlug(slug: string): Promise<AnalysisArticle | 
     console.warn(`[ContentService] Error fetching materia by slug (${slug}):`, err);
   }
 
+  // 2. Fallback to hardcoded static ANALYSES
+  const staticMateria = ANALYSES.find((a) => a.slug === slug || a.legacyId === slug);
+  if (staticMateria) {
+    return staticMateria;
+  }
+
   return null;
 }
 
 export async function getAllPublishedArticles(): Promise<Article[]> {
-  const combined = [...ARTICLES];
+  const articlesMap = new Map<string, Article>();
 
+  // 1. Load from Supabase first
   try {
     const isSupabaseConfigured =
       process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -134,9 +135,8 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
 
       if (!error && data && Array.isArray(data)) {
         for (const item of data) {
-          if (!combined.some((a) => a.slug === item.slug || a.id === item.id)) {
-            combined.unshift(mapDbItemToArticle(item));
-          }
+          const mapped = mapDbItemToArticle(item);
+          articlesMap.set(mapped.slug, mapped);
         }
       }
     }
@@ -144,5 +144,14 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
     console.warn("[ContentService] Error fetching all published articles:", err);
   }
 
+  // 2. Add static ARTICLES if not already present in Supabase
+  for (const staticArt of ARTICLES) {
+    if (!articlesMap.has(staticArt.slug)) {
+      articlesMap.set(staticArt.slug, staticArt);
+    }
+  }
+
+  const combined = Array.from(articlesMap.values());
+  combined.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
   return combined;
 }
