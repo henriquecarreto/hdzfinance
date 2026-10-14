@@ -158,7 +158,7 @@ class CMSStoreManager {
     showSectionBitcoinPrice: true,
     trainingCtaLabel: "Descobrir o treinamento",
     trainingCtaUrl: "/educacional/cursos",
-    picnicUrl: "https://picnic.com.br",
+    picnicUrl: "https://usepicnic.com/br/app/signup",
     quantfuryUrl: "https://quantfury.com",
     contactEmail: "contato@hdzfinance.com.br",
     contactPhone: "+55 (11) 99999-8888",

@@ -10,7 +10,7 @@ export default function MarketPartnerships() {
   const partnerships = {
     picnic: {
       enabled: true,
-      url: "https://promo.usepicnic.com/8pQU/HDZ",
+      url: "https://usepicnic.com/br/app/signup",
     },
     quantfury: {
       enabled: process.env.NEXT_PUBLIC_ENABLE_QUANTFURY_PARTNER === "true",

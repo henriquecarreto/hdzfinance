@@ -212,7 +212,7 @@ export default function DigitalDollarSection() {
 
               {/* Botão de Ação */}
               <a
-                href="https://promo.usepicnic.com/8pQU/HDZ"
+                href="https://usepicnic.com/br/app/signup"
                 target="_blank"
                 rel="sponsored nofollow noopener noreferrer"
                 aria-label="Conhecer a Picnic (link de afiliado externo)"
