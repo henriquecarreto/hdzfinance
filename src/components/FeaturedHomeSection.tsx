@@ -80,13 +80,14 @@ export default function FeaturedHomeSection() {
       setMainMateria(selectedMateria);
 
       // 2. Fetch published Notícias ONLY (strictly type === "noticia" & status === "published")
-      const noticias = cmsStore
+      const rawNoticias = cmsStore
         .getItems("noticia")
         .filter((item) => item.status === "published")
+        .filter((item) => item.coverImagePath !== "/images/materias/ciclos-de-mercado/cover.webp")
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
       // Ensure at least 4 items using fallback to ARTICLES if needed
-      const mergedNoticias = [...noticias];
+      const mergedNoticias = [...rawNoticias];
       for (const art of ARTICLES) {
         if (!mergedNoticias.some((n) => n.slug === art.slug || n.id === art.id)) {
           mergedNoticias.push({
@@ -113,7 +114,74 @@ export default function FeaturedHomeSection() {
         }
       }
 
-      setPublishedNoticias(mergedNoticias.slice(0, 4));
+      // Deduplicate by normalized title
+      const seenTitles = new Set<string>();
+      const deduplicated: CMSContentItem[] = [];
+      for (const item of mergedNoticias) {
+        const norm = item.title.trim().toLowerCase();
+        if (!seenTitles.has(norm)) {
+          seenTitles.add(norm);
+          deduplicated.push(item);
+        }
+      }
+
+      setPublishedNoticias(deduplicated.slice(0, 4));
+
+      // 3. Live sync from server /api/articles (Supabase database)
+      fetch("/api/articles", { cache: "no-store" })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.articles && Array.isArray(data.articles)) {
+            const serverNoticias: CMSContentItem[] = data.articles
+              .filter((a: any) => a.coverImage !== "/images/materias/ciclos-de-mercado/cover.webp")
+              .map((art: any) => ({
+                id: art.id,
+                type: "noticia",
+                status: "published",
+                title: art.title,
+                subtitle: art.subtitle || "",
+                excerpt: art.subtitle || "",
+                slug: art.slug,
+                bodyHtml: art.content || "",
+                category: art.category,
+                categoryName: art.categoryName,
+                tags: art.tags || [],
+                authorName: art.author?.name || "Produção HDZ Finance",
+                coverImagePath: art.coverImage,
+                coverImageAlt: art.coverAlt,
+                featured: Boolean(art.isFeatured),
+                featuredOrder: 1,
+                publishedAt: art.publishDate,
+                createdAt: art.publishDate,
+                updatedAt: art.updateDate || art.publishDate,
+              }));
+
+            const combinedWithServer = [...serverNoticias];
+            for (const localItem of deduplicated) {
+              const norm = localItem.title.trim().toLowerCase();
+              if (!combinedWithServer.some((s) => s.title.trim().toLowerCase() === norm || s.slug === localItem.slug)) {
+                combinedWithServer.push(localItem);
+              }
+            }
+
+            combinedWithServer.sort(
+              (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+            );
+
+            const finalSeen = new Set<string>();
+            const finalDeduplicated: CMSContentItem[] = [];
+            for (const item of combinedWithServer) {
+              const norm = item.title.trim().toLowerCase();
+              if (!finalSeen.has(norm)) {
+                finalSeen.add(norm);
+                finalDeduplicated.push(item);
+              }
+            }
+
+            setPublishedNoticias(finalDeduplicated.slice(0, 4));
+          }
+        })
+        .catch(() => {});
     };
 
     loadFeatured();

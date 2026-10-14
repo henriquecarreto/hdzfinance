@@ -198,7 +198,13 @@ class CMSStoreManager {
             merged.push(initItem);
           }
         }
-        this.items = merged;
+        // Purge any stale/erroneous news items that have the Ciclos de Mercado materia cover
+        this.items = merged.filter((item) => {
+          if (item.type === "noticia" && item.coverImagePath === "/images/materias/ciclos-de-mercado/cover.webp") {
+            return false;
+          }
+          return true;
+        });
         localStorage.setItem("hdz_cms_items", JSON.stringify(this.items));
       }
       const storedEvents = localStorage.getItem("hdz_cms_events");
@@ -245,8 +251,14 @@ class CMSStoreManager {
 
   public getItems(type?: ContentType): CMSContentItem[] {
     this.initFromLocalStorage();
-    if (!type) return this.items;
-    return this.items.filter((item) => item.type === type);
+    const list = this.items.filter((item) => {
+      if (item.type === "noticia" && item.coverImagePath === "/images/materias/ciclos-de-mercado/cover.webp") {
+        return false;
+      }
+      return true;
+    });
+    if (!type) return list;
+    return list.filter((item) => item.type === type);
   }
 
   public getItemBySlug(slug: string): CMSContentItem | undefined {
